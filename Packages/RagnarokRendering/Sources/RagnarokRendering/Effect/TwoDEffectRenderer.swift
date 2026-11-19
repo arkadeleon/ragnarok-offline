@@ -25,7 +25,7 @@ public final class TwoDEffectRenderer {
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.depthCompareFunction = configuration.depthCompareFunction
-        depthStencilDescriptor.isDepthWriteEnabled = true
+        depthStencilDescriptor.isDepthWriteEnabled = false
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
 
         let overlayDepthStencilDescriptor = MTLDepthStencilDescriptor()

@@ -14,6 +14,10 @@ public class WorldRenderResource {
     let modelResources: [RSMModelRenderResource]
     let effectResources: [EffectRenderResourceGroup]
 
+    public var hasWater: Bool {
+        waterResource.vertexCount > 0
+    }
+
     public init(device: any MTLDevice, asset: WorldAsset) {
         groundResource = GroundRenderResource(device: device, asset: asset.ground, light: asset.light)
         waterResource = WaterRenderResource(device: device, asset: asset.water, light: asset.light)

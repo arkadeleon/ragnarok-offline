@@ -80,6 +80,22 @@ public final class WorldRenderer {
         )
     }
 
+    public func renderWaterDepth(
+        resource: WorldRenderResource,
+        atTime time: TimeInterval,
+        modelMatrix: simd_float4x4,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
+    ) {
+        waterRenderer.renderDepth(
+            resource: resource.waterResource,
+            atTime: time,
+            modelMatrix: modelMatrix,
+            camera: camera,
+            renderCommandEncoder: renderCommandEncoder
+        )
+    }
+
     public func renderWater(
         resource: WorldRenderResource,
         atTime time: TimeInterval,

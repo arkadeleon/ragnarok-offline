@@ -15,6 +15,8 @@ public final class WaterRenderer {
 
     private let renderPipelineState: any MTLRenderPipelineState
     private let depthStencilState: (any MTLDepthStencilState)?
+    private let depthRenderPipelineState: any MTLRenderPipelineState
+    private let depthWriteStencilState: (any MTLDepthStencilState)?
 
     public init(device: any MTLDevice, configuration: RenderConfiguration) throws {
         self.device = device
@@ -36,8 +38,50 @@ public final class WaterRenderer {
 
         let depthStencilDescriptor = MTLDepthStencilDescriptor()
         depthStencilDescriptor.depthCompareFunction = configuration.depthCompareFunction
-        depthStencilDescriptor.isDepthWriteEnabled = true
+        depthStencilDescriptor.isDepthWriteEnabled = false
         depthStencilState = device.makeDepthStencilState(descriptor: depthStencilDescriptor)
+
+        let depthPipelineDescriptor = MTLRenderPipelineDescriptor()
+        depthPipelineDescriptor.vertexFunction = library.makeFunction(name: "waterVertexShader")
+        depthPipelineDescriptor.fragmentFunction = nil
+        depthPipelineDescriptor.maxVertexAmplificationCount = configuration.amplificationCount
+        depthPipelineDescriptor.colorAttachments[0].pixelFormat = .invalid
+        depthPipelineDescriptor.depthAttachmentPixelFormat = configuration.depthStencilPixelFormat
+        depthRenderPipelineState = try device.makeRenderPipelineState(descriptor: depthPipelineDescriptor)
+
+        let depthWriteDescriptor = MTLDepthStencilDescriptor()
+        depthWriteDescriptor.depthCompareFunction = configuration.depthCompareFunction
+        depthWriteDescriptor.isDepthWriteEnabled = true
+        depthWriteStencilState = device.makeDepthStencilState(descriptor: depthWriteDescriptor)
+    }
+
+    public func renderDepth(
+        resource: WaterRenderResource,
+        atTime time: TimeInterval,
+        modelMatrix: simd_float4x4,
+        camera: RenderCamera,
+        renderCommandEncoder: any MTLRenderCommandEncoder
+    ) {
+        guard resource.vertexCount > 0 else {
+            return
+        }
+
+        var vertexUniforms = makeVertexUniforms(
+            resource: resource,
+            atTime: time,
+            modelMatrix: modelMatrix,
+            camera: camera
+        )
+
+        renderCommandEncoder.setRenderPipelineState(depthRenderPipelineState)
+        renderCommandEncoder.setDepthStencilState(depthWriteStencilState)
+        renderCommandEncoder.setVertexBuffer(resource.vertexBuffer, offset: 0, index: 0)
+        renderCommandEncoder.setVertexBytes(
+            &vertexUniforms,
+            length: MemoryLayout<WaterVertexUniforms>.stride,
+            index: 1
+        )
+        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
     }
 
     public func render(
@@ -54,13 +98,11 @@ public final class WaterRenderer {
             return
         }
 
-        var vertexUniforms = WaterVertexUniforms(
+        var vertexUniforms = makeVertexUniforms(
+            resource: resource,
+            atTime: time,
             modelMatrix: modelMatrix,
-            viewMatrix: camera.viewMatrix,
-            projectionMatrix: camera.projectionMatrix,
-            waveHeight: resource.waveHeight,
-            wavePitch: resource.wavePitch,
-            waterOffset: (frame * resource.waveSpeed).truncatingRemainder(dividingBy: 360) - 180
+            camera: camera
         )
 
         var fragmentUniforms = WaterFragmentUniforms(
@@ -92,5 +134,22 @@ public final class WaterRenderer {
         )
         renderCommandEncoder.setFragmentTexture(texture, index: 0)
         renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertexCount)
+    }
+
+    private func makeVertexUniforms(
+        resource: WaterRenderResource,
+        atTime time: TimeInterval,
+        modelMatrix: simd_float4x4,
+        camera: RenderCamera
+    ) -> WaterVertexUniforms {
+        let frame = Float(time * 60)
+        return WaterVertexUniforms(
+            modelMatrix: modelMatrix,
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix,
+            waveHeight: resource.waveHeight,
+            wavePitch: resource.wavePitch,
+            waterOffset: (frame * resource.waveSpeed).truncatingRemainder(dividingBy: 360) - 180
+        )
     }
 }
