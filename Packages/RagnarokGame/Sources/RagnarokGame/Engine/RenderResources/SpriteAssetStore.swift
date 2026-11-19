@@ -27,11 +27,7 @@ final class SpriteAssetStore {
         self.shadowmap = shadowmap
     }
 
-    func sync(
-        objects: [GameObjectID : MapSceneMapObject],
-        items: [GameObjectID : MapSceneDroppedItem],
-        worldPositions: [GameObjectID : SIMD3<Float>]
-    ) -> [SpriteDrawable] {
+    func sync(objects: [GameObjectID : MapSceneMapObject], items: [GameObjectID : MapSceneDroppedItem]) -> [SpriteDrawable] {
         for objectID in Set(objectTextures.keys).subtracting(objects.keys) {
             objectTextures.removeValue(forKey: objectID)
         }
@@ -46,11 +42,11 @@ final class SpriteAssetStore {
         let frameResolver = SpriteFrameResolver()
 
         for (objectID, object) in objects {
-            guard let composedSprite = object.composedSprite,
-                  let worldPosition = worldPositions[objectID] else {
+            guard let composedSprite = object.composedSprite else {
                 continue
             }
 
+            let worldPosition = object.worldPosition
             let drawable = frameResolver.resolve(
                 object,
                 composedSprite: composedSprite,
@@ -65,11 +61,11 @@ final class SpriteAssetStore {
         }
 
         for (objectID, item) in items {
-            guard let sprite = item.sprite,
-                  let worldPosition = worldPositions[objectID] else {
+            guard let sprite = item.sprite else {
                 continue
             }
 
+            let worldPosition = item.worldPosition
             let drawable = frameResolver.resolve(
                 objectID: objectID,
                 sprite: sprite,
@@ -81,14 +77,6 @@ final class SpriteAssetStore {
                 continue
             }
             sprites.append(drawable)
-        }
-
-        sprites.sort {
-            if $0.worldPosition.z == $1.worldPosition.z {
-                $0.objectID < $1.objectID
-            } else {
-                $0.worldPosition.z < $1.worldPosition.z
-            }
         }
 
         return sprites

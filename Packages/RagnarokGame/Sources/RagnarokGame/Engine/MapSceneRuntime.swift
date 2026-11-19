@@ -69,11 +69,7 @@ final class MapSceneRuntime {
             scene.removeEffect(objectID: effectID)
         }
 
-        renderResources.synchronizeSprites(
-            objects: scene.objects,
-            items: scene.items,
-            worldPositions: makeWorldPositions()
-        )
+        renderResources.synchronizeSprites(objects: scene.objects, items: scene.items)
 
         let effectWorldPositions = scene.effects.mapValues { effect in
             scene.mapGrid.worldPosition(for: effect.gridPosition)
@@ -92,7 +88,7 @@ final class MapSceneRuntime {
     /// and uses this camera's view matrix to place the map around the viewer.
     func makeCamera(viewport: MTLViewport) -> RenderCamera {
         let camera = scene.camera
-        let targetPosition = camera.target ?? scene.worldPosition(for: scene.player)
+        let targetPosition = camera.target ?? scene.player.worldPosition
         let worldTarget = targetPosition + Self.cameraTargetOffset + camera.shakeOffset
 
         let viewportHeight = max(Float(viewport.height), 1)
@@ -137,17 +133,15 @@ final class MapSceneRuntime {
     }
 
     func makeRenderSnapshot(atTime currentTime: TimeInterval) -> MapSceneRenderSnapshot {
-        let worldPositions = makeWorldPositions()
-
         var snapshot = MapSceneRenderSnapshot(fog: scene.fog)
         snapshot.world = renderResources.world
         snapshot.tileSelector = makeTileSelector(atTime: currentTime)
         snapshot.targetSelector = makeTargetSelector(atTime: currentTime)
         snapshot.spriteDrawables = renderResources.spriteDrawables
-        snapshot.effects = makeEffects(worldPositions: worldPositions)
-        snapshot.bars = makeBars(atTime: currentTime, worldPositions: worldPositions)
-        snapshot.texts = makeTexts(worldPositions: worldPositions)
-        snapshot.combatTexts = makeCombatTexts(atTime: currentTime, worldPositions: worldPositions)
+        snapshot.effects = makeEffects()
+        snapshot.bars = makeBars(atTime: currentTime)
+        snapshot.texts = makeTexts()
+        snapshot.combatTexts = makeCombatTexts(atTime: currentTime)
         snapshot.combatTextTexture = renderResources.combatTextTexture
         return snapshot
     }
@@ -184,7 +178,7 @@ final class MapSceneRuntime {
         )
     }
 
-    private func makeEffects(worldPositions: [GameObjectID : SIMD3<Float>]) -> [MapSceneRenderSnapshot.Effect] {
+    private func makeEffects() -> [MapSceneRenderSnapshot.Effect] {
         scene.effects.values
             .compactMap { effect in
                 guard let resourceGroup = renderResources.effectResource(for: effect.id) else {
@@ -192,7 +186,7 @@ final class MapSceneRuntime {
                 }
                 return MapSceneRenderSnapshot.Effect(
                     resourceGroup: resourceGroup,
-                    attachedWorldPosition: effect.targetObjectID.flatMap { worldPositions[$0] }
+                    attachedWorldPosition: effect.targetObjectID.flatMap { scene.objects[$0]?.worldPosition }
                 )
             }
             .sorted {
@@ -200,14 +194,9 @@ final class MapSceneRuntime {
             }
     }
 
-    private func makeBars(
-        atTime currentTime: TimeInterval,
-        worldPositions: [GameObjectID : SIMD3<Float>]
-    ) -> [MapSceneRenderSnapshot.Bar] {
-        let hpspBars = scene.hpspBarObjectIDs.compactMap { objectID -> MapSceneRenderSnapshot.Bar? in
-            guard let object = scene.objects[objectID],
-                  object.effectState != .cloak,
-                  let worldPosition = worldPositions[objectID] else {
+    private func makeBars(atTime currentTime: TimeInterval) -> [MapSceneRenderSnapshot.Bar] {
+        let hpspBars = scene.objects.values.compactMap { object -> MapSceneRenderSnapshot.Bar? in
+            guard object.showsHPSPBar, object.effectState != .cloak else {
                 return nil
             }
             let mesh = BarMesh.mesh(
@@ -222,20 +211,18 @@ final class MapSceneRuntime {
             }
             return MapSceneRenderSnapshot.Bar(
                 vertices: mesh.vertices,
-                worldPosition: worldPosition + [0, -0.8, 0]
+                worldPosition: object.worldPosition + [0, -0.8, 0]
             )
         }
 
         let castBars = scene.objects.values.compactMap { object -> MapSceneRenderSnapshot.Bar? in
-            guard let cast = object.cast,
-                  object.effectState != .cloak,
-                  let worldPosition = worldPositions[object.objectID] else {
+            guard let cast = object.cast, object.effectState != .cloak else {
                 return nil
             }
             let mesh = BarMesh.mesh(cast: cast, atTime: currentTime)
             return MapSceneRenderSnapshot.Bar(
                 vertices: mesh.vertices,
-                worldPosition: worldPosition
+                worldPosition: object.worldPosition
             )
         }
 
@@ -244,10 +231,9 @@ final class MapSceneRuntime {
 
     /// The target selector's object shows its name 2 points under its HP bar.
     /// Without a bar, the name is centered where the bar would be.
-    private func makeTexts(worldPositions: [GameObjectID : SIMD3<Float>]) -> [MapSceneRenderSnapshot.Text] {
+    private func makeTexts() -> [MapSceneRenderSnapshot.Text] {
         guard let targetSelector = scene.targetSelector,
               let target = scene.objects[targetSelector.objectID],
-              let targetPosition = worldPositions[target.objectID],
               target.effectState != .cloak else {
             return []
         }
@@ -259,7 +245,7 @@ final class MapSceneRuntime {
         }
 
         var barBottom: Float? = nil
-        if scene.hpspBarObjectIDs.contains(target.objectID) {
+        if target.showsHPSPBar {
             let barMesh = BarMesh.mesh(
                 hp: target.hp,
                 maxHp: target.maxHp,
@@ -278,16 +264,13 @@ final class MapSceneRuntime {
         let textMesh = TextMesh(size: targetNameText.size, top: textTop)
         let text = MapSceneRenderSnapshot.Text(
             vertices: textMesh.vertices,
-            worldPosition: targetPosition + [0, -0.8, 0],
+            worldPosition: target.worldPosition + [0, -0.8, 0],
             texture: textTexture
         )
         return [text]
     }
 
-    private func makeCombatTexts(
-        atTime currentTime: TimeInterval,
-        worldPositions: [GameObjectID : SIMD3<Float>]
-    ) -> [MapSceneRenderSnapshot.CombatText] {
+    private func makeCombatTexts(atTime currentTime: TimeInterval) -> [MapSceneRenderSnapshot.CombatText] {
         guard let combatTextGlyphSet = renderResources.combatTextGlyphSet else {
             return []
         }
@@ -311,7 +294,7 @@ final class MapSceneRuntime {
                 }
             }
             .compactMap { combatText in
-                let anchor = worldPositions[combatText.target.objectID] ?? combatText.target.initialWorldPosition
+                let anchor = scene.objects[combatText.target.objectID]?.worldPosition ?? combatText.target.initialWorldPosition
                 guard let animation = combatText.animation(
                     atTime: currentTime,
                     anchor: anchor,
@@ -335,20 +318,5 @@ final class MapSceneRuntime {
                     worldPosition: animation.worldPosition
                 )
             }
-    }
-
-    private func makeWorldPositions() -> [GameObjectID : SIMD3<Float>] {
-        var worldPositions: [GameObjectID : SIMD3<Float>] = [:]
-        worldPositions.reserveCapacity(scene.objects.count + scene.items.count)
-
-        for object in scene.objects.values {
-            worldPositions[object.objectID] = scene.worldPosition(for: object)
-        }
-
-        for item in scene.items.values {
-            worldPositions[item.objectID] = scene.mapGrid.worldPosition(for: item.gridPosition)
-        }
-
-        return worldPositions
     }
 }

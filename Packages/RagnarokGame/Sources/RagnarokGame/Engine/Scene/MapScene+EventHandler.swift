@@ -42,7 +42,7 @@ extension MapScene {
             creationTime: CACurrentMediaTime(),
             target: CombatText.Target(
                 objectID: player.objectID,
-                initialWorldPosition: worldPosition(for: player),
+                initialWorldPosition: player.worldPosition,
                 isPlayer: true
             ),
             amount: recovered,
@@ -59,7 +59,7 @@ extension MapScene {
             creationTime: CACurrentMediaTime(),
             target: CombatText.Target(
                 objectID: player.objectID,
-                initialWorldPosition: worldPosition(for: player),
+                initialWorldPosition: player.worldPosition,
                 isPlayer: true
             ),
             amount: recovered,
@@ -96,7 +96,7 @@ extension MapScene {
         object.maxHp = maxHp
 
         if object.type == .monster {
-            hpspBarObjectIDs.insert(objectID)
+            object.showsHPSPBar = true
         }
     }
 
@@ -106,6 +106,7 @@ extension MapScene {
             hp: object.hp,
             maxHp: object.maxHp,
             gridPosition: position,
+            worldPosition: mapGrid.worldPosition(for: position),
             direction: SpriteDirection(direction: direction),
             headDirection: SpriteHeadDirection(headDirection: headDirection)
         )
@@ -152,6 +153,7 @@ extension MapScene {
                 hp: object.hp,
                 maxHp: object.maxHp,
                 gridPosition: endPosition,
+                worldPosition: mapGrid.worldPosition(for: endPosition),
                 direction: SpriteDirection(sourcePosition: startPosition, targetPosition: endPosition),
                 headDirection: .lookForward
             )
@@ -203,6 +205,7 @@ extension MapScene {
             return
         }
 
+        object.showsHPSPBar = false
         object.death = MapObjectDeath(
             startTime: CACurrentMediaTime(),
             fadeDuration: object.type == .pc ? nil : 5
@@ -211,7 +214,6 @@ extension MapScene {
         object.perform(.die, completion: .indefinite)
         cancelCast(for: object)
 
-        hpspBarObjectIDs.remove(objectID)
         if selectedTargetID == objectID {
             selectTarget(nil)
         }
@@ -225,10 +227,12 @@ extension MapScene {
         if let object = objects[objectID] {
             object.death = nil
             object.perform(.idle, completion: .indefinite)
+            if objectID == player.objectID {
+                object.showsHPSPBar = true
+            }
         }
 
         if objectID == player.objectID {
-            hpspBarObjectIDs.insert(objectID)
             state.isPlayerDead = false
         }
     }
@@ -419,7 +423,7 @@ extension MapScene {
                 creationTime: currentTime,
                 target: CombatText.Target(
                     objectID: objectSkill.targetObjectID,
-                    initialWorldPosition: worldPosition(for: targetObject),
+                    initialWorldPosition: targetObject.worldPosition,
                     isPlayer: targetObject.type == .pc
                 ),
                 amount: objectSkill.level,
@@ -444,7 +448,11 @@ extension MapScene {
     // MARK: - Dropped Item
 
     public func onItemSpawned(item: DroppedItem, position: SIMD2<Int>) {
-        let droppedItem = MapSceneDroppedItem(item: item, gridPosition: position)
+        let droppedItem = MapSceneDroppedItem(
+            item: item,
+            gridPosition: position,
+            worldPosition: mapGrid.worldPosition(for: position)
+        )
         items[item.objectID] = droppedItem
     }
 
@@ -509,7 +517,7 @@ extension MapScene {
                 reference: effectReference,
                 creationTime: currentTime,
                 gridPosition: position,
-                sourceWorldPosition: worldPosition(forObjectID: sourceObjectID),
+                sourceWorldPosition: objects[sourceObjectID]?.worldPosition,
                 targetObjectID: nil,
                 ownerObjectID: nil
             )
@@ -522,8 +530,7 @@ extension MapScene {
 
 extension MapScene {
     private func addCombatTexts(for hits: [MapObjectHit], targetObjectID: GameObjectID, hitSoundName: String? = nil, currentTime: TimeInterval) {
-        guard !hits.isEmpty,
-              let initialWorldPosition = worldPosition(forObjectID: targetObjectID) else {
+        guard !hits.isEmpty, let initialWorldPosition = objects[targetObjectID]?.worldPosition else {
             return
         }
 
@@ -604,7 +611,7 @@ extension MapScene {
             reference: .name("ef_arrow_projectile"),
             creationTime: CACurrentMediaTime(),
             gridPosition: targetObject.gridPosition,
-            sourceWorldPosition: worldPosition(for: sourceObject),
+            sourceWorldPosition: sourceObject.worldPosition,
             targetObjectID: targetObject.objectID,
             ownerObjectID: nil,
             delay: TimeInterval(objectAction.sourceSpeed) / 1000
@@ -627,7 +634,7 @@ extension MapScene {
                     reference: effectReference,
                     creationTime: currentTime,
                     gridPosition: targetPosition,
-                    sourceWorldPosition: worldPosition(forObjectID: objectSkill.sourceObjectID),
+                    sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
                     targetObjectID: objectSkill.targetObjectID,
                     ownerObjectID: nil,
                     delay: MapObjectHit.multiHitInterval * TimeInterval(i)
@@ -652,7 +659,7 @@ extension MapScene {
                     reference: effectReference,
                     creationTime: currentTime,
                     gridPosition: targetPosition,
-                    sourceWorldPosition: worldPosition(forObjectID: objectSkill.sourceObjectID),
+                    sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
                     targetObjectID: objectSkill.targetObjectID,
                     ownerObjectID: nil,
                     delay: hit.delay
@@ -678,7 +685,7 @@ extension MapScene {
                 reference: effectReference,
                 creationTime: currentTime,
                 gridPosition: targetPosition,
-                sourceWorldPosition: worldPosition(forObjectID: objectSkill.sourceObjectID),
+                sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
                 targetObjectID: objectSkill.targetObjectID,
                 ownerObjectID: nil,
                 delay: TimeInterval(objectSkill.attackDelay) / 1000
@@ -701,7 +708,7 @@ extension MapScene {
                 reference: effectReference,
                 creationTime: currentTime,
                 gridPosition: targetPosition,
-                sourceWorldPosition: worldPosition(forObjectID: objectSkill.sourceObjectID),
+                sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
                 targetObjectID: objectSkill.targetObjectID,
                 ownerObjectID: nil
             )

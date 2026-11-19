@@ -14,13 +14,15 @@ final class MapSceneDroppedItem {
     let itemID: Int
 
     var gridPosition: SIMD2<Int>
+    var worldPosition: SIMD3<Float>
 
     var sprite: SpriteResource?
 
-    init(item: DroppedItem, gridPosition: SIMD2<Int>) {
+    init(item: DroppedItem, gridPosition: SIMD2<Int>, worldPosition: SIMD3<Float>) {
         objectID = item.objectID
         itemID = Int(item.itemID)
 
         self.gridPosition = gridPosition
+        self.worldPosition = worldPosition
     }
 }

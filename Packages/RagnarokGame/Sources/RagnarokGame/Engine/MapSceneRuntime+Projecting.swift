@@ -24,8 +24,7 @@ extension MapSceneRuntime {
 
         let viewProjectionMatrix = lastCamera.projectionMatrix * lastCamera.viewMatrix
         scene.selectNextTarget { object in
-            let worldPosition = scene.worldPosition(for: object)
-            let clipPosition = viewProjectionMatrix * SIMD4<Float>(worldPosition, 1)
+            let clipPosition = viewProjectionMatrix * SIMD4<Float>(object.worldPosition, 1)
             guard clipPosition.w > 0 else {
                 return false
             }

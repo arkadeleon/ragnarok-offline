@@ -38,6 +38,9 @@ final class MapSceneMapObject {
     var effectState: StatusChangeOption
 
     var gridPosition: SIMD2<Int>
+    var worldPosition: SIMD3<Float>
+
+    var showsHPSPBar = false
 
     var composedSprite: ComposedSprite?
 
@@ -64,6 +67,7 @@ final class MapSceneMapObject {
         account: AccountInfo,
         character: CharacterInfo,
         gridPosition: SIMD2<Int>,
+        worldPosition: SIMD3<Float>,
         direction: SpriteDirection,
         headDirection: SpriteHeadDirection
     ) {
@@ -92,6 +96,7 @@ final class MapSceneMapObject {
         effectState = StatusChangeOption(rawValue: character.effectState) ?? .nothing
 
         self.gridPosition = gridPosition
+        self.worldPosition = worldPosition
 
         action = SpriteAction(
             actionType: .idle,
@@ -109,6 +114,7 @@ final class MapSceneMapObject {
         sp: Int = 0,
         maxSp: Int = 0,
         gridPosition: SIMD2<Int>,
+        worldPosition: SIMD3<Float>,
         direction: SpriteDirection,
         headDirection: SpriteHeadDirection
     ) {
@@ -137,6 +143,7 @@ final class MapSceneMapObject {
         effectState = object.effectState
 
         self.gridPosition = gridPosition
+        self.worldPosition = worldPosition
 
         action = SpriteAction(
             actionType: .idle,
@@ -252,7 +259,7 @@ final class MapSceneMapObject {
         gridPosition = position
     }
 
-    func update(atTime currentTime: TimeInterval) {
+    func update(atTime currentTime: TimeInterval, mapGrid: MapGrid) {
         let onceDuration: TimeInterval?
         if case .once = action.completion {
             onceDuration = composedSprite?.duration(
@@ -267,11 +274,56 @@ final class MapSceneMapObject {
 
         action.update(atTime: currentTime, onceDuration: onceDuration)
         movement?.update(atTime: currentTime)
+        if let movement {
+            gridPosition = movement.currentLocation.position
+        }
+        worldPosition = if let movement, movement.isMoving {
+            mapGrid.worldPosition(at: movement.currentLocation.point)
+        } else {
+            mapGrid.worldPosition(for: gridPosition)
+        }
         death?.update(atTime: currentTime)
 
         if cast?.isFinished(atTime: currentTime) == true {
             cast = nil
         }
+    }
+
+    func resolveAction(cameraAzimuth: Float) -> ResolvedSpriteAction? {
+        guard let composedSprite else {
+            return nil
+        }
+
+        var action = action
+
+        if let movement, movement.isMoving {
+            action.actionType = .walk
+            action.direction = movement.direction ?? action.direction
+            action.elapsedTime = movement.animationElapsedTime
+            action.completion = .indefinite
+        }
+
+        action.direction = action.direction.adjustedForCameraAzimuth(cameraAzimuth)
+
+        if !SpriteActionType.availableActionTypes(forJobID: job).contains(action.actionType) {
+            action.actionType = .idle
+        }
+
+        let frameIndex = composedSprite.mainFrameIndex(
+            forActionType: action.actionType,
+            direction: action.direction,
+            headDirection: action.headDirection,
+            elapsedTime: action.elapsedTime,
+            attackDelay: attackDelay
+        )
+
+        return ResolvedSpriteAction(
+            actionType: action.actionType,
+            direction: action.direction,
+            headDirection: action.headDirection,
+            elapsedTime: action.elapsedTime,
+            frameIndex: frameIndex ?? 0
+        )
     }
 
     func nextPosition(atTime time: TimeInterval) -> SIMD2<Int>? {

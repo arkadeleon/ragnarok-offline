@@ -46,16 +46,8 @@ final class MapSceneRenderResources {
         spriteDrawables.removeAll()
     }
 
-    func synchronizeSprites(
-        objects: [GameObjectID : MapSceneMapObject],
-        items: [GameObjectID : MapSceneDroppedItem],
-        worldPositions: [GameObjectID : SIMD3<Float>]
-    ) {
-        spriteDrawables = spriteAssetStore?.sync(
-            objects: objects,
-            items: items,
-            worldPositions: worldPositions
-        ) ?? []
+    func synchronizeSprites(objects: [GameObjectID : MapSceneMapObject], items: [GameObjectID : MapSceneDroppedItem]) {
+        spriteDrawables = spriteAssetStore?.sync(objects: objects, items: items) ?? []
     }
 
     func prepareCombatTexts(resourceManager: ResourceManager) async {

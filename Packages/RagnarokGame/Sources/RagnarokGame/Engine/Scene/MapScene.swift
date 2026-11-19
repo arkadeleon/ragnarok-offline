@@ -39,7 +39,6 @@ public final class MapScene {
     let player: MapSceneMapObject
     var objects: [GameObjectID: MapSceneMapObject] = [:]
     var items: [GameObjectID : MapSceneDroppedItem] = [:]
-    var hpspBarObjectIDs: Set<GameObjectID> = []
 
     var effects: [UUID : MapSceneEffect] = [:]
     var combatTexts: [CombatText] = []
@@ -103,6 +102,7 @@ public final class MapScene {
             account: account,
             character: character,
             gridPosition: playerPosition,
+            worldPosition: mapGrid.worldPosition(for: playerPosition),
             direction: .south,
             headDirection: .lookForward
         )
@@ -118,8 +118,8 @@ public final class MapScene {
             MapSceneSound(sound: sound, gnd: world.gnd)
         }
 
+        player.showsHPSPBar = true
         objects[player.objectID] = player
-        hpspBarObjectIDs.insert(player.objectID)
 
         await audioPlayer.playBGM(forMapName: mapName)
     }
@@ -133,7 +133,6 @@ public final class MapScene {
         sounds.removeAll()
         objects.removeAll()
         items.removeAll()
-        hpspBarObjectIDs.removeAll()
         effects.removeAll()
         combatTexts.removeAll()
         tileSelector = nil
@@ -146,7 +145,6 @@ public final class MapScene {
         camera.reset()
         objects.removeAll()
         items.removeAll()
-        hpspBarObjectIDs.removeAll()
         effects.removeAll()
         combatTexts.removeAll()
         tileSelector = nil
@@ -155,9 +153,10 @@ public final class MapScene {
         player.movement = nil
         player.cast = nil
         player.gridPosition = position
+        player.worldPosition = mapGrid.worldPosition(for: position)
+        player.showsHPSPBar = true
         player.perform(.idle, completion: .indefinite)
         objects[player.objectID] = player
-        hpspBarObjectIDs.insert(player.objectID)
 
         cancelArrivalAction()
     }
@@ -183,19 +182,16 @@ extension MapScene {
         }
 
         for object in objects.values {
-            object.update(atTime: currentTime)
-            if let movement = object.movement {
-                object.gridPosition = movement.currentLocation.position
-            }
+            object.update(atTime: currentTime, mapGrid: mapGrid)
         }
 
-        camera.update(playerPosition: worldPosition(for: player), atTime: currentTime)
+        camera.update(playerPosition: player.worldPosition, atTime: currentTime)
 
         spriteLoader.load(objects: objects, items: items)
 
         for object in objects.values {
             let previousAction = object.resolvedAction
-            object.resolvedAction = resolveAction(for: object)
+            object.resolvedAction = object.resolveAction(cameraAzimuth: camera.azimuth)
             playActionSound(for: object, previousAction: previousAction)
         }
 
@@ -210,43 +206,6 @@ extension MapScene {
         }
 
         updateSounds(atTime: currentTime)
-    }
-
-    private func resolveAction(for object: MapSceneMapObject) -> ResolvedSpriteAction? {
-        guard let composedSprite = object.composedSprite else {
-            return nil
-        }
-
-        var action = object.action
-
-        if let movement = object.movement, movement.isMoving {
-            action.actionType = .walk
-            action.direction = movement.direction ?? action.direction
-            action.elapsedTime = movement.animationElapsedTime
-            action.completion = .indefinite
-        }
-
-        action.direction = action.direction.adjustedForCameraAzimuth(camera.azimuth)
-
-        if !SpriteActionType.availableActionTypes(forJobID: object.job).contains(action.actionType) {
-            action.actionType = .idle
-        }
-
-        let frameIndex = composedSprite.mainFrameIndex(
-            forActionType: action.actionType,
-            direction: action.direction,
-            headDirection: action.headDirection,
-            elapsedTime: action.elapsedTime,
-            attackDelay: object.attackDelay
-        )
-
-        return ResolvedSpriteAction(
-            actionType: action.actionType,
-            direction: action.direction,
-            headDirection: action.headDirection,
-            elapsedTime: action.elapsedTime,
-            frameIndex: frameIndex ?? 0
-        )
     }
 
     private func playActionSound(for object: MapSceneMapObject, previousAction: ResolvedSpriteAction?) {
@@ -280,12 +239,12 @@ extension MapScene {
         }
 
         // An object can be heard however far away it is. Only the volume falls off.
-        let source = GameAudio.Source(position: worldPosition(for: object), range: .infinity)
+        let source = GameAudio.Source(position: object.worldPosition, range: .infinity)
         audioPlayer.playSoundEffect(named: soundName, from: source)
     }
 
     private func updateSounds(atTime currentTime: TimeInterval) {
-        let listenerPosition = worldPosition(for: player)
+        let listenerPosition = player.worldPosition
         audioPlayer.setListenerPosition(listenerPosition)
 
         for sound in sounds {
@@ -320,13 +279,13 @@ extension MapScene {
             return
         }
         object.gridPosition = gridPosition
+        object.worldPosition = mapGrid.worldPosition(for: gridPosition)
         object.perform(.idle, completion: .indefinite)
         object.turn(direction: direction, headDirection: headDirection)
     }
 
     func removeObject(objectID: GameObjectID) {
         objects.removeValue(forKey: objectID)
-        hpspBarObjectIDs.remove(objectID)
         if selectedTargetID == objectID {
             selectTarget(nil)
         }
@@ -355,6 +314,9 @@ extension MapScene {
         )
 
         object.gridPosition = movement.currentLocation.position
+        object.worldPosition = movement.isMoving
+            ? mapGrid.worldPosition(at: movement.currentLocation.point)
+            : mapGrid.worldPosition(for: object.gridPosition)
         let remainingDuration = movement.remainingDuration(atTime: currentTime)
         object.perform(
             .walk,
@@ -369,6 +331,7 @@ extension MapScene {
     func stopObject(objectID: GameObjectID, at position: SIMD2<Int>) {
         if let object = objects[objectID] {
             object.stopMovement(on: position)
+            object.worldPosition = mapGrid.worldPosition(for: position)
             object.perform(.idle, completion: .indefinite)
         }
     }
@@ -811,18 +774,6 @@ extension MapScene {
     private func distanceSquared(_ a: SIMD2<Int>, to b: SIMD2<Int>) -> Int {
         let d = a &- b
         return d.x * d.x + d.y * d.y
-    }
-
-    func worldPosition(for object: MapSceneMapObject) -> SIMD3<Float> {
-        if let movement = object.movement, movement.isMoving {
-            mapGrid.worldPosition(at: movement.currentLocation.point)
-        } else {
-            mapGrid.worldPosition(for: object.gridPosition)
-        }
-    }
-
-    func worldPosition(forObjectID objectID: GameObjectID) -> SIMD3<Float>? {
-        objects[objectID].map(worldPosition(for:))
     }
 
     func isMonster(objectID: GameObjectID) -> Bool {
