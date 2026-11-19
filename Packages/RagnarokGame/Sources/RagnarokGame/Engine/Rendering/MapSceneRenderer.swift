@@ -91,18 +91,20 @@ final class MapSceneRenderer {
     }
 
     private func renderWaterDepthIfNeeded(frame: RenderFrame, snapshot: MapSceneRenderSnapshot) -> (any MTLTexture)? {
+        let rasterizationRateMap = frame.renderPassDescriptor.rasterizationRateMap
         guard let world = snapshot.world, world.hasWater,
               let targetDepthTexture = frame.renderPassDescriptor.depthAttachment.texture,
-              let depthTexture = ensureWaterDepthTexture(matching: targetDepthTexture) else {
+              let depthTexture = ensureWaterDepthTexture(matching: targetDepthTexture, rasterizationRateMap: rasterizationRateMap) else {
             return nil
         }
 
+        // Rasterize water depth in logical screen space (without foveation) so
+        // `waterDepthTexture.read(uint2(in.position.xy))` aligns 1:1 with fragment coordinates.
         let waterDepthPassDescriptor = MTLRenderPassDescriptor()
         waterDepthPassDescriptor.depthAttachment.texture = depthTexture
         waterDepthPassDescriptor.depthAttachment.loadAction = .clear
         waterDepthPassDescriptor.depthAttachment.storeAction = .store
         waterDepthPassDescriptor.depthAttachment.clearDepth = configuration.clearDepth
-        waterDepthPassDescriptor.rasterizationRateMap = frame.renderPassDescriptor.rasterizationRateMap
 
         guard let waterDepthEncoder = frame.commandBuffer.makeRenderCommandEncoder(descriptor: waterDepthPassDescriptor) else {
             return nil
@@ -123,18 +125,24 @@ final class MapSceneRenderer {
         return depthTexture
     }
 
-    private func ensureWaterDepthTexture(matching depthTexture: any MTLTexture) -> (any MTLTexture)? {
+    private func ensureWaterDepthTexture(
+        matching depthTexture: any MTLTexture,
+        rasterizationRateMap: (any MTLRasterizationRateMap)?
+    ) -> (any MTLTexture)? {
+        let width = rasterizationRateMap?.screenSize.width ?? depthTexture.width
+        let height = rasterizationRateMap?.screenSize.height ?? depthTexture.height
+
         if let waterDepthTexture,
-           waterDepthTexture.width == depthTexture.width,
-           waterDepthTexture.height == depthTexture.height,
+           waterDepthTexture.width == width,
+           waterDepthTexture.height == height,
            waterDepthTexture.pixelFormat == configuration.depthStencilPixelFormat {
             return waterDepthTexture
         }
 
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(
             pixelFormat: configuration.depthStencilPixelFormat,
-            width: depthTexture.width,
-            height: depthTexture.height,
+            width: width,
+            height: height,
             mipmapped: false
         )
         descriptor.usage = [.renderTarget, .shaderRead]
