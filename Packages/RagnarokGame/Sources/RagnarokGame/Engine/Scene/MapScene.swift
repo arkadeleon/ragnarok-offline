@@ -41,6 +41,7 @@ public final class MapScene {
     var items: [GameObjectID : MapSceneDroppedItem] = [:]
 
     var effects: [UUID : MapSceneEffect] = [:]
+    var effectIDsByOwner: [GameObjectID : Set<UUID>] = [:]
     var combatTexts: [CombatText] = []
     var tileSelector: TileSelector?
     var targetSelector: TargetSelector?
@@ -134,6 +135,7 @@ public final class MapScene {
         objects.removeAll()
         items.removeAll()
         effects.removeAll()
+        effectIDsByOwner.removeAll()
         combatTexts.removeAll()
         tileSelector = nil
         selectTarget(nil)
@@ -146,6 +148,7 @@ public final class MapScene {
         objects.removeAll()
         items.removeAll()
         effects.removeAll()
+        effectIDsByOwner.removeAll()
         combatTexts.removeAll()
         tileSelector = nil
         selectTarget(nil)
@@ -290,12 +293,7 @@ extension MapScene {
             selectTarget(nil)
         }
 
-        let ownedEffectObjectIDs = effects.compactMap { effectID, effect in
-            effect.ownerObjectID == objectID ? effectID : nil
-        }
-        for effectObjectID in ownedEffectObjectIDs {
-            removeEffect(objectID: effectObjectID)
-        }
+        removeEffects(ownedBy: objectID)
     }
 
     func moveObject(objectID: GameObjectID, startTime: TimeInterval, startPosition: SIMD2<Int>, endPosition: SIMD2<Int>) {
@@ -337,14 +335,40 @@ extension MapScene {
     }
 
     func cancelCast(for object: MapSceneMapObject) {
-        if let spellEffectObjectID = object.cast?.spellEffectObjectID {
-            removeEffect(objectID: spellEffectObjectID)
-        }
+        removeEffects(ownedBy: object.objectID, key: .cast)
         object.cast = nil
     }
 
-    func removeEffect(objectID: UUID) {
-        effects.removeValue(forKey: objectID)
+    func addEffect(_ effect: MapSceneEffect) {
+        effects[effect.id] = effect
+        if let ownerObjectID = effect.ownerObjectID {
+            effectIDsByOwner[ownerObjectID, default: []].insert(effect.id)
+        }
+    }
+
+    func removeEffect(id: UUID) {
+        guard let effect = effects.removeValue(forKey: id),
+              let ownerObjectID = effect.ownerObjectID else {
+            return
+        }
+
+        effectIDsByOwner[ownerObjectID]?.remove(id)
+        if effectIDsByOwner[ownerObjectID]?.isEmpty == true {
+            effectIDsByOwner.removeValue(forKey: ownerObjectID)
+        }
+    }
+
+    func removeEffects(ownedBy ownerObjectID: GameObjectID, key: MapEffectAttachmentKey? = nil) {
+        guard let ownedEffectIDs = effectIDsByOwner[ownerObjectID] else {
+            return
+        }
+
+        for effectID in ownedEffectIDs {
+            if let key, effects[effectID]?.attachmentKey != key {
+                continue
+            }
+            removeEffect(id: effectID)
+        }
     }
 }
 

@@ -10,7 +10,6 @@ import Foundation
 struct MapObjectCast {
     var startTime: TimeInterval
     var duration: TimeInterval
-    var spellEffectObjectID: UUID?
 
     func progress(atTime time: TimeInterval) -> Float {
         guard duration > 0 else {

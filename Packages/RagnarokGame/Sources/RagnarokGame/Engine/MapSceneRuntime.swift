@@ -66,18 +66,12 @@ final class MapSceneRuntime {
         scene.update(atTime: worldTime)
 
         for effectID in renderResources.expiredEffectIDs(atTime: currentTime) {
-            scene.removeEffect(objectID: effectID)
+            scene.removeEffect(id: effectID)
         }
 
         renderResources.synchronizeSprites(objects: scene.objects, items: scene.items)
 
-        let effectWorldPositions = scene.effects.mapValues { effect in
-            scene.mapGrid.worldPosition(for: effect.gridPosition)
-        }
-        renderResources.synchronizeEffects(
-            scene.effects,
-            worldPositions: effectWorldPositions
-        ) { [audioPlayer = scene.audioPlayer] soundName, delay in
+        renderResources.synchronizeEffects(scene.effects) { [audioPlayer = scene.audioPlayer] soundName, delay in
             audioPlayer.playSoundEffect(named: soundName, afterDelay: delay)
         }
     }

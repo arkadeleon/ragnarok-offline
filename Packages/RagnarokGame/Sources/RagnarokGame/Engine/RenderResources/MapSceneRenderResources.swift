@@ -76,7 +76,6 @@ final class MapSceneRenderResources {
 
     func synchronizeEffects(
         _ effects: [UUID : MapSceneEffect],
-        worldPositions: [UUID : SIMD3<Float>],
         onSound: @escaping @MainActor (_ name: String, _ delay: TimeInterval) -> Void
     ) {
         let currentIDs = Set(effects.keys)
@@ -85,11 +84,8 @@ final class MapSceneRenderResources {
         }
 
         for (effectObjectID, effect) in effects where !effectObjectIDs.contains(effectObjectID) {
-            guard let worldPosition = worldPositions[effectObjectID] else {
-                continue
-            }
             effectObjectIDs.insert(effectObjectID)
-            loadEffect(effect, worldPosition: worldPosition, onSound: onSound)
+            loadEffect(effect, worldPosition: effect.worldPosition, onSound: onSound)
         }
     }
 

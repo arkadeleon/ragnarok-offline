@@ -137,10 +137,11 @@ extension MapScene {
                 reference: .id(.ef_warpzone2),
                 creationTime: CACurrentMediaTime(),
                 gridPosition: position,
+                worldPosition: mapObject.worldPosition,
                 targetObjectID: object.objectID,
                 ownerObjectID: object.objectID
             )
-            effects[effect.id] = effect
+            addEffect(effect)
         }
     }
 
@@ -195,10 +196,11 @@ extension MapScene {
                     reference: .id(.ef_teleportation2),
                     creationTime: CACurrentMediaTime(),
                     gridPosition: object.gridPosition,
+                    worldPosition: object.worldPosition,
                     targetObjectID: nil,
                     ownerObjectID: nil
                 )
-                effects[effect.id] = effect
+                addEffect(effect)
             }
 
             removeObject(objectID: objectID)
@@ -353,6 +355,8 @@ extension MapScene {
 
         let currentTime = CACurrentMediaTime()
 
+        cancelCast(for: sourceObject)
+
         if castTime > 0 {
             let effectID: EffectID = switch element {
             case .water: .ef_beginspell2
@@ -369,17 +373,17 @@ extension MapScene {
                 reference: .id(effectID),
                 creationTime: currentTime,
                 gridPosition: sourceObject.gridPosition,
+                worldPosition: sourceObject.worldPosition,
                 targetObjectID: sourceObjectID,
                 ownerObjectID: sourceObjectID,
+                attachmentKey: .cast,
                 duration: castTime
             )
-            effects[spellEffect.id] = spellEffect
+            addEffect(spellEffect)
 
-            cancelCast(for: sourceObject)
             sourceObject.cast = MapObjectCast(
                 startTime: currentTime,
-                duration: castTime,
-                spellEffectObjectID: spellEffect.id
+                duration: castTime
             )
         }
 
@@ -388,10 +392,12 @@ extension MapScene {
                 reference: effectReference,
                 creationTime: currentTime,
                 gridPosition: sourceObject.gridPosition,
+                worldPosition: sourceObject.worldPosition,
                 targetObjectID: sourceObjectID,
-                ownerObjectID: sourceObjectID
+                ownerObjectID: sourceObjectID,
+                attachmentKey: .cast
             )
-            effects[effect.id] = effect
+            addEffect(effect)
         }
     }
 
@@ -481,10 +487,11 @@ extension MapScene {
                 reference: .id(effectID),
                 creationTime: CACurrentMediaTime(),
                 gridPosition: object.gridPosition,
+                worldPosition: object.worldPosition,
                 targetObjectID: objectID,
                 ownerObjectID: objectID
             )
-            effects[effect.id] = effect
+            addEffect(effect)
         }
     }
 
@@ -497,10 +504,11 @@ extension MapScene {
             reference: .id(effectID),
             creationTime: CACurrentMediaTime(),
             gridPosition: object.gridPosition,
+            worldPosition: object.worldPosition,
             targetObjectID: objectID,
             ownerObjectID: objectID
         )
-        effects[effect.id] = effect
+        addEffect(effect)
     }
 
     // MARK: - Other
@@ -511,17 +519,19 @@ extension MapScene {
         }
 
         let currentTime = CACurrentMediaTime()
+        let worldPosition = mapGrid.worldPosition(for: position)
 
         for effectReference in SkillEffectTable.effects(for: skillID) {
             let effect = MapSceneEffect(
                 reference: effectReference,
                 creationTime: currentTime,
                 gridPosition: position,
+                worldPosition: worldPosition,
                 sourceWorldPosition: objects[sourceObjectID]?.worldPosition,
                 targetObjectID: nil,
                 ownerObjectID: nil
             )
-            effects[effect.id] = effect
+            addEffect(effect)
         }
     }
 }
@@ -584,11 +594,12 @@ extension MapScene {
             reference: .id(.ef_hit1),
             creationTime: CACurrentMediaTime(),
             gridPosition: targetObject.gridPosition,
+            worldPosition: targetObject.worldPosition,
             targetObjectID: targetObject.objectID,
             ownerObjectID: nil,
             delay: TimeInterval(objectAction.sourceSpeed) / 1000
         )
-        effects[effect.id] = effect
+        addEffect(effect)
     }
 
     private func addArrowProjectileEffect(for objectAction: MapObjectAction) {
@@ -611,18 +622,19 @@ extension MapScene {
             reference: .name("ef_arrow_projectile"),
             creationTime: CACurrentMediaTime(),
             gridPosition: targetObject.gridPosition,
+            worldPosition: targetObject.worldPosition,
             sourceWorldPosition: sourceObject.worldPosition,
             targetObjectID: targetObject.objectID,
             ownerObjectID: nil,
             delay: TimeInterval(objectAction.sourceSpeed) / 1000
         )
-        effects[effect.id] = effect
+        addEffect(effect)
     }
 
     private func addSkillBeforeHitEffects(for objectSkill: MapObjectSkill, hits: [MapObjectHit]) {
         guard objectSkill.damage > 0,
               let skillID = objectSkill.skillID,
-              let targetPosition = objects[objectSkill.targetObjectID]?.gridPosition else {
+              let targetObject = objects[objectSkill.targetObjectID] else {
             return
         }
 
@@ -633,13 +645,14 @@ extension MapScene {
                 let effect = MapSceneEffect(
                     reference: effectReference,
                     creationTime: currentTime,
-                    gridPosition: targetPosition,
+                    gridPosition: targetObject.gridPosition,
+                    worldPosition: targetObject.worldPosition,
                     sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
                     targetObjectID: objectSkill.targetObjectID,
                     ownerObjectID: nil,
                     delay: MapObjectHit.multiHitInterval * TimeInterval(i)
                 )
-                effects[effect.id] = effect
+                addEffect(effect)
             }
         }
     }
@@ -647,7 +660,7 @@ extension MapScene {
     private func addSkillHitEffects(for objectSkill: MapObjectSkill, hits: [MapObjectHit]) {
         guard objectSkill.damage > 0,
               let skillID = objectSkill.skillID,
-              let targetPosition = objects[objectSkill.targetObjectID]?.gridPosition else {
+              let targetObject = objects[objectSkill.targetObjectID] else {
             return
         }
 
@@ -658,13 +671,14 @@ extension MapScene {
                 let effect = MapSceneEffect(
                     reference: effectReference,
                     creationTime: currentTime,
-                    gridPosition: targetPosition,
+                    gridPosition: targetObject.gridPosition,
+                    worldPosition: targetObject.worldPosition,
                     sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
                     targetObjectID: objectSkill.targetObjectID,
                     ownerObjectID: nil,
                     delay: hit.delay
                 )
-                effects[effect.id] = effect
+                addEffect(effect)
             }
         }
     }
@@ -672,8 +686,7 @@ extension MapScene {
     private func addSkillEffects(for objectSkill: MapObjectSkill) {
         guard let skillID = objectSkill.skillID,
               objects[objectSkill.sourceObjectID] != nil,
-              objects[objectSkill.targetObjectID] != nil,
-              let targetPosition = objects[objectSkill.targetObjectID]?.gridPosition,
+              let targetObject = objects[objectSkill.targetObjectID],
               objectSkill.damageType != .splash, objectSkill.damageType != .splash_endure else {
             return
         }
@@ -684,20 +697,21 @@ extension MapScene {
             let effect = MapSceneEffect(
                 reference: effectReference,
                 creationTime: currentTime,
-                gridPosition: targetPosition,
+                gridPosition: targetObject.gridPosition,
+                worldPosition: targetObject.worldPosition,
                 sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
                 targetObjectID: objectSkill.targetObjectID,
                 ownerObjectID: nil,
                 delay: TimeInterval(objectSkill.attackDelay) / 1000
             )
-            effects[effect.id] = effect
+            addEffect(effect)
         }
     }
 
     private func addSkillSuccessEffects(for objectSkill: MapObjectSkill) {
         guard objectSkill.isSuccess,
               let skillID = objectSkill.skillID,
-              let targetPosition = objects[objectSkill.targetObjectID]?.gridPosition else {
+              let targetObject = objects[objectSkill.targetObjectID] else {
             return
         }
 
@@ -707,12 +721,13 @@ extension MapScene {
             let effect = MapSceneEffect(
                 reference: effectReference,
                 creationTime: currentTime,
-                gridPosition: targetPosition,
+                gridPosition: targetObject.gridPosition,
+                worldPosition: targetObject.worldPosition,
                 sourceWorldPosition: objects[objectSkill.sourceObjectID]?.worldPosition,
                 targetObjectID: objectSkill.targetObjectID,
                 ownerObjectID: nil
             )
-            effects[effect.id] = effect
+            addEffect(effect)
         }
     }
 }
