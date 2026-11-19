@@ -89,18 +89,6 @@ final class MapSceneRuntime {
         let targetPosition = camera.target ?? scene.worldPosition(for: scene.player)
         let worldTarget = targetPosition + Self.cameraTargetOffset + camera.shakeOffset
 
-        let cameraOrientation =
-            simd_quatf(angle: -camera.azimuth, axis: [0, 1, 0]) *
-            simd_quatf(angle: -camera.elevation, axis: [1, 0, 0])
-        var cameraPosition = worldTarget + cameraOrientation.act([0, 0, camera.distance])
-        let cameraUp = cameraOrientation.act([0, 1, 0])
-
-        let terrainHeight = scene.mapGrid.height(atWorldX: cameraPosition.x, worldZ: cameraPosition.z)
-        let minimumCameraY = terrainHeight + 0.5
-        if cameraPosition.y < minimumCameraY {
-            cameraPosition.y = minimumCameraY
-        }
-
         let viewportHeight = max(Float(viewport.height), 1)
         let aspectRatio = max(Float(viewport.width) / viewportHeight, .leastNonzeroMagnitude)
         #if os(visionOS)
@@ -110,12 +98,35 @@ final class MapSceneRuntime {
         #endif
         let farZ = max(camera.distance * 4, 1000)
 
+        let cameraOrientation =
+            simd_quatf(angle: -camera.azimuth, axis: [0, 1, 0]) *
+            simd_quatf(angle: -camera.elevation, axis: [1, 0, 0])
+        var cameraPosition = worldTarget + cameraOrientation.act([0, 0, camera.distance])
+        let cameraUp = cameraOrientation.act([0, 1, 0])
+
+        let forward = simd_normalize(worldTarget - cameraPosition)
+        let nearPlanePosition = cameraPosition + forward * nearZ
+        let terrainHeight = max(
+            scene.mapGrid.height(atWorldX: cameraPosition.x, worldZ: cameraPosition.z),
+            scene.mapGrid.height(atWorldX: nearPlanePosition.x, worldZ: nearPlanePosition.z)
+        )
+        let minimumCameraY = terrainHeight + max(0.5, nearZ * 1.25)
+        if cameraPosition.y < minimumCameraY {
+            cameraPosition.y = minimumCameraY
+        }
+
+        let offset = cameraPosition - worldTarget
+        let horizontalDistance = simd_length(SIMD2<Float>(offset.x, offset.z))
+        let effectiveElevation = horizontalDistance > .leastNonzeroMagnitude
+            ? atan2(offset.y, horizontalDistance)
+            : camera.elevation
+
         return RenderCamera(
             viewMatrix: lookAt(cameraPosition, worldTarget, cameraUp),
             projectionMatrix: perspective(radians(Self.cameraFieldOfViewDegrees), aspectRatio, nearZ, farZ),
             position: cameraPosition,
             azimuth: camera.azimuth,
-            elevation: camera.elevation
+            elevation: effectiveElevation
         )
     }
 
