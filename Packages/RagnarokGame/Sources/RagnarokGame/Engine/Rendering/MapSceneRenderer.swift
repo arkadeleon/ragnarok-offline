@@ -34,6 +34,11 @@ final class MapSceneRenderer {
         case world(WorldRenderer.RenderPayload)
         case sprite(SpriteRenderer.RenderPayload)
         case effect(EffectRenderer.RenderPayload)
+        case tileSelector(MapSceneRenderSnapshot.TileSelector, fog: Fog, modelMatrix: simd_float4x4)
+        case targetSelector(MapSceneRenderSnapshot.TargetSelector, modelMatrix: simd_float4x4)
+        case bars([MapSceneRenderSnapshot.Bar], modelMatrix: simd_float4x4)
+        case texts([MapSceneRenderSnapshot.Text], modelMatrix: simd_float4x4)
+        case combatTexts([MapSceneRenderSnapshot.CombatText], texture: (any MTLTexture)?, modelMatrix: simd_float4x4)
     }
 
     private let renderQueue = RenderQueue<RenderPayload>()
@@ -173,6 +178,46 @@ final class MapSceneRenderer {
                 transform: RenderPayload.effect
             )
         }
+
+        if let tileSelector = snapshot.tileSelector {
+            renderQueue.submit(
+                bucket: .overlay,
+                payload: .tileSelector(tileSelector, fog: snapshot.fog, modelMatrix: matrix_identity_float4x4)
+            )
+        }
+
+        if let targetSelector = snapshot.targetSelector {
+            renderQueue.submit(
+                bucket: .overlay,
+                payload: .targetSelector(targetSelector, modelMatrix: matrix_identity_float4x4)
+            )
+        }
+
+        if !snapshot.bars.isEmpty {
+            renderQueue.submit(
+                bucket: .overlay,
+                payload: .bars(snapshot.bars, modelMatrix: matrix_identity_float4x4)
+            )
+        }
+
+        if !snapshot.texts.isEmpty {
+            renderQueue.submit(
+                bucket: .overlay,
+                payload: .texts(snapshot.texts, modelMatrix: matrix_identity_float4x4)
+            )
+        }
+
+        // Combat text submits last so nothing draws over it.
+        if !snapshot.combatTexts.isEmpty {
+            renderQueue.submit(
+                bucket: .overlay,
+                payload: .combatTexts(
+                    snapshot.combatTexts,
+                    texture: snapshot.combatTextTexture,
+                    modelMatrix: matrix_identity_float4x4
+                )
+            )
+        }
     }
 
     private func renderSnapshot(
@@ -246,48 +291,6 @@ final class MapSceneRenderer {
             camera: camera,
             renderCommandEncoder: renderCommandEncoder
         )
-
-        if let tileSelector = snapshot.tileSelector {
-            tileSelectorRenderer.render(
-                tileSelector: tileSelector,
-                fog: snapshot.fog,
-                modelMatrix: matrix_identity_float4x4,
-                camera: camera,
-                renderCommandEncoder: renderCommandEncoder
-            )
-        }
-
-        if let targetSelector = snapshot.targetSelector {
-            targetSelectorRenderer.render(
-                targetSelector: targetSelector,
-                modelMatrix: matrix_identity_float4x4,
-                camera: camera,
-                renderCommandEncoder: renderCommandEncoder
-            )
-        }
-
-        barRenderer.render(
-            bars: snapshot.bars,
-            modelMatrix: matrix_identity_float4x4,
-            camera: camera,
-            renderCommandEncoder: renderCommandEncoder
-        )
-
-        textRenderer.render(
-            texts: snapshot.texts,
-            modelMatrix: matrix_identity_float4x4,
-            camera: camera,
-            renderCommandEncoder: renderCommandEncoder
-        )
-
-        // Combat text renders last so nothing draws over it.
-        combatTextRenderer.render(
-            combatTexts: snapshot.combatTexts,
-            texture: snapshot.combatTextTexture,
-            modelMatrix: matrix_identity_float4x4,
-            camera: camera,
-            renderCommandEncoder: renderCommandEncoder
-        )
     }
 
     private func flush(
@@ -325,6 +328,43 @@ final class MapSceneRenderer {
                 }
                 effectRenderer.render(
                     payload: payload,
+                    camera: camera,
+                    renderCommandEncoder: renderCommandEncoder
+                )
+            case .tileSelector(let tileSelector, let fog, let modelMatrix):
+                tileSelectorRenderer.render(
+                    tileSelector: tileSelector,
+                    fog: fog,
+                    modelMatrix: modelMatrix,
+                    camera: camera,
+                    renderCommandEncoder: renderCommandEncoder
+                )
+            case .targetSelector(let targetSelector, let modelMatrix):
+                targetSelectorRenderer.render(
+                    targetSelector: targetSelector,
+                    modelMatrix: modelMatrix,
+                    camera: camera,
+                    renderCommandEncoder: renderCommandEncoder
+                )
+            case .bars(let bars, let modelMatrix):
+                barRenderer.render(
+                    bars: bars,
+                    modelMatrix: modelMatrix,
+                    camera: camera,
+                    renderCommandEncoder: renderCommandEncoder
+                )
+            case .texts(let texts, let modelMatrix):
+                textRenderer.render(
+                    texts: texts,
+                    modelMatrix: modelMatrix,
+                    camera: camera,
+                    renderCommandEncoder: renderCommandEncoder
+                )
+            case .combatTexts(let combatTexts, let texture, let modelMatrix):
+                combatTextRenderer.render(
+                    combatTexts: combatTexts,
+                    texture: texture,
+                    modelMatrix: modelMatrix,
                     camera: camera,
                     renderCommandEncoder: renderCommandEncoder
                 )
