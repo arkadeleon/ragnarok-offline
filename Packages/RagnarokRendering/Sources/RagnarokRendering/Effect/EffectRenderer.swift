@@ -37,6 +37,24 @@ public final class EffectRenderer {
         strEffectRenderer = try STREffectRenderer(device: device, configuration: configuration)
     }
 
+    public func submit(
+        resourceGroup: EffectRenderResourceGroup,
+        atTime time: TimeInterval,
+        attachedWorldPosition: SIMD3<Float>? = nil,
+        fog: Fog,
+        modelMatrix: simd_float4x4,
+        into queue: RenderQueue<EffectRenderer.RenderPayload>
+    ) {
+        submit(
+            resourceGroup: resourceGroup,
+            atTime: time,
+            attachedWorldPosition: attachedWorldPosition,
+            fog: fog,
+            modelMatrix: modelMatrix,
+            into: queue
+        ) { $0 }
+    }
+
     public func submit<Payload>(
         resourceGroup: EffectRenderResourceGroup,
         atTime time: TimeInterval,

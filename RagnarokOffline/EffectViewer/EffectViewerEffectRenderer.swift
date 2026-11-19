@@ -79,7 +79,7 @@ class EffectViewerEffectRenderer: Renderer {
             fog: fog,
             modelMatrix: matrix_identity_float4x4,
             into: renderQueue
-        ) { $0 }
+        )
 
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)

@@ -71,6 +71,7 @@ final class SpriteRenderer {
             )
             queue.submit(
                 bucket: .translucent,
+                translucentPasses: .all,
                 worldCenter: drawable.worldPosition,
                 modelMatrix: modelMatrix,
                 payload: transform(payload)

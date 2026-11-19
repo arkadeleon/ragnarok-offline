@@ -18,8 +18,21 @@ public enum RenderPassBucket: Int, CaseIterable, Comparable, Sendable {
     }
 }
 
+public struct RenderTranslucentPasses: OptionSet, Sendable {
+    public let rawValue: UInt8
+
+    public init(rawValue: UInt8) {
+        self.rawValue = rawValue
+    }
+
+    public static let all: RenderTranslucentPasses = [.behindWater, .inFrontOfWater]
+    public static let behindWater = RenderTranslucentPasses(rawValue: 1 << 0)
+    public static let inFrontOfWater = RenderTranslucentPasses(rawValue: 1 << 1)
+}
+
 public struct RenderQueueItem<Payload> {
     public let bucket: RenderPassBucket
+    public let translucentPasses: RenderTranslucentPasses
     public let worldCenter: SIMD3<Float>
     public let modelMatrix: simd_float4x4
     public let sequence: Int
@@ -47,12 +60,14 @@ public final class RenderQueue<Payload> {
 
     public func submit(
         bucket: RenderPassBucket,
+        translucentPasses: RenderTranslucentPasses = .inFrontOfWater,
         worldCenter: SIMD3<Float> = .zero,
         modelMatrix: simd_float4x4 = matrix_identity_float4x4,
         payload: Payload
     ) {
         let item = RenderQueueItem(
             bucket: bucket,
+            translucentPasses: translucentPasses,
             worldCenter: worldCenter,
             modelMatrix: modelMatrix,
             sequence: nextSequence,

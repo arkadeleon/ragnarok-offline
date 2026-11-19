@@ -252,7 +252,7 @@ final class MapSceneRenderer {
                 camera: camera,
                 waterClipMode: 1,
                 waterDepthTexture: waterDepthTexture,
-                includeEffects: false,
+                translucentPass: .behindWater,
                 renderCommandEncoder: renderCommandEncoder
             )
 
@@ -273,7 +273,7 @@ final class MapSceneRenderer {
                 camera: camera,
                 waterClipMode: 2,
                 waterDepthTexture: waterDepthTexture,
-                includeEffects: true,
+                translucentPass: .inFrontOfWater,
                 renderCommandEncoder: renderCommandEncoder
             )
         } else {
@@ -299,15 +299,16 @@ final class MapSceneRenderer {
         camera: RenderCamera,
         waterClipMode: Int32 = 0,
         waterDepthTexture: (any MTLTexture)? = nil,
-        includeEffects: Bool = true,
+        translucentPass: RenderTranslucentPasses? = nil,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
         for item in renderQueue.items(in: bucket) {
+            if let translucentPass, !item.translucentPasses.contains(translucentPass) {
+                continue
+            }
+
             switch item.payload {
             case .world(let payload):
-                if case .effect = payload, !includeEffects {
-                    continue
-                }
                 worldRenderer.render(
                     payload: payload,
                     camera: camera,
@@ -323,9 +324,6 @@ final class MapSceneRenderer {
                     renderCommandEncoder: renderCommandEncoder
                 )
             case .effect(let payload):
-                guard includeEffects else {
-                    continue
-                }
                 effectRenderer.render(
                     payload: payload,
                     camera: camera,
