@@ -818,3 +818,27 @@ extension MapScene {
         }
     }
 }
+
+// MARK: - MapWorldContext
+
+extension MapScene: MapWorldContext {
+    func terrainHeight(atWorldX x: Float, worldZ: Float) -> Float {
+        world.mapGrid.height(atWorldX: x, worldZ: worldZ)
+    }
+
+    func object(for id: GameObjectID) -> MapSceneMapObject? {
+        world.objects[id]
+    }
+
+    func playSoundEffect(named name: String, after delay: TimeInterval) {
+        audioPlayer.playSoundEffect(named: name, afterDelay: delay)
+    }
+
+    func shakeCamera(amplitude: Float, duration: TimeInterval, frequency: Float) {
+        camera.shake(amplitude: amplitude, duration: duration, frequency: frequency)
+    }
+
+    func spawnEffect(_ effect: MapSceneEffect) {
+        addEffect(effect)
+    }
+}
