@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/11/20.
 //
 
+/// Ported from `RagEffectID` in `EffectTypes.h`.
 public enum EffectID: Int, CaseIterable, Sendable {
     case ef_none = -1
     case ef_hit1 = 0
