@@ -49,7 +49,7 @@ extension STR {
         public init(from decoder: BinaryDecoder) throws {
             let textureCount = try decoder.decode(Int32.self)
             for _ in 0..<textureCount {
-                let texture = try decoder.decode(String.self, lengthOfBytes: 128, encoding: .ascii)
+                let texture = try decoder.decode(String.self, lengthOfBytes: 128, encoding: .isoLatin1)
                 textures.append(texture)
             }
 

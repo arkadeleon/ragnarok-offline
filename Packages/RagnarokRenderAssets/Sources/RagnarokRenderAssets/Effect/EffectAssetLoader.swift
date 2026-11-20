@@ -123,8 +123,10 @@ public struct EffectAssetLoader: Sendable {
             var textureImages: [String : CGImage] = [:]
             let textureNames = Set(str.layers.flatMap(\.textures))
             for textureName in textureNames {
-                let texturePath = ResourcePath.effectDirectory.appending(subpath: textureName)
-                if let image = try? await resourceManager.image(at: texturePath, removesMagentaPixels: true) {
+                let resolvedTextureName = textureName.contains(".") ? textureName : "\(textureName).bmp"
+                let texturePath = strPath.removingLastComponent().appending(subpath: resolvedTextureName)
+                let removesMagentaPixels = resolvedTextureName.lowercased().hasSuffix(".bmp")
+                if let image = try? await resourceManager.image(at: texturePath, removesMagentaPixels: removesMagentaPixels) {
                     textureImages[textureName] = image.cgImage
                 }
             }
