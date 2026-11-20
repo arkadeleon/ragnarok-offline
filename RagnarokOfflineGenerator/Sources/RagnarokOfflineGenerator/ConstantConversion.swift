@@ -403,19 +403,6 @@ let allConstantConversions: [ConstantConversion] = [
         outputType: "MadoType"
     ),
 
-    // MARK: - map/script.hpp
-
-    .cEnum(
-        source: "map/script.hpp",
-        type: "e_special_effects",
-        exclude: [
-            "EF_NONE",
-            "EF_MAX",
-        ],
-        outputType: "EffectID",
-        extensions: [.decodable]
-    ),
-
     // MARK: - map/skill.hpp
 
     .cEnum(

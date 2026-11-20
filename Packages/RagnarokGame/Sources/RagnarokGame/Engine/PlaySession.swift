@@ -10,6 +10,7 @@ import Metal
 import Observation
 import QuartzCore
 import RagnarokConstants
+import RagnarokEffects
 import RagnarokModels
 import RagnarokNetwork
 import RagnarokPackets

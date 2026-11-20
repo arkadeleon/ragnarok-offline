@@ -5,7 +5,6 @@
 //  Created by Leon Li on 2026/6/29.
 //
 
-import RagnarokConstants
 import RagnarokEffects
 
 struct EffectViewerEffect: Identifiable, Hashable {
@@ -20,6 +19,6 @@ struct EffectViewerEffect: Identifiable, Hashable {
     }
 
     var displayName: String {
-        effectID.stringValue
+        String(describing: effectID).uppercased()
     }
 }

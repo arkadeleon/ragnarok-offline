@@ -5,7 +5,7 @@
 //  Created by Leon Li on 2026/7/15.
 //
 
-import RagnarokConstants
+import RagnarokEffects
 import simd
 
 public struct WorldEffectAsset: Sendable {
