@@ -34,7 +34,7 @@ public struct ResourcePath: ExpressibleByArrayLiteral, Sendable {
     }
 
     public func appending(subpath: String) -> ResourcePath {
-        let components = subpath.split(separator: "\\").map(String.init)
+        let components = subpath.split(whereSeparator: { $0 == "\\" || $0 == "/" }).map(String.init)
         if components.isEmpty {
             return appending(subpath)
         } else {
