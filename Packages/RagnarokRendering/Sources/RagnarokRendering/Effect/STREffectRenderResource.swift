@@ -14,8 +14,7 @@ import simd
 
 public final class STREffectRenderResource {
     public let definition: STREffectDefinition?
-    public let fps: Int
-    public let frames: [STREffectAnimation.Frame]
+    public let animation: STREffectAnimation
     public let textures: [String : any MTLTexture]
     public let duration: TimeInterval
 
@@ -47,25 +46,16 @@ public final class STREffectRenderResource {
         }
 
         self.definition = definition
-        self.fps = animation.fps
-        self.frames = animation.frames
+        self.animation = animation
         self.textures = textures
         self.duration = duration ?? animation.duration
     }
 
     public func isExpired(elapsedTime: TimeInterval) -> Bool {
-        guard elapsedTime >= 0 else {
-            return false
+        if elapsedTime >= 0 {
+            elapsedTime >= duration
+        } else {
+            false
         }
-        return elapsedTime >= duration
-    }
-
-    public func frame(atElapsedTime elapsedTime: TimeInterval) -> STREffectAnimation.Frame? {
-        guard !frames.isEmpty, elapsedTime >= 0 else {
-            return nil
-        }
-
-        let frameIndex = Int(elapsedTime * TimeInterval(fps)) % frames.count
-        return frames[frameIndex]
     }
 }

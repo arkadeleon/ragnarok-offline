@@ -8,148 +8,15 @@
 import CoreGraphics
 import Foundation
 import RagnarokFileFormats
-import RagnarokShaders
 
 public struct STREffectAnimation: Sendable {
-    public let fps: Int
-    public let frames: [STREffectAnimation.Frame]
-    public let textureImages: [String : CGImage]
-
-    public var duration: TimeInterval {
-        TimeInterval(frames.count) / TimeInterval(fps)
-    }
-
-    public init(str: STR, textureImages: [String : CGImage]) {
-        fps = Int(str.fps)
-
-        var frames: [STREffectAnimation.Frame] = []
-        let frameCount = str.maxKeyframeIndex + 1
-        for frameIndex in 0..<frameCount {
-            var sprites: [STREffectAnimation.Sprite] = []
-
-            for layer in str.layers {
-                var lastFrame = 0
-                var lastSource = 0
-                var fromId = -1
-                var toId = -1
-
-                for (i, keyframe) in layer.keyframes.enumerated() {
-                    if keyframe.frameIndex <= frameIndex {
-                        if keyframe.type == 0 {
-                            fromId = i
-                        }
-                        if keyframe.type == 1 {
-                            toId = i
-                        }
-                    }
-                    lastFrame = max(lastFrame, Int(keyframe.frameIndex))
-
-                    if keyframe.type == 0 {
-                        lastSource = max(lastSource, Int(keyframe.frameIndex))
-                    }
-                }
-
-                // Nothing to render
-                if fromId < 0 || (toId < 0 && lastFrame < frameIndex) {
-                    continue
-                }
-
-                let from  = layer.keyframes[fromId]
-                let to    = toId > -1 ? layer.keyframes[toId] : nil
-                let delta = frameIndex - from.frameIndex
-
-                guard from.textureIndex > -1 else {
-                    continue
-                }
-
-                // Static frame (or frame that can't be updated)
-                if (toId != fromId + 1 || to?.frameIndex != from.frameIndex) {
-                    // No other source
-                    if (to != nil && lastSource <= from.frameIndex) {
-                        continue
-                    }
-
-                    let textureName = layer.textures[Int(from.textureIndex)]
-                    let sprite = STREffectAnimation.Sprite(
-                        uv: from.uv,
-                        xy: from.xy,
-                        textureName: textureName,
-                        position: from.position,
-                        angle: from.angle,
-                        color: from.color,
-                        sourceAlpha: from.sourceAlpha,
-                        destinationAlpha: from.destinationAlpha
-                    )
-                    sprites.append(sprite)
-
-                    continue
-                }
-
-                guard let to else {
-                    continue
-                }
-
-                // Morph animation: compute texture index based on animationType
-                let textureCount = layer.textures.count
-                let rawFrame: Float
-                switch to.animationType {
-                case 1: // normal
-                    rawFrame = from.textureIndex + to.textureIndex * Float(delta)
-                case 2: // stop at end
-                    rawFrame = min(from.textureIndex + to.delay * Float(delta), Float(textureCount - 1))
-                case 3: // repeat
-                    rawFrame = (from.textureIndex + to.delay * Float(delta))
-                        .truncatingRemainder(dividingBy: Float(textureCount))
-                case 4: // reverse
-                    var r = (from.textureIndex - to.delay * Float(delta))
-                        .truncatingRemainder(dividingBy: Float(textureCount))
-                    if r < 0 {
-                        r += Float(textureCount)
-                    }
-                    rawFrame = r
-                default: // bug fix
-                    rawFrame = 0
-                }
-                let textureIndex = max(0, min(Int(rawFrame), textureCount - 1))
-                let textureName = layer.textures[textureIndex]
-
-                let uv = from.uv + to.uv * Float(delta)
-                let xy = from.xy + to.xy * Float(delta)
-                let position = from.position + to.position * Float(delta)
-                let angle = from.angle + to.angle * Float(delta)
-                let color = from.color + to.color * Float(delta)
-
-                let sprite = STREffectAnimation.Sprite(
-                    uv: uv,
-                    xy: xy,
-                    textureName: textureName,
-                    position: position,
-                    angle: angle,
-                    color: color,
-                    sourceAlpha: from.sourceAlpha,
-                    destinationAlpha: from.destinationAlpha
-                )
-                sprites.append(sprite)
-            }
-
-            let frame = STREffectAnimation.Frame(sprites: sprites)
-            frames.append(frame)
-        }
-        self.frames = frames
-
-        self.textureImages = textureImages
-    }
-}
-
-extension STREffectAnimation {
     public struct Frame: Sendable {
         public let sprites: [STREffectAnimation.Sprite]
     }
-}
 
-extension STREffectAnimation {
     public struct Sprite: Sendable {
-        public let vertices: [STREffectVertex]
+        public let uv: SIMD8<Float>
+        public let xy: SIMD8<Float>
         public let textureName: String
 
         public let position: SIMD2<Float>
@@ -157,43 +24,157 @@ extension STREffectAnimation {
         public let color: SIMD4<Float>
         public let sourceAlpha: Int32
         public let destinationAlpha: Int32
+        public let multiTexturePreset: Int32
+    }
 
-        init(
-            uv: SIMD8<Float>,
-            xy: SIMD8<Float>,
-            textureName: String,
-            position: SIMD2<Float>,
-            angle: Float,
-            color: SIMD4<Float>,
-            sourceAlpha: Int32,
-            destinationAlpha: Int32
-        ) {
-            let v0 = STREffectVertex(
-                position: [xy[0], xy[4]],
-                textureCoordinate: [0, 0]   // [uv[0], uv[1]]
-            )
-            let v1 = STREffectVertex(
-                position: [xy[1], xy[5]],
-                textureCoordinate: [1, 0]   // [uv[2], uv[3]]
-            )
-            let v2 = STREffectVertex(
-                position: [xy[3], xy[7]],
-                textureCoordinate: [0, 1]   // [uv[4], uv[5]]
-            )
-            let v3 = STREffectVertex(
-                position: [xy[2], xy[6]],
-                textureCoordinate: [1, 1]   // [uv[6], uv[7]]
-            )
+    public let str: STR
+    public let textureImages: [String : CGImage]
 
-            vertices = [v0, v1, v2, v3]
+    public var fps: Int {
+        Int(str.fps)
+    }
 
-            self.textureName = textureName
+    public var frameCount: Int {
+        max(0, Int(str.maxKeyframeIndex) + 1)
+    }
 
-            self.position = position
-            self.angle = angle
-            self.color = color
-            self.sourceAlpha = sourceAlpha
-            self.destinationAlpha = destinationAlpha
+    public var duration: TimeInterval {
+        if fps > 0 {
+            TimeInterval(frameCount) / TimeInterval(fps)
+        } else {
+            0
         }
+    }
+
+    public init(str: STR, textureImages: [String : CGImage]) {
+        self.str = str
+        self.textureImages = textureImages
+    }
+
+    public func frame(atElapsedTime elapsedTime: TimeInterval) -> STREffectAnimation.Frame? {
+        guard frameCount > 0, fps > 0, elapsedTime >= 0 else {
+            return nil
+        }
+
+        let frameIndex = Int(elapsedTime * TimeInterval(fps)) % frameCount
+        return frame(atFrameIndex: frameIndex)
+    }
+
+    public func frame(atFrameIndex frameIndex: Int) -> STREffectAnimation.Frame {
+        let frameIndex = Int32(frameIndex)
+
+        var sprites: [STREffectAnimation.Sprite] = []
+        sprites.reserveCapacity(str.layers.count)
+
+        for layer in str.layers {
+            if let sprite = evaluateLayer(layer, atFrameIndex: frameIndex) {
+                sprites.append(sprite)
+            }
+        }
+
+        return STREffectAnimation.Frame(sprites: sprites)
+    }
+
+    private func evaluateLayer(_ layer: STR.Layer, atFrameIndex frameIndex: Int32) -> STREffectAnimation.Sprite? {
+        var lastFrame: Int32 = 0
+        var lastSource: Int32 = 0
+        var fromId = -1
+        var toId = -1
+
+        for (i, keyframe) in layer.keyframes.enumerated() {
+            if keyframe.frameIndex <= frameIndex {
+                if keyframe.type == 0 {
+                    fromId = i
+                }
+                if keyframe.type == 1 {
+                    toId = i
+                }
+            }
+            lastFrame = max(lastFrame, keyframe.frameIndex)
+
+            if keyframe.type == 0 {
+                lastSource = max(lastSource, keyframe.frameIndex)
+            }
+        }
+
+        // Nothing to render
+        if fromId < 0 || (toId < 0 && lastFrame < frameIndex) {
+            return nil
+        }
+
+        let from = layer.keyframes[fromId]
+        let to = toId > -1 ? layer.keyframes[toId] : nil
+        let delta = frameIndex - from.frameIndex
+
+        guard from.textureIndex > -1, Int(from.textureIndex) < layer.textures.count else {
+            return nil
+        }
+
+        // Static frame (or frame that can't be updated)
+        if toId != fromId + 1 || to?.frameIndex != from.frameIndex {
+            // No other source
+            if to != nil && lastSource <= from.frameIndex {
+                return nil
+            }
+
+            let textureName = layer.textures[Int(from.textureIndex)]
+            return STREffectAnimation.Sprite(
+                uv: from.uv,
+                xy: from.xy,
+                textureName: textureName,
+                position: from.position,
+                angle: from.angle,
+                color: from.color,
+                sourceAlpha: from.sourceAlpha,
+                destinationAlpha: from.destinationAlpha,
+                multiTexturePreset: from.multiTexturePreset
+            )
+        }
+
+        guard let to, !layer.textures.isEmpty else {
+            return nil
+        }
+
+        // Morph animation: compute texture index based on animationType
+        let textureCount = layer.textures.count
+        let rawFrame: Float
+        switch to.animationType {
+        case 1: // normal
+            rawFrame = from.textureIndex + to.textureIndex * Float(delta)
+        case 2: // stop at end
+            rawFrame = min(from.textureIndex + to.delay * Float(delta), Float(textureCount - 1))
+        case 3: // repeat
+            rawFrame = (from.textureIndex + to.delay * Float(delta))
+                .truncatingRemainder(dividingBy: Float(textureCount))
+        case 4: // reverse
+            var r = (from.textureIndex - to.delay * Float(delta))
+                .truncatingRemainder(dividingBy: Float(textureCount))
+            if r < 0 {
+                r += Float(textureCount)
+            }
+            rawFrame = r
+        default: // bug fix
+            rawFrame = 0
+        }
+        let textureIndex = max(0, min(Int(rawFrame), textureCount - 1))
+        let textureName = layer.textures[textureIndex]
+
+        let uv = from.uv + to.uv * Float(delta)
+        let xy = from.xy + to.xy * Float(delta)
+        let position = from.position + to.position * Float(delta)
+        let angle = from.angle + to.angle * Float(delta)
+        let color = from.color + to.color * Float(delta)
+
+        return STREffectAnimation.Sprite(
+            uv: uv,
+            xy: xy,
+            textureName: textureName,
+            position: position,
+            angle: angle,
+            color: color,
+            sourceAlpha: from.sourceAlpha,
+            destinationAlpha: from.destinationAlpha,
+            multiTexturePreset: from.multiTexturePreset
+        )
     }
 }

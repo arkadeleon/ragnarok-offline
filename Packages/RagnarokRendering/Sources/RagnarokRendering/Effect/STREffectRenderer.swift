@@ -41,16 +41,14 @@ public final class STREffectRenderer {
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        guard let frame = resource.frame(atElapsedTime: elapsedTime) else {
+        guard let frame = resource.animation.frame(atElapsedTime: elapsedTime) else {
             return
         }
 
         renderCommandEncoder.setDepthStencilState(depthStencilState)
 
         for sprite in frame.sprites {
-            guard !sprite.vertices.isEmpty else {
-                continue
-            }
+            let vertices = makeVertices(for: sprite)
 
             let blendKey = SIMD2(sprite.sourceAlpha, sprite.destinationAlpha)
             guard let renderPipelineState = renderPipelineState(for: blendKey) else {
@@ -80,7 +78,7 @@ public final class STREffectRenderer {
 
             renderCommandEncoder.setRenderPipelineState(renderPipelineState)
 
-            sprite.vertices.withUnsafeBytes { bytes in
+            vertices.withUnsafeBytes { bytes in
                 renderCommandEncoder.setVertexBytes(bytes.baseAddress!, length: bytes.count, index: 0)
             }
             renderCommandEncoder.setVertexBytes(
@@ -94,7 +92,7 @@ public final class STREffectRenderer {
                 index: 0
             )
             renderCommandEncoder.setFragmentTexture(resource.textures[sprite.textureName], index: 0)
-            renderCommandEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: sprite.vertices.count)
+            renderCommandEncoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: vertices.count)
         }
     }
 
@@ -146,5 +144,15 @@ public final class STREffectRenderer {
         case 15: .oneMinusBlendAlpha
         default: .sourceAlpha
         }
+    }
+
+    private func makeVertices(for sprite: STREffectAnimation.Sprite) -> [STREffectVertex] {
+        let xy = sprite.xy
+        return [
+            STREffectVertex(position: [xy[0], xy[4]], textureCoordinate: [0, 0]),
+            STREffectVertex(position: [xy[1], xy[5]], textureCoordinate: [1, 0]),
+            STREffectVertex(position: [xy[3], xy[7]], textureCoordinate: [0, 1]),
+            STREffectVertex(position: [xy[2], xy[6]], textureCoordinate: [1, 1]),
+        ]
     }
 }
