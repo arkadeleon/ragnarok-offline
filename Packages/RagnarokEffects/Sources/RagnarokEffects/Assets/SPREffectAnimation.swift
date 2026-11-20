@@ -1,6 +1,6 @@
 //
 //  SPREffectAnimation.swift
-//  RagnarokRenderAssets
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/7/9.
 //

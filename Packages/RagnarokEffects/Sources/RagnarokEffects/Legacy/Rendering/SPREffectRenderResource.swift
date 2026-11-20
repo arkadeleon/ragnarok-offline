@@ -1,13 +1,13 @@
 //
 //  SPREffectRenderResource.swift
-//  RagnarokRendering
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/7/2.
 //
 
 import Foundation
 import Metal
-import RagnarokEffects
+import RagnarokRendering
 import RagnarokRenderAssets
 import RagnarokShaders
 import simd

@@ -1,12 +1,13 @@
 //
 //  STREffectRenderer.swift
-//  RagnarokRendering
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2023/11/24.
 //
 
 import Foundation
 import Metal
+import RagnarokRendering
 import RagnarokCore
 import RagnarokRenderAssets
 import RagnarokShaders

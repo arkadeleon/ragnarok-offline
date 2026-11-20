@@ -1,14 +1,14 @@
 //
 //  ThreeDEffectRenderResource.swift
-//  RagnarokRendering
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/6/29.
 //
 
 import Foundation
 import Metal
+import RagnarokRendering
 import RagnarokCore
-import RagnarokEffects
 import RagnarokRenderAssets
 import RagnarokShaders
 import simd

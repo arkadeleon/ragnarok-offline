@@ -1,6 +1,6 @@
 //
 //  STREffectAnimation.swift
-//  RagnarokRenderAssets
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2023/11/24.
 //

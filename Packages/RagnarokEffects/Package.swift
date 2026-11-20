@@ -18,6 +18,11 @@ let package = Package(
     dependencies: [
         .package(path: "../RagnarokConstants"),
         .package(path: "../RagnarokCore"),
+        .package(path: "../RagnarokFileFormats"),
+        .package(path: "../RagnarokRenderAssets"),
+        .package(path: "../RagnarokRendering"),
+        .package(path: "../RagnarokResources"),
+        .package(path: "../RagnarokShaders"),
     ],
     targets: [
         .target(
@@ -25,6 +30,11 @@ let package = Package(
             dependencies: [
                 "RagnarokConstants",
                 "RagnarokCore",
+                "RagnarokFileFormats",
+                "RagnarokRenderAssets",
+                "RagnarokRendering",
+                "RagnarokResources",
+                "RagnarokShaders",
             ]
         ),
         .testTarget(

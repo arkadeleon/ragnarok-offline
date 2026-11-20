@@ -1,14 +1,14 @@
 //
 //  EffectAssetLoader.swift
-//  RagnarokRenderAssets
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/6/30.
 //
 
 import CoreGraphics
 import RagnarokCore
-import RagnarokEffects
 import RagnarokFileFormats
+import RagnarokRenderAssets
 import RagnarokResources
 
 public struct EffectAssetLoader: Sendable {

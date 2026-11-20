@@ -1,11 +1,12 @@
 //
 //  EffectRenderer.swift
-//  RagnarokRendering
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/6/30.
 //
 
 import Metal
+import RagnarokRendering
 import simd
 
 public final class EffectRenderer {

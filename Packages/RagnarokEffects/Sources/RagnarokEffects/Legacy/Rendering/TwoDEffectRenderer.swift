@@ -1,17 +1,17 @@
 //
-//  ThreeDEffectRenderer.swift
-//  RagnarokRendering
+//  TwoDEffectRenderer.swift
+//  RagnarokEffects
 //
-//  Created by Leon Li on 2026/6/29.
+//  Created by Leon Li on 2026/7/9.
 //
 
 import Foundation
 import Metal
-import RagnarokEffects
+import RagnarokRendering
 import RagnarokShaders
 import simd
 
-public final class ThreeDEffectRenderer {
+public final class TwoDEffectRenderer {
     public let device: any MTLDevice
     public let configuration: RenderConfiguration
 
@@ -38,24 +38,17 @@ public final class ThreeDEffectRenderer {
     }
 
     public func render(
-        resource: ThreeDEffectRenderResource,
+        resource: TwoDEffectRenderResource,
         elapsedTime: TimeInterval,
         worldPosition: SIMD3<Float>,
-        sourceWorldPosition: SIMD3<Float>?,
-        targetWorldPosition: SIMD3<Float>,
         fog: Fog,
         modelMatrix: simd_float4x4,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        let sample = resource.sample(
-            atElapsedTime: elapsedTime,
-            worldPosition: worldPosition,
-            sourceWorldPosition: sourceWorldPosition,
-            targetWorldPosition: targetWorldPosition,
-            cameraAzimuth: camera.azimuth
-        )
-        guard let sample, let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
+        guard let texture = resource.texture,
+              let sample = resource.sample(atElapsedTime: elapsedTime, worldPosition: worldPosition, cameraAzimuth: camera.azimuth),
+              let renderPipelineState = renderPipelineState(for: resource.definition.blendMode) else {
             return
         }
 
@@ -70,43 +63,36 @@ public final class ThreeDEffectRenderer {
         // additive effects go through untouched.
         let isAdditive = resource.definition.blendMode == .one
 
-        for layer in sample.layers {
-            guard resource.textures.indices.contains(layer.imageIndex),
-                  let texture = resource.textures[layer.imageIndex] else {
-                continue
-            }
+        var vertexUniforms = TwoDEffectVertexUniforms(
+            modelMatrix: modelMatrix,
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix,
+            rotationMatrix: sample.rotationMatrix,
+            worldPosition: sample.worldPosition,
+            size: sample.size,
+            offset: sample.offset,
+            zIndex: resource.definition.zIndex
+        )
+        var fragmentUniforms = TwoDEffectFragmentUniforms(
+            color: sample.color,
+            fogUse: fog.isEnabled && !isAdditive ? 1 : 0,
+            fogNear: fog.near,
+            fogFar: fog.far,
+            fogColor: fog.color
+        )
 
-            var vertexUniforms = ThreeDEffectVertexUniforms(
-                modelMatrix: modelMatrix,
-                viewMatrix: camera.viewMatrix,
-                projectionMatrix: camera.projectionMatrix,
-                rotationMatrix: layer.rotationMatrix,
-                worldPosition: sample.worldPosition,
-                size: layer.size,
-                offset: layer.offset,
-                zIndex: resource.definition.zIndex
-            )
-            var fragmentUniforms = ThreeDEffectFragmentUniforms(
-                color: layer.color,
-                fogUse: fog.isEnabled && !isAdditive ? 1 : 0,
-                fogNear: fog.near,
-                fogFar: fog.far,
-                fogColor: fog.color
-            )
-
-            renderCommandEncoder.setVertexBytes(
-                &vertexUniforms,
-                length: MemoryLayout<ThreeDEffectVertexUniforms>.stride,
-                index: 1
-            )
-            renderCommandEncoder.setFragmentBytes(
-                &fragmentUniforms,
-                length: MemoryLayout<ThreeDEffectFragmentUniforms>.stride,
-                index: 0
-            )
-            renderCommandEncoder.setFragmentTexture(texture, index: 0)
-            renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertices.count)
-        }
+        renderCommandEncoder.setVertexBytes(
+            &vertexUniforms,
+            length: MemoryLayout<TwoDEffectVertexUniforms>.stride,
+            index: 1
+        )
+        renderCommandEncoder.setFragmentBytes(
+            &fragmentUniforms,
+            length: MemoryLayout<TwoDEffectFragmentUniforms>.stride,
+            index: 0
+        )
+        renderCommandEncoder.setFragmentTexture(texture, index: 0)
+        renderCommandEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: resource.vertices.count)
     }
 
     private func renderPipelineState(for blendMode: EffectParameters.BlendMode) -> (any MTLRenderPipelineState)? {
@@ -126,8 +112,8 @@ public final class ThreeDEffectRenderer {
         let library = RagnarokShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
-        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "threeDEffectVertexShader")
-        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "threeDEffectFragmentShader")
+        renderPipelineDescriptor.vertexFunction = library.makeFunction(name: "twoDEffectVertexShader")
+        renderPipelineDescriptor.fragmentFunction = library.makeFunction(name: "twoDEffectFragmentShader")
         renderPipelineDescriptor.maxVertexAmplificationCount = configuration.amplificationCount
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = configuration.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true

@@ -7,6 +7,7 @@
 
 import Metal
 import RagnarokCore
+import RagnarokEffects
 import RagnarokFileFormats
 import RagnarokRenderAssets
 import RagnarokRendering

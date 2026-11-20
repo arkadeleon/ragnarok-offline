@@ -1,13 +1,13 @@
 //
 //  CylinderEffectRenderer.swift
-//  RagnarokRendering
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/6/25.
 //
 
 import Foundation
 import Metal
-import RagnarokEffects
+import RagnarokRendering
 import RagnarokShaders
 import simd
 

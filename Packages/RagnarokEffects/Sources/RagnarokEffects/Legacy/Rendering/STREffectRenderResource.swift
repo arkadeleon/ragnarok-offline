@@ -1,6 +1,6 @@
 //
 //  STREffectRenderResource.swift
-//  RagnarokRendering
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/4/30.
 //
@@ -8,7 +8,7 @@
 import CoreGraphics
 import Foundation
 import Metal
-import RagnarokEffects
+import RagnarokRendering
 import RagnarokRenderAssets
 import simd
 

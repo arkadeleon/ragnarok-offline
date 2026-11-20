@@ -1,12 +1,11 @@
 //
 //  EffectAsset.swift
-//  RagnarokRenderAssets
+//  RagnarokEffects
 //
 //  Created by Leon Li on 2026/7/9.
 //
 
 import CoreGraphics
-import RagnarokEffects
 
 public enum EffectAsset: Sendable {
     case `2D`(TwoDEffect, textureImage: CGImage)

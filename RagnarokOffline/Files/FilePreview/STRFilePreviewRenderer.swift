@@ -10,6 +10,7 @@ import Foundation
 import Metal
 import QuartzCore
 import RagnarokCore
+import RagnarokEffects
 import RagnarokRenderAssets
 import RagnarokRendering
 import simd
