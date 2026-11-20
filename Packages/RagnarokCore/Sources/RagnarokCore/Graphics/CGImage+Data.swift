@@ -54,6 +54,69 @@ extension CGImage {
 }
 
 extension CGImage {
+    public func unpremultiplyingAlpha() -> CGImage? {
+        guard alphaInfo == .premultipliedFirst || alphaInfo == .premultipliedLast else {
+            return self
+        }
+
+        let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
+        let premultipliedBitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue
+
+        guard let context = CGContext(
+            data: nil,
+            width: width,
+            height: height,
+            bitsPerComponent: 8,
+            bytesPerRow: width * 4,
+            space: colorSpace,
+            bitmapInfo: premultipliedBitmapInfo
+        ) else {
+            return nil
+        }
+
+        let rect = CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height))
+        context.draw(self, in: rect)
+
+        let pixelCount = width * height
+        guard let pixels = context.data?.bindMemory(to: Pixel_8888.self, capacity: pixelCount) else {
+            return nil
+        }
+
+        for i in 0..<pixelCount {
+            let a = pixels[i].3
+            if a == 0 {
+                pixels[i] = (0, 0, 0, 0)
+            } else if a < 255 {
+                let alpha = Int(a)
+                pixels[i].0 = UInt8(min(255, (Int(pixels[i].0) * 255 + alpha / 2) / alpha))
+                pixels[i].1 = UInt8(min(255, (Int(pixels[i].1) * 255 + alpha / 2) / alpha))
+                pixels[i].2 = UInt8(min(255, (Int(pixels[i].2) * 255 + alpha / 2) / alpha))
+            }
+        }
+
+        let straightBitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.first.rawValue | CGImageByteOrderInfo.order32Little.rawValue)
+        let data = Data(bytes: pixels, count: pixelCount * 4)
+        guard let provider = CGDataProvider(data: data as CFData) else {
+            return nil
+        }
+
+        return CGImage(
+            width: width,
+            height: height,
+            bitsPerComponent: 8,
+            bitsPerPixel: 32,
+            bytesPerRow: width * 4,
+            space: colorSpace,
+            bitmapInfo: straightBitmapInfo,
+            provider: provider,
+            decode: nil,
+            shouldInterpolate: true,
+            intent: .defaultIntent
+        )
+    }
+}
+
+extension CGImage {
     public func removingMagentaPixels() -> CGImage? {
         let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
         let bitmapInfo = CGImageAlphaInfo.premultipliedFirst.rawValue | CGImageByteOrderInfo.order32Little.rawValue

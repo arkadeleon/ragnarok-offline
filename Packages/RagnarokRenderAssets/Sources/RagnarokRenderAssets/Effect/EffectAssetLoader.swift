@@ -37,7 +37,7 @@ public struct EffectAssetLoader: Sendable {
             let texturePath = ResourcePath.textureDirectory.appending(subpath: definition.fileName)
             let removesMagentaPixels = definition.fileName.lowercased().hasSuffix(".bmp")
             let image = try await resourceManager.image(at: texturePath, removesMagentaPixels: removesMagentaPixels)
-            return .`2D`(effect, textureImage: image.cgImage)
+            return .`2D`(effect, textureImage: image.cgImage.unpremultiplyingAlpha() ?? image.cgImage)
         case .`3D`(let definition):
             let effect = ThreeDEffect(definition: definition)
             let animation: ThreeDEffectAnimation
@@ -52,7 +52,7 @@ public struct EffectAssetLoader: Sendable {
             let effect = CylinderEffect(definition: definition)
             let texturePath = ResourcePath.effectDirectory.appending(subpath: definition.textureName)
             let image = try await resourceManager.image(at: texturePath)
-            return .cylinder(effect, textureImage: image.cgImage)
+            return .cylinder(effect, textureImage: image.cgImage.unpremultiplyingAlpha() ?? image.cgImage)
         case .spr(let definition):
             let effect = SPREffect(definition: definition)
             let animation = try await loadSPRAnimation(
@@ -91,7 +91,7 @@ public struct EffectAssetLoader: Sendable {
                 let texturePath = ResourcePath.textureDirectory.appending(subpath: textureName)
                 let removesMagentaPixels = textureName.lowercased().hasSuffix(".bmp")
                 let image = try await resourceManager.image(at: texturePath, removesMagentaPixels: removesMagentaPixels)
-                images.append(image.cgImage)
+                images.append(image.cgImage.unpremultiplyingAlpha() ?? image.cgImage)
             }
 
             return ThreeDEffectAnimation(images: images)
@@ -127,7 +127,7 @@ public struct EffectAssetLoader: Sendable {
                 let texturePath = strPath.removingLastComponent().appending(subpath: resolvedTextureName)
                 let removesMagentaPixels = resolvedTextureName.lowercased().hasSuffix(".bmp")
                 if let image = try? await resourceManager.image(at: texturePath, removesMagentaPixels: removesMagentaPixels) {
-                    textureImages[textureName] = image.cgImage
+                    textureImages[textureName] = image.cgImage.unpremultiplyingAlpha() ?? image.cgImage
                 }
             }
 
