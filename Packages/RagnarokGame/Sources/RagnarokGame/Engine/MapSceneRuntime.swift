@@ -51,6 +51,7 @@ final class MapSceneRuntime {
         renderResources.prepareEffects(resourceManager: scene.resourceManager) { [audioPlayer = scene.audioPlayer] soundName, delay in
             audioPlayer.playSoundEffect(named: soundName, afterDelay: delay)
         }
+        await renderResources.loadWorldEffects(worldAsset.effects)
 
         await scene.load(world: world)
     }
@@ -132,7 +133,7 @@ final class MapSceneRuntime {
         snapshot.tileSelector = makeTileSelector(atTime: currentTime)
         snapshot.targetSelector = makeTargetSelector(atTime: currentTime)
         snapshot.spriteDrawables = renderResources.spriteDrawables
-        snapshot.effects = makeEffects()
+        snapshot.effects = makeEffects(atTime: currentTime)
         snapshot.bars = makeBars(atTime: currentTime)
         snapshot.texts = makeTexts()
         snapshot.combatTexts = makeCombatTexts(atTime: currentTime)
@@ -172,9 +173,19 @@ final class MapSceneRuntime {
         )
     }
 
-    private func makeEffects() -> [MapSceneRenderSnapshot.Effect] {
-        scene.world.effects.values
-            .compactMap { effect in
+    private func makeEffects(atTime currentTime: TimeInterval) -> [MapSceneRenderSnapshot.Effect] {
+        let worldEffects: [MapSceneRenderSnapshot.Effect] = renderResources.worldEffectResources.map { resourceGroup in
+            if resourceGroup.isExpired(atTime: currentTime) {
+                resourceGroup.restart(atTime: currentTime)
+            }
+            return MapSceneRenderSnapshot.Effect(
+                resourceGroup: resourceGroup,
+                attachedWorldPosition: nil
+            )
+        }
+
+        let sceneEffects: [MapSceneRenderSnapshot.Effect] = scene.world.effects.values
+            .compactMap { effect -> MapSceneRenderSnapshot.Effect? in
                 guard let resourceGroup = renderResources.effectResource(for: effect.id) else {
                     return nil
                 }
@@ -186,6 +197,8 @@ final class MapSceneRuntime {
             .sorted {
                 $0.resourceGroup.creationTime < $1.resourceGroup.creationTime
             }
+
+        return worldEffects + sceneEffects
     }
 
     private func makeBars(atTime currentTime: TimeInterval) -> [MapSceneRenderSnapshot.Bar] {

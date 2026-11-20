@@ -12,7 +12,6 @@ public class WorldRenderResource {
     let groundResource: GroundRenderResource
     let waterResource: WaterRenderResource
     let modelResources: [RSMModelRenderResource]
-    let effectResources: [EffectRenderResourceGroup]
 
     public var hasWater: Bool {
         waterResource.vertexCount > 0
@@ -27,14 +26,6 @@ public class WorldRenderResource {
                 prototype: modelGroup.prototype,
                 instances: modelGroup.instances,
                 light: asset.light
-            )
-        }
-        effectResources = asset.effects.map { effect in
-            EffectRenderResourceGroup(
-                device: device,
-                assetGroup: effect.assetGroup,
-                creationTime: 0,
-                worldPosition: effect.position
             )
         }
     }

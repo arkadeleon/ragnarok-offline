@@ -26,6 +26,7 @@ final class MapSceneRenderResources {
     private(set) var combatTextTexture: (any MTLTexture)?
 
     private var effectAssetLoader: EffectAssetLoader?
+    private(set) var worldEffectResources: [EffectRenderResourceGroup] = []
     private var effectResources: [UUID : EffectRenderResourceGroup] = [:]
     private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
     private var onEffectSound: (@MainActor (_ name: String, _ delay: TimeInterval) -> Void)?
@@ -73,8 +74,39 @@ final class MapSceneRenderResources {
     ) {
         cancelEffectLoads()
         effectAssetLoader = EffectAssetLoader(resourceManager: resourceManager)
+        worldEffectResources.removeAll()
         effectResources.removeAll()
         onEffectSound = onSound
+    }
+
+    func loadWorldEffects(_ effects: [WorldEffect]) async {
+        guard let effectAssetLoader else {
+            return
+        }
+
+        var resources: [EffectRenderResourceGroup] = []
+        for effect in effects {
+            guard let effectID = EffectID(rawValue: effect.effectID) else {
+                continue
+            }
+
+            let definitions = EffectTable.definitions(for: effectID)
+            do {
+                let assetGroup = try await effectAssetLoader.loadAssetGroup(with: definitions)
+                resources.append(
+                    EffectRenderResourceGroup(
+                        device: device,
+                        assetGroup: assetGroup,
+                        creationTime: 0,
+                        worldPosition: effect.position
+                    )
+                )
+            } catch {
+                logger.warning("World failed to load effect \(effectID.rawValue): \(error)")
+            }
+        }
+
+        worldEffectResources = resources
     }
 
     private func loadEffect(_ effect: MapSceneEffect) {
@@ -150,6 +182,7 @@ final class MapSceneRenderResources {
 
         cancelEffectLoads()
         effectAssetLoader = nil
+        worldEffectResources.removeAll()
         effectResources.removeAll()
         onEffectSound = nil
 

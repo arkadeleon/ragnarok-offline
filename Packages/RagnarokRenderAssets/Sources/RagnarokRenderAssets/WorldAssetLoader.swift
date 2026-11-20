@@ -9,7 +9,6 @@ import CoreGraphics
 import Foundation
 import RagnarokConstants
 import RagnarokCore
-import RagnarokEffects
 import RagnarokFileFormats
 import RagnarokResources
 import simd
@@ -118,7 +117,20 @@ public struct WorldAssetLoader: Sendable {
             return RSMModelAssetGroup(prototype: prototype, instances: instances)
         }
 
-        let effects = await loadEffects(rsw: rsw, gnd: gnd, resourceManager: resourceManager)
+        let effects = rsw.effects.map { effect in
+            let position: SIMD3<Float> = [
+                effect.position.x + Float(gnd.width),
+                -effect.position.y + 1,
+                -(effect.position.z + Float(gnd.height)),
+            ]
+
+            return WorldEffect(
+                effectID: Int(effect.id),
+                position: position,
+                delay: effect.delay,
+                parameters: effect.parameters
+            )
+        }
 
         let worldAsset = WorldAsset(
             ground: groundAsset,
@@ -128,42 +140,5 @@ public struct WorldAssetLoader: Sendable {
             light: light
         )
         return worldAsset
-    }
-
-    private func loadEffects(rsw: RSW, gnd: GND, resourceManager: ResourceManager) async -> [WorldEffectAsset] {
-        let effectAssetLoader = EffectAssetLoader(resourceManager: resourceManager)
-
-        var effects: [WorldEffectAsset] = []
-
-        for effect in rsw.effects {
-            guard let effectID = EffectID(rawValue: Int(effect.id)) else {
-                continue
-            }
-
-            let definitions = EffectTable.definitions(for: effectID)
-            let assetGroup: EffectAssetGroup
-            do {
-                assetGroup = try await effectAssetLoader.loadAssetGroup(with: definitions)
-            } catch {
-                logger.warning("World failed to load effect \(effectID.rawValue): \(error)")
-                continue
-            }
-
-            let position: SIMD3<Float> = [
-                effect.position.x + Float(gnd.width),
-                -effect.position.y + 1,
-                -(effect.position.z + Float(gnd.height)),
-            ]
-
-            effects.append(
-                WorldEffectAsset(
-                    effectID: effectID,
-                    position: position,
-                    assetGroup: assetGroup
-                )
-            )
-        }
-
-        return effects
     }
 }

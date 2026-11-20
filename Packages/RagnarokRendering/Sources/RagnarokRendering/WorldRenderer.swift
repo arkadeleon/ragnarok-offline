@@ -14,7 +14,6 @@ public final class WorldRenderer {
         case ground(resource: GroundRenderResource, time: TimeInterval, fog: Fog, modelMatrix: simd_float4x4)
         case models(resources: [RSMModelRenderResource], time: TimeInterval, fog: Fog, modelMatrix: simd_float4x4)
         case water(resource: WaterRenderResource, time: TimeInterval, fog: Fog, modelMatrix: simd_float4x4)
-        case effect(EffectRenderer.RenderPayload)
     }
 
     public let device: any MTLDevice
@@ -22,7 +21,6 @@ public final class WorldRenderer {
     private let groundRenderer: GroundRenderer
     private let waterRenderer: WaterRenderer
     private let modelRenderer: RSMModelRenderer
-    private let effectRenderer: EffectRenderer
 
     public init(device: any MTLDevice, configuration: RenderConfiguration) throws {
         self.device = device
@@ -30,7 +28,6 @@ public final class WorldRenderer {
         groundRenderer = try GroundRenderer(device: device, configuration: configuration)
         waterRenderer = try WaterRenderer(device: device, configuration: configuration)
         modelRenderer = try RSMModelRenderer(device: device, configuration: configuration)
-        effectRenderer = try EffectRenderer(device: device, configuration: configuration)
     }
 
     public func submit(
@@ -81,21 +78,6 @@ public final class WorldRenderer {
             )
         }
 
-        for effectResource in resource.effectResources {
-            if effectResource.isExpired(atTime: time) {
-                effectResource.restart(atTime: time)
-            }
-
-            effectRenderer.submit(
-                resourceGroup: effectResource,
-                atTime: time,
-                fog: fog,
-                modelMatrix: modelMatrix,
-                into: queue
-            ) { payload in
-                transform(.effect(payload))
-            }
-        }
     }
 
     public func render(
@@ -128,12 +110,6 @@ public final class WorldRenderer {
                 atTime: time,
                 fog: fog,
                 modelMatrix: modelMatrix,
-                camera: camera,
-                renderCommandEncoder: renderCommandEncoder
-            )
-        case .effect(let payload):
-            effectRenderer.render(
-                payload: payload,
                 camera: camera,
                 renderCommandEncoder: renderCommandEncoder
             )
