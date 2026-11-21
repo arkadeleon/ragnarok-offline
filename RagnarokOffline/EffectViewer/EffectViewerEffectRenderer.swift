@@ -14,16 +14,27 @@ import RagnarokEffects
 import RagnarokFileFormats
 import RagnarokRenderAssets
 import RagnarokRendering
+import RagnarokResources
 import simd
 
+@MainActor
 class EffectViewerEffectRenderer: Renderer {
+    private enum RenderPayload {
+        case legacy(EffectRenderer.RenderPayload)
+        case str(STREffectRenderer.RenderPayload)
+    }
+
+    private enum Backend {
+        case legacy(renderer: EffectRenderer, resourceGroup: EffectRenderResourceGroup)
+        case managed(manager: EffectManager, world: EffectViewerEffectWorldContext, strRenderer: STREffectRenderer, isLooping: Bool)
+    }
+
     let device: any MTLDevice
     let configuration: RenderConfiguration
 
-    private let renderQueue = RenderQueue<EffectRenderer.RenderPayload>()
-    private let effectRenderer: EffectRenderer
-    private let effectResourceGroup: EffectRenderResourceGroup
-    private let fog: Fog
+    private let renderQueue = RenderQueue<RenderPayload>()
+    private let backend: Backend
+    private let fog = Fog()
 
     let camera: OrbitalCamera
 
@@ -31,16 +42,49 @@ class EffectViewerEffectRenderer: Renderer {
         self.device = device
         self.configuration = configuration
 
-        effectRenderer = try EffectRenderer(device: device, configuration: configuration)
-        effectResourceGroup = EffectRenderResourceGroup(
+        let effectRenderer = try EffectRenderer(device: device, configuration: configuration)
+        let resourceGroup = EffectRenderResourceGroup(
             device: device,
             assetGroup: assetGroup,
             creationTime: CACurrentMediaTime(),
             delay: 0
         )
-        fog = Fog()
+        self.backend = .legacy(renderer: effectRenderer, resourceGroup: resourceGroup)
+        self.camera = Self.makeDefaultCamera()
+    }
 
-        camera = OrbitalCamera(distance: 20)
+    init(
+        device: any MTLDevice,
+        configuration: RenderConfiguration,
+        rawEffectID: Int,
+        resourceManager: ResourceManager
+    ) throws {
+        self.device = device
+        self.configuration = configuration
+
+        let assetStore = EffectAssetStore(device: device, resourceManager: resourceManager)
+        let manager = EffectManager(assetStore: assetStore)
+        let world = EffectViewerEffectWorldContext()
+        let strRenderer = try STREffectRenderer(device: device, configuration: configuration)
+
+        let request = EffectSpawnRequest(
+            rawEffectID: rawEffectID,
+            worldPosition: .zero,
+            sourceWorldPosition: SIMD3<Float>(-5, 0, -5),
+            ownerObjectID: EffectViewerEffectWorldContext.targetObjectID,
+            targetObjectID: EffectViewerEffectWorldContext.targetObjectID,
+            sourceObjectID: EffectViewerEffectWorldContext.sourceObjectID
+        )
+        manager.spawn(request)
+
+        let isLooping = EffectID(rawValue: rawEffectID).map { $0.defaultLifetimeTicks >= 9999 } ?? false
+
+        self.backend = .managed(manager: manager, world: world, strRenderer: strRenderer, isLooping: isLooping)
+        self.camera = Self.makeDefaultCamera()
+    }
+
+    private static func makeDefaultCamera() -> OrbitalCamera {
+        let camera = OrbitalCamera(distance: 20)
         camera.fovy = 45
         camera.nearZ = 1
         camera.farZ = 1000
@@ -48,11 +92,17 @@ class EffectViewerEffectRenderer: Renderer {
         camera.minimumDistance = 8
         camera.maximumDistance = 80
         camera.target = [0, 1.5, 0]
+        return camera
     }
 
     func makeCamera(atTime time: TimeInterval, viewport: MTLViewport) -> RenderCamera {
         camera.update(atTime: time)
         camera.update(size: viewport.size)
+
+        if case .managed(_, let world, _, _) = backend {
+            let inverseView = camera.viewMatrix.inverse
+            world.cameraWorldPosition = SIMD3<Float>(inverseView.columns.3.x, inverseView.columns.3.y, inverseView.columns.3.z)
+        }
 
         return RenderCamera(
             viewMatrix: camera.viewMatrix,
@@ -74,13 +124,27 @@ class EffectViewerEffectRenderer: Renderer {
         }
 
         renderQueue.removeAll()
-        effectRenderer.submit(
-            resourceGroup: effectResourceGroup,
-            atTime: frame.time,
-            fog: fog,
-            modelMatrix: matrix_identity_float4x4,
-            into: renderQueue
-        )
+
+        switch backend {
+        case .legacy(let effectRenderer, let resourceGroup):
+            effectRenderer.submit(
+                resourceGroup: resourceGroup,
+                atTime: frame.time,
+                fog: fog,
+                modelMatrix: matrix_identity_float4x4,
+                into: renderQueue,
+                transform: RenderPayload.legacy
+            )
+        case .managed(let manager, let world, let strRenderer, _):
+            manager.update(atTime: frame.time, world: world)
+            for payload in manager.collectSTRPayloads(fog: fog, world: world) {
+                strRenderer.submit(
+                    payload: payload,
+                    into: renderQueue,
+                    transformPayload: RenderPayload.str
+                )
+            }
+        }
 
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
@@ -89,11 +153,22 @@ class EffectViewerEffectRenderer: Renderer {
 
             for bucket in RenderPassBucket.allCases {
                 for item in renderQueue.items(in: bucket) {
-                    effectRenderer.render(
-                        payload: item.payload,
-                        camera: view.camera,
-                        renderCommandEncoder: renderCommandEncoder
-                    )
+                    switch (item.payload, backend) {
+                    case (.legacy(let payload), .legacy(let effectRenderer, _)):
+                        effectRenderer.render(
+                            payload: payload,
+                            camera: view.camera,
+                            renderCommandEncoder: renderCommandEncoder
+                        )
+                    case (.str(let payload), .managed(_, _, let strRenderer, _)):
+                        strRenderer.render(
+                            payload: payload,
+                            camera: view.camera,
+                            renderCommandEncoder: renderCommandEncoder
+                        )
+                    default:
+                        break
+                    }
                 }
             }
         }
@@ -102,6 +177,11 @@ class EffectViewerEffectRenderer: Renderer {
     }
 
     func isComplete(atTime time: TimeInterval) -> Bool {
-        effectResourceGroup.isExpired(atTime: time)
+        switch backend {
+        case .legacy(_, let resourceGroup):
+            resourceGroup.isExpired(atTime: time)
+        case .managed(let manager, _, _, let isLooping):
+            !isLooping && !manager.hasActiveEffects
+        }
     }
 }

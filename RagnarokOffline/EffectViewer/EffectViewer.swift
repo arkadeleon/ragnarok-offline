@@ -20,7 +20,7 @@ struct EffectViewer: View {
     var body: some View {
         ZStack {
             if let selectedEffect {
-                EffectViewerEffectRenderingView(effectID: selectedEffect.effectID, resourceManager: resourceManager) {
+                EffectViewerEffectRenderingView(effect: selectedEffect, resourceManager: resourceManager) {
                     replayToken += 1
                 }
                 .id("\(selectedEffect.id)-\(replayToken)")
@@ -75,6 +75,5 @@ struct EffectViewer: View {
             .presentationSizing(.form)
             .adaptiveNavigationTransition(sourceID: "effect", in: effectNamespace)
         }
-        .preferredColorScheme(.dark)
     }
 }

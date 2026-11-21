@@ -7,6 +7,7 @@
 
 import Foundation
 import RagnarokCore
+import RagnarokEffects
 import RagnarokModels
 import RagnarokRenderAssets
 import RagnarokRendering
@@ -88,7 +89,7 @@ final class MapWorld {
         return effect
     }
 
-    func removeEffects(ownedBy ownerObjectID: GameObjectID, key: MapEffectAttachmentKey? = nil) -> [UUID] {
+    func removeEffects(ownedBy ownerObjectID: GameObjectID, key: EffectAttachmentKey? = nil) -> [UUID] {
         guard let ownedEffectIDs = effectIDsByOwner[ownerObjectID] else {
             return []
         }

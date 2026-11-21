@@ -69,6 +69,7 @@ final class MapSceneRuntime {
 
         let worldTime = MapWorldTime(time: currentTime, deltaTime: deltaTime)
         scene.update(atTime: worldTime)
+        renderResources.updateEffects(atTime: currentTime, world: scene)
 
         for effectID in renderResources.expiredEffectIDs(atTime: currentTime) {
             scene.removeEffect(id: effectID)
@@ -111,6 +112,7 @@ final class MapSceneRuntime {
         if cameraPosition.y < minimumCameraY {
             cameraPosition.y = minimumCameraY
         }
+        scene.lastCameraWorldPosition = cameraPosition
 
         let offset = cameraPosition - worldTarget
         let horizontalDistance = simd_length(SIMD2<Float>(offset.x, offset.z))
@@ -134,6 +136,7 @@ final class MapSceneRuntime {
         snapshot.targetSelector = makeTargetSelector(atTime: currentTime)
         snapshot.spriteDrawables = renderResources.spriteDrawables
         snapshot.effects = makeEffects(atTime: currentTime)
+        snapshot.strEffectPayloads = renderResources.collectSTRPayloads(fog: scene.world.fog, world: scene)
         snapshot.bars = makeBars(atTime: currentTime)
         snapshot.texts = makeTexts()
         snapshot.combatTexts = makeCombatTexts(atTime: currentTime)

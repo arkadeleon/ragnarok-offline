@@ -9,13 +9,6 @@ import Foundation
 import RagnarokEffects
 import simd
 
-enum MapEffectAttachmentKey: Hashable, Sendable {
-    case untagged
-    case cast
-    case status(Int)
-    case skillUnit(GameObjectID)
-}
-
 final class MapSceneEffect: Identifiable {
     let id: UUID
     let reference: EffectReference
@@ -32,7 +25,7 @@ final class MapSceneEffect: Identifiable {
     /// The object this effect belongs to. The effect ends when that object leaves the map.
     let ownerObjectID: GameObjectID?
 
-    let attachmentKey: MapEffectAttachmentKey
+    let attachmentKey: EffectAttachmentKey
 
     let delay: TimeInterval
 
@@ -46,7 +39,7 @@ final class MapSceneEffect: Identifiable {
         sourceWorldPosition: SIMD3<Float>? = nil,
         targetObjectID: GameObjectID?,
         ownerObjectID: GameObjectID?,
-        attachmentKey: MapEffectAttachmentKey = .untagged,
+        attachmentKey: EffectAttachmentKey = .untagged,
         delay: TimeInterval = 0,
         duration: TimeInterval? = nil
     ) {

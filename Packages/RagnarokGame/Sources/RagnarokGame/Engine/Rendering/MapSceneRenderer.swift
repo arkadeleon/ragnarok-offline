@@ -23,6 +23,7 @@ final class MapSceneRenderer {
         case world(WorldRenderer.RenderPayload)
         case sprite(SpriteRenderer.RenderPayload)
         case effect(EffectRenderer.RenderPayload)
+        case strEffect(STREffectRenderer.RenderPayload)
         case tileSelector(MapSceneRenderSnapshot.TileSelector, fog: Fog, modelMatrix: simd_float4x4)
         case targetSelector(MapSceneRenderSnapshot.TargetSelector, modelMatrix: simd_float4x4)
         case bars([MapSceneRenderSnapshot.Bar], modelMatrix: simd_float4x4)
@@ -40,6 +41,7 @@ final class MapSceneRenderer {
     private let combatTextRenderer: CombatTextRenderer
     private let barRenderer: BarRenderer
     private let effectRenderer: EffectRenderer
+    private let strEffectRenderer: STREffectRenderer
     private let tileSelectorRenderer: TileSelectorRenderer
     private let targetSelectorRenderer: TargetSelectorRenderer
 
@@ -55,6 +57,7 @@ final class MapSceneRenderer {
         combatTextRenderer = try CombatTextRenderer(device: device, configuration: configuration)
         barRenderer = try BarRenderer(device: device, configuration: configuration)
         effectRenderer = try EffectRenderer(device: device, configuration: configuration)
+        strEffectRenderer = try STREffectRenderer(device: device, configuration: configuration)
         tileSelectorRenderer = try TileSelectorRenderer(device: device, configuration: configuration)
         targetSelectorRenderer = try TargetSelectorRenderer(device: device, configuration: configuration)
     }
@@ -185,6 +188,14 @@ final class MapSceneRenderer {
                 modelMatrix: matrix_identity_float4x4,
                 into: renderQueue,
                 transform: RenderPayload.effect
+            )
+        }
+
+        for payload in snapshot.strEffectPayloads {
+            strEffectRenderer.submit(
+                payload: payload,
+                into: renderQueue,
+                transformPayload: RenderPayload.strEffect
             )
         }
 
@@ -334,6 +345,12 @@ final class MapSceneRenderer {
                 )
             case .effect(let payload):
                 effectRenderer.render(
+                    payload: payload,
+                    camera: camera,
+                    renderCommandEncoder: renderCommandEncoder
+                )
+            case .strEffect(let payload):
+                strEffectRenderer.render(
                     payload: payload,
                     camera: camera,
                     renderCommandEncoder: renderCommandEncoder

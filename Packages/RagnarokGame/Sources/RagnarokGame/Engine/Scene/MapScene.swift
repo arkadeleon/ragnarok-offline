@@ -10,6 +10,7 @@ import Foundation
 import QuartzCore
 import RagnarokConstants
 import RagnarokCore
+import RagnarokEffects
 import RagnarokModels
 import RagnarokPackets
 import RagnarokRenderAssets
@@ -45,6 +46,7 @@ public final class MapScene {
     let state: MapSceneState
 
     var camera = MapSceneCamera()
+    var lastCameraWorldPosition: SIMD3<Float>?
 
     var tileSelector: TileSelector?
     var targetSelector: TargetSelector?
@@ -374,7 +376,7 @@ extension MapScene {
         observer?.mapSceneDidRemoveEffect(id: id)
     }
 
-    func removeEffects(ownedBy ownerObjectID: GameObjectID, key: MapEffectAttachmentKey? = nil) {
+    func removeEffects(ownedBy ownerObjectID: GameObjectID, key: EffectAttachmentKey? = nil) {
         for effectID in world.removeEffects(ownedBy: ownerObjectID, key: key) {
             observer?.mapSceneDidRemoveEffect(id: effectID)
         }
@@ -819,26 +821,61 @@ extension MapScene {
     }
 }
 
-// MARK: - MapWorldContext
+// MARK: - EffectWorldContext
 
-extension MapScene: MapWorldContext {
-    func terrainHeight(atWorldX x: Float, worldZ: Float) -> Float {
-        world.mapGrid.height(atWorldX: x, worldZ: worldZ)
+extension MapScene: EffectWorldContext {
+    public var cameraWorldPosition: SIMD3<Float> {
+        lastCameraWorldPosition ?? world.player.worldPosition
     }
 
-    func object(for id: GameObjectID) -> MapSceneMapObject? {
-        world.objects[id]
+    public func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float {
+        let worldX = x * EffectSpace.effectToWorldScale
+        let worldZ = -z * EffectSpace.effectToWorldScale
+        let worldY = world.mapGrid.height(atWorldX: worldX, worldZ: worldZ)
+        return EffectSpace.toEffectHeight(worldY)
     }
 
-    func playSoundEffect(named name: String, after delay: TimeInterval) {
+    public func targetState(for targetID: EffectTargetID) -> EffectTargetState? {
+        guard let object = world.objects[targetID] else {
+            return nil
+        }
+        return EffectTargetState(
+            objectID: object.objectID,
+            worldPosition: object.worldPosition,
+            headHeight: 2.0,
+            facingAngle: 0,
+            directionIndex: object.action.direction.rawValue,
+            isValid: !object.isDead
+        )
+    }
+
+    public func playSound(named name: String, atWorldPosition position: SIMD3<Float>?, delay: TimeInterval) {
         audioPlayer.playSoundEffect(named: name, afterDelay: delay)
     }
 
-    func shakeCamera(amplitude: Float, duration: TimeInterval, frequency: Float) {
+    public func shakeCamera(amplitude: Float, duration: TimeInterval, frequency: Float) {
         camera.shake(amplitude: amplitude, duration: duration, frequency: frequency)
     }
 
-    func spawnEffect(_ effect: MapSceneEffect) {
+    public func applyTargetModifier(_ modifier: EffectTargetModifier, to targetID: EffectTargetID) {
+    }
+
+    public func spawnChildEffect(_ request: EffectSpawnRequest) {
+        guard let effectID = request.effectID else {
+            return
+        }
+        let effect = MapSceneEffect(
+            reference: .id(effectID),
+            creationTime: CACurrentMediaTime(),
+            gridPosition: [Int(request.worldPosition.x), Int(-request.worldPosition.z)],
+            worldPosition: request.worldPosition,
+            sourceWorldPosition: request.sourceWorldPosition,
+            targetObjectID: request.targetObjectID,
+            ownerObjectID: request.ownerObjectID,
+            attachmentKey: request.attachmentKey,
+            delay: request.delay,
+            duration: request.duration
+        )
         addEffect(effect)
     }
 }

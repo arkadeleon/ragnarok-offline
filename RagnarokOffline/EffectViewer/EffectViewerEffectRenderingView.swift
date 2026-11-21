@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/6/29.
 //
 
+import Combine
 import Metal
 import RagnarokConstants
 import RagnarokEffects
@@ -13,7 +14,7 @@ import RagnarokResources
 import SwiftUI
 
 struct EffectViewerEffectRenderingView: View {
-    var effectID: EffectID
+    var effect: EffectViewerEffect
     var resourceManager: ResourceManager
     var onReplay: () -> Void
 
@@ -48,13 +49,22 @@ struct EffectViewerEffectRenderingView: View {
     }
 
     private func loadRenderer() async throws -> EffectViewerEffectRenderer {
-        let definitions = EffectTable.definitions(for: effectID)
-
         let device = MTLCreateSystemDefaultDevice()!
+
+        let effectManager = EffectManager()
+        if effectManager.supports(rawEffectID: effect.rawEffectID) {
+            return try EffectViewerEffectRenderer(
+                device: device,
+                configuration: .default,
+                rawEffectID: effect.rawEffectID,
+                resourceManager: resourceManager
+            )
+        }
+
+        let definitions = effect.effectID.map(EffectTable.definitions(for:)) ?? []
         let loader = EffectAssetLoader(resourceManager: resourceManager)
         let assetGroup = try await loader.loadAssetGroup(with: definitions)
 
-        let renderer = try EffectViewerEffectRenderer(device: device, configuration: .default, assetGroup: assetGroup)
-        return renderer
+        return try EffectViewerEffectRenderer(device: device, configuration: .default, assetGroup: assetGroup)
     }
 }

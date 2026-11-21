@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RagnarokRendering
+import simd
 
 public struct EffectTickContext {
     public let world: any EffectWorldContext
@@ -44,6 +46,15 @@ public protocol EffectInstance: AnyObject {
 
     func tick(context: EffectTickContext)
     func stop()
+}
+
+@MainActor
+public protocol STREffectRenderable: EffectInstance {
+    func makeSTRRenderPayloads(
+        fog: Fog,
+        modelMatrix: simd_float4x4,
+        world: any EffectWorldContext
+    ) -> [STREffectRenderer.RenderPayload]
 }
 
 @MainActor
@@ -115,12 +126,11 @@ public final class EffectManager {
     }
 
     @discardableResult
-    public func spawn(_ request: EffectSpawnRequest) -> UUID? {
+    public func spawn(_ request: EffectSpawnRequest, id: UUID = UUID()) -> UUID? {
         guard supports(rawEffectID: request.rawEffectID) else {
             return nil
         }
 
-        let id = UUID()
         if request.delay > 0 {
             let delayTicks = max(1, Int((request.delay * Self.tickRate).rounded()))
             let spawn = PendingSpawn(id: id, request: request, remainingTicks: delayTicks)
@@ -226,6 +236,21 @@ public final class EffectManager {
         for childRequest in childRequests where spawn(childRequest) == nil {
             world.spawnChildEffect(childRequest)
         }
+    }
+
+    public func collectSTRPayloads(
+        fog: Fog,
+        modelMatrix: simd_float4x4 = matrix_identity_float4x4,
+        world: any EffectWorldContext
+    ) -> [STREffectRenderer.RenderPayload] {
+        var payloads: [STREffectRenderer.RenderPayload] = []
+        for effect in activeEffects {
+            if let renderable = effect as? any STREffectRenderable {
+                let strPayloads = renderable.makeSTRRenderPayloads(fog: fog, modelMatrix: modelMatrix, world: world)
+                payloads.append(contentsOf: strPayloads)
+            }
+        }
+        return payloads
     }
 
     @discardableResult

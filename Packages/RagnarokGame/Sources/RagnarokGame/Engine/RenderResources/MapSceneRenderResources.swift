@@ -26,6 +26,8 @@ final class MapSceneRenderResources {
     private(set) var combatTextTexture: (any MTLTexture)?
 
     private var effectAssetLoader: EffectAssetLoader?
+    private var effectAssetStore: EffectAssetStore?
+    private(set) var effectManager = EffectManager()
     private(set) var worldEffectResources: [EffectRenderResourceGroup] = []
     private var effectResources: [UUID : EffectRenderResourceGroup] = [:]
     private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
@@ -74,9 +76,20 @@ final class MapSceneRenderResources {
     ) {
         cancelEffectLoads()
         effectAssetLoader = EffectAssetLoader(resourceManager: resourceManager)
+        let assetStore = EffectAssetStore(device: device, resourceManager: resourceManager)
+        effectAssetStore = assetStore
+        effectManager = EffectManager(assetStore: assetStore)
         worldEffectResources.removeAll()
         effectResources.removeAll()
         onEffectSound = onSound
+    }
+
+    func updateEffects(atTime currentTime: TimeInterval, world: any EffectWorldContext) {
+        effectManager.update(atTime: currentTime, world: world)
+    }
+
+    func collectSTRPayloads(fog: Fog, world: any EffectWorldContext) -> [STREffectRenderer.RenderPayload] {
+        effectManager.collectSTRPayloads(fog: fog, world: world)
     }
 
     func loadWorldEffects(_ effects: [WorldEffect]) async {
@@ -169,6 +182,7 @@ final class MapSceneRenderResources {
     }
 
     private func removeEffect(objectID: UUID) {
+        effectManager.removeEffect(id: objectID)
         effectResources.removeValue(forKey: objectID)
         effectLoadTasks.removeValue(forKey: objectID)?.cancel()
     }
@@ -181,6 +195,9 @@ final class MapSceneRenderResources {
         combatTextTexture = nil
 
         cancelEffectLoads()
+        effectManager.removeAll()
+        effectAssetStore?.removeAll()
+        effectAssetStore = nil
         effectAssetLoader = nil
         worldEffectResources.removeAll()
         effectResources.removeAll()
@@ -218,6 +235,22 @@ extension MapSceneRenderResources: MapSceneObserver {
     }
 
     func mapSceneDidAddEffect(_ effect: MapSceneEffect) {
+        if case .id(let effectID) = effect.reference, effectManager.supports(effectID) {
+            let request = EffectSpawnRequest(
+                effectID: effectID,
+                worldPosition: effect.worldPosition,
+                sourceWorldPosition: effect.sourceWorldPosition,
+                ownerObjectID: effect.ownerObjectID,
+                targetObjectID: effect.targetObjectID,
+                attachmentKey: effect.attachmentKey,
+                delay: effect.delay,
+                duration: effect.duration
+            )
+            if effectManager.spawn(request, id: effect.id) != nil {
+                return
+            }
+        }
+
         loadEffect(effect)
     }
 
@@ -229,6 +262,7 @@ extension MapSceneRenderResources: MapSceneObserver {
         spriteAssetStore?.removeAll()
         spriteDrawables.removeAll()
         cancelEffectLoads()
+        effectManager.removeAll()
         effectResources.removeAll()
     }
 }

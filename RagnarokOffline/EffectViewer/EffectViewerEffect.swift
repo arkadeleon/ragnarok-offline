@@ -8,17 +8,37 @@
 import RagnarokEffects
 
 struct EffectViewerEffect: Identifiable, Hashable {
+    @MainActor
     static var all: [EffectViewerEffect] {
-        EffectTable.effectIDs.map(EffectViewerEffect.init(effectID:))
+        let effectManager = EffectManager()
+        var ids = Set(EffectTable.effectIDs.map(\.rawValue))
+        ids.formUnion(effectManager.supportedRawEffectIDs)
+        return ids.sorted().map(EffectViewerEffect.init(rawEffectID:))
     }
 
-    var effectID: EffectID
+    var rawEffectID: Int
+
+    var effectID: EffectID? {
+        EffectID(rawValue: rawEffectID)
+    }
 
     var id: Int {
-        effectID.rawValue
+        rawEffectID
     }
 
     var displayName: String {
-        String(describing: effectID).uppercased()
+        if let effectID {
+            "#\(rawEffectID) \(String(describing: effectID).uppercased())"
+        } else {
+            "#\(rawEffectID) BSON_\(rawEffectID)"
+        }
+    }
+
+    init(rawEffectID: Int) {
+        self.rawEffectID = rawEffectID
+    }
+
+    init(effectID: EffectID) {
+        self.rawEffectID = effectID.rawValue
     }
 }

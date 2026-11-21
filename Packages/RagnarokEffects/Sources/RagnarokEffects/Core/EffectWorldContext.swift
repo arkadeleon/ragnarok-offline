@@ -167,6 +167,7 @@ public enum EffectTargetModifier: Sendable, Equatable {
 
 /// Single boundary protocol bridging `EffectManager` with its host world
 /// (`MapWorldContext` in-game or `PreviewEffectWorldContext` in `EffectViewer`).
+@MainActor
 public protocol EffectWorldContext: AnyObject {
     /// Returns terrain elevation in native effect space (`-worldY * 5.0`) at the given effect-space XZ coordinates.
     func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float

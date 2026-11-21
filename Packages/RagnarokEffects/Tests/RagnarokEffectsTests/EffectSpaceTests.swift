@@ -123,6 +123,7 @@ struct EffectSpaceTests {
         #expect(approxEqual(EffectSpace.scaleDistance(0.0, viewportScaleX: 1280.0), 0.0))
     }
 
+    @MainActor
     @Test("EffectSpawnRequest and EffectWorldContext bridge coordinates")
     func contextAndRequestBridge() {
         final class StubWorldContext: EffectWorldContext {

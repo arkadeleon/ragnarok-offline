@@ -122,7 +122,15 @@ public final class STREffectRenderer {
             terrainHeight: terrainHeight
         )
 
-        let bucket: RenderPassBucket = switch mode {
+        submit(payload: payload, into: queue, transformPayload: transformPayload)
+    }
+
+    public func submit<Payload>(
+        payload: RenderPayload,
+        into queue: RenderQueue<Payload>,
+        transformPayload: (RenderPayload) -> Payload
+    ) {
+        let bucket: RenderPassBucket = switch payload.mode {
         case .ground:
             .groundDecal
         case .billboard:
@@ -133,8 +141,8 @@ public final class STREffectRenderer {
 
         queue.submit(
             bucket: bucket,
-            worldCenter: worldPosition,
-            modelMatrix: modelMatrix,
+            worldCenter: payload.worldPosition,
+            modelMatrix: payload.modelMatrix,
             payload: transformPayload(payload)
         )
     }
