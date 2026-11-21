@@ -7,8 +7,8 @@
 
 import Foundation
 import Metal
-import RagnarokRendering
 import RagnarokRenderAssets
+import RagnarokRendering
 import simd
 
 public final class EffectRenderResourceGroup {

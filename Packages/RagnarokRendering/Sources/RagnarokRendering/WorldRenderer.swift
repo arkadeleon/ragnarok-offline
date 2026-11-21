@@ -77,7 +77,6 @@ public final class WorldRenderer {
                 payload: transform(.water(resource: resource.waterResource, time: time, fog: fog, modelMatrix: modelMatrix))
             )
         }
-
     }
 
     public func render(

@@ -127,8 +127,15 @@ struct EffectSpaceTests {
     func contextAndRequestBridge() {
         final class StubWorldContext: EffectWorldContext {
             var cameraWorldPosition: SIMD3<Float> = SIMD3<Float>(10, 5, 10)
-            func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float { 0 }
-            func targetState(for targetID: EffectTargetID) -> EffectTargetState? { nil }
+
+            func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float {
+                0
+            }
+
+            func targetState(for targetID: EffectTargetID) -> EffectTargetState? {
+                nil
+            }
+
             func playSound(named name: String, atWorldPosition position: SIMD3<Float>?, delay: TimeInterval) {}
             func shakeCamera(amplitude: Float, duration: TimeInterval, frequency: Float) {}
             func applyTargetModifier(_ modifier: EffectTargetModifier, to targetID: EffectTargetID) {}

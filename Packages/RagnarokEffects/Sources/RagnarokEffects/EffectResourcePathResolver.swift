@@ -197,7 +197,6 @@ public struct EffectResourcePathResolver: Sendable {
         }
         return resolveMinimalSTRPath(path)
     }
-
 }
 
 private extension Unicode.Scalar {
