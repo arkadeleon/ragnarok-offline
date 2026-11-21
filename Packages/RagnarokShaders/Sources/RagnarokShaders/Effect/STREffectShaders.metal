@@ -39,18 +39,43 @@ strEffectVertexShader(const device STREffectVertex *vertices [[buffer(0)]],
     const float pixelRatio = 1.0 / 35.0;
 
     STREffectVertex in = vertices[vertexIndex];
+    RasterizerData out;
+    out.textureCoordinate = in.textureCoordinate;
 
+    if (uniforms.renderMode == 1) {
+        // Ground mode: vertices are already placed in world space with terrain heights.
+        float4 viewPosition = uniforms.viewMatrix * uniforms.modelMatrix * float4(in.position, 1.0);
+        float4 position = uniforms.projectionMatrix * viewPosition;
+        position.z -= uniforms.depthBias;
+        out.position = position;
+        out.fogDepth = -viewPosition.z;
+        return out;
+    }
+
+    if (uniforms.renderMode == 2) {
+        // Screen mode: anchor to projected world position in NDC and apply 2D/3D screen transform.
+        float4 clipAnchor = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * float4(uniforms.spritePosition, 1.0);
+        float2 ndcAnchor = abs(clipAnchor.w) > 0.0001 ? (clipAnchor.xy / clipAnchor.w) : float2(0.0, 0.0);
+
+        float4 local = uniforms.spriteAngle * float4(in.position.x, -in.position.y, 0.0, 1.0);
+        float2 offsetPixels = float2(local.x + uniforms.spriteOffset.x, local.y - uniforms.spriteOffset.y);
+        float2 ndcPosition = ndcAnchor + offsetPixels * uniforms.screenScale;
+
+        out.position = float4(ndcPosition, 0.0, 1.0);
+        out.fogDepth = 0.0;
+        return out;
+    }
+
+    // Billboard mode (default): spherical billboard facing the camera.
     float4 position = uniforms.spriteAngle * float4(in.position.x * pixelRatio, -in.position.y * pixelRatio, 0.0, 1.0);
     position.x += uniforms.spriteOffset.x * pixelRatio;
     position.y -= uniforms.spriteOffset.y * pixelRatio + 0.5;
 
     float4 viewPosition = project(uniforms.viewMatrix * uniforms.modelMatrix, uniforms.spritePosition) * position;
     position = uniforms.projectionMatrix * viewPosition;
-    position.z -= 0.1;
+    position.z -= uniforms.depthBias;
 
-    RasterizerData out;
     out.position = position;
-    out.textureCoordinate = in.textureCoordinate;
     out.fogDepth = -viewPosition.z;
     return out;
 }

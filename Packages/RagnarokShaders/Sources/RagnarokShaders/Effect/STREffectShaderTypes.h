@@ -8,7 +8,7 @@
 #include <simd/simd.h>
 
 typedef struct {
-    vector_float2 position;
+    vector_float3 position;
     vector_float2 textureCoordinate;
 } STREffectVertex;
 
@@ -20,6 +20,9 @@ typedef struct {
     matrix_float4x4 spriteAngle;
     vector_float3 spritePosition;
     vector_float2 spriteOffset;
+    vector_float2 screenScale;
+    float depthBias;
+    int renderMode;
 } STREffectVertexUniforms;
 
 typedef struct {
