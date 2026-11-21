@@ -1,0 +1,262 @@
+//
+//  EffectManager.swift
+//  RagnarokEffects
+//
+//  Created by Leon Li on 2026/11/20.
+//
+
+import Foundation
+
+public struct EffectTickContext {
+    public let world: any EffectWorldContext
+    public let assets: EffectAssetStore?
+    public let currentTick: Int
+    public let usesMinimalEffects: Bool
+
+    private let onSpawnChild: (EffectSpawnRequest) -> Void
+
+    init(
+        world: any EffectWorldContext,
+        assets: EffectAssetStore?,
+        currentTick: Int,
+        usesMinimalEffects: Bool,
+        onSpawnChild: @escaping (EffectSpawnRequest) -> Void
+    ) {
+        self.world = world
+        self.assets = assets
+        self.currentTick = currentTick
+        self.usesMinimalEffects = usesMinimalEffects
+        self.onSpawnChild = onSpawnChild
+    }
+
+    public func spawnChildEffect(_ request: EffectSpawnRequest) {
+        onSpawnChild(request)
+    }
+}
+
+@MainActor
+public protocol EffectInstance: AnyObject {
+    var id: UUID { get }
+    var rawEffectID: Int { get }
+    var ownerObjectID: EffectTargetID? { get }
+    var attachmentKey: EffectAttachmentKey { get }
+    var isAlive: Bool { get }
+
+    func tick(context: EffectTickContext)
+    func stop()
+}
+
+@MainActor
+public final class EffectManager {
+    public static let tickRate: Double = 60.0
+    public static let tickDuration: TimeInterval = 1.0 / tickRate
+    public static let maxTicksPerUpdate: Int = 4
+
+    public typealias EffectBuilder = (UUID, EffectSpawnRequest) -> any EffectInstance
+
+    private struct PendingSpawn {
+        let id: UUID
+        let request: EffectSpawnRequest
+        var remainingTicks: Int
+    }
+
+    public let assetStore: EffectAssetStore?
+    public var usesMinimalEffects: Bool
+
+    public private(set) var currentTick: Int = 0
+    public private(set) var activeEffects: [any EffectInstance] = []
+
+    private var pendingSpawns: [PendingSpawn] = []
+    private var particleEffectBuilders: [Int : EffectBuilder] = [:]
+    private var ragEffectBuilders: [Int : EffectBuilder] = [:]
+
+    private var lastUpdateTime: TimeInterval?
+    private var tickAccumulator: TimeInterval = 0
+
+    public init(assetStore: EffectAssetStore? = nil, usesMinimalEffects: Bool = false) {
+        self.assetStore = assetStore
+        self.usesMinimalEffects = usesMinimalEffects
+    }
+
+    public func registerParticleEffect(for rawEffectID: Int, builder: @escaping EffectBuilder) {
+        particleEffectBuilders[rawEffectID] = builder
+    }
+
+    public func registerParticleEffect(for effectID: EffectID, builder: @escaping EffectBuilder) {
+        particleEffectBuilders[effectID.rawValue] = builder
+    }
+
+    public func registerRagEffect(for rawEffectID: Int, builder: @escaping EffectBuilder) {
+        ragEffectBuilders[rawEffectID] = builder
+    }
+
+    public func registerRagEffect(for effectID: EffectID, builder: @escaping EffectBuilder) {
+        ragEffectBuilders[effectID.rawValue] = builder
+    }
+
+    public func supports(rawEffectID: Int) -> Bool {
+        particleEffectBuilders[rawEffectID] != nil || ragEffectBuilders[rawEffectID] != nil
+    }
+
+    public func supports(_ effectID: EffectID) -> Bool {
+        supports(rawEffectID: effectID.rawValue)
+    }
+
+    public var supportedRawEffectIDs: [Int] {
+        Set(particleEffectBuilders.keys).union(ragEffectBuilders.keys).sorted()
+    }
+
+    public var hasActiveEffects: Bool {
+        !activeEffects.isEmpty || !pendingSpawns.isEmpty
+    }
+
+    public var activeEffectCount: Int {
+        activeEffects.count + pendingSpawns.count
+    }
+
+    @discardableResult
+    public func spawn(_ request: EffectSpawnRequest) -> UUID? {
+        guard supports(rawEffectID: request.rawEffectID) else {
+            return nil
+        }
+
+        let id = UUID()
+        if request.delay > 0 {
+            let delayTicks = max(1, Int((request.delay * Self.tickRate).rounded()))
+            let spawn = PendingSpawn(id: id, request: request, remainingTicks: delayTicks)
+            pendingSpawns.append(spawn)
+            return id
+        }
+
+        return spawnImmediately(id: id, request: request)
+    }
+
+    public func removeEffects(ownedBy ownerObjectID: EffectTargetID, key: EffectAttachmentKey? = nil) {
+        pendingSpawns.removeAll {
+            $0.request.ownerObjectID == ownerObjectID && (key == nil || $0.request.attachmentKey == key)
+        }
+        activeEffects.removeAll { effect in
+            let matches = effect.ownerObjectID == ownerObjectID && (key == nil || effect.attachmentKey == key)
+            if matches {
+                effect.stop()
+            }
+            return matches
+        }
+    }
+
+    public func removeEffect(id: UUID) {
+        pendingSpawns.removeAll {
+            $0.id == id
+        }
+        activeEffects.removeAll {
+            guard $0.id == id else {
+                return false
+            }
+            $0.stop()
+            return true
+        }
+    }
+
+    public func removeAll() {
+        pendingSpawns.removeAll()
+        activeEffects.forEach {
+            $0.stop()
+        }
+        activeEffects.removeAll()
+        lastUpdateTime = nil
+        tickAccumulator = 0
+    }
+
+    @discardableResult
+    public func update(atTime time: TimeInterval, world: any EffectWorldContext) -> Int {
+        guard let previousTime = lastUpdateTime else {
+            lastUpdateTime = time
+            return 0
+        }
+        lastUpdateTime = time
+        return advance(deltaTime: max(0, time - previousTime), world: world)
+    }
+
+    @discardableResult
+    public func advance(deltaTime: TimeInterval, world: any EffectWorldContext) -> Int {
+        guard deltaTime > 0 else {
+            return 0
+        }
+
+        let epsilon: TimeInterval = 1e-9
+        tickAccumulator += deltaTime
+
+        var ticks = 0
+        while tickAccumulator + epsilon >= Self.tickDuration && ticks < Self.maxTicksPerUpdate {
+            tickAccumulator = max(0, tickAccumulator - Self.tickDuration)
+            stepOneTick(world: world)
+            ticks += 1
+        }
+
+        if ticks == Self.maxTicksPerUpdate && tickAccumulator + epsilon >= Self.tickDuration {
+            tickAccumulator = tickAccumulator.truncatingRemainder(dividingBy: Self.tickDuration)
+        }
+
+        return ticks
+    }
+
+    public func stepOneTick(world: any EffectWorldContext) {
+        currentTick += 1
+        processPendingSpawns()
+
+        var childRequests: [EffectSpawnRequest] = []
+        let context = EffectTickContext(
+            world: world,
+            assets: assetStore,
+            currentTick: currentTick,
+            usesMinimalEffects: usesMinimalEffects,
+            onSpawnChild: {
+                childRequests.append($0)
+            }
+        )
+
+        for effect in activeEffects where effect.isAlive {
+            effect.tick(context: context)
+        }
+
+        activeEffects.removeAll {
+            !$0.isAlive
+        }
+
+        for childRequest in childRequests where spawn(childRequest) == nil {
+            world.spawnChildEffect(childRequest)
+        }
+    }
+
+    @discardableResult
+    private func spawnImmediately(id: UUID, request: EffectSpawnRequest) -> UUID? {
+        guard let builder = particleEffectBuilders[request.rawEffectID] ?? ragEffectBuilders[request.rawEffectID] else {
+            return nil
+        }
+
+        let effect = builder(id, request)
+        activeEffects.append(effect)
+        return id
+    }
+
+    private func processPendingSpawns() {
+        guard !pendingSpawns.isEmpty else {
+            return
+        }
+
+        var readySpawns: [PendingSpawn] = []
+        pendingSpawns = pendingSpawns.compactMap { pendingSpawn in
+            var nextSpawn = pendingSpawn
+            nextSpawn.remainingTicks -= 1
+            if nextSpawn.remainingTicks <= 0 {
+                readySpawns.append(nextSpawn)
+                return nil
+            }
+            return nextSpawn
+        }
+
+        for spawn in readySpawns {
+            _ = spawnImmediately(id: spawn.id, request: spawn.request)
+        }
+    }
+}
