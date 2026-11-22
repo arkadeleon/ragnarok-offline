@@ -16,6 +16,7 @@ import SwiftUI
 struct EffectViewerEffectRenderingView: View {
     var effect: EffectViewerEffect
     var resourceManager: ResourceManager
+    var ez2strEffectCatalog: EZ2STREffectCatalog? = nil
     var onReplay: () -> Void
 
     private let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
@@ -51,12 +52,13 @@ struct EffectViewerEffectRenderingView: View {
     private func loadRenderer() async throws -> EffectViewerEffectRenderer {
         let device = MTLCreateSystemDefaultDevice()!
 
-        if EffectManager.supports(rawEffectID: effect.rawEffectID) {
+        if EffectManager.supports(rawEffectID: effect.rawEffectID) || ez2strEffectCatalog?.entry(forRawEffectID: effect.rawEffectID) != nil {
             return try EffectViewerEffectRenderer(
                 device: device,
                 configuration: .default,
                 rawEffectID: effect.rawEffectID,
-                resourceManager: resourceManager
+                resourceManager: resourceManager,
+                ez2strEffectCatalog: ez2strEffectCatalog
             )
         }
 

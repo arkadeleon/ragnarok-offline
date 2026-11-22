@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct EffectViewerEffectListView: View {
+    var effects: [EffectViewerEffect] = EffectViewerEffect.all
     @Binding var selection: EffectViewerEffect?
 
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         List {
-            ForEach(EffectViewerEffect.all) { effect in
+            ForEach(effects) { effect in
                 Button {
                     selection = effect
                     dismiss()

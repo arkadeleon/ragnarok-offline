@@ -57,13 +57,14 @@ class EffectViewerEffectRenderer: Renderer {
         device: any MTLDevice,
         configuration: RenderConfiguration,
         rawEffectID: Int,
-        resourceManager: ResourceManager
+        resourceManager: ResourceManager,
+        ez2strEffectCatalog: EZ2STREffectCatalog? = nil
     ) throws {
         self.device = device
         self.configuration = configuration
 
         let assetStore = EffectAssetStore(device: device, resourceManager: resourceManager)
-        let manager = EffectManager(assetStore: assetStore)
+        let manager = EffectManager(assetStore: assetStore, ez2strEffectCatalog: ez2strEffectCatalog)
         let world = EffectViewerEffectWorldContext()
         let strRenderer = try STREffectRenderer(device: device, configuration: configuration)
 

@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/3/14.
 //
 
+import RagnarokEffects
 import RagnarokResources
 import SwiftUI
 
@@ -16,11 +17,18 @@ struct EffectViewer: View {
     @State private var isPicking = false
     @State private var selectedEffect: EffectViewerEffect?
     @State private var replayToken = 0
+    @State private var ez2strEffectCatalog: EZ2STREffectCatalog?
 
     var body: some View {
+        let effects = EffectViewerEffect.all(ez2strEffectCatalog: ez2strEffectCatalog)
+
         ZStack {
             if let selectedEffect {
-                EffectViewerEffectRenderingView(effect: selectedEffect, resourceManager: resourceManager) {
+                EffectViewerEffectRenderingView(
+                    effect: selectedEffect,
+                    resourceManager: resourceManager,
+                    ez2strEffectCatalog: ez2strEffectCatalog
+                ) {
                     replayToken += 1
                 }
                 .id("\(selectedEffect.id)-\(replayToken)")
@@ -70,10 +78,16 @@ struct EffectViewer: View {
         }
         .sheet(isPresented: $isPicking) {
             NavigationStack {
-                EffectViewerEffectListView(selection: $selectedEffect)
+                EffectViewerEffectListView(
+                    effects: effects,
+                    selection: $selectedEffect
+                )
             }
             .presentationSizing(.form)
             .adaptiveNavigationTransition(sourceID: "effect", in: effectNamespace)
+        }
+        .task {
+            ez2strEffectCatalog = await EZ2STREffectCatalog.load(from: resourceManager)
         }
     }
 }
