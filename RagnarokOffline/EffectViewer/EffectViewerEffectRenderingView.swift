@@ -51,8 +51,7 @@ struct EffectViewerEffectRenderingView: View {
     private func loadRenderer() async throws -> EffectViewerEffectRenderer {
         let device = MTLCreateSystemDefaultDevice()!
 
-        let effectManager = EffectManager()
-        if effectManager.supports(rawEffectID: effect.rawEffectID) {
+        if EffectManager.supports(rawEffectID: effect.rawEffectID) {
             return try EffectViewerEffectRenderer(
                 device: device,
                 configuration: .default,

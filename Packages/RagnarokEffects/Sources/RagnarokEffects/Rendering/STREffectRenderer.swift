@@ -60,12 +60,35 @@ public final class STREffectRenderer {
     public struct RenderPayload {
         public let asset: STREffectAsset
         public let frameIndex: Int
+        public let frame: STREffectAnimation.Frame?
         public let mode: STREffectRenderMode
         public let worldPosition: SIMD3<Float>
         public let transform: STREffectTransform
         public let fog: Fog
         public let modelMatrix: simd_float4x4
         public let terrainHeight: ((_ worldX: Float, _ worldZ: Float) -> Float)?
+
+        public init(
+            asset: STREffectAsset,
+            frameIndex: Int = 0,
+            frame: STREffectAnimation.Frame? = nil,
+            mode: STREffectRenderMode = .billboard,
+            worldPosition: SIMD3<Float>,
+            transform: STREffectTransform = .identity,
+            fog: Fog,
+            modelMatrix: simd_float4x4 = matrix_identity_float4x4,
+            terrainHeight: ((_ worldX: Float, _ worldZ: Float) -> Float)? = nil
+        ) {
+            self.asset = asset
+            self.frameIndex = frameIndex
+            self.frame = frame
+            self.mode = mode
+            self.worldPosition = worldPosition
+            self.transform = transform
+            self.fog = fog
+            self.modelMatrix = modelMatrix
+            self.terrainHeight = terrainHeight
+        }
     }
 
     private static let pixelRatio: Float = 1.0 / 35.0
@@ -152,7 +175,7 @@ public final class STREffectRenderer {
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
-        let frame = payload.asset.animation.frame(atFrameIndex: payload.frameIndex)
+        let frame = payload.frame ?? payload.asset.animation.frame(atFrameIndex: payload.frameIndex)
         render(
             frame: frame,
             textures: payload.asset.textures,

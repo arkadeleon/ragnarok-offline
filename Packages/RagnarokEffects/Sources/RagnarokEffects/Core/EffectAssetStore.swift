@@ -46,7 +46,7 @@ public final class EffectAssetStore {
         self.pathResolver = pathResolver
     }
 
-    public func strAsset(at path: String) -> STREffectAsset? {
+    public func strAsset(atPath path: String) -> STREffectAsset? {
         let resolvedPath = pathResolver.resolveSTRPath(path)
         switch strAssets[resolvedPath] {
         case .loaded(let asset):
@@ -72,6 +72,14 @@ public final class EffectAssetStore {
         case nil:
             return await startSTRLoad(resolvedPath: resolvedPath).value
         }
+    }
+
+    public func hasFailedSTRAsset(atPath path: String) -> Bool {
+        let resolvedPath = pathResolver.resolveSTRPath(path)
+        if case .failed = strAssets[resolvedPath] {
+            return true
+        }
+        return false
     }
 
     public func removeAll() {

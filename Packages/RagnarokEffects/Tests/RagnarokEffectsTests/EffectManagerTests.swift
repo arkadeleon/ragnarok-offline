@@ -103,7 +103,8 @@ struct EffectManagerTests {
         #expect(manager.supports(.ef_stormgust))
         #expect(manager.supports(.ef_fireball))
         #expect(!manager.supports(.ef_hit1))
-        #expect(manager.supportedRawEffectIDs == [EffectID.ef_fireball.rawValue, EffectID.ef_stormgust.rawValue])
+        #expect(manager.supportedRawEffectIDs.contains(EffectID.ef_fireball.rawValue))
+        #expect(manager.supportedRawEffectIDs.contains(EffectID.ef_stormgust.rawValue))
 
         #expect(manager.spawn(EffectSpawnRequest(effectID: .ef_stormgust, worldPosition: .zero)) != nil)
         #expect(manager.spawn(EffectSpawnRequest(effectID: .ef_fireball, worldPosition: .zero)) != nil)
@@ -168,7 +169,7 @@ struct EffectManagerTests {
         let resourceManager = ResourceManager(resourceProvider: EmptyResourceProvider())
         let store = EffectAssetStore(device: device, resourceManager: resourceManager)
 
-        #expect(store.strAsset(at: "missing.str") == nil)
+        #expect(store.strAsset(atPath: "missing.str") == nil)
         #expect(await store.preloadSTRAsset(atPath: "missing.str") == nil)
 
         store.removeAll()

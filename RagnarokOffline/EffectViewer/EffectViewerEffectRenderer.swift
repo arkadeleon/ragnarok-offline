@@ -26,7 +26,7 @@ class EffectViewerEffectRenderer: Renderer {
 
     private enum Backend {
         case legacy(renderer: EffectRenderer, resourceGroup: EffectRenderResourceGroup)
-        case managed(manager: EffectManager, world: EffectViewerEffectWorldContext, strRenderer: STREffectRenderer, isLooping: Bool)
+        case managed(manager: EffectManager, world: EffectViewerEffectWorldContext, strRenderer: STREffectRenderer)
     }
 
     let device: any MTLDevice
@@ -77,9 +77,7 @@ class EffectViewerEffectRenderer: Renderer {
         )
         manager.spawn(request)
 
-        let isLooping = EffectID(rawValue: rawEffectID).map { $0.defaultLifetimeTicks >= 9999 } ?? false
-
-        self.backend = .managed(manager: manager, world: world, strRenderer: strRenderer, isLooping: isLooping)
+        self.backend = .managed(manager: manager, world: world, strRenderer: strRenderer)
         self.camera = Self.makeDefaultCamera()
     }
 
@@ -99,9 +97,13 @@ class EffectViewerEffectRenderer: Renderer {
         camera.update(atTime: time)
         camera.update(size: viewport.size)
 
-        if case .managed(_, let world, _, _) = backend {
+        if case .managed(_, let world, _) = backend {
             let inverseView = camera.viewMatrix.inverse
-            world.cameraWorldPosition = SIMD3<Float>(inverseView.columns.3.x, inverseView.columns.3.y, inverseView.columns.3.z)
+            world.cameraWorldPosition = [
+                inverseView.columns.3.x,
+                inverseView.columns.3.y,
+                inverseView.columns.3.z,
+            ]
         }
 
         return RenderCamera(
@@ -135,7 +137,7 @@ class EffectViewerEffectRenderer: Renderer {
                 into: renderQueue,
                 transform: RenderPayload.legacy
             )
-        case .managed(let manager, let world, let strRenderer, _):
+        case .managed(let manager, let world, let strRenderer):
             manager.update(atTime: frame.time, world: world)
             for payload in manager.collectSTRPayloads(fog: fog, world: world) {
                 strRenderer.submit(
@@ -160,7 +162,7 @@ class EffectViewerEffectRenderer: Renderer {
                             camera: view.camera,
                             renderCommandEncoder: renderCommandEncoder
                         )
-                    case (.str(let payload), .managed(_, _, let strRenderer, _)):
+                    case (.str(let payload), .managed(_, _, let strRenderer)):
                         strRenderer.render(
                             payload: payload,
                             camera: view.camera,
@@ -180,8 +182,8 @@ class EffectViewerEffectRenderer: Renderer {
         switch backend {
         case .legacy(_, let resourceGroup):
             resourceGroup.isExpired(atTime: time)
-        case .managed(let manager, _, _, let isLooping):
-            !isLooping && !manager.hasActiveEffects
+        case .managed(let manager, _, _):
+            !manager.hasActiveEffects
         }
     }
 }

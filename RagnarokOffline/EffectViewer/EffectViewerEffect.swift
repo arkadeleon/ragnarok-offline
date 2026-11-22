@@ -8,11 +8,9 @@
 import RagnarokEffects
 
 struct EffectViewerEffect: Identifiable, Hashable {
-    @MainActor
     static var all: [EffectViewerEffect] {
-        let effectManager = EffectManager()
         var ids = Set(EffectTable.effectIDs.map(\.rawValue))
-        ids.formUnion(effectManager.supportedRawEffectIDs)
+        ids.formUnion(EffectManager.supportedRawEffectIDs)
         return ids.sorted().map(EffectViewerEffect.init(rawEffectID:))
     }
 

@@ -59,16 +59,31 @@ public protocol STREffectRenderable: EffectInstance {
 
 @MainActor
 public final class EffectManager {
-    public static let tickRate: Double = 60.0
-    public static let tickDuration: TimeInterval = 1.0 / tickRate
-    public static let maxTicksPerUpdate: Int = 4
-
     public typealias EffectBuilder = (UUID, EffectSpawnRequest) -> any EffectInstance
 
     private struct PendingSpawn {
         let id: UUID
         let request: EffectSpawnRequest
         var remainingTicks: Int
+    }
+
+    public static let tickRate: Double = 60.0
+    public static let tickDuration: TimeInterval = 1.0 / tickRate
+    public static let maxTicksPerUpdate: Int = 4
+
+    public nonisolated static var supportedRawEffectIDs: [Int] {
+        RagSTREffectDefinition.definitions.map(\.effectID.rawValue)
+    }
+
+    public nonisolated static func supports(rawEffectID: Int) -> Bool {
+        guard let effectID = EffectID(rawValue: rawEffectID) else {
+            return false
+        }
+        return supports(effectID)
+    }
+
+    public nonisolated static func supports(_ effectID: EffectID) -> Bool {
+        RagSTREffectDefinition.definition(for: effectID) != nil
     }
 
     public let assetStore: EffectAssetStore?
@@ -89,24 +104,26 @@ public final class EffectManager {
         self.usesMinimalEffects = usesMinimalEffects
     }
 
-    public func registerParticleEffect(for rawEffectID: Int, builder: @escaping EffectBuilder) {
+    func registerParticleEffect(for rawEffectID: Int, builder: @escaping EffectBuilder) {
         particleEffectBuilders[rawEffectID] = builder
     }
 
-    public func registerParticleEffect(for effectID: EffectID, builder: @escaping EffectBuilder) {
+    func registerParticleEffect(for effectID: EffectID, builder: @escaping EffectBuilder) {
         particleEffectBuilders[effectID.rawValue] = builder
     }
 
-    public func registerRagEffect(for rawEffectID: Int, builder: @escaping EffectBuilder) {
+    func registerRagEffect(for rawEffectID: Int, builder: @escaping EffectBuilder) {
         ragEffectBuilders[rawEffectID] = builder
     }
 
-    public func registerRagEffect(for effectID: EffectID, builder: @escaping EffectBuilder) {
+    func registerRagEffect(for effectID: EffectID, builder: @escaping EffectBuilder) {
         ragEffectBuilders[effectID.rawValue] = builder
     }
 
     public func supports(rawEffectID: Int) -> Bool {
-        particleEffectBuilders[rawEffectID] != nil || ragEffectBuilders[rawEffectID] != nil
+        particleEffectBuilders[rawEffectID] != nil
+            || ragEffectBuilders[rawEffectID] != nil
+            || Self.supports(rawEffectID: rawEffectID)
     }
 
     public func supports(_ effectID: EffectID) -> Bool {
@@ -114,7 +131,10 @@ public final class EffectManager {
     }
 
     public var supportedRawEffectIDs: [Int] {
-        Set(particleEffectBuilders.keys).union(ragEffectBuilders.keys).sorted()
+        Set(Self.supportedRawEffectIDs)
+            .union(particleEffectBuilders.keys)
+            .union(ragEffectBuilders.keys)
+            .sorted()
     }
 
     public var hasActiveEffects: Bool {
@@ -255,11 +275,15 @@ public final class EffectManager {
 
     @discardableResult
     private func spawnImmediately(id: UUID, request: EffectSpawnRequest) -> UUID? {
-        guard let builder = particleEffectBuilders[request.rawEffectID] ?? ragEffectBuilders[request.rawEffectID] else {
+        let effect: any EffectInstance
+        if let builder = particleEffectBuilders[request.rawEffectID] ?? ragEffectBuilders[request.rawEffectID] {
+            effect = builder(id, request)
+        } else if let effectID = request.effectID, let definition = RagSTREffectDefinition.definition(for: effectID) {
+            effect = RagSTREffect(id: id, request: request, definition: definition, usesMinimalEffects: usesMinimalEffects)
+        } else {
             return nil
         }
 
-        let effect = builder(id, request)
         activeEffects.append(effect)
         return id
     }
