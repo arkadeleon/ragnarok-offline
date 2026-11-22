@@ -87,6 +87,7 @@ public final class EffectManager {
     }
 
     public let assetStore: EffectAssetStore?
+    public var ez2strEffectCatalog: EZ2STREffectCatalog?
     public var usesMinimalEffects: Bool
 
     public private(set) var currentTick: Int = 0
@@ -99,8 +100,13 @@ public final class EffectManager {
     private var lastUpdateTime: TimeInterval?
     private var tickAccumulator: TimeInterval = 0
 
-    public init(assetStore: EffectAssetStore? = nil, usesMinimalEffects: Bool = false) {
+    public init(
+        assetStore: EffectAssetStore? = nil,
+        ez2strEffectCatalog: EZ2STREffectCatalog? = nil,
+        usesMinimalEffects: Bool = false
+    ) {
         self.assetStore = assetStore
+        self.ez2strEffectCatalog = ez2strEffectCatalog
         self.usesMinimalEffects = usesMinimalEffects
     }
 
@@ -124,6 +130,7 @@ public final class EffectManager {
         particleEffectBuilders[rawEffectID] != nil
             || ragEffectBuilders[rawEffectID] != nil
             || Self.supports(rawEffectID: rawEffectID)
+            || ez2strEffectCatalog?.entry(forRawEffectID: rawEffectID) != nil
     }
 
     public func supports(_ effectID: EffectID) -> Bool {
@@ -134,6 +141,7 @@ public final class EffectManager {
         Set(Self.supportedRawEffectIDs)
             .union(particleEffectBuilders.keys)
             .union(ragEffectBuilders.keys)
+            .union(ez2strEffectCatalog?.rawEffectIDs ?? [])
             .sorted()
     }
 
@@ -278,6 +286,8 @@ public final class EffectManager {
         let effect: any EffectInstance
         if let builder = particleEffectBuilders[request.rawEffectID] ?? ragEffectBuilders[request.rawEffectID] {
             effect = builder(id, request)
+        } else if let entry = ez2strEffectCatalog?.entry(forRawEffectID: request.rawEffectID) {
+            effect = EZ2STREffect(id: id, request: request, entry: entry)
         } else if let effectID = request.effectID, let definition = RagSTREffectDefinition.definition(for: effectID) {
             effect = RagSTREffect(id: id, request: request, definition: definition, usesMinimalEffects: usesMinimalEffects)
         } else {
