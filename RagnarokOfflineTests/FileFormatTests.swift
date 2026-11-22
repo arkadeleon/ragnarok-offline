@@ -21,4 +21,12 @@ final class FileFormatTests: XCTestCase {
         XCTAssertEqual(act.actions.count, 14)
         XCTAssertEqual(act.actions[0].frames.count, 11)
     }
+
+    func testBSON() async throws {
+        let data = try await resourceManager.contentsOfResource(at: ["data", "contentdata", "effectdata", "ez2streffect.bson"])
+        let bson = try BSON(data: data)
+
+        let effects = try XCTUnwrap(bson.root["EZ2STREffect"]?.documentValue)
+        XCTAssertEqual(effects.count, 752)
+    }
 }
