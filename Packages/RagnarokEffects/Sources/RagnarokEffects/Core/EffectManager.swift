@@ -72,7 +72,9 @@ public final class EffectManager {
     public static let maxTicksPerUpdate: Int = 4
 
     public nonisolated static var supportedRawEffectIDs: [Int] {
-        RagSTREffectDefinition.definitions.map(\.effectID.rawValue)
+        let screenEffectIDs = EZ2STRScreenEffectDefinition.definitions.map(\.effectID.rawValue)
+        let ragEffectIDs = RagSTREffectDefinition.definitions.map(\.effectID.rawValue)
+        return Array(Set(screenEffectIDs).union(ragEffectIDs)).sorted()
     }
 
     public nonisolated static func supports(rawEffectID: Int) -> Bool {
@@ -83,7 +85,8 @@ public final class EffectManager {
     }
 
     public nonisolated static func supports(_ effectID: EffectID) -> Bool {
-        RagSTREffectDefinition.definition(for: effectID) != nil
+        EZ2STRScreenEffectDefinition.definition(for: effectID) != nil
+            || RagSTREffectDefinition.definition(for: effectID) != nil
     }
 
     public let assetStore: EffectAssetStore?
@@ -284,10 +287,14 @@ public final class EffectManager {
     @discardableResult
     private func spawnImmediately(id: UUID, request: EffectSpawnRequest) -> UUID? {
         let effect: any EffectInstance
-        if let builder = particleEffectBuilders[request.rawEffectID] ?? ragEffectBuilders[request.rawEffectID] {
+        if let builder = particleEffectBuilders[request.rawEffectID] {
             effect = builder(id, request)
         } else if let entry = ez2strEffectCatalog?.entry(forRawEffectID: request.rawEffectID) {
             effect = EZ2STREffect(id: id, request: request, entry: entry)
+        } else if let effectID = request.effectID, let definition = EZ2STRScreenEffectDefinition.definition(for: effectID) {
+            effect = EZ2STRScreenEffect(id: id, request: request, definition: definition, usesMinimalEffects: usesMinimalEffects)
+        } else if let builder = ragEffectBuilders[request.rawEffectID] {
+            effect = builder(id, request)
         } else if let effectID = request.effectID, let definition = RagSTREffectDefinition.definition(for: effectID) {
             effect = RagSTREffect(id: id, request: request, definition: definition, usesMinimalEffects: usesMinimalEffects)
         } else {
