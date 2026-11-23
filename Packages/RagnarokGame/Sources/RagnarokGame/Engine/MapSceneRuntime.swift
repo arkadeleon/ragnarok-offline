@@ -48,7 +48,7 @@ final class MapSceneRuntime {
 
         renderResources.prepareSprites(shadowmap: GroundShadowmap(gnd: world.gnd))
         await renderResources.prepareCombatTexts(resourceManager: scene.resourceManager)
-        renderResources.prepareEffects(resourceManager: scene.resourceManager) { [audioPlayer = scene.audioPlayer] soundName, delay in
+        await renderResources.prepareEffects(resourceManager: scene.resourceManager) { [audioPlayer = scene.audioPlayer] soundName, delay in
             audioPlayer.playSoundEffect(named: soundName, afterDelay: delay)
         }
         await renderResources.loadWorldEffects(worldAsset.effects)

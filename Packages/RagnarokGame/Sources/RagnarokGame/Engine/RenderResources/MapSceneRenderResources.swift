@@ -73,12 +73,13 @@ final class MapSceneRenderResources {
     func prepareEffects(
         resourceManager: ResourceManager,
         onSound: @escaping @MainActor (_ name: String, _ delay: TimeInterval) -> Void
-    ) {
+    ) async {
         cancelEffectLoads()
         effectAssetLoader = EffectAssetLoader(resourceManager: resourceManager)
         let assetStore = EffectAssetStore(device: device, resourceManager: resourceManager)
+        let ez2strEffectCatalog = await EZ2STREffectCatalog.load(from: resourceManager)
         effectAssetStore = assetStore
-        effectManager = EffectManager(assetStore: assetStore)
+        effectManager = EffectManager(assetStore: assetStore, ez2strEffectCatalog: ez2strEffectCatalog)
         worldEffectResources.removeAll()
         effectResources.removeAll()
         onEffectSound = onSound
@@ -242,7 +243,9 @@ extension MapSceneRenderResources: MapSceneObserver {
                 sourceWorldPosition: effect.sourceWorldPosition,
                 ownerObjectID: effect.ownerObjectID,
                 targetObjectID: effect.targetObjectID,
+                sourceObjectID: effect.sourceObjectID,
                 attachmentKey: effect.attachmentKey,
+                level: effect.level,
                 delay: effect.delay,
                 duration: effect.duration
             )

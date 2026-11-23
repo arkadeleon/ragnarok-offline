@@ -875,8 +875,10 @@ extension MapScene: EffectWorldContext {
             worldPosition: request.worldPosition,
             sourceWorldPosition: request.sourceWorldPosition,
             targetObjectID: request.targetObjectID,
+            sourceObjectID: request.sourceObjectID,
             ownerObjectID: request.ownerObjectID,
             attachmentKey: request.attachmentKey,
+            level: request.level,
             delay: request.delay,
             duration: request.duration
         )

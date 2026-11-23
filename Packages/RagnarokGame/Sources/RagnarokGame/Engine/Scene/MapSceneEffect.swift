@@ -22,10 +22,14 @@ final class MapSceneEffect: Identifiable {
 
     let targetObjectID: GameObjectID?
 
+    let sourceObjectID: GameObjectID?
+
     /// The object this effect belongs to. The effect ends when that object leaves the map.
     let ownerObjectID: GameObjectID?
 
     let attachmentKey: EffectAttachmentKey
+
+    let level: Int
 
     let delay: TimeInterval
 
@@ -38,8 +42,10 @@ final class MapSceneEffect: Identifiable {
         worldPosition: SIMD3<Float>,
         sourceWorldPosition: SIMD3<Float>? = nil,
         targetObjectID: GameObjectID?,
+        sourceObjectID: GameObjectID? = nil,
         ownerObjectID: GameObjectID?,
         attachmentKey: EffectAttachmentKey = .untagged,
+        level: Int = 0,
         delay: TimeInterval = 0,
         duration: TimeInterval? = nil
     ) {
@@ -50,8 +56,10 @@ final class MapSceneEffect: Identifiable {
         self.worldPosition = worldPosition
         self.sourceWorldPosition = sourceWorldPosition
         self.targetObjectID = targetObjectID
+        self.sourceObjectID = sourceObjectID
         self.ownerObjectID = ownerObjectID
         self.attachmentKey = attachmentKey
+        self.level = level
         self.delay = delay
         self.duration = duration
     }

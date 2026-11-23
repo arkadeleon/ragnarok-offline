@@ -531,6 +531,7 @@ extension MapScene {
                 worldPosition: worldPosition,
                 sourceWorldPosition: world.objects[sourceObjectID]?.worldPosition,
                 targetObjectID: nil,
+                sourceObjectID: sourceObjectID,
                 ownerObjectID: nil
             )
             addEffect(effect)
@@ -627,6 +628,7 @@ extension MapScene {
             worldPosition: targetObject.worldPosition,
             sourceWorldPosition: sourceObject.worldPosition,
             targetObjectID: targetObject.objectID,
+            sourceObjectID: objectAction.sourceObjectID,
             ownerObjectID: nil,
             delay: TimeInterval(objectAction.sourceSpeed) / 1000
         )
@@ -651,7 +653,9 @@ extension MapScene {
                     worldPosition: targetObject.worldPosition,
                     sourceWorldPosition: world.objects[objectSkill.sourceObjectID]?.worldPosition,
                     targetObjectID: objectSkill.targetObjectID,
+                    sourceObjectID: objectSkill.sourceObjectID,
                     ownerObjectID: nil,
+                    level: objectSkill.level,
                     delay: MapObjectHit.multiHitInterval * TimeInterval(i)
                 )
                 addEffect(effect)
@@ -677,7 +681,9 @@ extension MapScene {
                     worldPosition: targetObject.worldPosition,
                     sourceWorldPosition: world.objects[objectSkill.sourceObjectID]?.worldPosition,
                     targetObjectID: objectSkill.targetObjectID,
+                    sourceObjectID: objectSkill.sourceObjectID,
                     ownerObjectID: nil,
+                    level: objectSkill.level,
                     delay: hit.delay
                 )
                 addEffect(effect)
@@ -703,7 +709,9 @@ extension MapScene {
                 worldPosition: targetObject.worldPosition,
                 sourceWorldPosition: world.objects[objectSkill.sourceObjectID]?.worldPosition,
                 targetObjectID: objectSkill.targetObjectID,
+                sourceObjectID: objectSkill.sourceObjectID,
                 ownerObjectID: nil,
+                level: objectSkill.level,
                 delay: TimeInterval(objectSkill.attackDelay) / 1000
             )
             addEffect(effect)
@@ -727,7 +735,9 @@ extension MapScene {
                 worldPosition: targetObject.worldPosition,
                 sourceWorldPosition: world.objects[objectSkill.sourceObjectID]?.worldPosition,
                 targetObjectID: objectSkill.targetObjectID,
-                ownerObjectID: nil
+                sourceObjectID: objectSkill.sourceObjectID,
+                ownerObjectID: nil,
+                level: objectSkill.level
             )
             addEffect(effect)
         }
