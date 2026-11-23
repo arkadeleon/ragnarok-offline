@@ -36,11 +36,11 @@ public final class EZ2STREffect: STREffectRenderable {
     public private(set) var holdsFinalFrame: Bool = false
     public private(set) var isFadingOut: Bool = false
     public var repeatCount: Int = 0
-    public var lifeTimeFrames: Int = 0
+    public var lifetimeTicks: Int = 0
 
     private var remainingDelayMs: Int
-    private var frameStep: Int
-    private var eventFrame: Int = 0
+    private var delayTicks: Int
+    private var eventTick: Int = 0
     private var soundTriggered: Bool = false
     private var quakeTriggered: Bool = false
 
@@ -60,7 +60,7 @@ public final class EZ2STREffect: STREffectRenderable {
         self.worldPosition = request.worldPosition
         self.isLooping = entry.isInfinite
         self.remainingDelayMs = entry.startDelayTime
-        self.frameStep = entry.startDelayTime / 16
+        self.delayTicks = entry.startDelayTime / 16
         self.transform = STREffectTransform(offset: SIMD2<Float>(entry.offsetX, entry.offsetY))
 
         if entry.isAboveUI {
@@ -74,7 +74,7 @@ public final class EZ2STREffect: STREffectRenderable {
 
     public func setDelayMilliseconds(_ delayMs: Int) {
         remainingDelayMs = delayMs
-        frameStep = delayMs / 16
+        delayTicks = delayMs / 16
     }
 
     public func endLoop(hold: Bool) {
@@ -108,7 +108,7 @@ public final class EZ2STREffect: STREffectRenderable {
 
         if remainingDelayMs > 0 {
             remainingDelayMs -= 16
-            eventFrame += 1
+            eventTick += 1
             return
         }
 
@@ -123,7 +123,7 @@ public final class EZ2STREffect: STREffectRenderable {
 
         if let asset = loadedAsset {
             let str = asset.animation.str
-            if lifeTimeFrames > 0 && playbackState.frameCounter >= lifeTimeFrames {
+            if lifetimeTicks > 0 && playbackState.frameCounter >= lifetimeTicks {
                 isFinished = true
                 stop()
                 return
@@ -134,7 +134,7 @@ public final class EZ2STREffect: STREffectRenderable {
                 currentFrame = playbackState.makeFrame(for: str)
                 if entry.isSoundLoop && playbackState.frameCounter == 1 {
                     soundTriggered = false
-                    eventFrame = frameStep
+                    eventTick = delayTicks
                 }
             } else {
                 isFinished = true
@@ -146,7 +146,7 @@ public final class EZ2STREffect: STREffectRenderable {
                         currentFrame = playbackState.makeFrame(for: str)
                         if entry.isSoundLoop {
                             soundTriggered = false
-                            eventFrame = frameStep
+                            eventTick = delayTicks
                         }
                     }
                 } else if repeatCount > 0 {
@@ -162,7 +162,7 @@ public final class EZ2STREffect: STREffectRenderable {
             }
         }
 
-        eventFrame += 1
+        eventTick += 1
     }
 
     public func stop() {
@@ -208,12 +208,12 @@ public final class EZ2STREffect: STREffectRenderable {
     }
 
     private func triggerTimedEvents(world: any EffectWorldContext) {
-        if !entry.soundPath.isEmpty && !soundTriggered && eventFrame >= frameStep + 1 {
+        if !entry.soundPath.isEmpty && !soundTriggered && eventTick >= delayTicks + 1 {
             soundTriggered = true
             world.playSound(named: entry.soundPath, atWorldPosition: worldPosition, delay: 0)
         }
 
-        if entry.quakeDelay >= 0 && !quakeTriggered && eventFrame >= entry.quakeDelay {
+        if entry.quakeDelay >= 0 && !quakeTriggered && eventTick >= entry.quakeDelay {
             quakeTriggered = true
             world.shakeCamera(amplitude: 0.4, duration: 0.3, frequency: 30)
         }

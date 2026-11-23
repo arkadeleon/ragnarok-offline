@@ -81,7 +81,7 @@ public struct EZ2STRScreenEffectDefinition: Sendable {
     public let defaultScale: Float
     public let levelScales: [Int : Float]
     public let defaultRepeatCount: Int
-    public let defaultLifeTimeFrames: Int?
+    public let defaultLifetimeTicks: Int?
     public let overlayColorStep: UInt32
     public let followCamera: Bool
     public let aimMode: AimMode
@@ -104,7 +104,7 @@ public struct EZ2STRScreenEffectDefinition: Sendable {
         defaultScale: Float = 1,
         levelScales: [Int : Float] = [:],
         defaultRepeatCount: Int = 0,
-        defaultLifeTimeFrames: Int? = nil,
+        defaultLifetimeTicks: Int? = nil,
         overlayColorStep: UInt32 = 0,
         followCamera: Bool = false,
         aimMode: AimMode = .none,
@@ -126,7 +126,7 @@ public struct EZ2STRScreenEffectDefinition: Sendable {
         self.defaultScale = defaultScale
         self.levelScales = levelScales
         self.defaultRepeatCount = defaultRepeatCount
-        self.defaultLifeTimeFrames = defaultLifeTimeFrames
+        self.defaultLifetimeTicks = defaultLifetimeTicks
         self.overlayColorStep = overlayColorStep
         self.followCamera = followCamera
         self.aimMode = aimMode
@@ -4353,7 +4353,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            defaultLifeTimeFrames: 60,
+            defaultLifetimeTicks: 60,
             sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_DIAMOND_STORM.wav"])]
         ),
         EZ2STRScreenEffectDefinition(

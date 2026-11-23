@@ -261,7 +261,7 @@ struct EZ2STRScreenEffectTests {
 
         let diamondBottom = EZ2STRScreenEffectDefinition.definition(for: .ef_diamond_storm_bottom)
         #expect(diamondBottom?.renderMode == .ground)
-        #expect(diamondBottom?.defaultLifeTimeFrames == 60)
+        #expect(diamondBottom?.defaultLifetimeTicks == 60)
 
         #expect(EZ2STRScreenEffectDefinition.definition(for: .ef_ui_enchant_success)?.renderMode == .screen)
         #expect(EZ2STRScreenEffectDefinition.definition(for: .ef_ui_enchant_success)?.overlayColorStep == 0x0200_0000)
@@ -441,7 +441,7 @@ struct EZ2STRScreenEffectTests {
 
         effect.setDelayMilliseconds(32)
         effect.setRepeat(2)
-        effect.setLifeTime(frames: 5)
+        effect.setLifetime(ticks: 5)
 
         for _ in 0..<8 {
             effect.tick(context: context)

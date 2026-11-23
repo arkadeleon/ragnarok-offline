@@ -27,9 +27,9 @@ public final class RagSTREffect: STREffectRenderable {
     public let attachmentKey: EffectAttachmentKey
 
     public private(set) var worldPosition: SIMD3<Float>
-    public private(set) var stateCount: Int = 0
+    public private(set) var elapsedTicks: Int = 0
     public private(set) var playbackState: STREffectPlaybackState
-    public let durationTicks: Int?
+    public let lifetimeTicks: Int?
 
     public private(set) var isAlive: Bool = true
 
@@ -53,11 +53,11 @@ public final class RagSTREffect: STREffectRenderable {
         self.playbackState = STREffectPlaybackState(loopLimit: definition.loopLimit)
 
         if let duration = request.duration, duration > 0 {
-            self.durationTicks = max(1, Int((duration * EffectManager.tickRate).rounded()))
+            self.lifetimeTicks = max(1, Int((duration * EffectManager.tickRate).rounded()))
         } else if definition.effectID.defaultLifetimeTicks > 0 {
-            self.durationTicks = definition.effectID.defaultLifetimeTicks
+            self.lifetimeTicks = definition.effectID.defaultLifetimeTicks
         } else {
-            self.durationTicks = nil
+            self.lifetimeTicks = nil
         }
     }
 
@@ -99,8 +99,8 @@ public final class RagSTREffect: STREffectRenderable {
             }
         }
 
-        stateCount += 1
-        if let durationTicks, stateCount >= durationTicks {
+        elapsedTicks += 1
+        if let lifetimeTicks, elapsedTicks >= lifetimeTicks {
             isAlive = false
             currentFrame = nil
         }
@@ -146,10 +146,10 @@ public final class RagSTREffect: STREffectRenderable {
 
     private func triggerTimedEvents(world: any EffectWorldContext) {
         for sound in definition.sounds {
-            sound.playIfMatching(tick: stateCount, atWorldPosition: worldPosition, world: world)
+            sound.playIfMatching(tick: elapsedTicks, atWorldPosition: worldPosition, world: world)
         }
 
-        if definition.cameraShakeTicks.contains(stateCount) {
+        if definition.cameraShakeTicks.contains(elapsedTicks) {
             world.shakeCamera(amplitude: 0.4, duration: 0.3, frequency: 30)
         }
 
@@ -158,8 +158,8 @@ public final class RagSTREffect: STREffectRenderable {
             case .constant(let color):
                 world.applyTargetModifier(.tint(color: color, durationTicks: 2), to: targetID)
             case .rejectSwordFlicker(let durationTicks):
-                if stateCount < durationTicks {
-                    let level: Float = (stateCount % 6) < 3 ? (100.0 / 255.0) : (250.0 / 255.0)
+                if elapsedTicks < durationTicks {
+                    let level: Float = (elapsedTicks % 6) < 3 ? (100.0 / 255.0) : (250.0 / 255.0)
                     let color = SIMD4<Float>(level, level, level, 1)
                     world.applyTargetModifier(.tint(color: color, durationTicks: 2), to: targetID)
                 }

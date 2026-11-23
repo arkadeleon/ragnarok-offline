@@ -10,12 +10,12 @@ import RagnarokCore
 import RagnarokFileFormats
 import RagnarokResources
 
-/// Data-driven catalog of `ez2streffect.bson` entries (`ID >= 10000`),
+/// Data-driven catalog of `EZ2STREffect.bson` entries (`ID >= 10000`),
 /// ported from `CEZ2STREffectMgr` in `EffectResourceSwitcher.cpp`
 /// and `JsonCppLoader::GetEZ2STREffect` in `FileCreation.cpp`.
 public struct EZ2STREffectCatalog: Sendable, Equatable {
     public static let baseEffectID: Int = 10000
-    public static let resourcePath = ResourcePath(components: ["data", "contentdata", "effectdata", "ez2streffect.bson"])
+    public static let resourcePath = ResourcePath(components: ["data", "ContentData", "EffectData", "EZ2STREffect.bson"])
 
     public struct Entry: Sendable, Equatable {
         public let id: Int

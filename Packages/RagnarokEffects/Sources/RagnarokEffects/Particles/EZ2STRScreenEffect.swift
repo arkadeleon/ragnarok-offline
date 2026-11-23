@@ -30,7 +30,7 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
 
     public private(set) var worldPosition: SIMD3<Float>
     public private(set) var playbackState = STREffectPlaybackState()
-    public private(set) var elapsedFrames: Int = 0
+    public private(set) var elapsedTicks: Int = 0
     public private(set) var isAlive: Bool = true
     public private(set) var isFinished: Bool = false
 
@@ -39,7 +39,7 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
     public var isLooping: Bool
     public var holdsFinalFrame: Bool = false
     public var repeatCount: Int
-    public var lifeTimeFrames: Int
+    public var lifetimeTicks: Int
     public private(set) var remainingDelayMs: Int = 0
 
     public var fadePulse: Bool = false
@@ -91,14 +91,14 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
         self.transform = STREffectTransform(scale: initialScale, angle: initialAngle)
 
         if let duration = request.duration, duration > 0 {
-            self.lifeTimeFrames = max(1, Int((duration * EffectManager.tickRate).rounded()))
+            self.lifetimeTicks = max(1, Int((duration * EffectManager.tickRate).rounded()))
         } else {
-            self.lifeTimeFrames = definition.defaultLifeTimeFrames ?? 0
+            self.lifetimeTicks = definition.defaultLifetimeTicks ?? 0
         }
     }
 
-    public func setLifeTime(frames: Int) {
-        lifeTimeFrames = max(0, frames)
+    public func setLifetime(ticks: Int) {
+        lifetimeTicks = max(0, ticks)
     }
 
     public func setRepeat(_ count: Int) {
@@ -172,7 +172,7 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
 
         if remainingDelayMs > 0 {
             remainingDelayMs -= 16
-            elapsedFrames += 1
+            elapsedTicks += 1
             return
         }
 
@@ -187,7 +187,7 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
 
         if let asset = loadedAsset {
             let str = asset.animation.str
-            if lifeTimeFrames > 0 && playbackState.frameCounter >= lifeTimeFrames {
+            if lifetimeTicks > 0 && playbackState.frameCounter >= lifetimeTicks {
                 isFinished = true
                 stop()
                 return
@@ -218,7 +218,7 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
             }
         }
 
-        elapsedFrames += 1
+        elapsedTicks += 1
     }
 
     public func stop() {
@@ -300,17 +300,17 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
 
     private func triggerTimedEvents(world: any EffectWorldContext) {
         for sound in definition.sounds {
-            sound.playIfMatching(tick: elapsedFrames, atWorldPosition: worldPosition, world: world)
+            sound.playIfMatching(tick: elapsedTicks, atWorldPosition: worldPosition, world: world)
         }
 
         if let periodic = definition.periodicSound {
-            let delta = elapsedFrames - periodic.startTick
+            let delta = elapsedTicks - periodic.startTick
             if delta >= 0 && delta % periodic.intervalTicks == 0 {
                 world.playSound(named: periodic.name, atWorldPosition: worldPosition, delay: 0)
             }
         }
 
-        if definition.cameraShakeTicks.contains(elapsedFrames) {
+        if definition.cameraShakeTicks.contains(elapsedTicks) {
             world.shakeCamera(amplitude: 0.4, duration: 0.3, frequency: 30)
         }
     }

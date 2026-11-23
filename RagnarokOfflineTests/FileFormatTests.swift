@@ -23,7 +23,7 @@ final class FileFormatTests: XCTestCase {
     }
 
     func testBSON() async throws {
-        let data = try await resourceManager.contentsOfResource(at: ["data", "contentdata", "effectdata", "ez2streffect.bson"])
+        let data = try await resourceManager.contentsOfResource(at: ["data", "ContentData", "EffectData", "EZ2STREffect.bson"])
         let bson = try BSON(data: data)
 
         let effects = try XCTUnwrap(bson.root["EZ2STREffect"]?.documentValue)
