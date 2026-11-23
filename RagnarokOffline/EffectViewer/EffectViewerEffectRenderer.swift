@@ -105,6 +105,7 @@ class EffectViewerEffectRenderer: Renderer {
                 inverseView.columns.3.y,
                 inverseView.columns.3.z,
             ]
+            world.cameraYawDegrees = degrees(camera.azimuth)
         }
 
         return RenderCamera(

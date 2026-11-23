@@ -19,6 +19,7 @@ import Testing
 struct EZ2STREffectTests {
     private final class MockWorldContext: EffectWorldContext {
         var cameraWorldPosition: SIMD3<Float> = .zero
+        var cameraYawDegrees: Float = 0
         var terrainYInEffectSpace: Float = 0
         var targets: [EffectTargetID : EffectTargetState] = [:]
         var playedSounds: [String] = []

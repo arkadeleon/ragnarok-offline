@@ -75,7 +75,7 @@ public enum EffectTargetModifier: Sendable, Equatable {
 }
 
 /// Single boundary protocol bridging `EffectManager` with its host world
-/// (`MapWorldContext` in-game or `PreviewEffectWorldContext` in `EffectViewer`).
+/// (`MapScene` in-game or `EffectViewerEffectWorldContext` in `EffectViewer`).
 @MainActor
 public protocol EffectWorldContext: AnyObject {
     /// Returns terrain elevation in native effect space (`-worldY * 5.0`) at the given effect-space XZ coordinates.
@@ -100,10 +100,6 @@ public protocol EffectWorldContext: AnyObject {
 }
 
 extension EffectWorldContext {
-    public var cameraYawDegrees: Float {
-        0
-    }
-
     public var cameraEffectPosition: SIMD3<Float> {
         EffectSpace.toEffectPosition(cameraWorldPosition)
     }

@@ -17,6 +17,7 @@ import Testing
 struct RagEffectSTRTests {
     private final class RecordingWorldContext: EffectWorldContext {
         var cameraWorldPosition: SIMD3<Float> = .zero
+        var cameraYawDegrees: Float = 0
         var targets: [EffectTargetID : EffectTargetState] = [:]
         var playedSounds: [(name: String, position: SIMD3<Float>?)] = []
         var shakeCount: Int = 0

@@ -128,6 +128,7 @@ struct EffectSpaceTests {
     func contextAndRequestBridge() {
         final class StubWorldContext: EffectWorldContext {
             var cameraWorldPosition: SIMD3<Float> = SIMD3<Float>(10, 5, 10)
+            var cameraYawDegrees: Float = 0
 
             func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float {
                 0
