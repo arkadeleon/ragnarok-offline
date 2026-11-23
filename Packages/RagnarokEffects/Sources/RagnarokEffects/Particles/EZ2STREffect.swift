@@ -113,9 +113,9 @@ public final class EZ2STREffect: STREffectRenderable {
         }
 
         if loadedAsset == nil, let assets = context.assets {
-            if let asset = assets.strAsset(atPath: entry.filePath) {
+            if let asset = assets.strAsset(atPath: entry.filePath, usesMinimalEffects: context.usesMinimalEffects) {
                 loadedAsset = asset
-            } else if assets.hasFailedSTRAsset(atPath: entry.filePath) {
+            } else if assets.hasFailedSTRAsset(atPath: entry.filePath, usesMinimalEffects: context.usesMinimalEffects) {
                 stop()
                 return
             }

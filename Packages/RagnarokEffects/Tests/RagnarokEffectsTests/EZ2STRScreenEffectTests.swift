@@ -502,12 +502,13 @@ struct EZ2STRScreenEffectTests {
         ])
         let store = EffectAssetStore(
             device: device,
-            resourceManager: ResourceManager(resourceProvider: provider),
-            pathResolver: EffectResourcePathResolver(usesMinimalEffects: true)
+            resourceManager: ResourceManager(resourceProvider: provider)
         )
 
-        let minimalMeteor = await store.preloadSTRAsset(atPath: meteorPath)
-        let fallbackAsset = await store.preloadSTRAsset(atPath: fallbackPath)
+        let normalMeteor = await store.preloadSTRAsset(atPath: meteorPath, usesMinimalEffects: false)
+        let minimalMeteor = await store.preloadSTRAsset(atPath: meteorPath, usesMinimalEffects: true)
+        let fallbackAsset = await store.preloadSTRAsset(atPath: fallbackPath, usesMinimalEffects: true)
+        #expect(normalMeteor?.animation.str.maxKeyframeIndex == 5)
         #expect(minimalMeteor?.animation.str.maxKeyframeIndex == 2)
         #expect(fallbackAsset?.animation.str.maxKeyframeIndex == 5)
     }

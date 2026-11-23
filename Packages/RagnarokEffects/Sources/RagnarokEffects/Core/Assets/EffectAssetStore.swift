@@ -14,6 +14,11 @@ import RagnarokResources
 
 @MainActor
 public final class EffectAssetStore {
+    private struct STRCacheKey: Hashable {
+        let path: String
+        let usesMinimalEffects: Bool
+    }
+
     private enum Phase<Value> {
         case inProgress(Task<Value?, Never>)
         case loaded(Value)
@@ -22,35 +27,31 @@ public final class EffectAssetStore {
 
     public let device: any MTLDevice
     public let resourceManager: ResourceManager
-    public let pathResolver: EffectResourcePathResolver
 
-    private var strAssets: [String : EffectAssetStore.Phase<STREffectAsset>] = [:]
+    private var strAssets: [STRCacheKey : EffectAssetStore.Phase<STREffectAsset>] = [:]
 
-    public init(
-        device: any MTLDevice,
-        resourceManager: ResourceManager,
-        pathResolver: EffectResourcePathResolver = EffectResourcePathResolver()
-    ) {
+    public init(device: any MTLDevice, resourceManager: ResourceManager) {
         self.device = device
         self.resourceManager = resourceManager
-        self.pathResolver = pathResolver
     }
 
-    public func strAsset(atPath path: String) -> STREffectAsset? {
-        switch strAssets[path] {
+    public func strAsset(atPath path: String, usesMinimalEffects: Bool = false) -> STREffectAsset? {
+        let key = STRCacheKey(path: path, usesMinimalEffects: usesMinimalEffects)
+        switch strAssets[key] {
         case .loaded(let asset):
             return asset
         case .inProgress, .failed:
             return nil
         case nil:
-            _ = startSTRLoad(forPath: path)
+            _ = startSTRLoad(for: key)
             return nil
         }
     }
 
     @discardableResult
-    public func preloadSTRAsset(atPath path: String) async -> STREffectAsset? {
-        switch strAssets[path] {
+    public func preloadSTRAsset(atPath path: String, usesMinimalEffects: Bool = false) async -> STREffectAsset? {
+        let key = STRCacheKey(path: path, usesMinimalEffects: usesMinimalEffects)
+        switch strAssets[key] {
         case .loaded(let asset):
             return asset
         case .failed:
@@ -58,12 +59,13 @@ public final class EffectAssetStore {
         case .inProgress(let task):
             return await task.value
         case nil:
-            return await startSTRLoad(forPath: path).value
+            return await startSTRLoad(for: key).value
         }
     }
 
-    public func hasFailedSTRAsset(atPath path: String) -> Bool {
-        if case .failed = strAssets[path] {
+    public func hasFailedSTRAsset(atPath path: String, usesMinimalEffects: Bool = false) -> Bool {
+        let key = STRCacheKey(path: path, usesMinimalEffects: usesMinimalEffects)
+        if case .failed = strAssets[key] {
             return true
         }
         return false
@@ -78,8 +80,9 @@ public final class EffectAssetStore {
         strAssets.removeAll()
     }
 
-    private func startSTRLoad(forPath path: String) -> Task<STREffectAsset?, Never> {
-        let candidatePaths = pathResolver.candidateSTRPaths(forPath: path)
+    private func startSTRLoad(for key: STRCacheKey) -> Task<STREffectAsset?, Never> {
+        let resolver = EffectResourcePathResolver(usesMinimalEffects: key.usesMinimalEffects)
+        let candidatePaths = resolver.candidateSTRPaths(forPath: key.path)
 
         let device = self.device
         let resourceManager = self.resourceManager
@@ -94,14 +97,14 @@ public final class EffectAssetStore {
                 return nil
             }
             if let asset {
-                self.strAssets[path] = .loaded(asset)
+                self.strAssets[key] = .loaded(asset)
             } else {
-                self.strAssets[path] = .failed
+                self.strAssets[key] = .failed
             }
             return asset
         }
 
-        strAssets[path] = .inProgress(task)
+        strAssets[key] = .inProgress(task)
         return task
     }
 

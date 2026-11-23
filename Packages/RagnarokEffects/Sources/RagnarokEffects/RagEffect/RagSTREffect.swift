@@ -70,9 +70,9 @@ public final class RagSTREffect: STREffectRenderable {
         triggerTimedEvents(world: context.world)
 
         if loadedAsset == nil, let assets = context.assets {
-            if let asset = assets.strAsset(atPath: resolvedSTRPath) {
+            if let asset = assets.strAsset(atPath: resolvedSTRPath, usesMinimalEffects: context.usesMinimalEffects) {
                 loadedAsset = asset
-            } else if assets.hasFailedSTRAsset(atPath: resolvedSTRPath) {
+            } else if assets.hasFailedSTRAsset(atPath: resolvedSTRPath, usesMinimalEffects: context.usesMinimalEffects) {
                 isAlive = false
                 currentFrame = nil
                 return

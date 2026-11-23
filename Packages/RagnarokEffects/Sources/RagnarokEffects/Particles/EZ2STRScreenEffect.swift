@@ -20,7 +20,7 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
     }
 
     public let definition: EZ2STRScreenEffectDefinition
-    public let resolvedSTRPath: String
+    public let strPath: String
 
     public let ownerObjectID: EffectTargetID?
     public let targetObjectID: EffectTargetID?
@@ -64,15 +64,12 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
     public init(
         id: UUID = UUID(),
         request: EffectSpawnRequest,
-        definition: EZ2STRScreenEffectDefinition,
-        usesMinimalEffects: Bool = false
+        definition: EZ2STRScreenEffectDefinition
     ) {
         self.id = id
         self.effectID = definition.effectID
         self.definition = definition
-
-        let resolver = EffectResourcePathResolver(usesMinimalEffects: usesMinimalEffects)
-        self.resolvedSTRPath = resolver.resolveExplicitSTRPath(definition.expandedSTRPath())
+        self.strPath = definition.expandedSTRPath()
 
         self.ownerObjectID = request.ownerObjectID
         self.targetObjectID = request.targetObjectID
@@ -180,9 +177,9 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
         }
 
         if loadedAsset == nil, let assets = context.assets {
-            if let asset = assets.strAsset(atPath: resolvedSTRPath) {
+            if let asset = assets.strAsset(atPath: strPath, usesMinimalEffects: context.usesMinimalEffects) {
                 loadedAsset = asset
-            } else if assets.hasFailedSTRAsset(atPath: resolvedSTRPath) {
+            } else if assets.hasFailedSTRAsset(atPath: strPath, usesMinimalEffects: context.usesMinimalEffects) {
                 stop()
                 return
             }

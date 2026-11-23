@@ -244,7 +244,7 @@ public final class EffectManager {
         } else if let entry = ez2strEffectCatalog?.entry(forRawEffectID: request.rawEffectID) {
             effect = EZ2STREffect(id: id, request: request, entry: entry)
         } else if let effectID = request.effectID, let definition = EZ2STRScreenEffectDefinition.definition(for: effectID) {
-            effect = EZ2STRScreenEffect(id: id, request: request, definition: definition, usesMinimalEffects: usesMinimalEffects)
+            effect = EZ2STRScreenEffect(id: id, request: request, definition: definition)
         } else if let builder = ragEffectBuilders[request.rawEffectID] {
             effect = builder(id, request)
         } else if let effectID = request.effectID, let definition = RagSTREffectDefinition.definition(for: effectID) {
