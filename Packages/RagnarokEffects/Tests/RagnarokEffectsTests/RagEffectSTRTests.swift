@@ -123,8 +123,8 @@ struct RagEffectSTRTests {
         return try STR(data: data)
     }
 
-    @Test("RagEffectSTRState copies type-0 keyframes, accumulates type-1 deltas, and loops up to loopLimit")
-    func strStateCopyMorphAndLoop() throws {
+    @Test("STREffectPlaybackState copies type-0 keyframes, accumulates type-1 deltas, and loops up to loopLimit")
+    func playbackStateCopyMorphAndLoop() throws {
         let str = try Self.makeSTR(layers: [
             (
                 textures: ["tex0.bmp", "tex1.bmp", "tex2.bmp"],
@@ -136,51 +136,51 @@ struct RagEffectSTRTests {
             ),
         ])
 
-        var state = RagEffectSTRState(loopLimit: 1)
+        var playbackState = STREffectPlaybackState(loopLimit: 1)
 
         // Frame 0: type 0 copies initial transform and advances currentKey to the same-frame type 1 key
-        #expect(state.step(str: str) == true)
-        var frame = state.makeFrame(for: str)
+        #expect(playbackState.step(str: str) == true)
+        var frame = playbackState.makeFrame(for: str)
         #expect(frame.sprites.count == 1)
         #expect(frame.sprites[0].position == SIMD2<Float>(100, 200))
         #expect(frame.sprites[0].textureName == "tex0.bmp")
 
         // Frame 1: type 1 adds position delta and advances textureIndex via anitype 3
-        #expect(state.step(str: str) == true)
-        frame = state.makeFrame(for: str)
+        #expect(playbackState.step(str: str) == true)
+        frame = playbackState.makeFrame(for: str)
         #expect(frame.sprites[0].position == SIMD2<Float>(105, 198))
         #expect(frame.sprites[0].textureName == "tex1.bmp")
 
         // Frame 2: type 1 accumulates again
-        #expect(state.step(str: str) == true)
-        frame = state.makeFrame(for: str)
+        #expect(playbackState.step(str: str) == true)
+        frame = playbackState.makeFrame(for: str)
         #expect(frame.sprites[0].position == SIMD2<Float>(110, 196))
         #expect(frame.sprites[0].textureName == "tex2.bmp")
 
         // Frame 3: reaches final keyframe (frameIndex == 3), marks layer complete
-        #expect(state.step(str: str) == true)
-        frame = state.makeFrame(for: str)
+        #expect(playbackState.step(str: str) == true)
+        frame = playbackState.makeFrame(for: str)
         #expect(frame.sprites[0].position == SIMD2<Float>(300, 400))
         #expect(frame.sprites[0].textureName == "tex2.bmp")
 
         // Next step triggers loop 1 (since loopLimit == 1), resets to frame 0
-        #expect(state.step(str: str) == true)
-        #expect(state.loopCount == 1)
-        frame = state.makeFrame(for: str)
+        #expect(playbackState.step(str: str) == true)
+        #expect(playbackState.loopCount == 1)
+        frame = playbackState.makeFrame(for: str)
         #expect(frame.sprites[0].position == SIMD2<Float>(100, 200))
 
         // Finish second pass (frames 1, 2, 3)
-        #expect(state.step(str: str) == true)
-        #expect(state.step(str: str) == true)
-        #expect(state.step(str: str) == true)
+        #expect(playbackState.step(str: str) == true)
+        #expect(playbackState.step(str: str) == true)
+        #expect(playbackState.step(str: str) == true)
 
         // Exceeds loopLimit -> stops and clears drawn layers
-        #expect(state.step(str: str) == false)
-        #expect(state.makeFrame(for: str).sprites.isEmpty)
+        #expect(playbackState.step(str: str) == false)
+        #expect(playbackState.makeFrame(for: str).sprites.isEmpty)
     }
 
-    @Test("RagEffectSTRState handles anitype 2 clamp and anitype 5 ping-pong")
-    func strStateAnimationTypes() throws {
+    @Test("STREffectPlaybackState handles anitype 2 clamp and anitype 5 ping-pong")
+    func playbackStateAnimationTypes() throws {
         let clampSTR = try Self.makeSTR(layers: [
             (
                 textures: ["a.bmp", "b.bmp"],
@@ -192,12 +192,12 @@ struct RagEffectSTRTests {
             ),
         ])
 
-        var clampState = RagEffectSTRState()
-        #expect(clampState.step(str: clampSTR) == true)
-        #expect(clampState.step(str: clampSTR) == true)
-        #expect(clampState.transforms[0].textureIndex == 1.5)
-        #expect(clampState.step(str: clampSTR) == true)
-        #expect(clampState.transforms[0].textureIndex == 1.0)
+        var clampPlaybackState = STREffectPlaybackState()
+        #expect(clampPlaybackState.step(str: clampSTR) == true)
+        #expect(clampPlaybackState.step(str: clampSTR) == true)
+        #expect(clampPlaybackState.transforms[0].textureIndex == 1.5)
+        #expect(clampPlaybackState.step(str: clampSTR) == true)
+        #expect(clampPlaybackState.transforms[0].textureIndex == 1.0)
 
         let pingPongSTR = try Self.makeSTR(layers: [
             (
@@ -210,12 +210,12 @@ struct RagEffectSTRTests {
             ),
         ])
 
-        var pingPongState = RagEffectSTRState()
-        #expect(pingPongState.step(str: pingPongSTR) == true) // frame 0 -> 0
-        #expect(pingPongState.step(str: pingPongSTR) == true) // elapsed 1 -> 1
-        #expect(pingPongState.makeFrame(for: pingPongSTR).sprites[0].textureName == "f1.bmp")
-        #expect(pingPongState.step(str: pingPongSTR) == true) // elapsed 2, prev 1 -> 3 -> turns=1 -> 2-(3-2)=1
-        #expect(pingPongState.makeFrame(for: pingPongSTR).sprites[0].textureName == "f1.bmp")
+        var pingPongPlaybackState = STREffectPlaybackState()
+        #expect(pingPongPlaybackState.step(str: pingPongSTR) == true) // frame 0 -> 0
+        #expect(pingPongPlaybackState.step(str: pingPongSTR) == true) // elapsed 1 -> 1
+        #expect(pingPongPlaybackState.makeFrame(for: pingPongSTR).sprites[0].textureName == "f1.bmp")
+        #expect(pingPongPlaybackState.step(str: pingPongSTR) == true) // elapsed 2, prev 1 -> 3 -> turns=1 -> 2-(3-2)=1
+        #expect(pingPongPlaybackState.makeFrame(for: pingPongSTR).sprites[0].textureName == "f1.bmp")
     }
 
     @Test("RagSTREffectDefinition covers all 199 pure-STR entries with expected overrides")

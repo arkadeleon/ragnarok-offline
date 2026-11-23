@@ -9,7 +9,7 @@ import Foundation
 import RagnarokRendering
 import simd
 
-/// Pure-STR `CRagEffect` runtime instance driven by `RagEffectSTRState` and `RagSTREffectDefinition`.
+/// Pure-STR `CRagEffect` runtime instance driven by `STREffectPlaybackState` and `RagSTREffectDefinition`.
 @MainActor
 public final class RagSTREffect: STREffectRenderable {
     public let id: UUID
@@ -28,7 +28,7 @@ public final class RagSTREffect: STREffectRenderable {
 
     public private(set) var worldPosition: SIMD3<Float>
     public private(set) var stateCount: Int = 0
-    public private(set) var state: RagEffectSTRState
+    public private(set) var playbackState: STREffectPlaybackState
     public let durationTicks: Int?
 
     public private(set) var isAlive: Bool = true
@@ -50,7 +50,7 @@ public final class RagSTREffect: STREffectRenderable {
         self.targetObjectID = request.targetObjectID
         self.attachmentKey = request.attachmentKey
         self.worldPosition = request.worldPosition
-        self.state = RagEffectSTRState(loopLimit: definition.loopLimit)
+        self.playbackState = STREffectPlaybackState(loopLimit: definition.loopLimit)
 
         if let duration = request.duration, duration > 0 {
             self.durationTicks = max(1, Int((duration * EffectManager.tickRate).rounded()))
@@ -80,13 +80,13 @@ public final class RagSTREffect: STREffectRenderable {
         }
 
         if let asset = loadedAsset {
-            let stillPlaying = state.step(str: asset.animation.str)
+            let stillPlaying = playbackState.step(str: asset.animation.str)
             if stillPlaying {
-                currentFrame = state.makeFrame(for: asset.animation.str)
+                currentFrame = playbackState.makeFrame(for: asset.animation.str)
             } else if definition.restartsOnEnd {
-                state.reset(for: asset.animation.str)
-                if state.step(str: asset.animation.str) {
-                    currentFrame = state.makeFrame(for: asset.animation.str)
+                playbackState.reset(for: asset.animation.str)
+                if playbackState.step(str: asset.animation.str) {
+                    currentFrame = playbackState.makeFrame(for: asset.animation.str)
                 } else {
                     currentFrame = nil
                 }
@@ -123,7 +123,7 @@ public final class RagSTREffect: STREffectRenderable {
         let transform = STREffectTransform(offset: SIMD2<Float>(0, definition.yOffset + 80))
         let payload = STREffectRenderer.RenderPayload(
             asset: asset,
-            frameIndex: max(0, state.frameCounter - 1),
+            frameIndex: max(0, playbackState.frameCounter - 1),
             frame: frame,
             mode: .billboard,
             worldPosition: worldPosition,

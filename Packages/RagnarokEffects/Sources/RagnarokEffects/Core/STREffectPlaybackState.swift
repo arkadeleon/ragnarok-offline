@@ -1,5 +1,5 @@
 //
-//  RagEffectSTRState.swift
+//  STREffectPlaybackState.swift
 //  RagnarokEffects
 //
 //  Created by Leon Li on 2026/11/21.
@@ -9,9 +9,9 @@ import Foundation
 import RagnarokFileFormats
 import simd
 
-/// Discrete 60Hz keyframe playback state mirroring `RagEffectState`'s STR playback
-/// (`CRagEffect::InitEZ2STRFrame`, `CRagEffect::ProcessEZ2STR`, and `CRagEffect::RenderAniClip`).
-public struct RagEffectSTRState: Sendable {
+/// Shared 60Hz discrete keyframe playback state for STR animations,
+/// used by both `RagSTREffect` and `EZ2STR*` effects.
+public struct STREffectPlaybackState: Sendable {
     public struct LayerTransform: Sendable, Equatable {
         public var position: SIMD2<Float> = .zero
         public var uv: SIMD8<Float> = .zero

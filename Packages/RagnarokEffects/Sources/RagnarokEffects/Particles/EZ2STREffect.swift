@@ -25,7 +25,7 @@ public final class EZ2STREffect: STREffectRenderable {
     public let attachmentKey: EffectAttachmentKey
 
     public private(set) var worldPosition: SIMD3<Float>
-    public private(set) var state = RagEffectSTRState()
+    public private(set) var playbackState = STREffectPlaybackState()
     public private(set) var isAlive: Bool = true
     public private(set) var isFinished: Bool = false
 
@@ -123,16 +123,16 @@ public final class EZ2STREffect: STREffectRenderable {
 
         if let asset = loadedAsset {
             let str = asset.animation.str
-            if lifeTimeFrames > 0 && state.frameCounter >= lifeTimeFrames {
+            if lifeTimeFrames > 0 && playbackState.frameCounter >= lifeTimeFrames {
                 isFinished = true
                 stop()
                 return
             }
 
-            let stillPlaying = state.step(str: str)
+            let stillPlaying = playbackState.step(str: str)
             if stillPlaying {
-                currentFrame = state.makeFrame(for: str)
-                if entry.isSoundLoop && state.frameCounter == 1 {
+                currentFrame = playbackState.makeFrame(for: str)
+                if entry.isSoundLoop && playbackState.frameCounter == 1 {
                     soundTriggered = false
                     eventFrame = frameStep
                 }
@@ -141,9 +141,9 @@ public final class EZ2STREffect: STREffectRenderable {
                 if holdsFinalFrame {
                     // Hold current state until caller switches or stops.
                 } else if isLooping {
-                    state.reset(for: str)
-                    if state.step(str: str) {
-                        currentFrame = state.makeFrame(for: str)
+                    playbackState.reset(for: str)
+                    if playbackState.step(str: str) {
+                        currentFrame = playbackState.makeFrame(for: str)
                         if entry.isSoundLoop {
                             soundTriggered = false
                             eventFrame = frameStep
@@ -151,9 +151,9 @@ public final class EZ2STREffect: STREffectRenderable {
                     }
                 } else if repeatCount > 0 {
                     repeatCount -= 1
-                    state.reset(for: str)
-                    if state.step(str: str) {
-                        currentFrame = state.makeFrame(for: str)
+                    playbackState.reset(for: str)
+                    if playbackState.step(str: str) {
+                        currentFrame = playbackState.makeFrame(for: str)
                     }
                 } else {
                     stop()
@@ -192,7 +192,7 @@ public final class EZ2STREffect: STREffectRenderable {
 
         let payload = STREffectRenderer.RenderPayload(
             asset: asset,
-            frameIndex: max(0, state.frameCounter - 1),
+            frameIndex: max(0, playbackState.frameCounter - 1),
             frame: frame,
             mode: renderMode,
             worldPosition: worldPosition,
