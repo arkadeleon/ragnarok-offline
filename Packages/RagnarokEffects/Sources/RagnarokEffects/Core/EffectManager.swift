@@ -81,12 +81,17 @@ public final class EffectManager {
             .sorted()
     }
 
-    public var hasActiveEffects: Bool {
+    public var hasEffects: Bool {
         !activeEffects.isEmpty || !pendingSpawns.isEmpty
     }
 
-    public var activeEffectCount: Int {
+    public var effectCount: Int {
         activeEffects.count + pendingSpawns.count
+    }
+
+    public func contains(instanceID: UUID) -> Bool {
+        activeEffects.contains { $0.id == instanceID }
+            || pendingSpawns.contains { $0.id == instanceID }
     }
 
     @discardableResult

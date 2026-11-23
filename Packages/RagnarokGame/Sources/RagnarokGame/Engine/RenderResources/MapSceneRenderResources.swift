@@ -30,6 +30,7 @@ final class MapSceneRenderResources {
     private(set) var effectManager = EffectManager()
     private(set) var worldEffectResources: [EffectRenderResourceGroup] = []
     private var effectResources: [UUID : EffectRenderResourceGroup] = [:]
+    private var managedEffectIDs: Set<UUID> = []
     private var effectLoadTasks: [UUID : Task<Void, Never>] = [:]
     private var onEffectSound: (@MainActor (_ name: String, _ delay: TimeInterval) -> Void)?
 
@@ -82,6 +83,7 @@ final class MapSceneRenderResources {
         effectManager = EffectManager(assetStore: assetStore, ez2strEffectCatalog: ez2strEffectCatalog)
         worldEffectResources.removeAll()
         effectResources.removeAll()
+        managedEffectIDs.removeAll()
         onEffectSound = onSound
     }
 
@@ -174,12 +176,17 @@ final class MapSceneRenderResources {
     }
 
     func expiredEffectInstanceIDs(atTime time: TimeInterval) -> [UUID] {
-        effectResources.compactMap { instanceID, resourceGroup in
+        var expiredIDs = effectResources.compactMap { instanceID, resourceGroup in
             resourceGroup.isExpired(atTime: time) ? instanceID : nil
         }
+        for instanceID in managedEffectIDs where !effectManager.contains(instanceID: instanceID) {
+            expiredIDs.append(instanceID)
+        }
+        return expiredIDs
     }
 
     private func removeEffect(instanceID: UUID) {
+        managedEffectIDs.remove(instanceID)
         effectManager.removeEffect(instanceID: instanceID)
         effectResources.removeValue(forKey: instanceID)
         effectLoadTasks.removeValue(forKey: instanceID)?.cancel()
@@ -199,6 +206,7 @@ final class MapSceneRenderResources {
         effectAssetLoader = nil
         worldEffectResources.removeAll()
         effectResources.removeAll()
+        managedEffectIDs.removeAll()
         onEffectSound = nil
 
         textTextureCache.removeAll()
@@ -247,6 +255,7 @@ extension MapSceneRenderResources: MapSceneObserver {
                 duration: effect.duration
             )
             if effectManager.spawn(request, id: effect.id) != nil {
+                managedEffectIDs.insert(effect.id)
                 return
             }
         }
@@ -264,5 +273,6 @@ extension MapSceneRenderResources: MapSceneObserver {
         cancelEffectLoads()
         effectManager.removeAll()
         effectResources.removeAll()
+        managedEffectIDs.removeAll()
     }
 }

@@ -194,7 +194,7 @@ struct EZ2STREffectTests {
             manager.stepOneTick(world: world)
         }
         #expect(!effect.isAlive)
-        #expect(!manager.hasActiveEffects)
+        #expect(!manager.hasEffects)
     }
 
     @Test("EZ2STREffectCatalog loads from ResourceManager and EffectManager spawns ID >= 10000")

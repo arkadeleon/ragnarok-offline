@@ -274,7 +274,7 @@ struct RagEffectSTRTests {
         for _ in 0..<4 {
             manager.stepOneTick(world: world)
         }
-        #expect(!manager.hasActiveEffects)
+        #expect(!manager.hasEffects)
 
         // LKConcentration: constant tint + sound at tick 0
         let ownerID: EffectTargetID = 42

@@ -118,7 +118,7 @@ struct EffectManagerTests {
         #expect(manager.activeEffects.first?.effectID == .ef_fireball)
 
         manager.stepOneTick(world: world)
-        #expect(!manager.hasActiveEffects)
+        #expect(!manager.hasEffects)
     }
 
     @Test("Owner/attachmentKey removal and delayed spawn handle stability")
@@ -138,15 +138,19 @@ struct EffectManagerTests {
         manager.spawn(EffectSpawnRequest(effectID: .ef_blessing, worldPosition: .zero, ownerObjectID: ownerB, attachmentKey: .cast))
         let delayedID = manager.spawn(EffectSpawnRequest(effectID: .ef_blessing, worldPosition: .zero, ownerObjectID: ownerA, attachmentKey: .status(20), delay: 2.0 / 60.0))
 
+        #expect(delayedID.map(manager.contains(instanceID:)) == true)
+
         manager.removeEffects(ownedBy: ownerA, key: .cast)
         #expect(manager.activeEffects.count == 2)
 
         manager.stepOneTick(world: world)
         manager.stepOneTick(world: world)
         #expect(manager.activeEffects.count == 3)
+        #expect(delayedID.map(manager.contains(instanceID:)) == true)
 
         if let delayedID {
             manager.removeEffect(instanceID: delayedID)
+            #expect(!manager.contains(instanceID: delayedID))
         }
         #expect(manager.activeEffects.count == 2)
 

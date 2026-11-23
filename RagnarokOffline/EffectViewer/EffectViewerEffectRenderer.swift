@@ -185,7 +185,7 @@ class EffectViewerEffectRenderer: Renderer {
         case .legacy(_, let resourceGroup):
             resourceGroup.isExpired(atTime: time)
         case .managed(let manager, _, _):
-            !manager.hasActiveEffects
+            !manager.hasEffects
         }
     }
 }
