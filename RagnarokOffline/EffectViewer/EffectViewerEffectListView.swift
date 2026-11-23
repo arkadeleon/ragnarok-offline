@@ -13,9 +13,12 @@ struct EffectViewerEffectListView: View {
 
     @Environment(\.dismiss) private var dismiss
 
+    @State private var searchText = ""
+    @State private var filteredEffects: [EffectViewerEffect] = []
+
     var body: some View {
         List {
-            ForEach(effects) { effect in
+            ForEach(filteredEffects) { effect in
                 Button {
                     selection = effect
                     dismiss()
@@ -43,6 +46,30 @@ struct EffectViewerEffectListView: View {
                 dismiss()
             }
         }
+        .adaptiveSearch(text: $searchText)
+        .task(id: "\(effects.count)-\(searchText)") {
+            filteredEffects = await matchingEffects(searchText, in: effects)
+        }
+    }
+
+    private func matchingEffects(_ searchText: String, in effects: [EffectViewerEffect]) async -> [EffectViewerEffect] {
+        if searchText.isEmpty {
+            return effects
+        }
+
+        if searchText.hasPrefix("#") {
+            if let effectID = Int(searchText.dropFirst()),
+               let effect = effects.first(where: { $0.id == effectID }) {
+                return [effect]
+            } else {
+                return []
+            }
+        }
+
+        let filteredEffects = effects.filter { effect in
+            effect.displayName.localizedStandardContains(searchText)
+        }
+        return filteredEffects
     }
 }
 
