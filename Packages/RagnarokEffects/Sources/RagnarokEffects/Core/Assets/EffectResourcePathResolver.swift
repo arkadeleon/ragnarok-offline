@@ -129,15 +129,10 @@ public struct EffectResourcePathResolver: Sendable {
     ]
 
     /// Whether minimal effects (`TT_MIN_EFFECT_ON_OFF`) are enabled.
-    public var useMinimalEffects: Bool
-    private let resourceExists: @Sendable (String) -> Bool
+    public var usesMinimalEffects: Bool
 
-    public init(
-        useMinimalEffects: Bool = false,
-        resourceExists: @escaping @Sendable (String) -> Bool = { _ in false }
-    ) {
-        self.useMinimalEffects = useMinimalEffects
-        self.resourceExists = resourceExists
+    public init(usesMinimalEffects: Bool = false) {
+        self.usesMinimalEffects = usesMinimalEffects
     }
 
     /// Returns the same-directory `min_`-prefixed candidate STR path matching
@@ -170,32 +165,26 @@ public struct EffectResourcePathResolver: Sendable {
 
     /// Resolves an explicit `TT_MIN_EFFECT_ON_OFF` STR path replacement.
     public func resolveExplicitSTRPath(_ path: String) -> String {
-        guard useMinimalEffects else {
+        guard usesMinimalEffects else {
             return path
         }
         return Self.explicitMinimalSTRPaths[path] ?? path
     }
 
-    /// Resolves a STR path via `CEZ2STRParticle::Load` + `CEZ2STRParticle::ResolvePath`.
-    public func resolveMinimalSTRPath(_ path: String) -> String {
-        guard useMinimalEffects,
-              let candidate = Self.minimalCandidateSTRPath(forPath: path),
-              resourceExists(candidate) else {
-            return path
+    /// Returns ordered candidate STR paths to try when loading `path`.
+    /// When `usesMinimalEffects` is `true`, prefers an explicit replacement or a same-directory
+    /// `min_` file and falls back to `path` if the minimal asset is unavailable.
+    public func candidateSTRPaths(forPath path: String) -> [String] {
+        guard usesMinimalEffects else {
+            return [path]
         }
-        return candidate
-    }
-
-    /// Resolves a STR path checking explicit minimal-effect replacements first,
-    /// then falling back to the `min_` candidate check via `resolveMinimalSTRPath(_:)`.
-    public func resolveSTRPath(_ path: String) -> String {
-        guard useMinimalEffects else {
-            return path
+        if let explicitPath = Self.explicitMinimalSTRPaths[path], explicitPath != path {
+            return [explicitPath, path]
         }
-        if let explicitPath = Self.explicitMinimalSTRPaths[path] {
-            return explicitPath
+        if let candidate = Self.minimalCandidateSTRPath(forPath: path), candidate != path {
+            return [candidate, path]
         }
-        return resolveMinimalSTRPath(path)
+        return [path]
     }
 }
 

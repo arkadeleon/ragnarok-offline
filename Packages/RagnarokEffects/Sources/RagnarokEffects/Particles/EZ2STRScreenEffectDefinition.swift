@@ -147,24 +147,18 @@ public struct EZ2STRScreenEffectDefinition: Sendable {
         self.cameraShakeTicks = cameraShakeTicks
     }
 
-    public func resolveSTRPath(
-        usesMinimalEffects: Bool = false,
-        resourceExists: @escaping @Sendable (String) -> Bool = { _ in false },
-        randomValue: ((ClosedRange<Int>) -> Int)? = nil
-    ) -> String {
-        let expandedPath: String
-        if let randomPathRange {
-            let value = randomValue?(randomPathRange) ?? Int.random(in: randomPathRange)
-            expandedPath = strPath.replacingOccurrences(of: "%d", with: "\(value)")
-        } else {
-            expandedPath = strPath
+    public func expandedSTRPath(randomValue: ((ClosedRange<Int>) -> Int)? = nil) -> String {
+        guard let randomPathRange else {
+            return strPath
         }
+        let value = randomValue?(randomPathRange) ?? Int.random(in: randomPathRange)
+        return strPath.replacingOccurrences(of: "%d", with: "\(value)")
+    }
 
-        let resolver = EffectResourcePathResolver(
-            useMinimalEffects: usesMinimalEffects,
-            resourceExists: resourceExists
-        )
-        return resolver.resolveSTRPath(expandedPath)
+    public func candidateSTRPaths(usesMinimalEffects: Bool = false, randomValue: ((ClosedRange<Int>) -> Int)? = nil) -> [String] {
+        let expandedPath = expandedSTRPath(randomValue: randomValue)
+        let resolver = EffectResourcePathResolver(usesMinimalEffects: usesMinimalEffects)
+        return resolver.candidateSTRPaths(forPath: expandedPath)
     }
 }
 

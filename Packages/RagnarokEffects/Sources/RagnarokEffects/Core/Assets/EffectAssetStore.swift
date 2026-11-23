@@ -37,22 +37,20 @@ public final class EffectAssetStore {
     }
 
     public func strAsset(atPath path: String) -> STREffectAsset? {
-        let resolvedPath = pathResolver.resolveSTRPath(path)
-        switch strAssets[resolvedPath] {
+        switch strAssets[path] {
         case .loaded(let asset):
             return asset
         case .inProgress, .failed:
             return nil
         case nil:
-            _ = startSTRLoad(resolvedPath: resolvedPath)
+            _ = startSTRLoad(forPath: path)
             return nil
         }
     }
 
     @discardableResult
     public func preloadSTRAsset(atPath path: String) async -> STREffectAsset? {
-        let resolvedPath = pathResolver.resolveSTRPath(path)
-        switch strAssets[resolvedPath] {
+        switch strAssets[path] {
         case .loaded(let asset):
             return asset
         case .failed:
@@ -60,13 +58,12 @@ public final class EffectAssetStore {
         case .inProgress(let task):
             return await task.value
         case nil:
-            return await startSTRLoad(resolvedPath: resolvedPath).value
+            return await startSTRLoad(forPath: path).value
         }
     }
 
     public func hasFailedSTRAsset(atPath path: String) -> Bool {
-        let resolvedPath = pathResolver.resolveSTRPath(path)
-        if case .failed = strAssets[resolvedPath] {
+        if case .failed = strAssets[path] {
             return true
         }
         return false
@@ -81,13 +78,15 @@ public final class EffectAssetStore {
         strAssets.removeAll()
     }
 
-    private func startSTRLoad(resolvedPath: String) -> Task<STREffectAsset?, Never> {
+    private func startSTRLoad(forPath path: String) -> Task<STREffectAsset?, Never> {
+        let candidatePaths = pathResolver.candidateSTRPaths(forPath: path)
+
         let device = self.device
         let resourceManager = self.resourceManager
 
         let task = Task<STREffectAsset?, Never> { [weak self] in
             let asset = await Self.loadSTRAsset(
-                resolvedPath: resolvedPath,
+                candidatePaths: candidatePaths,
                 device: device,
                 resourceManager: resourceManager
             )
@@ -95,27 +94,37 @@ public final class EffectAssetStore {
                 return nil
             }
             if let asset {
-                self.strAssets[resolvedPath] = .loaded(asset)
+                self.strAssets[path] = .loaded(asset)
             } else {
-                self.strAssets[resolvedPath] = .failed
+                self.strAssets[path] = .failed
             }
             return asset
         }
 
-        strAssets[resolvedPath] = .inProgress(task)
+        strAssets[path] = .inProgress(task)
         return task
     }
 
     private nonisolated static func loadSTRAsset(
-        resolvedPath: String,
+        candidatePaths: [String],
         device: any MTLDevice,
         resourceManager: ResourceManager
     ) async -> STREffectAsset? {
-        let strPath = ResourcePath.effectDirectory.appending(subpath: resolvedPath)
-        guard !Task.isCancelled,
-              let strData = try? await resourceManager.contentsOfResource(at: strPath),
-              !Task.isCancelled,
-              let str = try? STR(data: strData) else {
+        var loaded: (strPath: ResourcePath, str: STR)?
+        for candidate in candidatePaths {
+            guard !Task.isCancelled else {
+                return nil
+            }
+            let candidatePath = ResourcePath.effectDirectory.appending(subpath: candidate)
+            if let strData = try? await resourceManager.contentsOfResource(at: candidatePath),
+               !Task.isCancelled,
+               let str = try? STR(data: strData) {
+                loaded = (candidatePath, str)
+                break
+            }
+        }
+
+        guard let (strPath, str) = loaded, !Task.isCancelled else {
             return nil
         }
 

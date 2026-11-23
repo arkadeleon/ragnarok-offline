@@ -65,16 +65,15 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
         id: UUID = UUID(),
         request: EffectSpawnRequest,
         definition: EZ2STRScreenEffectDefinition,
-        usesMinimalEffects: Bool = false,
-        resourceExists: @escaping @Sendable (String) -> Bool = { _ in false }
+        usesMinimalEffects: Bool = false
     ) {
         self.id = id
         self.effectID = definition.effectID
         self.definition = definition
-        self.resolvedSTRPath = definition.resolveSTRPath(
-            usesMinimalEffects: usesMinimalEffects,
-            resourceExists: resourceExists
-        )
+
+        let resolver = EffectResourcePathResolver(usesMinimalEffects: usesMinimalEffects)
+        self.resolvedSTRPath = resolver.resolveExplicitSTRPath(definition.expandedSTRPath())
+
         self.ownerObjectID = request.ownerObjectID
         self.targetObjectID = request.targetObjectID
         self.sourceObjectID = request.sourceObjectID

@@ -167,27 +167,35 @@ struct EZ2STRScreenEffectTests {
 
         let counterSlash = EZ2STRScreenEffectDefinition.definition(for: .ef_new_counter_slash)
         #expect(
-            counterSlash?.resolveSTRPath(usesMinimalEffects: false)
-                == "new_counter_slash\\new_counter_slash\\new_counter_slash.str"
+            counterSlash?.candidateSTRPaths(usesMinimalEffects: false)
+                == ["new_counter_slash\\new_counter_slash\\new_counter_slash.str"]
         )
         #expect(
-            counterSlash?.resolveSTRPath(usesMinimalEffects: true)
-                == "mineffect\\new_counter_slash\\new_counter_slash\\new_counter_slash.str"
+            counterSlash?.candidateSTRPaths(usesMinimalEffects: true)
+                == [
+                    "mineffect\\new_counter_slash\\new_counter_slash\\new_counter_slash.str",
+                    "new_counter_slash\\new_counter_slash\\new_counter_slash.str",
+                ]
         )
 
         let rayOfGenesis = EZ2STRScreenEffectDefinition.definition(for: .ef_new_rayofgenesis)
         #expect(
-            rayOfGenesis?.resolveSTRPath(usesMinimalEffects: true)
-                == "mineffect\\new_rayofgenesis\\new_rayofgenesis\\new_rayofgenesis.str"
+            rayOfGenesis?.candidateSTRPaths(usesMinimalEffects: true)
+                == [
+                    "mineffect\\new_rayofgenesis\\new_rayofgenesis\\new_rayofgenesis.str",
+                    "new_rayofgenesis\\new_rayofgenesis\\new_rayofgenesis.str",
+                ]
         )
         #expect(rayOfGenesis?.isAttachedToHead == true)
         #expect(rayOfGenesis?.sounds.count == 3)
 
         let meteor = EZ2STRScreenEffectDefinition.definition(for: .ef_new_meteorstorm)
         #expect(
-            meteor?.resolveSTRPath(usesMinimalEffects: true, resourceExists: { path in
-                path == "new_meteostorm\\new_meteostorm\\min_new_meteostorm.str"
-            }) == "new_meteostorm\\new_meteostorm\\min_new_meteostorm.str"
+            meteor?.candidateSTRPaths(usesMinimalEffects: true)
+                == [
+                    "new_meteostorm\\new_meteostorm\\min_new_meteostorm.str",
+                    "new_meteostorm\\new_meteostorm\\new_meteostorm.str",
+                ]
         )
     }
 
@@ -195,10 +203,10 @@ struct EZ2STRScreenEffectTests {
     func definitionsSpecialOverridesSpotChecks() {
         let pneuma = EZ2STRScreenEffectDefinition.definition(for: .ef_pneuma)
         #expect(pneuma?.isRetained == true)
-        #expect(pneuma?.resolveSTRPath(randomValue: { _ in 2 }) == "Pneuma2.str")
+        #expect(pneuma?.expandedSTRPath(randomValue: { _ in 2 }) == "Pneuma2.str")
 
         let meteorVisual = EZ2STRScreenEffectDefinition.definition(for: .ef_meteor_storm_visual)
-        #expect(meteorVisual?.resolveSTRPath(randomValue: { _ in 3 }) == "MeteorStorm\\meteor3.str")
+        #expect(meteorVisual?.expandedSTRPath(randomValue: { _ in 3 }) == "MeteorStorm\\meteor3.str")
         #expect(meteorVisual?.cameraShakeTicks == [40])
 
         let test05 = EZ2STRScreenEffectDefinition.definition(for: .ef_test_effect_05)
@@ -463,5 +471,44 @@ struct EZ2STRScreenEffectTests {
 
         manager.stepOneTick(world: world)
         #expect(world.playedSounds.map(\.name) == ["_heal_effect.wav"])
+    }
+
+    @Test("EffectAssetStore probes same-directory min_ STR candidates and falls back when absent")
+    func assetStoreMinimalSTRProbingAndFallback() async {
+        guard let device = MTLCreateSystemDefaultDevice() else {
+            return
+        }
+
+        let meteorPath = "new_meteostorm\\new_meteostorm\\new_meteostorm.str"
+        let minMeteorPath = "new_meteostorm\\new_meteostorm\\min_new_meteostorm.str"
+        let fallbackPath = "new_jackfrost\\new_jackfrost\\new_jackfrost_00.str"
+
+        struct VariantSTRProvider: ResourceProvider {
+            let files: [String : Data]
+
+            func contentsOfResource(at path: ResourcePath) async throws -> Data {
+                let joined = path.components.joined(separator: "\\").lowercased()
+                for (suffix, data) in files where joined.hasSuffix(suffix) {
+                    return data
+                }
+                throw ResourceError.resourceNotFound(path)
+            }
+        }
+
+        let provider = VariantSTRProvider(files: [
+            meteorPath.lowercased(): Self.makeSyntheticSTRData(maxKeyframeIndex: 5),
+            minMeteorPath.lowercased(): Self.makeSyntheticSTRData(maxKeyframeIndex: 2),
+            fallbackPath.lowercased(): Self.makeSyntheticSTRData(maxKeyframeIndex: 5),
+        ])
+        let store = EffectAssetStore(
+            device: device,
+            resourceManager: ResourceManager(resourceProvider: provider),
+            pathResolver: EffectResourcePathResolver(usesMinimalEffects: true)
+        )
+
+        let minimalMeteor = await store.preloadSTRAsset(atPath: meteorPath)
+        let fallbackAsset = await store.preloadSTRAsset(atPath: fallbackPath)
+        #expect(minimalMeteor?.animation.str.maxKeyframeIndex == 2)
+        #expect(fallbackAsset?.animation.str.maxKeyframeIndex == 5)
     }
 }
