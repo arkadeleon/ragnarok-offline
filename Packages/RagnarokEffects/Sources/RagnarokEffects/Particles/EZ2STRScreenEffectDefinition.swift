@@ -10,18 +10,6 @@ import simd
 
 /// Declarative definition for screen/world STR particle effects (`EZ2STRScreenEffect`).
 public struct EZ2STRScreenEffectDefinition: Sendable {
-    public struct TimedSound: Sendable, Equatable {
-        public let tick: Int
-        public let names: [String]
-        public let chanceDenominator: Int
-
-        public init(tick: Int, names: [String], chanceDenominator: Int = 1) {
-            self.tick = tick
-            self.names = names
-            self.chanceDenominator = chanceDenominator
-        }
-    }
-
     public struct PeriodicSound: Sendable, Equatable {
         public let startTick: Int
         public let intervalTicks: Int
@@ -97,7 +85,7 @@ public struct EZ2STRScreenEffectDefinition: Sendable {
     public let overlayColorStep: UInt32
     public let followCamera: Bool
     public let aimMode: AimMode
-    public let sounds: [TimedSound]
+    public let sounds: [EffectTimedSound]
     public let periodicSound: PeriodicSound?
     public let cameraShakeTicks: [Int]
 
@@ -120,7 +108,7 @@ public struct EZ2STRScreenEffectDefinition: Sendable {
         overlayColorStep: UInt32 = 0,
         followCamera: Bool = false,
         aimMode: AimMode = .none,
-        sounds: [TimedSound] = [],
+        sounds: [EffectTimedSound] = [],
         periodicSound: PeriodicSound? = nil,
         cameraShakeTicks: [Int] = []
     ) {
@@ -174,42 +162,42 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_potion1,
             strPath: K2L("빨간포션.str"),
-            sounds: [TimedSound(tick: 0, names: ["_heal_effect.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["_heal_effect.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_potion2,
             strPath: K2L("주홍포션.str"),
-            sounds: [TimedSound(tick: 0, names: ["_heal_effect.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["_heal_effect.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_potion3,
             strPath: K2L("노란포션.str"),
-            sounds: [TimedSound(tick: 0, names: ["_heal_effect.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["_heal_effect.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_potion4,
             strPath: K2L("하얀포션.str"),
-            sounds: [TimedSound(tick: 0, names: ["_heal_effect.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["_heal_effect.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_potion5,
             strPath: K2L("파란포션.str"),
-            sounds: [TimedSound(tick: 0, names: [K2L("effect\\흡기.wav")])]
+            sounds: [EffectTimedSound(tick: 0, names: [K2L("effect\\흡기.wav")])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_potion6,
             strPath: K2L("초록포션.str"),
-            sounds: [TimedSound(tick: 0, names: [K2L("effect\\흡기.wav")])]
+            sounds: [EffectTimedSound(tick: 0, names: [K2L("effect\\흡기.wav")])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_potion7,
             strPath: "fruit.str",
-            sounds: [TimedSound(tick: 0, names: ["_heal_effect.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["_heal_effect.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_potion8,
             strPath: "fruit_.str",
-            sounds: [TimedSound(tick: 0, names: [K2L("effect\\흡기.wav")])]
+            sounds: [EffectTimedSound(tick: 0, names: [K2L("effect\\흡기.wav")])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_ko_zenkai_water,
@@ -297,7 +285,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_hammer_of_god,
             strPath: "RL_HAMER_GOD\\hogg2.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\RL_HAMMER_OF_GOD.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\RL_HAMMER_OF_GOD.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_mass_spiral,
@@ -420,21 +408,21 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_su_sv_stemspear,
             strPath: "su_sv_stemspear\\su_sv_stemspear.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\su_stemspear.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\su_stemspear.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_su_tunabelly,
             strPath: "su_tunabelly\\su_tunabelly.str",
             isAttachedToHead: true,
             headOffsetYDelta: -8,
-            sounds: [TimedSound(tick: 0, names: ["effect\\su_tunabelly.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\su_tunabelly.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_su_scratch,
             strPath: "su_scratch\\su_scratch.str",
             isAttachedToHead: true,
             headOffsetYDelta: -8,
-            sounds: [TimedSound(tick: 0, names: ["effect\\su_scratch.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\su_scratch.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_su_bite,
@@ -447,7 +435,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "su_scaroftarou\\su_scaroftarou.str",
             isAttachedToHead: true,
             headOffsetYDelta: -8,
-            sounds: [TimedSound(tick: 0, names: ["effect\\su_scaroftarou.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\su_scaroftarou.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_su_arclousedash,
@@ -460,14 +448,14 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "su_pickypeck\\su_pickypeck.str",
             isAttachedToHead: true,
             headOffsetYDelta: -8,
-            sounds: [TimedSound(tick: 0, names: ["effect\\su_pickypeck.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\su_pickypeck.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_su_bunchofshrimp,
             strPath: "su_bunchofshrimp\\su_bunchofshrimp.str",
             isAttachedToHead: true,
             headOffsetYDelta: -8,
-            sounds: [TimedSound(tick: 0, names: ["effect\\su_brunchofshrimp.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\su_brunchofshrimp.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_bite_scar,
@@ -486,31 +474,31 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "su_grooming\\su_grooming.str",
             isAttachedToHead: true,
             headOffsetYDelta: -8,
-            sounds: [TimedSound(tick: 0, names: ["effect\\su_grooming.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\su_grooming.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_su_chattering,
             strPath: "su_chattering\\su_chattering.str",
             isAttachedToHead: true,
             headOffsetYDelta: 8,
-            sounds: [TimedSound(tick: 0, names: ["effect\\su_chattering.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\su_chattering.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_su_hiss,
             strPath: "su_hiss\\su_hiss.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\su_hiss.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\su_hiss.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_su_powerofflock,
             strPath: "su_powerofflock\\su_powerofflock.str",
             isAttachedToHead: true,
             headOffsetYDelta: 8,
-            sounds: [TimedSound(tick: 0, names: ["effect\\su_powerofflock.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\su_powerofflock.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_su_svg_spirit,
             strPath: "su_svg_spirit\\su_svg_spirit.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\su_svg_spirit.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\su_svg_spirit.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_firedance,
@@ -565,19 +553,19 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_quagmire_visual,
             strPath: "Quagmire\\Quagmire.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\wizard_quagmire.wav"], chanceDenominator: 12)]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\wizard_quagmire.wav"], chanceDenominator: 12)]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_lord_of_vermillion_visual,
             strPath: "lord_of_vermillion\\lord_of_vermillion.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\wizard_meteo.wav"]), TimedSound(tick: 0, names: ["effect\\hunter_blastmine.wav"]), TimedSound(tick: 10, names: ["effect\\hunter_blastmine.wav"]), TimedSound(tick: 20, names: ["effect\\wizard_meteo.wav"]), TimedSound(tick: 50, names: ["effect\\wizard_meteo.wav"]), TimedSound(tick: 80, names: ["effect\\wizard_meteo.wav"]), TimedSound(tick: 100, names: ["effect\\wizard_meteo.wav"]), TimedSound(tick: 130, names: ["effect\\wizard_meteo.wav"]), TimedSound(tick: 140, names: ["effect\\wizard_meteo.wav"]), TimedSound(tick: 180, names: ["effect\\wizard_meteo.wav"]), TimedSound(tick: 200, names: ["effect\\wizard_meteo.wav"])],
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\wizard_meteo.wav"]), EffectTimedSound(tick: 0, names: ["effect\\hunter_blastmine.wav"]), EffectTimedSound(tick: 10, names: ["effect\\hunter_blastmine.wav"]), EffectTimedSound(tick: 20, names: ["effect\\wizard_meteo.wav"]), EffectTimedSound(tick: 50, names: ["effect\\wizard_meteo.wav"]), EffectTimedSound(tick: 80, names: ["effect\\wizard_meteo.wav"]), EffectTimedSound(tick: 100, names: ["effect\\wizard_meteo.wav"]), EffectTimedSound(tick: 130, names: ["effect\\wizard_meteo.wav"]), EffectTimedSound(tick: 140, names: ["effect\\wizard_meteo.wav"]), EffectTimedSound(tick: 180, names: ["effect\\wizard_meteo.wav"]), EffectTimedSound(tick: 200, names: ["effect\\wizard_meteo.wav"])],
             cameraShakeTicks: [50, 100, 150, 200, 250]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_meteor_storm_visual,
             strPath: "MeteorStorm\\meteor%d.str",
             randomPathRange: 1...3,
-            sounds: [TimedSound(tick: 0, names: ["effect\\wizard_meteor.wav"])],
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\wizard_meteor.wav"])],
             cameraShakeTicks: [40]
         ),
         EZ2STRScreenEffectDefinition(
@@ -1091,7 +1079,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_new_axetornado_bottom,
             strPath: "new_axetornado\\new_axetornado_bottom\\new_axetornado_bottom.str",
             renderMode: .ground,
-            sounds: [TimedSound(tick: 5, names: ["ice_titan_attack.wav"])]
+            sounds: [EffectTimedSound(tick: 5, names: ["ice_titan_attack.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_cart_tornado,
@@ -1221,7 +1209,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_new_fatal_menace_bottom,
             strPath: "new_fatal_menace\\new_fatal_menace_bottom\\new_fatal_menace_bottom.str",
             renderMode: .ground,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_Bash.wav"]), TimedSound(tick: 35, names: ["effect\\rog_intimidate.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_Bash.wav"]), EffectTimedSound(tick: 35, names: ["effect\\rog_intimidate.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_fatal_menace_cast,
@@ -1268,7 +1256,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_new_cannon_spear_bottom,
             strPath: "new_cannon_spear\\new_cannon_spear_bottom\\new_cannon_spear_bottom.str",
             renderMode: .ground,
-            sounds: [TimedSound(tick: 10, names: ["effect\\EF_hit2.wav"]), TimedSound(tick: 20, names: ["effect\\EF_hit4.wav"])]
+            sounds: [EffectTimedSound(tick: 10, names: ["effect\\EF_hit2.wav"]), EffectTimedSound(tick: 20, names: ["effect\\EF_hit4.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_basicattack,
@@ -1277,7 +1265,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_criticalattack,
             strPath: "new_hit\\new_criticalattack\\new_criticalattack.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_hit2.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_hit2.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_rangedattack,
@@ -1288,7 +1276,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_comet,
             strPath: "new_comet\\new_comet\\new_comet.str",
-            sounds: [TimedSound(tick: 0, names: [K2L("effect\\g크레이지위드.wav")])]
+            sounds: [EffectTimedSound(tick: 0, names: [K2L("effect\\g크레이지위드.wav")])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_comet_bottom,
@@ -1321,13 +1309,13 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_new_cart_cannon_cast_bottom,
             strPath: "new_cart_cannon\\new_cart_cannon_cast_bottom\\new_cart_cannon_cast_bottom.str",
             renderMode: .ground,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_rayofgenesis,
             strPath: "new_rayofgenesis\\new_rayofgenesis\\new_rayofgenesis.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 5, names: [K2L("effect\\mon_맹룡과강.wav")]), TimedSound(tick: 5, names: [K2L("effect\\mon_맹룡과강.wav")]), TimedSound(tick: 5, names: [K2L("effect\\mon_맹룡과강.wav")])]
+            sounds: [EffectTimedSound(tick: 5, names: [K2L("effect\\mon_맹룡과강.wav")]), EffectTimedSound(tick: 5, names: [K2L("effect\\mon_맹룡과강.wav")]), EffectTimedSound(tick: 5, names: [K2L("effect\\mon_맹룡과강.wav")])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_rayofgenesis_cast,
@@ -1339,7 +1327,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "new_rayofgenesis\\new_rayofgenesis_cast_bottom\\new_rayofgenesis_cast_bottom.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_rayofgenesis_hit,
@@ -1655,7 +1643,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_mineffect_axetornado_bottom,
             strPath: "mineffect\\new_axetornado\\new_axetornado_bottom\\new_axetornado_bottom.str",
             renderMode: .ground,
-            sounds: [TimedSound(tick: 5, names: ["ice_titan_attack.wav"])]
+            sounds: [EffectTimedSound(tick: 5, names: ["ice_titan_attack.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_mineffect_cart_cannon_explosion,
@@ -1679,7 +1667,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_mineffect_cart_cannon_cast_bottom,
             strPath: "mineffect\\new_cart_cannon\\new_cart_cannon_cast_bottom\\new_cart_cannon_cast_bottom.str",
             renderMode: .ground,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_mineffect_cart_tornado,
@@ -1760,7 +1748,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_mineffect_cannon_spear_bottom,
             strPath: "mineffect\\new_cannonspear\\new_cannonspear_bottom\\new_cannonspear_bottom.str",
             renderMode: .ground,
-            sounds: [TimedSound(tick: 10, names: ["effect\\EF_hit2.wav"]), TimedSound(tick: 20, names: ["effect\\EF_hit4.wav"])]
+            sounds: [EffectTimedSound(tick: 10, names: ["effect\\EF_hit2.wav"]), EffectTimedSound(tick: 20, names: ["effect\\EF_hit4.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_mineffect_dragonbreath_bomb,
@@ -1813,7 +1801,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_mineffect_comet,
             strPath: "mineffect\\new_comet\\new_comet\\new_comet.str",
-            sounds: [TimedSound(tick: 0, names: [K2L("effect\\g크레이지위드.wav")])]
+            sounds: [EffectTimedSound(tick: 0, names: [K2L("effect\\g크레이지위드.wav")])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_mineffect_comet_bottom,
@@ -1876,12 +1864,12 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_fearbreeze,
             strPath: "new_fearbreeze\\new_fearbreeze.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_Bash.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_Bash.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_hellinferno,
             strPath: "new_hellInferno\\new_hellInferno\\new_hellInferno.str",
-            sounds: [TimedSound(tick: 0, names: ["hell_in.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["hell_in.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_hellinferno_bottom,
@@ -1892,7 +1880,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_new_hellinferno_cast_bottom,
             strPath: "new_hellInferno\\new_hellInferno_cast_bottom\\new_hellInferno_cast_bottom.str",
             renderMode: .ground,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_hellinferno_sub,
@@ -1906,7 +1894,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_clearance,
             strPath: "new_clearence\\new_clearence\\new_clearence.str",
-            sounds: [TimedSound(tick: 0, names: [K2L("effect\\샤프슈팅.wav")]), TimedSound(tick: 0, names: [K2L("effect\\흡기.wav")])]
+            sounds: [EffectTimedSound(tick: 0, names: [K2L("effect\\샤프슈팅.wav")]), EffectTimedSound(tick: 0, names: [K2L("effect\\흡기.wav")])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_clearance_bottom,
@@ -1920,7 +1908,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_varetyrspear,
             strPath: "new_varetyrspear\\new_varetyrspear\\new_varetyrspear.str",
-            sounds: [TimedSound(tick: 3, names: [K2L("effect\\프레셔.wav")]), TimedSound(tick: 22, names: [K2L("effect\\S바레티르스피어.wav")])],
+            sounds: [EffectTimedSound(tick: 3, names: [K2L("effect\\프레셔.wav")]), EffectTimedSound(tick: 22, names: [K2L("effect\\S바레티르스피어.wav")])],
             cameraShakeTicks: [22]
         ),
         EZ2STRScreenEffectDefinition(
@@ -1940,7 +1928,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_crossimpact,
             strPath: "new_crossimpact\\new_crossimpact\\new_crossimpact.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_StoneCurse.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_StoneCurse.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_crossimpact_target,
@@ -1962,7 +1950,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_gateofhell_cast,
             strPath: "new_gateofhell\\new_gateofhell_cast\\new_gateofhell_cast.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_gateofhell_target,
@@ -1980,7 +1968,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_howlingoflion_cast,
             strPath: "new_howlingoflion\\new_howlingoflion_cast\\new_howlingoflion_cast.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_howlingoflion_cast_bottom,
@@ -1995,7 +1983,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_new_metallicsound,
             strPath: "new_metalicsound\\new_metalicsound\\new_metalicsound.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_metallicsound_bottom,
@@ -2023,7 +2011,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_new_soulexpansion_cast,
             strPath: "new_soulexpansion\\new_soulexpansion_cast\\new_soulexpansion_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_soulexpansion_cast_bottom,
@@ -2052,7 +2040,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "new_soulexpansion\\new_soulexpansion_hit_bottom\\new_soulexpansion_hit_bottom.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: [K2L("effect\\매직 크래쉬.wav")])]
+            sounds: [EffectTimedSound(tick: 0, names: [K2L("effect\\매직 크래쉬.wav")])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_reverberation_hit,
@@ -2162,7 +2150,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_wallofthorn_cast,
             strPath: "new_wallofthorn\\new_wallofthorn_cast\\new_wallofthorn_cast.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_wallofthorn_cast_bottom,
@@ -2211,7 +2199,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_new_judex_cast_loop,
             strPath: "new_judex\\new_judex_cast_loop\\new_judex_cast_loop.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_judex_cast_loop_bottom,
@@ -2243,7 +2231,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_new_chainlightning_cast,
             strPath: "new_chainlightning\\new_chainlightning_cast\\new_chainlightning_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_chainlightning_cast_bottom,
@@ -2261,7 +2249,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_new_chainlightning_target,
             strPath: "new_chainlightning\\new_chainlightning_target\\new_chainlightning_target.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["chainlight.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["chainlight.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_mandragora,
@@ -2278,13 +2266,13 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_new_mandragora_cast,
             strPath: "new_mandragora\\new_mandragora_cast\\new_mandragora_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_soundofdestruction_cast,
             strPath: "new_soundofdestruction\\new_soundofdestruction_cast\\new_soundofdestruction_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_soundofdestruction_cast_bottom,
@@ -2296,7 +2284,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_new_soundofdestruction_target,
             strPath: "new_soundofdestruction\\new_soundofdestruction_target\\new_soundofdestruction_target.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\priest_lexaeterna.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\priest_lexaeterna.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_aimedbolt_01,
@@ -2323,7 +2311,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "new_aimedbolt\\new_aimedbolt_cast_bottom\\new_aimedbolt_cast_bottom.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_aimedbolt_end,
@@ -2355,7 +2343,7 @@ extension EZ2STRScreenEffectDefinition {
             isRetained: true,
             isAttachedToHead: true,
             headOffsetYDelta: -3,
-            sounds: [TimedSound(tick: 30, names: ["effect\\EF_GlassWall.wav"])]
+            sounds: [EffectTimedSound(tick: 30, names: ["effect\\EF_GlassWall.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_axeboomerang_cast,
@@ -2378,7 +2366,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_hackandslash_bottom,
             strPath: "hackandslash\\hackandslash_bottom\\hackandslash_bottom.str",
             renderMode: .ground,
-            sounds: [TimedSound(tick: 0, names: ["effect\\DK_HACKANDSLASHER.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\DK_HACKANDSLASHER.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_hackandslash_hit,
@@ -2387,7 +2375,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_spellfist_fire,
             strPath: "new_spellfist\\new_spellfist_fire\\new_spellfist_fire.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_spellfist_fire_bottom,
@@ -2397,7 +2385,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_spellfist_water,
             strPath: "new_spellfist\\new_spellfist_water\\new_spellfist_water.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_spellfist_water_bottom,
@@ -2407,42 +2395,42 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_spellfist_wind,
             strPath: "new_spellfist\\new_spellfist_wind\\new_spellfist_wind.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_stormslash_1,
             strPath: "stormslash\\stormslash\\stormslash_1.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_stormslash_2,
             strPath: "stormslash\\stormslash\\stormslash_2.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), TimedSound(tick: 15, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), EffectTimedSound(tick: 15, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_stormslash_3,
             strPath: "stormslash\\stormslash\\stormslash_3.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), TimedSound(tick: 15, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), TimedSound(tick: 30, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), EffectTimedSound(tick: 15, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), EffectTimedSound(tick: 30, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_stormslash_4,
             strPath: "stormslash\\stormslash\\stormslash_4.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), TimedSound(tick: 15, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), TimedSound(tick: 30, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), TimedSound(tick: 45, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), EffectTimedSound(tick: 15, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), EffectTimedSound(tick: 30, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), EffectTimedSound(tick: 45, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_stormslash_5,
             strPath: "stormslash\\stormslash\\stormslash_5.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), TimedSound(tick: 15, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), TimedSound(tick: 30, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), TimedSound(tick: 45, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), TimedSound(tick: 60, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), EffectTimedSound(tick: 15, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), EffectTimedSound(tick: 30, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), EffectTimedSound(tick: 45, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"]), EffectTimedSound(tick: 60, names: ["effect\\DK_STORMSLASH1.wav", "effect\\DK_STORMSLASH2.wav", "effect\\DK_STORMSLASH3.wav", "effect\\DK_STORMSLASH4.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_cartboost,
@@ -2501,7 +2489,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_windcutter,
             strPath: "new_windcutter\\new_windcutter\\new_windcutter.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\wl_siennaexecrate.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\wl_siennaexecrate.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_windcutter_bottom_01,
@@ -2556,7 +2544,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "new_powerswing\\new_powerswing_bottom\\new_powerswing_bottom.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 15, names: ["effect\\wizard_fire_pillar_b.wav"])],
+            sounds: [EffectTimedSound(tick: 15, names: ["effect\\wizard_fire_pillar_b.wav"])],
             cameraShakeTicks: [20]
         ),
         EZ2STRScreenEffectDefinition(
@@ -2581,7 +2569,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_earthdrive,
             strPath: "new_earthdrive\\new_earthdrive\\new_earthdrive.str",
-            sounds: [TimedSound(tick: 20, names: ["effect\\wizard_earthspike.wav"])],
+            sounds: [EffectTimedSound(tick: 20, names: ["effect\\wizard_earthspike.wav"])],
             cameraShakeTicks: [20]
         ),
         EZ2STRScreenEffectDefinition(
@@ -2614,7 +2602,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 40, names: ["effect\\DK_SERVANT_W_SIGN.wav"])]
+            sounds: [EffectTimedSound(tick: 40, names: ["effect\\DK_SERVANT_W_SIGN.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_servant_phantom_down,
@@ -2627,7 +2615,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "servant_phantom\\servant_phantom_hit\\servant_phantom_hit.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\DK_SERVANT_W_PHANTOM.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\DK_SERVANT_W_PHANTOM.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_servant_phantom_hit_bottom,
@@ -2660,7 +2648,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "servant_demolition\\servant_demolition_hit\\servant_demolition_hit.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\DK_SERVANT_W_DEMOL.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\DK_SERVANT_W_DEMOL.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_servant_demolition_leftdown,
@@ -2679,7 +2667,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "dragonnic_ora\\dragonnic_ora\\dragonnic_ora.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\DK_DRAGONIC_AURA1.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\DK_DRAGONIC_AURA1.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_dragonic_aura_bottom,
@@ -2693,7 +2681,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "dragonnic_ora\\dragonnic_ora_hit\\dragonnic_ora_hit.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 1, names: ["effect\\DK_DRAGONIC_AURA2.wav"])]
+            sounds: [EffectTimedSound(tick: 1, names: ["effect\\DK_DRAGONIC_AURA2.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_dragonic_aura_hit_bottom,
@@ -2724,7 +2712,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "madness_crusher\\madness_crusher\\madness_crusher.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 1, names: ["effect\\DK_MADNESS_CRUSHER.wav"])]
+            sounds: [EffectTimedSound(tick: 1, names: ["effect\\DK_MADNESS_CRUSHER.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_madness_crusher_bottom,
@@ -2751,7 +2739,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "destructive_hurricane\\destructive_hurricane\\destructive_hurricane.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\AG_DESTRUCTIVE_HURRICANE.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\AG_DESTRUCTIVE_HURRICANE.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_destructive_hurricane_bottom,
@@ -2772,7 +2760,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_destructive_hurricane_climax,
@@ -2798,14 +2786,14 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_deadly_projection_hit,
             strPath: "deadly_projection\\deadly_projection_hit\\deadly_projection_hit.str",
             isAttachedToHead: true,
             headOffsetYDelta: -6,
-            sounds: [TimedSound(tick: 0, names: ["effect\\AG_DEADLY_PROJECTION.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\AG_DEADLY_PROJECTION.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_deadly_projection,
@@ -2827,7 +2815,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_soul_vc_strike_hit,
@@ -2840,7 +2828,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "rockdown\\rockdown\\rockdown.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\AG_ROCK_DOWN.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\AG_ROCK_DOWN.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_rockdown_bottom,
@@ -2861,7 +2849,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_rockdown_hit,
@@ -2873,7 +2861,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_vigor_cast,
             strPath: "vigor\\vigor_cast\\vigor_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\DK_VIGOR.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\DK_VIGOR.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_vigor_buff,
@@ -2894,7 +2882,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_crimson_arrow_cast,
@@ -2908,7 +2896,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_crimson_arrow_hit,
@@ -2928,7 +2916,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_violent_quake_hit,
@@ -2948,7 +2936,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_chargingpierce_hit,
             strPath: "new_chargingpierce\\new_chargingpierce_hit\\new_chargingpierce_hit.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\DK_CHARGINGPIERCE1.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\DK_CHARGINGPIERCE1.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_astral_strike_cast,
@@ -2962,7 +2950,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_mystery_illusion,
@@ -2980,7 +2968,7 @@ extension EZ2STRScreenEffectDefinition {
             isRetained: true,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\AG_MYSTERY_ILLUSION.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\AG_MYSTERY_ILLUSION.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_mystery_illusion_cast,
@@ -2994,7 +2982,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_mystery_illusion_hit,
@@ -3009,7 +2997,7 @@ extension EZ2STRScreenEffectDefinition {
             isRetained: true,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\AG_TORNADO_STORM.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\AG_TORNADO_STORM.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_tornado_storm_bottom,
@@ -3032,7 +3020,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_tornado_storm_hit,
@@ -3045,7 +3033,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "frozen_slash\\frozen_slash\\frozen_slash.str",
             isAttachedToHead: true,
             headOffsetYDelta: -1,
-            sounds: [TimedSound(tick: 0, names: ["effect\\AG_FROZEN_SLASH.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\AG_FROZEN_SLASH.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_frozen_slash_cast,
@@ -3059,7 +3047,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -1,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_frozen_slash_hit,
@@ -3145,7 +3133,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_all_bloom_hit,
@@ -3165,7 +3153,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_climax_cast_loop,
@@ -3186,7 +3174,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_floral_flare_road_hit,
@@ -3198,13 +3186,13 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_mediale_votum,
             strPath: "medialevotum\\medialevotum\\medialevotum.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\CD_MEDIALE_VOTUM.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\CD_MEDIALE_VOTUM.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_mediale_votum_cast,
             strPath: "medialevotum\\medialevotum_cast\\medialevotum_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_mediale_votum_loop,
@@ -3216,35 +3204,35 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_argutus_vita,
             strPath: "argutusvita\\argutusvita\\argutusvita.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\CD_ARGUTUS_VITA.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\CD_ARGUTUS_VITA.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_argutus_vita_cast,
             strPath: "argutusvita\\argutusvita_cast\\argutusvita_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_argutus_telum,
             strPath: "argutustelum\\argutustelum\\argutustelum.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\CD_ARGUTUS_VITA.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\CD_ARGUTUS_VITA.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_argutus_telum_cast,
             strPath: "argutustelum\\argutustelum_cast\\argutustelum_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_presens_acies,
             strPath: "presensacies\\presensacies\\presensacies.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\CD_PRESENS_ACIES.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\CD_PRESENS_ACIES.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_presens_acies_cast,
             strPath: "presensacies\\presensacies_cast\\presensacies_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_d_machine,
@@ -3272,7 +3260,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "new_d_machine\\new_d_machine_start_end\\new_d_machine_start.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\MT_D_MACHINE.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\MT_D_MACHINE.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_d_machine_end,
@@ -3283,7 +3271,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_arbitrium_cast,
             strPath: "arbitrium\\arbitrium_cast\\arbitrium_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_arbitrium_cast_bottom,
@@ -3301,7 +3289,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "arbitrium\\arbitrium_bottom\\arbitrium_bottom.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\CD_ARBITRIUM.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\CD_ARBITRIUM.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_arbitrium_hit,
@@ -3313,7 +3301,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_dancing_knife_cast,
             strPath: "dancing_knife\\dancing_knife_cast\\dancing_knife_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_dancing_knife_cast_bottom,
@@ -3385,7 +3373,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "effligo\\effligo_bottom\\effligo_bottom.str",
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\CD_EFFLIGO.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\CD_EFFLIGO.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_effligo_hit,
@@ -3405,7 +3393,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -1,
-            sounds: [TimedSound(tick: 0, names: ["effect\\CD_COMPETENTIA.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\CD_COMPETENTIA.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_competentia_loop,
@@ -3428,7 +3416,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_crystal_impact,
             strPath: "crystal_impact\\crystal_impact\\crystal_impact.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\AG_CRYSTAL_IMPACT.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\AG_CRYSTAL_IMPACT.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_crystal_impact_bottom,
@@ -3440,7 +3428,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "crystal_impact\\crystal_impact_cast\\crystal_impact_cast.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_crystal_impact_cast_bottom,
@@ -3464,20 +3452,20 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_religio,
             strPath: "religio\\religio\\religio.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\CD_RELIGIO.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\CD_RELIGIO.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_religio_cast,
             strPath: "religio\\religio_cast\\religio_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_enchanting_shadow,
             strPath: "enchanting_shadow\\enchanting_shadow\\new_enchanting_shadow.str",
             isAttachedToHead: true,
             headOffsetYDelta: -1,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_enchanting_shadow_bottom,
@@ -3491,7 +3479,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "fatal_shadow_crow\\fatal_shadow_crow\\fatal_shadow_crow.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\SHC_FATAL_SHADOW_CROW.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\SHC_FATAL_SHADOW_CROW.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_fatal_shadow_crow_bottom,
@@ -3508,7 +3496,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_shadow_exceed_cast,
             strPath: "shadow_exceed\\shadow_exceed_cast\\shadow_exceed_cast.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_deep_blind_trap_cast,
@@ -3522,14 +3510,14 @@ extension EZ2STRScreenEffectDefinition {
             isRetained: true,
             isAttachedToHead: true,
             headOffsetYDelta: -6,
-            sounds: [TimedSound(tick: 0, names: ["effect\\WH_TRAP.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\WH_TRAP.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_deep_blind_trap_hit,
             strPath: "deepblindtrap\\deepblindtrap_hit\\deepblindtrap_hit.str",
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\WH_DEEP_BLIND_TRAP_HIT.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\WH_DEEP_BLIND_TRAP_HIT.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_swift_trap_cast,
@@ -3544,21 +3532,21 @@ extension EZ2STRScreenEffectDefinition {
             isRetained: true,
             isAttachedToHead: true,
             headOffsetYDelta: -6,
-            sounds: [TimedSound(tick: 0, names: ["effect\\WH_TRAP.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\WH_TRAP.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_swift_trap_hit,
             strPath: "swifttrap\\swifttrap_hit\\swifttrap_hit.str",
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\WH_SWIFT_TRAP_HIT.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\WH_SWIFT_TRAP_HIT.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_solid_trap_cast,
             strPath: "solidtrap\\solidtrap_cast\\solidtrap_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_solid_trap_cast_bottom,
@@ -3573,14 +3561,14 @@ extension EZ2STRScreenEffectDefinition {
             isRetained: true,
             isAttachedToHead: true,
             headOffsetYDelta: -6,
-            sounds: [TimedSound(tick: 0, names: ["effect\\WH_TRAP.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\WH_TRAP.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_solid_trap_hit,
             strPath: "solidtrap\\solidtrap_hit\\solidtrap_hit.str",
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\WH_SOLID_TRAP_HIT.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\WH_SOLID_TRAP_HIT.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_rush_quake,
@@ -3592,7 +3580,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "new_rush_quake\\new_rush_quake_bottom\\new_rush_quake.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 15, names: ["effect\\wizard_fire_pillar_b.wav"])],
+            sounds: [EffectTimedSound(tick: 15, names: ["effect\\wizard_fire_pillar_b.wav"])],
             cameraShakeTicks: [20]
         ),
         EZ2STRScreenEffectDefinition(
@@ -3600,20 +3588,20 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "new_rush_quake\\new_rush_quake_hit\\new_rush_quake_hit.str",
             isAttachedToHead: true,
             headOffsetYDelta: -5,
-            sounds: [TimedSound(tick: 0, names: ["effect\\MT_RUSH_QUAKE.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\MT_RUSH_QUAKE.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_benedictum,
             strPath: "benedictum\\benedictum\\benedictum.str",
             isAttachedToHead: true,
             headOffsetYDelta: -1,
-            sounds: [TimedSound(tick: 0, names: ["effect\\CD_BENEDICTUM.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\CD_BENEDICTUM.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_benedictum_cast,
             strPath: "benedictum\\benedictum_cast\\benedictum_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_benedictum_cast_bottom,
@@ -3632,7 +3620,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_stratum_tremor_hit,
@@ -3649,7 +3637,7 @@ extension EZ2STRScreenEffectDefinition {
             isAttachedToHead: true,
             headOffsetYDelta: -8,
             levelScales: [1: 0.7, 2: 1.25, 3: 1.25, 4: 1.25, 5: 1.25],
-            sounds: [TimedSound(tick: 0, names: ["effect\\AG_STRANTUM_TREMOR1.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\AG_STRANTUM_TREMOR1.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_stratum_tremor_bottom,
@@ -3679,14 +3667,14 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "impact_crater\\impact_crater_hit\\impact_crater_hit.str",
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\SHC_IMPACT_CRATER.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\SHC_IMPACT_CRATER.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_wind_sign,
             strPath: "windsign\\windsign\\windsign.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\WH_WIND_SIGN.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\WH_WIND_SIGN.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_wind_sign_loop,
@@ -3706,21 +3694,21 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "new_abr_mother\\new_abr_mother_01\\new_abr_mother_01.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\MT_ABR_NET_REPAIR.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\MT_ABR_NET_REPAIR.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_abr_mother_02,
             strPath: "new_abr_mother\\new_abr_mother_02\\new_abr_mother_02.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\MT_ABR_NET_SUPPORT.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\MT_ABR_NET_SUPPORT.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_hawk_rush,
             strPath: "hawkrush\\hawkrush\\hawkrush.str",
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\WH_HAWKRUSH.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\WH_HAWKRUSH.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_abr_infinity,
@@ -3750,7 +3738,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "eternal_slash\\eternal_slash_hit\\eternal_slash_hit.str",
             isAttachedToHead: true,
             headOffsetYDelta: -6,
-            sounds: [TimedSound(tick: 0, names: ["effect\\SHC_ETERNAL_SLASH.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\SHC_ETERNAL_SLASH.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_d_cannon,
@@ -3774,7 +3762,7 @@ extension EZ2STRScreenEffectDefinition {
             isRetained: true,
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\WH_TRAP.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\WH_TRAP.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_flame_trap_cast,
@@ -3785,7 +3773,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "flametrap\\flametrap_hit\\flametrap_hit.str",
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\WH_FLAMETRAP_HIT.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\WH_FLAMETRAP_HIT.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_dilectio_heal,
@@ -3796,7 +3784,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_new_dilectio_heal_cast,
             strPath: "new_dilectioheal\\new_dilectioheal_cast\\new_dilectioheal_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_dilectio_heal_cast_bottom,
@@ -3815,13 +3803,13 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: 1,
-            sounds: [TimedSound(tick: 0, names: ["effect\\CD_DILECTIO_HEAL.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\CD_DILECTIO_HEAL.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_pramen_bottom,
             strPath: "new_pramen\\new_pramen_bottom\\new_pramen_bottom.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\CD_FRAMEN.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\CD_FRAMEN.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_pramen_cast,
@@ -3837,7 +3825,7 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_potent_venom,
             strPath: "new_potent_venom\\new_potent_venom.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\SHC_POTENT_VENOM.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\SHC_POTENT_VENOM.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_battle_w,
@@ -3876,7 +3864,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_new_axe_stomp,
             strPath: "new_axe_stomp\\new_axe_stomp\\new_axe_stomp.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\MT_AXE_STOMP.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\MT_AXE_STOMP.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_new_axe_stomp_12,
@@ -3923,7 +3911,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "crescivebolt\\crescivebolt_cast\\crescivebolt_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_crescivebolt_hit,
@@ -3943,7 +3931,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "eternal_slash\\eternal_slash_hit\\eternal_slash_hit.str",
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\SHC_SHADOW_STAB.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\SHC_SHADOW_STAB.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_shadow_stab_hit2,
@@ -3954,18 +3942,18 @@ extension EZ2STRScreenEffectDefinition {
         EZ2STRScreenEffectDefinition(
             effectID: .ef_pneumaticus_procella_cast,
             strPath: "pneumaticusprocella\\pneumaticusprocella_cast\\pneumaticusprocella_cast.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_calumitygale,
             strPath: "4wh_calumitygale\\calumitygale\\calumitygale.str",
-            sounds: [TimedSound(tick: 0, names: ["effect\\WH_CALAMITYGALE.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\WH_CALAMITYGALE.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_calumitygale_cast,
             strPath: "4wh_calumitygale\\calumitygale_cast\\calumitygale_cast.str",
             renderMode: .ground,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_calumitygale_loop,
@@ -3979,7 +3967,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -1,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IQ_FAITH.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IQ_FAITH.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_sincere_faith_bottom,
@@ -3991,7 +3979,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_abyss_dagger,
             strPath: "abyss_dagger\\abyss_dagger\\abyss_dagger.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ABC_ABYSS_DAGGER.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ABC_ABYSS_DAGGER.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_abyss_dagger_hit,
@@ -4004,7 +3992,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "hawkvumerang\\hawkvumerang_cast\\hawkvumerang_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_hawk_boomerang_hit,
@@ -4023,7 +4011,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "galestorm\\galestorm_cast\\galestorm_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -1,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_gale_storm_hit,
@@ -4043,13 +4031,13 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_first_faith_power_cast,
             strPath: "4ig_firstfaithpower\\firstfaithpower_cast\\firstfaithpower_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_first_faith_power_start,
             strPath: "4ig_firstfaithpower\\firstfaithpower_start\\firstfaithpower_start.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IQ_FIRST_FAITH_POWER.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IQ_FIRST_FAITH_POWER.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_judge,
@@ -4063,13 +4051,13 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_judge_cast,
             strPath: "4ig_judge\\judge_cast\\judge_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_judge_start,
             strPath: "4ig_judge\\judge_start\\judge_start.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IQ_JUDGE.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IQ_JUDGE.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_judge_aura,
@@ -4091,13 +4079,13 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_third_exor_flame_cast,
             strPath: "4ig_thirdexorflame\\thirdexorflame_cast\\thirdexorflame_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_third_exor_flame_start,
             strPath: "4ig_thirdexorflame\\thirdexorflame_start\\thirdexorflame_start.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IQ_THIRD_EXOR_FLAME.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IQ_THIRD_EXOR_FLAME.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_third_exor_flame_aura,
@@ -4112,13 +4100,13 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "powerfulfaith\\powerfulfaith\\powerfulfaith.str",
             isAttachedToHead: true,
             headOffsetYDelta: -1,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IQ_FAITH.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IQ_FAITH.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_oleum_sanctum,
             strPath: "4ig_oleumsanctum\\oleumsanctum\\oleumsanctum.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 50, names: ["effect\\IQ_OLEUM_SANCTUM.wav"])]
+            sounds: [EffectTimedSound(tick: 50, names: ["effect\\IQ_OLEUM_SANCTUM.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_oleum_sanctum_bottom,
@@ -4143,7 +4131,7 @@ extension EZ2STRScreenEffectDefinition {
             isAttachedToHead: true,
             headOffsetYDelta: -2,
             defaultRepeatCount: 2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_INCREASING_ACTIVITY.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_INCREASING_ACTIVITY.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_increasing_activity_cast,
@@ -4157,13 +4145,13 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_explosion_blaster,
             strPath: "4ig_explosionblaster\\explosionblaster\\explosionblaster.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IQ_EXPOSION_BLASTER.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IQ_EXPOSION_BLASTER.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_explosion_blaster_bottom,
@@ -4180,14 +4168,14 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "firmfaith\\firmfaith\\firmfaith.str",
             isAttachedToHead: true,
             headOffsetYDelta: -1,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IQ_FAITH.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IQ_FAITH.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_mysticsymphony,
             strPath: "mysticsymphony\\mysticsymphony\\mysticsymphony.str",
             isAttachedToHead: true,
             headOffsetYDelta: -1,
-            sounds: [TimedSound(tick: 0, names: ["effect\\TR_MYSTIC_SYMPHONY.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\TR_MYSTIC_SYMPHONY.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_mysticsymphony_cast,
@@ -4195,7 +4183,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -1,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_mysticsymphony_note,
@@ -4210,7 +4198,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "activity_burn\\activity_burn\\activity_burn.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_ACTIVITY_BURN.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_ACTIVITY_BURN.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_activity_burn_cast,
@@ -4224,7 +4212,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_kvasirsonata,
@@ -4236,14 +4224,14 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_kvasirsonata_cast,
             strPath: "4tr_kvasirsonata\\kvasirsonata_cast\\kvasirsonata_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_kvasirsonata_cast_bottom,
             strPath: "4tr_kvasirsonata\\kvasirsonata_cast_bottom\\kvasirsonata_cast_bottom.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\TR_KVASIR_SONATA.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\TR_KVASIR_SONATA.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_serpens_bottom,
@@ -4251,7 +4239,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_SUMMON_ELEMENTAL_SERPENS_2.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_SUMMON_ELEMENTAL_SERPENS_2.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_serpens_cast,
@@ -4265,7 +4253,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_serpens_hit,
@@ -4284,7 +4272,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "chain_reaction_shot\\chain_reaction_shot_cast\\chain_reaction_shot_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: 1,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_chain_reaction_shot_cast_bottom,
@@ -4317,7 +4305,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "diluvio\\diluvio_ice\\diluvio_ice.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_SUMMON_ELEMENTAL_DILUVIO_2.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_SUMMON_ELEMENTAL_DILUVIO_2.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_diluvio_ice_bottom,
@@ -4338,7 +4326,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_diluvio_hit,
@@ -4357,7 +4345,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "spell_enchanting\\spell_enchanting\\spell_enchanting.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_SPELL_ENCHANTING.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_SPELL_ENCHANTING.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_diamond_storm_bottom,
@@ -4366,7 +4354,7 @@ extension EZ2STRScreenEffectDefinition {
             isAttachedToHead: true,
             headOffsetYDelta: -4,
             defaultLifeTimeFrames: 60,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_DIAMOND_STORM.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_DIAMOND_STORM.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_diamond_storm_cast,
@@ -4380,7 +4368,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_diamond_storm_hit,
@@ -4396,7 +4384,7 @@ extension EZ2STRScreenEffectDefinition {
             isRetained: true,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_VENOM_SWAMP.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_VENOM_SWAMP.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_venom_swamp_cast,
@@ -4410,7 +4398,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_venom_swamp_hit,
@@ -4423,7 +4411,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "ardor\\ardor\\ardor.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_SUMMON_ELEMENTAL_ARDOR_2.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_SUMMON_ELEMENTAL_ARDOR_2.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_ardor_bottom,
@@ -4444,7 +4432,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_ardor_hit,
@@ -4465,7 +4453,7 @@ extension EZ2STRScreenEffectDefinition {
             isRetained: true,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_LIGHTNING_LAND.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_LIGHTNING_LAND.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_lightning_land_bottom,
@@ -4488,7 +4476,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_lightning_land_hit,
@@ -4500,7 +4488,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_roseblossom_cast,
             strPath: "roseblossom\\roseblossom_cast\\roseblossom_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_roseblossom_cast_bottom,
@@ -4518,7 +4506,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_roseblossom_rose,
             strPath: "roseblossom\\roseblossom_rose\\roseblossom_rose.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\TR_ROSEBLOSSOM_ROSE.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\TR_ROSEBLOSSOM_ROSE.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_roseblossom_shot,
@@ -4526,7 +4514,7 @@ extension EZ2STRScreenEffectDefinition {
             isAttachedToHead: true,
             headOffsetYDelta: -6,
             aimMode: .fromSource,
-            sounds: [TimedSound(tick: 0, names: ["effect\\TR_ROSEBLOSSOM_SHOT.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\TR_ROSEBLOSSOM_SHOT.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_first_brand,
@@ -4555,7 +4543,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "4ig_firstbrand\\firstbrand_start\\firstbrand_start.str",
             isAttachedToHead: true,
             headOffsetYDelta: -5,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IQ_FIRST_BRAND.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IQ_FIRST_BRAND.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_conflagration,
@@ -4564,7 +4552,7 @@ extension EZ2STRScreenEffectDefinition {
             isRetained: true,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_CONFLAGRATION.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_CONFLAGRATION.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_conflagration_bottom,
@@ -4587,7 +4575,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_conflagration_hit,
@@ -4602,14 +4590,14 @@ extension EZ2STRScreenEffectDefinition {
             isRetained: true,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\TR_SOUNDBLEND_SHOT.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\TR_SOUNDBLEND_SHOT.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_sound_blend_cast,
             strPath: "soundblend\\soundblend_cast\\soundblend_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_sound_blend_cast_bottom,
@@ -4623,14 +4611,14 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "soundblend\\soundblend_red\\soundblend_red.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\TR_SOUNDBLEND_HIT.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\TR_SOUNDBLEND_HIT.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_metallic_fury,
             strPath: "metalicfury\\metalicfury\\metalicfury.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\TR_METALIC_FURY.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\TR_METALIC_FURY.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_jawaii_serenade,
@@ -4638,14 +4626,14 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\TR_JAWAII_SERENADE.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\TR_JAWAII_SERENADE.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_jawaii_serenade_cast,
             strPath: "jawaii_serenade\\jawaii_serenade_cast\\jawaii_serenade_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_jawaii_serenade_cast_bottom,
@@ -4659,14 +4647,14 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "pronmarch\\pronmarch\\pronmarch.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\TR_PRON_MARCH.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\TR_PRON_MARCH.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_pronmarch_cast,
             strPath: "pronmarch\\pronmarch_cast\\pronmarch_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_pronmarch_cast_bottom,
@@ -4679,7 +4667,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_rhythmshooting_cast,
             strPath: "rhythmshooting\\rhythmshooting_cast\\rhythmshooting_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_rhythmshooting_cast_bottom,
@@ -4697,14 +4685,14 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "nipelheim\\nipelheim\\nipelheim.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\TR_NIPELHEIM_REQUIEM.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\TR_NIPELHEIM_REQUIEM.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_niflheim_cast,
             strPath: "nipelheim\\nipelheim_cast\\nipelheim_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_second_faith,
@@ -4713,7 +4701,7 @@ extension EZ2STRScreenEffectDefinition {
             isRetained: true,
             isAttachedToHead: true,
             headOffsetYDelta: -5,
-            sounds: [TimedSound(tick: 20, names: ["effect\\IQ_SECOND_FAITH.wav"])]
+            sounds: [EffectTimedSound(tick: 20, names: ["effect\\IQ_SECOND_FAITH.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_second_faith_aura,
@@ -4733,14 +4721,14 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_second_flame,
             strPath: "4iq_secondflame\\secondflame\\secondflame.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IQ_SECOND_FLAME.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IQ_SECOND_FLAME.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_second_flame_bottom,
             strPath: "4iq_secondflame\\secondflame_bottom\\secondflame_bottom.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 15, names: ["effect\\wizard_fire_pillar_b.wav"])],
+            sounds: [EffectTimedSound(tick: 15, names: ["effect\\wizard_fire_pillar_b.wav"])],
             cameraShakeTicks: [40]
         ),
         EZ2STRScreenEffectDefinition(
@@ -4753,14 +4741,14 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "4iq_thirdflamebomb\\thirdflamebomb_bottom\\thirdflamebomb_bottom.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IQ_THIRD_FLAME_BOMB.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IQ_THIRD_FLAME_BOMB.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_abyss_strike,
             strPath: "abyss_strike\\abyss_strike\\abyss_strike.str",
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ABC_ABYSS_STRIKE.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ABC_ABYSS_STRIKE.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_abyss_strike_bottom,
@@ -4774,7 +4762,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "abyss_strike\\abyss_strike_cast\\abyss_strike_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_abyss_strike_cast_bottom,
@@ -4807,7 +4795,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "4iq_massivefblaster\\massivefblaster\\massivefblaster.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IQ_MASSIVE_F_BLASTER.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IQ_MASSIVE_F_BLASTER.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_massive_flame_blaster_hit,
@@ -4824,14 +4812,14 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_third_consecration,
             strPath: "4iq_thirdconsecration\\thirdconsecration\\thirdconsecration.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IQ_THIRD_CONSECRATION.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IQ_THIRD_CONSECRATION.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_procella,
             strPath: "procella\\procella\\procella.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_SUMMON_ELEMENTAL_PROCELLA_2.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_SUMMON_ELEMENTAL_PROCELLA_2.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_procella_bottom,
@@ -4852,7 +4840,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_procella_hit,
@@ -4871,7 +4859,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "terremotus\\terremotus\\terremotus.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_SUMMON_ELEMENTAL_TERREMOTUS_2.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_SUMMON_ELEMENTAL_TERREMOTUS_2.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_terremotus_cast,
@@ -4885,7 +4873,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_terremotus_hit,
@@ -4905,7 +4893,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -5,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ABC_FROM_THE_ABYSS.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ABC_FROM_THE_ABYSS.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_abyss_strike_hit_2,
@@ -4923,7 +4911,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "4iq_thirdpunish\\thirdpunish_bottom\\thirdpunish_bottom.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IQ_THIRD_PUNISH.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IQ_THIRD_PUNISH.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_frenzy_shot_hit,
@@ -4936,14 +4924,14 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "gef_nocturn\\gef_nocturn\\gef_nocturn.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\TR_GEF_NOCTURN.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\TR_GEF_NOCTURN.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_gef_nocturn_cast,
             strPath: "gef_nocturn\\gef_nocturn_cast\\gef_nocturn_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_gef_nocturn_cast_bottom,
@@ -4957,14 +4945,14 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "roki_capriccio\\roki_capriccio\\roki_capriccio.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\TR_ROKI_CAPRICCIO.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\TR_ROKI_CAPRICCIO.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_roki_capriccio_cast,
             strPath: "roki_capriccio\\roki_capriccio_cast\\roki_capriccio_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_roki_capriccio_cast_bottom,
@@ -4978,28 +4966,28 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "musical_interlude\\musical_interlude\\musical_interlude.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\TR_MUSICAL_INTERLUDE.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\TR_MUSICAL_INTERLUDE.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_musical_interlude_cast,
             strPath: "musical_interlude\\musical_interlude_cast\\musical_interlude_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_ain_rhapsody,
             strPath: "ain_rhapsody\\ain_rhapsody\\ain_rhapsody.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\TR_AIN_RHAPSODY.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\TR_AIN_RHAPSODY.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_ain_rhapsody_cast,
             strPath: "ain_rhapsody\\ain_rhapsody_cast\\ain_rhapsody_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_abyss_slayer,
@@ -5012,7 +5000,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_abyss_slayer_cast,
             strPath: "4abc_abyss_slayer\\abyss_slayer_cast\\abyss_slayer_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_abyss_slayer_cast_bottom,
@@ -5049,14 +5037,14 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "deft_stab\\deft_stab\\deft_stab.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ABC_DEFT_STAB1.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ABC_DEFT_STAB1.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_terra_drive,
             strPath: "terradrive\\terradrive\\terradrive.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_TERRA_DRIVE.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_TERRA_DRIVE.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_terra_drive_bottom,
@@ -5077,7 +5065,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_terra_drive_hit,
@@ -5091,14 +5079,14 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_elemental_buster_fire,
             strPath: "elemental_buster\\elemental_buster\\elemental_buster_fire\\elemental_buster_fire.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_ELEMETAL_BUSTER_FIRE.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_ELEMETAL_BUSTER_FIRE.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_elemental_buster_fire_bottom,
@@ -5118,7 +5106,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "elemental_buster\\elemental_buster\\elemental_buster_land\\elemental_buster_land.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_ELEMETAL_BUSTER_GROUND.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_ELEMETAL_BUSTER_GROUND.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_elemental_buster_land_bottom,
@@ -5138,7 +5126,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "elemental_buster\\elemental_buster\\elemental_buster_poison\\elemental_buster_poison.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_ELEMETAL_BUSTER_POISON.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_ELEMETAL_BUSTER_POISON.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_elemental_buster_poison_bottom,
@@ -5158,7 +5146,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "elemental_buster\\elemental_buster\\elemental_buster_water\\elemental_buster_water.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_ELEMETAL_BUSTER_WATER.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_ELEMETAL_BUSTER_WATER.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_elemental_buster_water_bottom,
@@ -5178,7 +5166,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "elemental_buster\\elemental_buster\\elemental_buster_wind\\elemental_buster_wind.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EM_ELEMETAL_BUSTER_WIND.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EM_ELEMETAL_BUSTER_WIND.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_elemental_buster_wind_bottom,
@@ -5197,7 +5185,7 @@ extension EZ2STRScreenEffectDefinition {
             effectID: .ef_unlucky_rush_cast,
             strPath: "unlucky_rush\\unlucky_rush_cast\\unlucky_rush_cast.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_abyss_dagger_hit_3,
@@ -5210,7 +5198,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "overslash\\overslash\\overslash.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IG_OVERSLASH.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IG_OVERSLASH.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_overslash_bottom,
@@ -5224,7 +5212,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "overslash\\overslash_cast\\overslash_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_overslash_hit,
@@ -5237,7 +5225,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "adv_protection\\adv_protection\\adv_protection.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\BO_ADVANCE_PROTECTION.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\BO_ADVANCE_PROTECTION.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_advanced_protection_bottom,
@@ -5251,7 +5239,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "adv_protection\\adv_protection_cast\\adv_protection_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_advanced_protection_cast_bottom,
@@ -5274,7 +5262,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "crossrain\\cross_rain_cast\\cross_rain_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_cross_rain_cast_bottom,
@@ -5288,7 +5276,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "guard_stance\\guard_stance\\guard_stance.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IG_GUARD_STANCE.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IG_GUARD_STANCE.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_guard_stance_cast,
@@ -5302,14 +5290,14 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_attack_stance,
             strPath: "attack_stance\\attack_stance\\attack_stance.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IG_GUARD_STANCE.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IG_GUARD_STANCE.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_attack_stance_cast,
@@ -5323,14 +5311,14 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_grand_judgement,
             strPath: "grand_judgement\\grand_judgement\\grand_judgement.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IG_GRAND_JUDGEMENT.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IG_GRAND_JUDGEMENT.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_grand_judgement_bottom,
@@ -5359,21 +5347,21 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_holy_shield_cast,
             strPath: "holy_shield\\holy_shield_cast\\holy_shield_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_holy_shield,
             strPath: "holy_shield\\holy_shield\\holy_shield.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IG_HOLY_SHIELD1.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IG_HOLY_SHIELD1.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_holy_shield_loop,
@@ -5382,14 +5370,14 @@ extension EZ2STRScreenEffectDefinition {
             isRetained: true,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 34, names: ["effect\\IG_HOLY_SHIELD2.wav"])]
+            sounds: [EffectTimedSound(tick: 34, names: ["effect\\IG_HOLY_SHIELD2.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_shield_shooting_cast,
             strPath: "shield_shooting\\shield_shooting_cast\\shield_shooting_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_shield_shooting_hit,
@@ -5402,14 +5390,14 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "the_w_protection\\the_w_protection\\the_w_protection.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["apocalips_attack.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["apocalips_attack.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_the_w_protection_cast,
             strPath: "the_w_protection\\the_w_protection_cast\\the_w_protection_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_guardianshield,
@@ -5429,7 +5417,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "guardianshield\\guardianshield_sub\\guardianshield_sub.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IG_GUARDIAN_SHIELD.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IG_GUARDIAN_SHIELD.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_judgement_cross,
@@ -5449,7 +5437,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "judgement_cross\\judgement_cross_cast\\judgement_cross_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_judgement_cross_cast_bottom,
@@ -5463,7 +5451,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "rebound_shield\\rebound_shield\\rebound_shield.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IG_REBOUND_SHIELD.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IG_REBOUND_SHIELD.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_rebound_shield_bottom,
@@ -5477,7 +5465,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "rebound_shield\\rebound_shield_cast\\rebound_shield_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_rebound_shield_cast_bottom,
@@ -5491,7 +5479,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "ultimate_sacrifice\\ultimatesacrifice\\ultimatesacrifice.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\IG_ULTIMATE_SACRIFICE.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\IG_ULTIMATE_SACRIFICE.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_ultimatesacrifice_bottom,
@@ -5511,7 +5499,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "acidified_zone_fire\\acidified_zone_fire_cast\\acidified_zone_fire_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -3,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_acidified_zone_fire_cast_bottom,
@@ -5561,7 +5549,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "acidified_zone_water\\acidified_zone_water_cast\\acidified_zone_water_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -3,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_acidified_zone_water_cast_bottom,
@@ -5611,7 +5599,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "acidified_zone_wind\\acidified_zone_wind_cast\\acidified_zone_wind_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -3,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_acidified_zone_wind_cast_bottom,
@@ -5661,7 +5649,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "acidified_zone_ground\\acidified_zone_ground_cast\\acidified_zone_ground_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -3,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_acidified_zone_ground_cast_bottom,
@@ -5718,7 +5706,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_helltree_dusty,
@@ -5731,21 +5719,21 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "helltree\\hell_howling\\hell_howling.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\BO_HELL_HOWLING.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\BO_HELL_HOWLING.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_research_report,
             strPath: "research_report\\researchreport\\researchreport.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\BO_RESEARCHREPORT.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\BO_RESEARCHREPORT.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_research_report_cast,
             strPath: "research_report\\researchreport_cast\\researchreport_cast.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_beginspell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_research_report_cast_bottom,
@@ -5784,7 +5772,7 @@ extension EZ2STRScreenEffectDefinition {
             renderMode: .ground,
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_wooden_warrior_attack,
@@ -5792,7 +5780,7 @@ extension EZ2STRScreenEffectDefinition {
             isAttachedToHead: true,
             headOffsetYDelta: -2,
             aimMode: .fromSourceInverted,
-            sounds: [TimedSound(tick: 0, names: ["effect\\BO_WOODEN_ATTACK.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\BO_WOODEN_ATTACK.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_wooden_warrior_attack_hit,
@@ -5806,7 +5794,7 @@ extension EZ2STRScreenEffectDefinition {
             isAttachedToHead: true,
             headOffsetYDelta: -2,
             aimMode: .fromSourceInverted,
-            sounds: [TimedSound(tick: 0, names: ["effect\\BO_THROWROCK.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\BO_THROWROCK.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_wooden_warrior_throwrock_hit,
@@ -5824,20 +5812,20 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "wooden_fairy\\wooden_cast_bottom\\wooden_cast_bottom.str",
             renderMode: .ground,
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_BeginSpell.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_wooden_fairy_dusty,
             strPath: "wooden_fairy\\fairy_dusty\\fairy_dusty.str",
             isAttachedToHead: true,
-            sounds: [TimedSound(tick: 0, names: ["effect\\BO_FAIRY_DUSTY.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\BO_FAIRY_DUSTY.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_serpens_deep_poisoning,
             strPath: "serpens\\serpens_deep_poisoning\\serpens_deep_poisoning.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\ef_detoxication.wav"])],
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\ef_detoxication.wav"])],
             cameraShakeTicks: [0]
         ),
         EZ2STRScreenEffectDefinition(
@@ -5852,7 +5840,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "diluvio\\diluvio_cold_force\\diluvio_cold_force.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_IceArrow1.wav"])],
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_IceArrow1.wav"])],
             cameraShakeTicks: [0]
         ),
         EZ2STRScreenEffectDefinition(
@@ -5867,7 +5855,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "ardor\\ardor_flametechnic\\ardor_flametechnic.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_FireArrow1.wav"])],
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_FireArrow1.wav"])],
             cameraShakeTicks: [0]
         ),
         EZ2STRScreenEffectDefinition(
@@ -5882,7 +5870,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "procella\\procella_grace_breeze\\procella_grace_breeze.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\EF_LightBolt3.wav"])],
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\EF_LightBolt3.wav"])],
             cameraShakeTicks: [0]
         ),
         EZ2STRScreenEffectDefinition(
@@ -5897,7 +5885,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "terremotus\\terremotus_earth_care\\terremotus_earth_care.str",
             isAttachedToHead: true,
             headOffsetYDelta: -2,
-            sounds: [TimedSound(tick: 0, names: ["effect\\wizard_earthspike.wav"])],
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\wizard_earthspike.wav"])],
             cameraShakeTicks: [0]
         ),
         EZ2STRScreenEffectDefinition(
@@ -6179,14 +6167,14 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "tetravortex\\tetra_04_water_sub_explosion\\tetra_04_water_sub_expn.str",
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\drop_effect_1.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\drop_effect_1.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_tetra_vortex_earth_sub_2,
             strPath: "tetravortex\\tetra_03_earth_sub_explosion\\tetra_03_earth_sub_expn.str",
             isAttachedToHead: true,
             headOffsetYDelta: -4,
-            sounds: [TimedSound(tick: 0, names: ["effect\\drop_effect_2.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\drop_effect_2.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_npc_20th_crystal_s,
@@ -6241,7 +6229,7 @@ extension EZ2STRScreenEffectDefinition {
             strPath: "20th_firework\\20th_firework.str",
             isAttachedToHead: true,
             headOffsetYDelta: 16,
-            sounds: [TimedSound(tick: 0, names: ["effect\\pokjuk_jap.wav"])]
+            sounds: [EffectTimedSound(tick: 0, names: ["effect\\pokjuk_jap.wav"])]
         ),
         EZ2STRScreenEffectDefinition(
             effectID: .ef_npc_gate_green_2,

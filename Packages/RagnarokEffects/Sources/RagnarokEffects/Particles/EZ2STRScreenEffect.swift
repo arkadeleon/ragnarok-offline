@@ -235,17 +235,6 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
             return []
         }
 
-        let terrainHeightClosure: ((_ worldX: Float, _ worldZ: Float) -> Float)?
-        if renderMode == .ground {
-            terrainHeightClosure = { worldX, worldZ in
-                let effectPos = EffectSpace.toEffectPosition(SIMD3<Float>(worldX, 0, worldZ))
-                let effectHeight = world.terrainHeight(atEffectX: effectPos.x, effectZ: effectPos.z)
-                return EffectSpace.toWorldHeight(effectHeight)
-            }
-        } else {
-            terrainHeightClosure = nil
-        }
-
         let payload = STREffectRenderer.RenderPayload(
             asset: asset,
             frameIndex: max(0, playbackState.frameCounter - 1),
@@ -255,7 +244,7 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
             transform: transform,
             fog: fog,
             modelMatrix: modelMatrix,
-            terrainHeight: terrainHeightClosure
+            terrainHeight: renderMode == .ground ? { world.worldTerrainHeight(atWorldX: $0, worldZ: $1) } : nil
         )
         return [payload]
     }
@@ -310,14 +299,8 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
     }
 
     private func triggerTimedEvents(world: any EffectWorldContext) {
-        for sound in definition.sounds where sound.tick == elapsedFrames {
-            if sound.chanceDenominator > 1 && Int.random(in: 0..<sound.chanceDenominator) != 0 {
-                continue
-            }
-            guard let soundName = sound.names.count == 1 ? sound.names.first : sound.names.randomElement() else {
-                continue
-            }
-            world.playSound(named: soundName, atWorldPosition: worldPosition, delay: 0)
+        for sound in definition.sounds {
+            sound.playIfMatching(tick: elapsedFrames, atWorldPosition: worldPosition, world: world)
         }
 
         if let periodic = definition.periodicSound {

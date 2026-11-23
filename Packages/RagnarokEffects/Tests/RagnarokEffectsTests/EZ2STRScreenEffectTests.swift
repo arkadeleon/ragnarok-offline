@@ -156,11 +156,11 @@ struct EZ2STRScreenEffectTests {
 
         let potion = EZ2STRScreenEffectDefinition.definition(for: .ef_potion1)
         #expect(potion?.strPath == K2L("빨간포션.str"))
-        #expect(potion?.sounds == [EZ2STRScreenEffectDefinition.TimedSound(tick: 0, names: ["_heal_effect.wav"])])
+        #expect(potion?.sounds == [EffectTimedSound(tick: 0, names: ["_heal_effect.wav"])])
 
         let potion5 = EZ2STRScreenEffectDefinition.definition(for: .ef_potion5)
         #expect(potion5?.strPath == K2L("파란포션.str"))
-        #expect(potion5?.sounds == [EZ2STRScreenEffectDefinition.TimedSound(tick: 0, names: [K2L("effect\\흡기.wav")])])
+        #expect(potion5?.sounds == [EffectTimedSound(tick: 0, names: [K2L("effect\\흡기.wav")])])
 
         let kaihou = EZ2STRScreenEffectDefinition.definition(for: .ef_kaihou1)
         #expect(kaihou?.strPath == K2L("술식해방.str"))
@@ -418,7 +418,7 @@ struct EZ2STRScreenEffectTests {
             strPath: "new_meteostorm\\new_meteostorm\\new_meteostorm.str",
             defaultScale: 1.0,
             levelScales: [1: 0.7, 3: 1.25],
-            sounds: [EZ2STRScreenEffectDefinition.TimedSound(tick: 1, names: ["effect\\timed.wav"])],
+            sounds: [EffectTimedSound(tick: 1, names: ["effect\\timed.wav"])],
             periodicSound: EZ2STRScreenEffectDefinition.PeriodicSound(startTick: 2, intervalTicks: 3, name: "effect\\pulse.wav"),
             cameraShakeTicks: [4]
         )

@@ -145,14 +145,8 @@ public final class RagSTREffect: STREffectRenderable {
     }
 
     private func triggerTimedEvents(world: any EffectWorldContext) {
-        for sound in definition.sounds where sound.tick == stateCount {
-            if sound.chanceDenominator > 1 && Int.random(in: 0..<sound.chanceDenominator) != 0 {
-                continue
-            }
-            guard let soundName = sound.names.count == 1 ? sound.names.first : sound.names.randomElement() else {
-                continue
-            }
-            world.playSound(named: soundName, atWorldPosition: worldPosition, delay: 0)
+        for sound in definition.sounds {
+            sound.playIfMatching(tick: stateCount, atWorldPosition: worldPosition, world: world)
         }
 
         if definition.cameraShakeTicks.contains(stateCount) {

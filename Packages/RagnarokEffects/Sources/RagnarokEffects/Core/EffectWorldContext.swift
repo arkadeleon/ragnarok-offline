@@ -104,6 +104,12 @@ extension EffectWorldContext {
         EffectSpace.toEffectPosition(cameraWorldPosition)
     }
 
+    public func worldTerrainHeight(atWorldX x: Float, worldZ z: Float) -> Float {
+        let effectPosition = EffectSpace.toEffectPosition(SIMD3<Float>(x, 0, z))
+        let effectHeight = terrainHeight(atEffectX: effectPosition.x, effectZ: effectPosition.z)
+        return EffectSpace.toWorldHeight(effectHeight)
+    }
+
     public func isWithinRange(ofEffectPosition position: SIMD3<Float>, maxDistance: Float) -> Bool {
         let delta = position - cameraEffectPosition
         return simd_length_squared(delta) <= maxDistance * maxDistance
