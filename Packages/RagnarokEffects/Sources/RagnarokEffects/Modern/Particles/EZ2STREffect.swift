@@ -26,6 +26,7 @@ public final class EZ2STREffect: STREffectRenderable {
 
     public private(set) var worldPosition: SIMD3<Float>
     public private(set) var playbackState = STREffectPlaybackState()
+    public private(set) var elapsedTicks: Int = 0
     public private(set) var isAlive: Bool = true
     public private(set) var isFinished: Bool = false
 
@@ -70,6 +71,10 @@ public final class EZ2STREffect: STREffectRenderable {
         } else {
             self.renderMode = .billboard
         }
+
+        if let duration = request.duration, duration > 0 {
+            self.lifetimeTicks = max(1, Int((duration * EffectManager.tickRate).rounded()))
+        }
     }
 
     public func setDelayMilliseconds(_ delayMs: Int) {
@@ -95,6 +100,12 @@ public final class EZ2STREffect: STREffectRenderable {
             return
         }
 
+        if lifetimeTicks > 0 && elapsedTicks >= lifetimeTicks {
+            isFinished = true
+            stop()
+            return
+        }
+
         if isFadingOut {
             transform.alpha -= 0.05
             if transform.alpha <= 0 {
@@ -109,6 +120,7 @@ public final class EZ2STREffect: STREffectRenderable {
         if remainingDelayMs > 0 {
             remainingDelayMs -= 16
             eventTick += 1
+            elapsedTicks += 1
             return
         }
 
@@ -123,12 +135,6 @@ public final class EZ2STREffect: STREffectRenderable {
 
         if let asset = loadedAsset {
             let str = asset.animation.str
-            if lifetimeTicks > 0 && playbackState.frameCounter >= lifetimeTicks {
-                isFinished = true
-                stop()
-                return
-            }
-
             let stillPlaying = playbackState.step(str: str)
             if stillPlaying {
                 currentFrame = playbackState.makeFrame(for: str)
@@ -163,6 +169,7 @@ public final class EZ2STREffect: STREffectRenderable {
         }
 
         eventTick += 1
+        elapsedTicks += 1
     }
 
     public func stop() {

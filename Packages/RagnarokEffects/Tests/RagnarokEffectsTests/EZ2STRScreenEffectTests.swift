@@ -441,7 +441,7 @@ struct EZ2STRScreenEffectTests {
 
         effect.setDelayMilliseconds(32)
         effect.setRepeat(2)
-        effect.setLifetime(ticks: 5)
+        effect.setLifetime(ticks: 8)
 
         for _ in 0..<8 {
             effect.tick(context: context)
@@ -454,6 +454,46 @@ struct EZ2STRScreenEffectTests {
             #expect(!effect.isAlive)
             #expect(effect.isFinished)
         }
+    }
+
+    @Test("Looping EZ2STRScreenEffect expires at requested duration even when loop period is shorter")
+    func loopingEffectExpiresAtRequestedDuration() async {
+        let def = EZ2STRScreenEffectDefinition(
+            effectID: .ef_test_effect_05,
+            strPath: "test_effect\\05\\05.str",
+            isLooping: true
+        )
+
+        let store = await Self.makeAssetStore(strPaths: [def.strPath], maxKeyframeIndex: 1)
+        let world = MockWorldContext()
+        let context = EffectTickContext(
+            world: world,
+            assets: store,
+            currentTick: 1,
+            usesMinimalEffects: false,
+            onSpawnChild: { _ in }
+        )
+
+        // 2-tick loop with 5-tick requested duration (5 / 60s)
+        let effect = EZ2STRScreenEffect(
+            request: EffectSpawnRequest(
+                effectID: .ef_test_effect_05,
+                worldPosition: .zero,
+                duration: 5.0 / EffectManager.tickRate
+            ),
+            definition: def
+        )
+        #expect(effect.lifetimeTicks == 5)
+
+        for _ in 0..<5 {
+            effect.tick(context: context)
+            #expect(effect.isAlive)
+        }
+
+        effect.tick(context: context)
+        #expect(!effect.isAlive)
+        #expect(effect.isFinished)
+        #expect(effect.elapsedTicks == 5)
     }
 
     @Test("EffectManager prioritizes particle EZ2STRScreenEffect over RagSTREffect")

@@ -231,4 +231,43 @@ struct EZ2STREffectTests {
         #expect(spawnedID != nil)
         #expect(manager.activeEffects.first is EZ2STREffect)
     }
+
+    @Test("Looping EZ2STREffect reads request.duration and expires after lifetimeTicks")
+    func loopingBSONEffectExpiresAtRequestedDuration() {
+        let entry = EZ2STREffectCatalog.Entry(
+            id: 0,
+            key: "looping_sample",
+            filePath: "looping.str",
+            isInfinite: true
+        )
+        let world = MockWorldContext()
+        let context = EffectTickContext(
+            world: world,
+            assets: nil,
+            currentTick: 1,
+            usesMinimalEffects: false,
+            onSpawnChild: { _ in }
+        )
+
+        let effect = EZ2STREffect(
+            request: EffectSpawnRequest(
+                rawEffectID: entry.rawEffectID,
+                worldPosition: .zero,
+                duration: 5.0 / EffectManager.tickRate
+            ),
+            entry: entry
+        )
+        #expect(effect.isLooping)
+        #expect(effect.lifetimeTicks == 5)
+
+        for _ in 0..<5 {
+            effect.tick(context: context)
+            #expect(effect.isAlive)
+        }
+
+        effect.tick(context: context)
+        #expect(!effect.isAlive)
+        #expect(effect.isFinished)
+        #expect(effect.elapsedTicks == 5)
+    }
 }

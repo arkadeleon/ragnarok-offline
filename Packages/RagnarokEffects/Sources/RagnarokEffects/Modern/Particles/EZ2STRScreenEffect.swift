@@ -154,6 +154,12 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
             return
         }
 
+        if lifetimeTicks > 0 && elapsedTicks >= lifetimeTicks {
+            isFinished = true
+            stop()
+            return
+        }
+
         if followCamera {
             updateCameraAngle(world: context.world)
         }
@@ -187,12 +193,6 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
 
         if let asset = loadedAsset {
             let str = asset.animation.str
-            if lifetimeTicks > 0 && playbackState.frameCounter >= lifetimeTicks {
-                isFinished = true
-                stop()
-                return
-            }
-
             let stillPlaying = playbackState.step(str: str)
             if stillPlaying {
                 currentFrame = playbackState.makeFrame(for: str)
