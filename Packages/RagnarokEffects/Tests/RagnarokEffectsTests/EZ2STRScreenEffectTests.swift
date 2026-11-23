@@ -453,7 +453,7 @@ struct EZ2STRScreenEffectTests {
         let manager = EffectManager()
         let world = MockWorldContext()
 
-        #expect(EffectManager.supports(.ef_new_meteorstorm))
+        #expect(EffectManager.hasBuiltInDefinition(for: .ef_new_meteorstorm))
         #expect(manager.supports(.ef_new_meteorstorm))
         #expect(manager.supports(.ef_potion1))
 

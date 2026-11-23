@@ -52,7 +52,7 @@ struct EffectViewerEffectRenderingView: View {
     private func loadRenderer() async throws -> EffectViewerEffectRenderer {
         let device = MTLCreateSystemDefaultDevice()!
 
-        if EffectManager.supports(rawEffectID: effect.rawEffectID) || ez2strEffectCatalog?.entry(forRawEffectID: effect.rawEffectID) != nil {
+        if EffectManager.hasBuiltInDefinition(for: effect.rawEffectID) || ez2strEffectCatalog?.entry(forRawEffectID: effect.rawEffectID) != nil {
             return try EffectViewerEffectRenderer(
                 device: device,
                 configuration: .default,

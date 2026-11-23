@@ -23,20 +23,20 @@ public final class EffectManager {
     public static let tickDuration: TimeInterval = 1.0 / tickRate
     public static let maxTicksPerUpdate: Int = 4
 
-    public nonisolated static var supportedRawEffectIDs: [Int] {
+    public nonisolated static var builtInRawEffectIDs: [Int] {
         let screenEffectIDs = EZ2STRScreenEffectDefinition.definitions.map(\.effectID.rawValue)
         let ragEffectIDs = RagSTREffectDefinition.definitions.map(\.effectID.rawValue)
         return Array(Set(screenEffectIDs).union(ragEffectIDs)).sorted()
     }
 
-    public nonisolated static func supports(rawEffectID: Int) -> Bool {
+    public nonisolated static func hasBuiltInDefinition(for rawEffectID: Int) -> Bool {
         guard let effectID = EffectID(rawValue: rawEffectID) else {
             return false
         }
-        return supports(effectID)
+        return hasBuiltInDefinition(for: effectID)
     }
 
-    public nonisolated static func supports(_ effectID: EffectID) -> Bool {
+    public nonisolated static func hasBuiltInDefinition(for effectID: EffectID) -> Bool {
         EZ2STRScreenEffectDefinition.definition(for: effectID) != nil
             || RagSTREffectDefinition.definition(for: effectID) != nil
     }
@@ -84,7 +84,7 @@ public final class EffectManager {
     public func supports(rawEffectID: Int) -> Bool {
         particleEffectBuilders[rawEffectID] != nil
             || ragEffectBuilders[rawEffectID] != nil
-            || Self.supports(rawEffectID: rawEffectID)
+            || Self.hasBuiltInDefinition(for: rawEffectID)
             || ez2strEffectCatalog?.entry(forRawEffectID: rawEffectID) != nil
     }
 
@@ -93,7 +93,7 @@ public final class EffectManager {
     }
 
     public var supportedRawEffectIDs: [Int] {
-        Set(Self.supportedRawEffectIDs)
+        Set(Self.builtInRawEffectIDs)
             .union(particleEffectBuilders.keys)
             .union(ragEffectBuilders.keys)
             .union(ez2strEffectCatalog?.rawEffectIDs ?? [])

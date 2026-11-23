@@ -18,7 +18,7 @@ struct EffectViewerEffect: Identifiable, Hashable {
         for effectID in EffectTable.effectIDs {
             effectsByID[effectID.rawValue] = EffectViewerEffect(effectID: effectID)
         }
-        for rawEffectID in EffectManager.supportedRawEffectIDs {
+        for rawEffectID in EffectManager.builtInRawEffectIDs {
             effectsByID[rawEffectID] = EffectViewerEffect(rawEffectID: rawEffectID)
         }
         if let ez2strEffectCatalog {
