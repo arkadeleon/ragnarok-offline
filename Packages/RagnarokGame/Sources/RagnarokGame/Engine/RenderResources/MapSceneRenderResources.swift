@@ -100,10 +100,7 @@ final class MapSceneRenderResources {
 
         var resources: [EffectRenderResourceGroup] = []
         for effect in effects {
-            guard let effectID = EffectID(rawValue: effect.effectID) else {
-                continue
-            }
-
+            let effectID = EffectID(rawValue: effect.effectID)
             let definitions = EffectTable.definitions(for: effectID)
             do {
                 let assetGroup = try await effectAssetLoader.loadAssetGroup(with: definitions)

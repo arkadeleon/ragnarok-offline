@@ -16,8 +16,8 @@ public final class EZ2STREffect: STREffectRenderable {
     public let id: UUID
     public let entry: EZ2STREffectCatalog.Entry
 
-    public var rawEffectID: Int {
-        entry.rawEffectID
+    public var effectID: EffectID {
+        entry.effectID
     }
 
     public let ownerObjectID: EffectTargetID?

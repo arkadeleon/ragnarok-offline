@@ -33,8 +33,8 @@ public struct EZ2STREffectCatalog: Sendable, Equatable {
         public let startDelayTime: Int
         public let isToGround: Bool
 
-        public var rawEffectID: Int {
-            EZ2STREffectCatalog.baseEffectID + id
+        public var effectID: EffectID {
+            EffectID(rawValue: EZ2STREffectCatalog.baseEffectID + id)
         }
 
         public init(
@@ -71,12 +71,12 @@ public struct EZ2STREffectCatalog: Sendable, Equatable {
     }
 
     public let entries: [EZ2STREffectCatalog.Entry]
-    private let entriesByRawID: [Int : EZ2STREffectCatalog.Entry]
+    private let entriesByEffectID: [EffectID : EZ2STREffectCatalog.Entry]
     private let entriesByKey: [String : EZ2STREffectCatalog.Entry]
 
     public init(entries: [EZ2STREffectCatalog.Entry] = []) {
         self.entries = entries
-        self.entriesByRawID = Dictionary(uniqueKeysWithValues: entries.map { ($0.rawEffectID, $0) })
+        self.entriesByEffectID = Dictionary(uniqueKeysWithValues: entries.map { ($0.effectID, $0) })
         self.entriesByKey = Dictionary(uniqueKeysWithValues: entries.map { ($0.key, $0) })
     }
 
@@ -132,20 +132,20 @@ public struct EZ2STREffectCatalog: Sendable, Equatable {
         self.init(entries: entries)
     }
 
-    public var rawEffectIDs: [Int] {
-        entries.map(\.rawEffectID)
+    public var effectIDs: [EffectID] {
+        entries.map(\.effectID)
     }
 
-    public func entry(forRawEffectID rawEffectID: Int) -> EZ2STREffectCatalog.Entry? {
-        entriesByRawID[rawEffectID]
+    public func entry(for effectID: EffectID) -> EZ2STREffectCatalog.Entry? {
+        entriesByEffectID[effectID]
     }
 
     public func entry(named name: String) -> EZ2STREffectCatalog.Entry? {
         entriesByKey[K2L(name).lowercased()]
     }
 
-    public func rawEffectID(named name: String) -> Int? {
-        entry(named: name)?.rawEffectID
+    public func effectID(named name: String) -> EffectID? {
+        entry(named: name)?.effectID
     }
 
     public static func load(from resourceManager: ResourceManager) async -> EZ2STREffectCatalog? {

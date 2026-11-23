@@ -59,7 +59,7 @@ struct EffectViewerEffectListView: View {
 
         if searchText.hasPrefix("#") {
             if let effectID = Int(searchText.dropFirst()),
-               let effect = effects.first(where: { $0.id == effectID }) {
+               let effect = effects.first(where: { $0.id.rawValue == effectID }) {
                 return [effect]
             } else {
                 return []

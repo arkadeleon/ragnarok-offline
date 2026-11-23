@@ -56,7 +56,7 @@ class EffectViewerEffectRenderer: Renderer {
     init(
         device: any MTLDevice,
         configuration: RenderConfiguration,
-        rawEffectID: Int,
+        effectID: EffectID,
         resourceManager: ResourceManager,
         ez2strEffectCatalog: EZ2STREffectCatalog? = nil
     ) throws {
@@ -69,7 +69,7 @@ class EffectViewerEffectRenderer: Renderer {
         let strRenderer = try STREffectRenderer(device: device, configuration: configuration)
 
         let request = EffectSpawnRequest(
-            rawEffectID: rawEffectID,
+            effectID: effectID,
             worldPosition: .zero,
             sourceWorldPosition: SIMD3<Float>(-5, 0, -5),
             ownerObjectID: EffectViewerEffectWorldContext.targetObjectID,

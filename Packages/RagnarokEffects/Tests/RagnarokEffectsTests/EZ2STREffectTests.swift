@@ -129,15 +129,15 @@ struct EZ2STREffectTests {
 
         let catalog = try EZ2STREffectCatalog(data: root)
         #expect(catalog.entries.count == 2)
-        #expect(catalog.rawEffectIDs == [10_000, 10_001])
+        #expect(catalog.effectIDs == [EffectID(rawValue: 10_000), EffectID(rawValue: 10_001)])
 
-        let alpha = catalog.entry(forRawEffectID: 10_000)
+        let alpha = catalog.entry(for: EffectID(rawValue: 10_000))
         #expect(alpha?.key == "alpha")
         #expect(alpha?.filePath == "new_fx\\alpha.str")
         #expect(alpha?.isAboveUI == true)
-        #expect(catalog.rawEffectID(named: "ALPHA") == 10_000)
+        #expect(catalog.effectID(named: "ALPHA") == EffectID(rawValue: 10_000))
 
-        let zeta = catalog.entry(forRawEffectID: 10_001)
+        let zeta = catalog.entry(for: EffectID(rawValue: 10_001))
         #expect(zeta?.key == "zeta")
         #expect(zeta?.offsetX == 10)
         #expect(zeta?.offsetY == -25)
@@ -171,14 +171,14 @@ struct EZ2STREffectTests {
 
         let manager = EffectManager()
         let effect = EZ2STREffect(
-            request: EffectSpawnRequest(rawEffectID: entry.rawEffectID, worldPosition: [2, 0, -4]),
+            request: EffectSpawnRequest(effectID: entry.effectID, worldPosition: [2, 0, -4]),
             entry: entry
         )
         #expect(effect.renderMode == .ground)
         #expect(effect.transform.offset == SIMD2<Float>(5, -10))
 
-        manager.registerParticleEffect(for: entry.rawEffectID) { _, _ in effect }
-        manager.spawn(EffectSpawnRequest(rawEffectID: entry.rawEffectID, worldPosition: [2, 0, -4]))
+        manager.registerParticleEffect(for: entry.effectID) { _, _ in effect }
+        manager.spawn(EffectSpawnRequest(effectID: entry.effectID, worldPosition: [2, 0, -4]))
 
         // startDelayTime = 32ms -> frameStep = 2 -> sound triggers at eventFrame == 3, quake at 4
         for _ in 0..<5 {
@@ -224,10 +224,11 @@ struct EZ2STREffectTests {
         #expect(loaded?.entries.count == 1)
 
         let manager = EffectManager(ez2strEffectCatalog: loaded)
-        #expect(manager.supports(rawEffectID: 10_000))
-        #expect(manager.supportedRawEffectIDs.contains(10_000))
+        let bsonID = EffectID(rawValue: 10_000)
+        #expect(manager.supports(bsonID))
+        #expect(manager.supportedEffectIDs.contains(bsonID))
 
-        let spawnedID = manager.spawn(EffectSpawnRequest(rawEffectID: 10_000, worldPosition: .zero))
+        let spawnedID = manager.spawn(EffectSpawnRequest(effectID: bsonID, worldPosition: .zero))
         #expect(spawnedID != nil)
         #expect(manager.activeEffects.first is EZ2STREffect)
     }
@@ -251,7 +252,7 @@ struct EZ2STREffectTests {
 
         let effect = EZ2STREffect(
             request: EffectSpawnRequest(
-                rawEffectID: entry.rawEffectID,
+                effectID: entry.effectID,
                 worldPosition: .zero,
                 duration: 5.0 / EffectManager.tickRate
             ),

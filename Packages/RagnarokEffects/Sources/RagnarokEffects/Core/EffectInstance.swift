@@ -10,7 +10,7 @@ import Foundation
 @MainActor
 public protocol EffectInstance: AnyObject {
     var id: UUID { get }
-    var rawEffectID: Int { get }
+    var effectID: EffectID { get }
     var ownerObjectID: EffectTargetID? { get }
     var attachmentKey: EffectAttachmentKey { get }
     var isAlive: Bool { get }

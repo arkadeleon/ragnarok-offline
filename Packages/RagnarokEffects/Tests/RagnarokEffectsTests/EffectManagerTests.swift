@@ -35,7 +35,7 @@ struct EffectManagerTests {
 
     private final class MockEffect: EffectInstance {
         let id: UUID
-        let rawEffectID: Int
+        let effectID: EffectID
         let ownerObjectID: EffectTargetID?
         let attachmentKey: EffectAttachmentKey
         var isAlive = true
@@ -44,7 +44,7 @@ struct EffectManagerTests {
 
         init(id: UUID, request: EffectSpawnRequest, lifetimeTicks: Int) {
             self.id = id
-            self.rawEffectID = request.rawEffectID
+            self.effectID = request.effectID
             self.ownerObjectID = request.ownerObjectID
             self.attachmentKey = request.attachmentKey
             self.lifetimeTicks = lifetimeTicks
@@ -104,8 +104,8 @@ struct EffectManagerTests {
         #expect(manager.supports(.ef_stormgust))
         #expect(manager.supports(.ef_fireball))
         #expect(!manager.supports(.ef_hit1))
-        #expect(manager.supportedRawEffectIDs.contains(EffectID.ef_fireball.rawValue))
-        #expect(manager.supportedRawEffectIDs.contains(EffectID.ef_stormgust.rawValue))
+        #expect(manager.supportedEffectIDs.contains(.ef_fireball))
+        #expect(manager.supportedEffectIDs.contains(.ef_stormgust))
 
         #expect(manager.spawn(EffectSpawnRequest(effectID: .ef_stormgust, worldPosition: .zero)) != nil)
         #expect(manager.spawn(EffectSpawnRequest(effectID: .ef_fireball, worldPosition: .zero)) != nil)
@@ -115,7 +115,7 @@ struct EffectManagerTests {
         manager.stepOneTick(world: world)
         manager.stepOneTick(world: world)
         #expect(manager.activeEffects.count == 1)
-        #expect(manager.activeEffects.first?.rawEffectID == EffectID.ef_fireball.rawValue)
+        #expect(manager.activeEffects.first?.effectID == .ef_fireball)
 
         manager.stepOneTick(world: world)
         #expect(!manager.hasActiveEffects)

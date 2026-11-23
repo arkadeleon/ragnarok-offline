@@ -23,17 +23,10 @@ public final class EffectManager {
     public static let tickDuration: TimeInterval = 1.0 / tickRate
     public static let maxTicksPerUpdate: Int = 4
 
-    public nonisolated static var builtInRawEffectIDs: [Int] {
-        let screenEffectIDs = EZ2STRScreenEffectDefinition.definitions.map(\.effectID.rawValue)
-        let ragEffectIDs = RagSTREffectDefinition.definitions.map(\.effectID.rawValue)
+    public nonisolated static var builtInEffectIDs: [EffectID] {
+        let screenEffectIDs = EZ2STRScreenEffectDefinition.definitions.map(\.effectID)
+        let ragEffectIDs = RagSTREffectDefinition.definitions.map(\.effectID)
         return Array(Set(screenEffectIDs).union(ragEffectIDs)).sorted()
-    }
-
-    public nonisolated static func hasBuiltInDefinition(for rawEffectID: Int) -> Bool {
-        guard let effectID = EffectID(rawValue: rawEffectID) else {
-            return false
-        }
-        return hasBuiltInDefinition(for: effectID)
     }
 
     public nonisolated static func hasBuiltInDefinition(for effectID: EffectID) -> Bool {
@@ -49,8 +42,8 @@ public final class EffectManager {
     public private(set) var activeEffects: [any EffectInstance] = []
 
     private var pendingSpawns: [PendingSpawn] = []
-    private var particleEffectBuilders: [Int : EffectBuilder] = [:]
-    private var ragEffectBuilders: [Int : EffectBuilder] = [:]
+    private var particleEffectBuilders: [EffectID : EffectBuilder] = [:]
+    private var ragEffectBuilders: [EffectID : EffectBuilder] = [:]
 
     private var lastUpdateTime: TimeInterval?
     private var tickAccumulator: TimeInterval = 0
@@ -65,38 +58,26 @@ public final class EffectManager {
         self.usesMinimalEffects = usesMinimalEffects
     }
 
-    func registerParticleEffect(for rawEffectID: Int, builder: @escaping EffectBuilder) {
-        particleEffectBuilders[rawEffectID] = builder
-    }
-
     func registerParticleEffect(for effectID: EffectID, builder: @escaping EffectBuilder) {
-        particleEffectBuilders[effectID.rawValue] = builder
-    }
-
-    func registerRagEffect(for rawEffectID: Int, builder: @escaping EffectBuilder) {
-        ragEffectBuilders[rawEffectID] = builder
+        particleEffectBuilders[effectID] = builder
     }
 
     func registerRagEffect(for effectID: EffectID, builder: @escaping EffectBuilder) {
-        ragEffectBuilders[effectID.rawValue] = builder
-    }
-
-    public func supports(rawEffectID: Int) -> Bool {
-        particleEffectBuilders[rawEffectID] != nil
-            || ragEffectBuilders[rawEffectID] != nil
-            || Self.hasBuiltInDefinition(for: rawEffectID)
-            || ez2strEffectCatalog?.entry(forRawEffectID: rawEffectID) != nil
+        ragEffectBuilders[effectID] = builder
     }
 
     public func supports(_ effectID: EffectID) -> Bool {
-        supports(rawEffectID: effectID.rawValue)
+        particleEffectBuilders[effectID] != nil
+            || ragEffectBuilders[effectID] != nil
+            || Self.hasBuiltInDefinition(for: effectID)
+            || ez2strEffectCatalog?.entry(for: effectID) != nil
     }
 
-    public var supportedRawEffectIDs: [Int] {
-        Set(Self.builtInRawEffectIDs)
+    public var supportedEffectIDs: [EffectID] {
+        Set(Self.builtInEffectIDs)
             .union(particleEffectBuilders.keys)
             .union(ragEffectBuilders.keys)
-            .union(ez2strEffectCatalog?.rawEffectIDs ?? [])
+            .union(ez2strEffectCatalog?.effectIDs ?? [])
             .sorted()
     }
 
@@ -110,7 +91,7 @@ public final class EffectManager {
 
     @discardableResult
     public func spawn(_ request: EffectSpawnRequest, id: UUID = UUID()) -> UUID? {
-        guard supports(rawEffectID: request.rawEffectID) else {
+        guard supports(request.effectID) else {
             return nil
         }
 
@@ -239,15 +220,15 @@ public final class EffectManager {
     @discardableResult
     private func spawnImmediately(id: UUID, request: EffectSpawnRequest) -> UUID? {
         let effect: any EffectInstance
-        if let builder = particleEffectBuilders[request.rawEffectID] {
+        if let builder = particleEffectBuilders[request.effectID] {
             effect = builder(id, request)
-        } else if let entry = ez2strEffectCatalog?.entry(forRawEffectID: request.rawEffectID) {
+        } else if let entry = ez2strEffectCatalog?.entry(for: request.effectID) {
             effect = EZ2STREffect(id: id, request: request, entry: entry)
-        } else if let effectID = request.effectID, let definition = EZ2STRScreenEffectDefinition.definition(for: effectID) {
+        } else if let definition = EZ2STRScreenEffectDefinition.definition(for: request.effectID) {
             effect = EZ2STRScreenEffect(id: id, request: request, definition: definition)
-        } else if let builder = ragEffectBuilders[request.rawEffectID] {
+        } else if let builder = ragEffectBuilders[request.effectID] {
             effect = builder(id, request)
-        } else if let effectID = request.effectID, let definition = RagSTREffectDefinition.definition(for: effectID) {
+        } else if let definition = RagSTREffectDefinition.definition(for: request.effectID) {
             effect = RagSTREffect(id: id, request: request, definition: definition, usesMinimalEffects: usesMinimalEffects)
         } else {
             return nil

@@ -10,12 +10,7 @@ import simd
 
 /// Request payload used to spawn an effect through `EffectManager`.
 public struct EffectSpawnRequest: Sendable {
-    /// Raw numeric effect identifier:
-    /// - `-1...2483`: `EffectID`
-    /// - `2485...`: Hat effects (`hatEffect + 2485`)
-    /// - `10000...`: Data-driven `EZ2STREffect.bson` entries
-    public var rawEffectID: Int
-
+    public var effectID: EffectID
     public var worldPosition: SIMD3<Float>
     public var sourceWorldPosition: SIMD3<Float>?
     public var ownerObjectID: EffectTargetID?
@@ -28,44 +23,12 @@ public struct EffectSpawnRequest: Sendable {
     public var duration: TimeInterval?
     public var parameters: [Float]
 
-    public var effectID: EffectID? {
-        EffectID(rawValue: rawEffectID)
-    }
-
     public var effectPosition: SIMD3<Float> {
         EffectSpace.toEffectPosition(worldPosition)
     }
 
     public var sourceEffectPosition: SIMD3<Float>? {
         sourceWorldPosition.map(EffectSpace.toEffectPosition)
-    }
-
-    public init(
-        rawEffectID: Int,
-        worldPosition: SIMD3<Float>,
-        sourceWorldPosition: SIMD3<Float>? = nil,
-        ownerObjectID: EffectTargetID? = nil,
-        targetObjectID: EffectTargetID? = nil,
-        sourceObjectID: EffectTargetID? = nil,
-        attachmentKey: EffectAttachmentKey = .untagged,
-        direction: SIMD3<Float>? = nil,
-        level: Int = 0,
-        delay: TimeInterval = 0,
-        duration: TimeInterval? = nil,
-        parameters: [Float] = []
-    ) {
-        self.rawEffectID = rawEffectID
-        self.worldPosition = worldPosition
-        self.sourceWorldPosition = sourceWorldPosition
-        self.ownerObjectID = ownerObjectID
-        self.targetObjectID = targetObjectID
-        self.sourceObjectID = sourceObjectID
-        self.attachmentKey = attachmentKey
-        self.direction = direction
-        self.level = level
-        self.delay = delay
-        self.duration = duration
-        self.parameters = parameters
     }
 
     public init(
@@ -82,19 +45,17 @@ public struct EffectSpawnRequest: Sendable {
         duration: TimeInterval? = nil,
         parameters: [Float] = []
     ) {
-        self.init(
-            rawEffectID: effectID.rawValue,
-            worldPosition: worldPosition,
-            sourceWorldPosition: sourceWorldPosition,
-            ownerObjectID: ownerObjectID,
-            targetObjectID: targetObjectID,
-            sourceObjectID: sourceObjectID,
-            attachmentKey: attachmentKey,
-            direction: direction,
-            level: level,
-            delay: delay,
-            duration: duration,
-            parameters: parameters
-        )
+        self.effectID = effectID
+        self.worldPosition = worldPosition
+        self.sourceWorldPosition = sourceWorldPosition
+        self.ownerObjectID = ownerObjectID
+        self.targetObjectID = targetObjectID
+        self.sourceObjectID = sourceObjectID
+        self.attachmentKey = attachmentKey
+        self.direction = direction
+        self.level = level
+        self.delay = delay
+        self.duration = duration
+        self.parameters = parameters
     }
 }

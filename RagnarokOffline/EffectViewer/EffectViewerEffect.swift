@@ -13,54 +13,45 @@ struct EffectViewerEffect: Identifiable, Hashable {
     }
 
     static func all(ez2strEffectCatalog: EZ2STREffectCatalog?) -> [EffectViewerEffect] {
-        var effectsByID: [Int : EffectViewerEffect] = [:]
+        var effectsByID: [EffectID : EffectViewerEffect] = [:]
 
         for effectID in EffectTable.effectIDs {
-            effectsByID[effectID.rawValue] = EffectViewerEffect(effectID: effectID)
+            effectsByID[effectID] = EffectViewerEffect(effectID: effectID)
         }
-        for rawEffectID in EffectManager.builtInRawEffectIDs {
-            effectsByID[rawEffectID] = EffectViewerEffect(rawEffectID: rawEffectID)
+        for effectID in EffectManager.builtInEffectIDs {
+            effectsByID[effectID] = EffectViewerEffect(effectID: effectID)
         }
         if let ez2strEffectCatalog {
             for entry in ez2strEffectCatalog.entries {
-                effectsByID[entry.rawEffectID] = EffectViewerEffect(
-                    rawEffectID: entry.rawEffectID,
+                effectsByID[entry.effectID] = EffectViewerEffect(
+                    effectID: entry.effectID,
                     customName: entry.displayName
                 )
             }
         }
 
-        return effectsByID.values.sorted { $0.rawEffectID < $1.rawEffectID }
+        return effectsByID.values.sorted { $0.effectID < $1.effectID }
     }
 
-    var rawEffectID: Int
+    var effectID: EffectID
     var customName: String?
 
-    var effectID: EffectID? {
-        EffectID(rawValue: rawEffectID)
-    }
-
-    var id: Int {
-        rawEffectID
+    var id: EffectID {
+        effectID
     }
 
     var displayName: String {
         if let customName {
-            "#\(rawEffectID) \(customName)"
-        } else if let effectID {
-            "#\(rawEffectID) \(String(describing: effectID).uppercased())"
+            "#\(effectID.rawValue) \(customName)"
+        } else if let name = effectID.name {
+            "#\(effectID.rawValue) \(name.uppercased())"
         } else {
-            "#\(rawEffectID) BSON_\(rawEffectID)"
+            "#\(effectID.rawValue) BSON_\(effectID.rawValue)"
         }
     }
 
-    init(rawEffectID: Int, customName: String? = nil) {
-        self.rawEffectID = rawEffectID
+    init(effectID: EffectID, customName: String? = nil) {
+        self.effectID = effectID
         self.customName = customName
-    }
-
-    init(effectID: EffectID) {
-        self.rawEffectID = effectID.rawValue
-        self.customName = nil
     }
 }

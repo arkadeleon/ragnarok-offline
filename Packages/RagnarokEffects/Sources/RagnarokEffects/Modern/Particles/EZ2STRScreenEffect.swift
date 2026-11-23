@@ -15,10 +15,6 @@ public final class EZ2STRScreenEffect: STREffectRenderable {
     public let id: UUID
     public let effectID: EffectID
 
-    public var rawEffectID: Int {
-        effectID.rawValue
-    }
-
     public let definition: EZ2STRScreenEffectDefinition
     public let strPath: String
 

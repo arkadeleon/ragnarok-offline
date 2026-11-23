@@ -15,10 +15,6 @@ public final class RagSTREffect: STREffectRenderable {
     public let id: UUID
     public let effectID: EffectID
 
-    public var rawEffectID: Int {
-        effectID.rawValue
-    }
-
     public let definition: RagSTREffectDefinition
     public let resolvedSTRPath: String
 

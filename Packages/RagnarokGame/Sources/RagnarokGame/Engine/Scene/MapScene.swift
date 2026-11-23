@@ -865,11 +865,8 @@ extension MapScene: EffectWorldContext {
     }
 
     public func spawnChildEffect(_ request: EffectSpawnRequest) {
-        guard let effectID = request.effectID else {
-            return
-        }
         let effect = MapSceneEffect(
-            reference: .id(effectID),
+            reference: .id(request.effectID),
             creationTime: CACurrentMediaTime(),
             gridPosition: [Int(request.worldPosition.x), Int(-request.worldPosition.z)],
             worldPosition: request.worldPosition,
