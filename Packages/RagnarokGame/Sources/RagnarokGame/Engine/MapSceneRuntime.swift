@@ -71,8 +71,8 @@ final class MapSceneRuntime {
         scene.update(atTime: worldTime)
         renderResources.updateEffects(atTime: currentTime, world: scene)
 
-        for effectID in renderResources.expiredEffectIDs(atTime: currentTime) {
-            scene.removeEffect(id: effectID)
+        for instanceID in renderResources.expiredEffectInstanceIDs(atTime: currentTime) {
+            scene.removeEffect(instanceID: instanceID)
         }
 
         renderResources.synchronizeSprites(objects: scene.world.objects, items: scene.world.items)

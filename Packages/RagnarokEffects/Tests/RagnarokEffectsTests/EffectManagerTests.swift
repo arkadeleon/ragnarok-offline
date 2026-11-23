@@ -145,7 +145,7 @@ struct EffectManagerTests {
         #expect(manager.activeEffects.count == 3)
 
         if let delayedID {
-            manager.removeEffect(id: delayedID)
+            manager.removeEffect(instanceID: delayedID)
         }
         #expect(manager.activeEffects.count == 2)
 

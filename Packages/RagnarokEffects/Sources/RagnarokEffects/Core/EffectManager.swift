@@ -137,12 +137,12 @@ public final class EffectManager {
         }
     }
 
-    public func removeEffect(id: UUID) {
+    public func removeEffect(instanceID: UUID) {
         pendingSpawns.removeAll {
-            $0.id == id
+            $0.id == instanceID
         }
         activeEffects.removeAll {
-            guard $0.id == id else {
+            guard $0.id == instanceID else {
                 return false
             }
             $0.stop()

@@ -27,7 +27,7 @@ protocol MapSceneObserver: AnyObject {
     func mapSceneDidAddItem(_ item: MapSceneDroppedItem)
     func mapSceneDidRemoveItem(objectID: GameObjectID)
     func mapSceneDidAddEffect(_ effect: MapSceneEffect)
-    func mapSceneDidRemoveEffect(id: UUID)
+    func mapSceneDidRemoveEffect(instanceID: UUID)
     func mapSceneDidClear()
 }
 
@@ -368,17 +368,17 @@ extension MapScene {
         observer?.mapSceneDidAddEffect(effect)
     }
 
-    func removeEffect(id: UUID) {
-        guard world.removeEffect(id: id) != nil else {
+    func removeEffect(instanceID: UUID) {
+        guard world.removeEffect(instanceID: instanceID) != nil else {
             return
         }
 
-        observer?.mapSceneDidRemoveEffect(id: id)
+        observer?.mapSceneDidRemoveEffect(instanceID: instanceID)
     }
 
     func removeEffects(ownedBy ownerObjectID: GameObjectID, key: EffectAttachmentKey? = nil) {
-        for effectID in world.removeEffects(ownedBy: ownerObjectID, key: key) {
-            observer?.mapSceneDidRemoveEffect(id: effectID)
+        for instanceID in world.removeEffects(ownedBy: ownerObjectID, key: key) {
+            observer?.mapSceneDidRemoveEffect(instanceID: instanceID)
         }
     }
 }

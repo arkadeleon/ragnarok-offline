@@ -27,7 +27,7 @@ final class MapWorld {
     var items: [GameObjectID : MapSceneDroppedItem] = [:]
 
     var effects: [UUID : MapSceneEffect] = [:]
-    var effectIDsByOwner: [GameObjectID : Set<UUID>] = [:]
+    var effectInstanceIDsByOwner: [GameObjectID : Set<UUID>] = [:]
     var combatTexts: [CombatText] = []
 
     init(
@@ -69,20 +69,20 @@ final class MapWorld {
     func addEffect(_ effect: MapSceneEffect) {
         effects[effect.id] = effect
         if let ownerObjectID = effect.ownerObjectID {
-            effectIDsByOwner[ownerObjectID, default: []].insert(effect.id)
+            effectInstanceIDsByOwner[ownerObjectID, default: []].insert(effect.id)
         }
     }
 
     @discardableResult
-    func removeEffect(id: UUID) -> MapSceneEffect? {
-        guard let effect = effects.removeValue(forKey: id) else {
+    func removeEffect(instanceID: UUID) -> MapSceneEffect? {
+        guard let effect = effects.removeValue(forKey: instanceID) else {
             return nil
         }
 
         if let ownerObjectID = effect.ownerObjectID {
-            effectIDsByOwner[ownerObjectID]?.remove(id)
-            if effectIDsByOwner[ownerObjectID]?.isEmpty == true {
-                effectIDsByOwner.removeValue(forKey: ownerObjectID)
+            effectInstanceIDsByOwner[ownerObjectID]?.remove(instanceID)
+            if effectInstanceIDsByOwner[ownerObjectID]?.isEmpty == true {
+                effectInstanceIDsByOwner.removeValue(forKey: ownerObjectID)
             }
         }
 
@@ -90,20 +90,20 @@ final class MapWorld {
     }
 
     func removeEffects(ownedBy ownerObjectID: GameObjectID, key: EffectAttachmentKey? = nil) -> [UUID] {
-        guard let ownedEffectIDs = effectIDsByOwner[ownerObjectID] else {
+        guard let ownedInstanceIDs = effectInstanceIDsByOwner[ownerObjectID] else {
             return []
         }
 
-        var removedEffectIDs: [UUID] = []
-        for effectID in ownedEffectIDs {
-            if let key, effects[effectID]?.attachmentKey != key {
+        var removedInstanceIDs: [UUID] = []
+        for instanceID in ownedInstanceIDs {
+            if let key, effects[instanceID]?.attachmentKey != key {
                 continue
             }
-            if removeEffect(id: effectID) != nil {
-                removedEffectIDs.append(effectID)
+            if removeEffect(instanceID: instanceID) != nil {
+                removedInstanceIDs.append(instanceID)
             }
         }
-        return removedEffectIDs
+        return removedInstanceIDs
     }
 
     func clear(includingSounds: Bool) {
@@ -113,7 +113,7 @@ final class MapWorld {
         objects.removeAll()
         items.removeAll()
         effects.removeAll()
-        effectIDsByOwner.removeAll()
+        effectInstanceIDsByOwner.removeAll()
         combatTexts.removeAll()
     }
 }

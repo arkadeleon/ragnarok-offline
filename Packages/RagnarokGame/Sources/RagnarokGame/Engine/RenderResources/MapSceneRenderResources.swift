@@ -123,16 +123,16 @@ final class MapSceneRenderResources {
     }
 
     private func loadEffect(_ effect: MapSceneEffect) {
-        let objectID = effect.id
-        effectLoadTasks.removeValue(forKey: objectID)?.cancel()
-        effectResources.removeValue(forKey: objectID)
+        let instanceID = effect.id
+        effectLoadTasks.removeValue(forKey: instanceID)?.cancel()
+        effectResources.removeValue(forKey: instanceID)
 
-        effectLoadTasks[objectID] = Task { [weak self] in
+        effectLoadTasks[instanceID] = Task { [weak self] in
             guard let self else {
                 return
             }
             defer {
-                self.effectLoadTasks[objectID] = nil
+                self.effectLoadTasks[instanceID] = nil
             }
 
             do {
@@ -146,7 +146,7 @@ final class MapSceneRenderResources {
                     return
                 }
 
-                guard effectLoadTasks[objectID] != nil else {
+                guard effectLoadTasks[instanceID] != nil else {
                     return
                 }
 
@@ -164,27 +164,27 @@ final class MapSceneRenderResources {
                     onEffectSound?(sound.name, effect.delay + sound.delay)
                 }
 
-                effectResources[objectID] = resourceGroup
+                effectResources[instanceID] = resourceGroup
             } catch {
                 logger.warning("Map scene failed to load effect \(effect.reference): \(error)")
             }
         }
     }
 
-    func effectResource(for objectID: UUID) -> EffectRenderResourceGroup? {
-        effectResources[objectID]
+    func effectResource(for instanceID: UUID) -> EffectRenderResourceGroup? {
+        effectResources[instanceID]
     }
 
-    func expiredEffectIDs(atTime time: TimeInterval) -> [UUID] {
-        effectResources.compactMap { objectID, resourceGroup in
-            resourceGroup.isExpired(atTime: time) ? objectID : nil
+    func expiredEffectInstanceIDs(atTime time: TimeInterval) -> [UUID] {
+        effectResources.compactMap { instanceID, resourceGroup in
+            resourceGroup.isExpired(atTime: time) ? instanceID : nil
         }
     }
 
-    private func removeEffect(objectID: UUID) {
-        effectManager.removeEffect(id: objectID)
-        effectResources.removeValue(forKey: objectID)
-        effectLoadTasks.removeValue(forKey: objectID)?.cancel()
+    private func removeEffect(instanceID: UUID) {
+        effectManager.removeEffect(instanceID: instanceID)
+        effectResources.removeValue(forKey: instanceID)
+        effectLoadTasks.removeValue(forKey: instanceID)?.cancel()
     }
 
     func removeAll() {
@@ -254,8 +254,8 @@ extension MapSceneRenderResources: MapSceneObserver {
         loadEffect(effect)
     }
 
-    func mapSceneDidRemoveEffect(id: UUID) {
-        removeEffect(objectID: id)
+    func mapSceneDidRemoveEffect(instanceID: UUID) {
+        removeEffect(instanceID: instanceID)
     }
 
     func mapSceneDidClear() {
