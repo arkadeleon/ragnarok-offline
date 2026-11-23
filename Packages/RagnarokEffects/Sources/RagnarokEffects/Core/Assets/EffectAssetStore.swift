@@ -12,16 +12,6 @@ import RagnarokFileFormats
 import RagnarokRendering
 import RagnarokResources
 
-public struct STREffectAsset: @unchecked Sendable {
-    public let animation: STREffectAnimation
-    public let textures: [String : any MTLTexture]
-
-    public init(animation: STREffectAnimation, textures: [String : any MTLTexture]) {
-        self.animation = animation
-        self.textures = textures
-    }
-}
-
 @MainActor
 public final class EffectAssetStore {
     private enum Phase<Value> {

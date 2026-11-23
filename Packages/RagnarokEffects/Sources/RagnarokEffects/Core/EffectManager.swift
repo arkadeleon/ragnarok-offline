@@ -9,54 +9,6 @@ import Foundation
 import RagnarokRendering
 import simd
 
-public struct EffectTickContext {
-    public let world: any EffectWorldContext
-    public let assets: EffectAssetStore?
-    public let currentTick: Int
-    public let usesMinimalEffects: Bool
-
-    private let onSpawnChild: (EffectSpawnRequest) -> Void
-
-    init(
-        world: any EffectWorldContext,
-        assets: EffectAssetStore?,
-        currentTick: Int,
-        usesMinimalEffects: Bool,
-        onSpawnChild: @escaping (EffectSpawnRequest) -> Void
-    ) {
-        self.world = world
-        self.assets = assets
-        self.currentTick = currentTick
-        self.usesMinimalEffects = usesMinimalEffects
-        self.onSpawnChild = onSpawnChild
-    }
-
-    public func spawnChildEffect(_ request: EffectSpawnRequest) {
-        onSpawnChild(request)
-    }
-}
-
-@MainActor
-public protocol EffectInstance: AnyObject {
-    var id: UUID { get }
-    var rawEffectID: Int { get }
-    var ownerObjectID: EffectTargetID? { get }
-    var attachmentKey: EffectAttachmentKey { get }
-    var isAlive: Bool { get }
-
-    func tick(context: EffectTickContext)
-    func stop()
-}
-
-@MainActor
-public protocol STREffectRenderable: EffectInstance {
-    func makeSTRRenderPayloads(
-        fog: Fog,
-        modelMatrix: simd_float4x4,
-        world: any EffectWorldContext
-    ) -> [STREffectRenderer.RenderPayload]
-}
-
 @MainActor
 public final class EffectManager {
     public typealias EffectBuilder = (UUID, EffectSpawnRequest) -> any EffectInstance

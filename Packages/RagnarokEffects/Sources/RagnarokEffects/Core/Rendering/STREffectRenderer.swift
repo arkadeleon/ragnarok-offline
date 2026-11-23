@@ -13,6 +13,15 @@ import RagnarokRendering
 import RagnarokShaders
 import simd
 
+@MainActor
+public protocol STREffectRenderable: EffectInstance {
+    func makeSTRRenderPayloads(
+        fog: Fog,
+        modelMatrix: simd_float4x4,
+        world: any EffectWorldContext
+    ) -> [STREffectRenderer.RenderPayload]
+}
+
 public enum STREffectRenderMode: Int32, Sendable, Hashable {
     case billboard = 0
     case ground = 1
