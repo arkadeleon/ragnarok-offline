@@ -116,6 +116,26 @@ public final class EffectPrimitiveBatchRenderer {
             return
         }
 
+        let byteLength = payload.vertices.count * MemoryLayout<EffectPrimitiveVertex>.stride
+        let vertexBuffer: (any MTLBuffer)?
+        if byteLength > Self.inlineVertexBytesLimit {
+            vertexBuffer = payload.vertices.withUnsafeBytes { bytes in
+                guard let baseAddress = bytes.baseAddress else {
+                    return nil
+                }
+                return device.makeBuffer(
+                    bytes: baseAddress,
+                    length: byteLength,
+                    options: .storageModeShared
+                )
+            }
+            guard vertexBuffer != nil else {
+                return
+            }
+        } else {
+            vertexBuffer = nil
+        }
+
         let depthKey = EffectPrimitiveDepthStencilKey(
             depthTest: payload.renderState.depthTest,
             depthWrite: payload.renderState.depthWrite
@@ -127,19 +147,19 @@ public final class EffectPrimitiveBatchRenderer {
         renderCommandEncoder.setRenderPipelineState(renderPipelineState)
         renderCommandEncoder.setCullMode(payload.renderState.cullMode)
 
-        let byteLength = payload.vertices.count * MemoryLayout<EffectPrimitiveVertex>.stride
-        payload.vertices.withUnsafeBytes { bytes in
-            guard let baseAddress = bytes.baseAddress else {
-                return
-            }
-            if byteLength <= Self.inlineVertexBytesLimit {
+        if let vertexBuffer {
+            renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        } else {
+            let didBind: Bool = payload.vertices.withUnsafeBytes { bytes in
+                guard let baseAddress = bytes.baseAddress else {
+                    return false
+                }
                 renderCommandEncoder.setVertexBytes(baseAddress, length: byteLength, index: 0)
-            } else if let vertexBuffer = device.makeBuffer(
-                bytes: baseAddress,
-                length: byteLength,
-                options: .storageModeShared
-            ) {
-                renderCommandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+                return true
+            }
+            guard didBind else {
+                renderCommandEncoder.setCullMode(.none)
+                return
             }
         }
 
