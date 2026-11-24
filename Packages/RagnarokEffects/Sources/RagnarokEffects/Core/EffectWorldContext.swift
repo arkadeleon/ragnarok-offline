@@ -90,6 +90,9 @@ public protocol EffectWorldContext: AnyObject {
     /// Current camera yaw in degrees.
     var cameraYawDegrees: Float { get }
 
+    /// Current camera pitch (elevation) in degrees.
+    var cameraPitchDegrees: Float { get }
+
     /// Checks whether an effect-space position is within the specified effect-space distance of the camera.
     func isWithinRange(ofEffectPosition position: SIMD3<Float>, maxDistance: Float) -> Bool
 

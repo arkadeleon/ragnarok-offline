@@ -19,6 +19,10 @@ public final class EffectAssetStore {
         let usesMinimalEffects: Bool
     }
 
+    private struct SendableTexture: @unchecked Sendable {
+        let texture: any MTLTexture
+    }
+
     private enum Phase<Value> {
         case inProgress(Task<Value?, Never>)
         case loaded(Value)
@@ -29,6 +33,7 @@ public final class EffectAssetStore {
     public let resourceManager: ResourceManager
 
     private var strAssets: [STRCacheKey : EffectAssetStore.Phase<STREffectAsset>] = [:]
+    private var textures: [String : EffectAssetStore.Phase<SendableTexture>] = [:]
 
     public init(device: any MTLDevice, resourceManager: ResourceManager) {
         self.device = device
@@ -71,6 +76,42 @@ public final class EffectAssetStore {
         return false
     }
 
+    public func texture(atPath path: String) -> (any MTLTexture)? {
+        let key = Self.normalizedTextureKey(forPath: path)
+        switch textures[key] {
+        case .loaded(let wrapped):
+            return wrapped.texture
+        case .inProgress, .failed:
+            return nil
+        case nil:
+            _ = startTextureLoad(forPath: path, key: key)
+            return nil
+        }
+    }
+
+    @discardableResult
+    public func preloadTexture(atPath path: String) async -> (any MTLTexture)? {
+        let key = Self.normalizedTextureKey(forPath: path)
+        switch textures[key] {
+        case .loaded(let wrapped):
+            return wrapped.texture
+        case .failed:
+            return nil
+        case .inProgress(let task):
+            return await task.value?.texture
+        case nil:
+            return await startTextureLoad(forPath: path, key: key).value?.texture
+        }
+    }
+
+    public func hasFailedTexture(atPath path: String) -> Bool {
+        let key = Self.normalizedTextureKey(forPath: path)
+        if case .failed = textures[key] {
+            return true
+        }
+        return false
+    }
+
     public func removeAll() {
         for phase in strAssets.values {
             if case .inProgress(let task) = phase {
@@ -78,6 +119,63 @@ public final class EffectAssetStore {
             }
         }
         strAssets.removeAll()
+
+        for phase in textures.values {
+            if case .inProgress(let task) = phase {
+                task.cancel()
+            }
+        }
+        textures.removeAll()
+    }
+
+    private static func normalizedTextureKey(forPath path: String) -> String {
+        path.replacingOccurrences(of: "\\", with: "/").lowercased()
+    }
+
+    private func startTextureLoad(forPath path: String, key: String) -> Task<SendableTexture?, Never> {
+        let device = self.device
+        let resourceManager = self.resourceManager
+
+        let task = Task<SendableTexture?, Never> { [weak self] in
+            let wrapped = await Self.loadTexture(
+                atPath: path,
+                device: device,
+                resourceManager: resourceManager
+            )
+            guard let self, !Task.isCancelled else {
+                return nil
+            }
+            if let wrapped {
+                self.textures[key] = .loaded(wrapped)
+            } else {
+                self.textures[key] = .failed
+            }
+            return wrapped
+        }
+
+        textures[key] = .inProgress(task)
+        return task
+    }
+
+    private nonisolated static func loadTexture(
+        atPath path: String,
+        device: any MTLDevice,
+        resourceManager: ResourceManager
+    ) async -> SendableTexture? {
+        let normalizedPath = path.replacingOccurrences(of: "\\", with: "/")
+        let texturePath = ResourcePath.textureDirectory.appending(subpath: normalizedPath)
+        let removesMagentaPixels = normalizedPath.lowercased().hasSuffix(".bmp")
+        guard let image = try? await resourceManager.image(
+            at: texturePath,
+            removesMagentaPixels: removesMagentaPixels
+        ), !Task.isCancelled else {
+            return nil
+        }
+        let straightImage = image.cgImage.unpremultiplyingAlpha() ?? image.cgImage
+        guard let texture = MetalTextureFactory.makeTexture(from: straightImage, device: device, label: normalizedPath) else {
+            return nil
+        }
+        return SendableTexture(texture: texture)
     }
 
     private func startSTRLoad(for key: STRCacheKey) -> Task<STREffectAsset?, Never> {

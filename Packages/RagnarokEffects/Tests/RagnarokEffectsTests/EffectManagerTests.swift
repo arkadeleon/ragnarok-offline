@@ -19,6 +19,7 @@ struct EffectManagerTests {
     private final class MockWorldContext: EffectWorldContext {
         var cameraWorldPosition: SIMD3<Float> = .zero
         var cameraYawDegrees: Float = 0
+        var cameraPitchDegrees: Float = 0
 
         func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float {
             0

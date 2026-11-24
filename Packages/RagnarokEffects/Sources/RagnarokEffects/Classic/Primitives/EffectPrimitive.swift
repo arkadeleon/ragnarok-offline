@@ -1,0 +1,724 @@
+//
+//  EffectPrimitive.swift
+//  RagnarokEffects
+//
+//  Created by Leon Li on 2026/11/24.
+//
+
+import Foundation
+import Metal
+import RagnarokRendering
+import simd
+
+/// Base primitive runtime owned by a `RagEffect` host, executing 60Hz state updates
+/// and emitting batched vertices through `EffectPrimitiveBatchCollector`.
+@MainActor
+public final class EffectPrimitive {
+    public typealias TickHandler = (EffectPrimitive, EffectTickContext) -> Bool
+    public typealias RenderHandler = (EffectPrimitive, inout EffectPrimitiveBatchCollector, any EffectWorldContext, EffectAssetStore?) -> Void
+
+    public weak var master: RagEffect?
+    public var id: EffectPrimitiveID
+    public var state: EffectPrimitiveState
+
+    public var position: SIMD3<Float> = .zero
+    public var angle: Float = 0
+    public var previousAnimation: Int = 0
+    public var currentMotion: Int = 0
+    public var spriteFrameCount: Int = 1
+
+    public private(set) var isAlive: Bool = true
+
+    var customTick: TickHandler?
+    var customRender: RenderHandler?
+
+    public init(id: EffectPrimitiveID = .pp_2dtexture) {
+        self.id = id
+        self.state = EffectPrimitiveState()
+        self.state.count = id.rawValue
+    }
+
+    public func initialize(master: RagEffect, id: EffectPrimitiveID, deltaPos: SIMD3<Float>) {
+        self.master = master
+        self.id = id
+        self.state.count = id.rawValue
+        self.state.deltaPos += deltaPos
+        self.state.orgPos = master.position
+        self.position = self.state.orgPos
+        self.state.isChangeProcessed = 0
+    }
+
+    /// Detaches from the owning `RagEffect` when the host retires or requests separation.
+    public func detachMaster() {
+        master = nil
+    }
+
+    public func stop() {
+        detachMaster()
+        isAlive = false
+    }
+
+    // MARK: - 60Hz Tick & Render Dispatch
+
+    public func tick(context: EffectTickContext) {
+        guard isAlive else {
+            return
+        }
+
+        if let customTick {
+            if !customTick(self, context) {
+                isAlive = false
+                return
+            }
+        }
+
+        state.stateCnt += 1
+        if state.duration > 0 && state.stateCnt >= state.duration {
+            isAlive = false
+        }
+    }
+
+    public func collectBatches(
+        into collector: inout EffectPrimitiveBatchCollector,
+        world: any EffectWorldContext,
+        assets: EffectAssetStore?
+    ) {
+        guard isAlive else {
+            return
+        }
+
+        if let customRender {
+            customRender(self, &collector, world, assets)
+        }
+    }
+
+    // MARK: - Master Following & Animation Helpers
+
+    public func followMaster() {
+        if let master {
+            position = master.position
+        }
+    }
+
+    public func tickLiveSlots() {
+        for index in 0..<state.slots.count where state.slots[index].life == 1 {
+            state.slots[index].process += 1
+        }
+    }
+
+    public func followMasterAndTickSlots() {
+        followMaster()
+        tickLiveSlots()
+    }
+
+    @discardableResult
+    public func followMasterAndAdvance() -> Bool {
+        followMaster()
+        return animMotion()
+    }
+
+    @discardableResult
+    public func animMotion() -> Bool {
+        let speed = max(1, state.animSpeed)
+        guard state.stateCnt % speed == 0 else {
+            return true
+        }
+
+        let frameCount = max(1, spriteFrameCount)
+        currentMotion += 1
+
+        if !state.repeatAnim {
+            if (state.pattern & 0x800) != 0 {
+                if currentMotion == frameCount {
+                    currentMotion -= 1
+                }
+            } else if currentMotion == frameCount {
+                return false
+            }
+        } else {
+            currentMotion %= frameCount
+        }
+
+        return true
+    }
+
+    // MARK: - Trail Segments (`InitSegment` / `ShiftSegment`)
+
+    public func initSegment() {
+        let count = min(max(0, state.numSegment), state.records.count)
+        let color = Self.packARGB(
+            alpha: Int(state.alpha),
+            red: state.red,
+            green: state.green,
+            blue: state.blue
+        )
+
+        for index in 0..<count {
+            state.records[index].position = position
+            for corner in 0..<4 {
+                state.records[index].corners[corner] = state.segPos[corner]
+            }
+            state.records[index].radius = state.radius
+            state.records[index].scale = state.size
+            state.records[index].angle = state.longitude
+            state.records[index].transform = state.transform
+            state.records[index].alpha = state.alpha
+            state.records[index].red = state.red
+            state.records[index].green = state.green
+            state.records[index].blue = state.blue
+            state.records[index].color = color
+        }
+    }
+
+    public func shiftSegment() {
+        let count = min(max(1, state.numSegment), state.records.count)
+
+        if count > 1 {
+            let alphaStep = state.alpha / Float(count)
+            let sizeStep = state.size / Float(count)
+
+            for index in stride(from: count - 1, through: 1, by: -1) {
+                state.records[index].position = state.records[index - 1].position
+                for corner in 0..<4 {
+                    state.records[index].corners[corner] = state.records[index - 1].corners[corner]
+                }
+                state.records[index].radius = state.records[index - 1].radius
+                state.records[index].angle = state.records[index - 1].angle
+                state.records[index].transform = state.records[index - 1].transform
+
+                let segmentAlpha = state.alpha - Float(index) * alphaStep
+                state.records[index].alpha = segmentAlpha
+                state.records[index].color = Self.packARGB(
+                    alpha: Int(segmentAlpha),
+                    red: state.red,
+                    green: state.green,
+                    blue: state.blue
+                )
+                state.records[index].scale = state.size - Float(index) * sizeStep * 0.5
+            }
+        }
+
+        state.records[0].position = position
+        for corner in 0..<4 {
+            state.records[0].corners[corner] = state.segPos[corner]
+        }
+        state.records[0].radius = state.radius
+        state.records[0].scale = state.size
+        state.records[0].angle = state.longitude
+        state.records[0].transform = state.transform
+        state.records[0].alpha = state.alpha
+        state.records[0].color = Self.packARGB(
+            alpha: Int(state.alpha),
+            red: state.red,
+            green: state.green,
+            blue: state.blue
+        )
+    }
+
+    // MARK: - Alpha & Color Processing (`ProcessAlpha` / `GetColorOverride`)
+
+    public func processAlpha() {
+        if state.alphaCycle != 0 {
+            if !state.chPoint.isEmpty {
+                var index = state.colorCycleIndex
+                if index < 0 || index >= state.chPoint.count {
+                    state.colorCycleIndex = 0
+                    index = 0
+                }
+                if Float(state.stateCnt) == state.chPoint[index] {
+                    if index < state.chVal1.count {
+                        state.alpha = state.chVal1[index]
+                    }
+                    if index < state.chVal2.count {
+                        state.maxAlpha = state.chVal2[index]
+                    }
+                    state.colorCycleIndex = index + 1
+                }
+            }
+            limitAlpha()
+        } else {
+            if state.alphaSpeedCycle != 0 && !state.chPoint.isEmpty {
+                var index = state.colorCycleIndex
+                if index < 0 || index >= state.chPoint.count {
+                    state.colorCycleIndex = 0
+                    index = 0
+                }
+                if Float(state.stateCnt) == state.chPoint[index] {
+                    if index < state.chVal1.count {
+                        state.alphaSpeed = state.chVal1[index]
+                    }
+                    state.colorCycleIndex = index + 1
+                }
+            }
+            limitAlpha()
+        }
+
+        if state.stateCnt == state.fadeOutCnt {
+            state.pattern &= ~0x80
+            let remaining = state.duration - state.stateCnt
+            if remaining != 0 {
+                state.alphaSpeed = -(state.alpha / Float(remaining)) * state.alphaDelta
+            }
+        }
+
+        let sum = state.alphaSpeed + state.alpha
+        let clamped = min(state.maxAlpha, max(state.minAlpha, sum))
+        state.alpha = clamped
+        state.argb = Self.packARGB(
+            alpha: Int(clamped),
+            red: state.red,
+            green: state.green,
+            blue: state.blue
+        )
+    }
+
+    private func limitAlpha() {
+        if (state.pattern & 0x80) != 0 {
+            if state.alphaSpeed < 0 {
+                if state.alpha <= state.minAlpha {
+                    state.alphaSpeed *= -1
+                }
+            } else if state.alpha >= state.maxAlpha {
+                state.alphaSpeed *= -1
+            }
+        }
+
+        if !state.isDisappear, let master {
+            let primitiveRemaining = state.duration - state.stateCnt
+            let masterRemaining = master.duration - master.stateCnt
+            if primitiveRemaining > masterRemaining + 1 {
+                state.isDisappear = true
+                state.pattern &= ~0x80
+                if masterRemaining > 0 {
+                    state.alphaSpeed = -(state.alpha / Float(masterRemaining))
+                } else {
+                    state.alphaSpeed = -state.alpha
+                }
+            }
+        }
+    }
+
+    public func colorOverride(red: inout UInt8, green: inout UInt8, blue: inout UInt8) {
+        guard let master else {
+            return
+        }
+        if master.colorChannels[0] != -1 {
+            red = UInt8(truncatingIfNeeded: master.colorChannels[0])
+        }
+        if master.colorChannels[1] != -1 {
+            green = UInt8(truncatingIfNeeded: master.colorChannels[1])
+        }
+        if master.colorChannels[2] != -1 {
+            blue = UInt8(truncatingIfNeeded: master.colorChannels[2])
+        }
+    }
+
+    // MARK: - Orientation & Camera-Facing Helpers (`Get_Angle` / `FaceCamera` / `Tei_TowardScreen`)
+
+    public static func angle(dx: Float, dy: Float) -> Int16 {
+        let length = sqrtf(dx * dx + dy * dy)
+        guard length > 0 else {
+            return 0
+        }
+
+        let normalX = dx / length
+        let normalY = dy / length
+
+        for index in 0...180 {
+            if normalX >= EffectSpace.cosTable[index] {
+                return normalY >= 0 ? Int16(index) : Int16(360 - index)
+            }
+        }
+
+        return 180
+    }
+
+    public func faceCamera(world: any EffectWorldContext) {
+        let yaw = Int(world.cameraYawDegrees)
+        let pitch = Int(world.cameraPitchDegrees)
+
+        state.slots[0].alphaT = Int16(((360 - yaw) % 360 + 360) % 360)
+        state.slots[1].alphaT = Int16(((360 - pitch + 90) % 360 + 360) % 360)
+    }
+
+    public static func towardScreen(
+        _ v1: inout SIMD3<Float>,
+        _ v2: inout SIMD3<Float>,
+        _ v3: inout SIMD3<Float>,
+        _ v4: inout SIMD3<Float>,
+        rot0: Int16,
+        rot1: Int16
+    ) {
+        rotatePairX(&v1, angle: Int(rot1))
+        rotatePairX(&v2, angle: Int(rot1))
+        rotatePairX(&v3, angle: Int(rot1))
+        rotatePairX(&v4, angle: Int(rot1))
+        rotatePairY(&v1, angle: Int(rot0))
+        rotatePairY(&v2, angle: Int(rot0))
+        rotatePairY(&v3, angle: Int(rot0))
+        rotatePairY(&v4, angle: Int(rot0))
+    }
+
+    private static func rotatePairX(_ point: inout SIMD3<Float>, angle: Int) {
+        let cosValue = EffectSpace.cosine(degrees: angle)
+        let sinValue = EffectSpace.sine(degrees: angle)
+        let y = point.y
+        let z = point.z
+        point.z = z * cosValue - y * sinValue
+        point.y = y * cosValue + z * sinValue
+    }
+
+    private static func rotatePairY(_ point: inout SIMD3<Float>, angle: Int) {
+        let cosValue = EffectSpace.cosine(degrees: angle)
+        let sinValue = EffectSpace.sine(degrees: angle)
+        let x = point.x
+        let z = point.z
+        point.x = x * cosValue - z * sinValue
+        point.z = z * cosValue + x * sinValue
+    }
+
+    // MARK: - Core Quad Submission (`RenderTeiRect` Overloads)
+
+    /// Full `RenderTeiRect` overload with explicit color, blend selector, texture index, UV bounds, and depth mode.
+    public func renderTeiRect(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?,
+        alpha: Int16,
+        v1: SIMD3<Float>,
+        v2: SIMD3<Float>,
+        v3: SIMD3<Float>,
+        v4: SIMD3<Float>,
+        blendSelector pw: Int16,
+        textureIndex: Int,
+        isWorldPosition: Bool,
+        red: UInt8,
+        green: UInt8,
+        blue: UInt8,
+        v1Coord: Float = 0,
+        v2Coord: Float = 1,
+        u1Coord: Float = 0,
+        u2Coord: Float = 1,
+        extra: Int8 = 0
+    ) {
+        var finalRed = red
+        var finalGreen = green
+        var finalBlue = blue
+        colorOverride(red: &finalRed, green: &finalGreen, blue: &finalBlue)
+
+        let defaultDstBlend: Int32 = pw != 0 ? 6 : 2
+        let masterDstBlend = master?.colorChannels[3] ?? -1
+        let resolvedDstBlend = masterDstBlend != -1 ? masterDstBlend : defaultDstBlend
+
+        let srcBlend: EffectBlendFactor
+        let dstBlend: EffectBlendFactor
+        if pw == 10 {
+            srcBlend = .one
+            dstBlend = .zero
+        } else {
+            srcBlend = .sourceAlpha
+            if pw == 99 {
+                dstBlend = .oneMinusSourceAlpha
+            } else {
+                dstBlend = EffectBlendFactor(d3dBlend: resolvedDstBlend)
+            }
+        }
+
+        let offset = isWorldPosition ? SIMD3<Float>.zero : position
+        let p0 = v1 + offset
+        let p1 = v2 + offset
+        let p2 = v3 + offset
+        let p3 = v4 + offset
+
+        let color = Self.normalizedRGBA(alpha: alpha, red: finalRed, green: finalGreen, blue: finalBlue)
+        let renderState = EffectPrimitiveRenderState(srcBlend: srcBlend, dstBlend: dstBlend, extra: extra)
+        let texture = resolveTexture(at: textureIndex, assets: assets)
+        let center = (p0 + p1 + p2 + p3) * 0.25
+
+        collector.appendEffectQuad(
+            p0: p0,
+            p1: p1,
+            p2: p2,
+            p3: p3,
+            uv0: SIMD2<Float>(u1Coord, v2Coord),
+            uv1: SIMD2<Float>(u2Coord, v2Coord),
+            uv2: SIMD2<Float>(u2Coord, v1Coord),
+            uv3: SIMD2<Float>(u1Coord, v1Coord),
+            color0: color,
+            color1: color,
+            color2: color,
+            color3: color,
+            texture: texture,
+            renderState: renderState,
+            effectCenter: center
+        )
+    }
+
+    /// Palette-driven `RenderTeiRect` overload mapping `state.size` to color/blend and slicing U horizontally by `texPart / 21`.
+    public func renderTeiRect(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?,
+        texPart: Int,
+        alphaB: Int16,
+        alphaT: Int16,
+        v1: SIMD3<Float>,
+        v2: SIMD3<Float>,
+        v3: SIMD3<Float>,
+        v4: SIMD3<Float>,
+        textureIndex: Int
+    ) {
+        let palette = SizePalette(sizeKey: Int(state.size))
+        let effectiveAlpha = palette.alphaOverride ?? alphaB
+
+        var finalRed = palette.red
+        var finalGreen = palette.green
+        var finalBlue = palette.blue
+        colorOverride(red: &finalRed, green: &finalGreen, blue: &finalBlue)
+
+        let masterDstBlend = master?.colorChannels[3] ?? -1
+        let resolvedDstBlend = masterDstBlend != -1 ? masterDstBlend : palette.dstBlend
+
+        let left: Float
+        let right: Float
+        if texPart >= 100 {
+            if texPart == 100 {
+                left = 0.35
+                right = 0.45
+            } else if texPart == 101 {
+                left = 0.45
+                right = 0.55
+            } else {
+                left = 0.55
+                right = 0.65
+            }
+        } else {
+            left = texPart == 0 ? 0 : Float(texPart) / 21.0
+            right = Float(texPart + 1) / 21.0
+        }
+
+        let p0 = v1 + position
+        let p1 = v2 + position
+        let p2 = v3 + position
+        let p3 = v4 + position
+
+        let color = Self.normalizedRGBA(alpha: effectiveAlpha, red: finalRed, green: finalGreen, blue: finalBlue)
+        let renderState = EffectPrimitiveRenderState(
+            srcBlend: .sourceAlpha,
+            dstBlend: EffectBlendFactor(d3dBlend: resolvedDstBlend)
+        )
+        let texture = resolveTexture(at: textureIndex, assets: assets)
+        let center = (p0 + p1 + p2 + p3) * 0.25
+
+        collector.appendEffectQuad(
+            p0: p0,
+            p1: p1,
+            p2: p2,
+            p3: p3,
+            uv0: SIMD2<Float>(left, palette.textureV),
+            uv1: SIMD2<Float>(right, palette.textureV),
+            uv2: SIMD2<Float>(right, 0),
+            uv3: SIMD2<Float>(left, 0),
+            color0: color,
+            color1: color,
+            color2: color,
+            color3: color,
+            texture: texture,
+            renderState: renderState,
+            effectCenter: center
+        )
+    }
+
+    /// Custom-RGB `RenderTeiRect` overload slicing V vertically by `texPart / 21`.
+    public func renderTeiRect(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?,
+        texPart: Int,
+        alphaB: Int16,
+        alphaT: Int16,
+        v1: SIMD3<Float>,
+        v2: SIMD3<Float>,
+        v3: SIMD3<Float>,
+        v4: SIMD3<Float>,
+        blendSelector pw: Int8,
+        red: UInt8,
+        green: UInt8,
+        blue: UInt8
+    ) {
+        var finalRed = red
+        var finalGreen = green
+        var finalBlue = blue
+        colorOverride(red: &finalRed, green: &finalGreen, blue: &finalBlue)
+
+        let defaultDstBlend: Int32 = pw != 0 ? 6 : 2
+        let masterDstBlend = master?.colorChannels[3] ?? -1
+        let resolvedDstBlend = masterDstBlend != -1 ? masterDstBlend : defaultDstBlend
+
+        let top: Float = texPart == 0 ? 0 : Float(texPart) / 21.0
+        let bottom: Float = Float(texPart + 1) / 21.0
+
+        let p0 = v1 + position
+        let p1 = v2 + position
+        let p2 = v3 + position
+        let p3 = v4 + position
+
+        let color = Self.normalizedRGBA(alpha: alphaB, red: finalRed, green: finalGreen, blue: finalBlue)
+        let renderState = EffectPrimitiveRenderState(
+            srcBlend: .sourceAlpha,
+            dstBlend: EffectBlendFactor(d3dBlend: resolvedDstBlend)
+        )
+        let texture = resolveTexture(at: 0, assets: assets)
+        let center = (p0 + p1 + p2 + p3) * 0.25
+
+        collector.appendEffectQuad(
+            p0: p0,
+            p1: p1,
+            p2: p2,
+            p3: p3,
+            uv0: SIMD2<Float>(1, top),
+            uv1: SIMD2<Float>(1, bottom),
+            uv2: SIMD2<Float>(0, bottom),
+            uv3: SIMD2<Float>(0, top),
+            color0: color,
+            color1: color,
+            color2: color,
+            color3: color,
+            texture: texture,
+            renderState: renderState,
+            effectCenter: center
+        )
+    }
+
+    public func resolveTexture(at index: Int, assets: EffectAssetStore?) -> (any MTLTexture)? {
+        guard let assets, index >= 0, index < state.texturePaths.count else {
+            return nil
+        }
+        return assets.texture(atPath: state.texturePaths[index])
+    }
+
+    // MARK: - Internal Utilities
+
+    @inlinable
+    static func packARGB(alpha: Int, red: Int, green: Int, blue: Int) -> UInt32 {
+        let a = UInt32(truncatingIfNeeded: alpha) & 0xFF
+        let r = UInt32(truncatingIfNeeded: red) & 0xFF
+        let g = UInt32(truncatingIfNeeded: green) & 0xFF
+        let b = UInt32(truncatingIfNeeded: blue) & 0xFF
+        return (a << 24) | (r << 16) | (g << 8) | b
+    }
+
+    @inlinable
+    static func normalizedRGBA(alpha: Int16, red: UInt8, green: UInt8, blue: UInt8) -> SIMD4<Float> {
+        let clampedAlpha = max(0, min(255, Int(alpha)))
+        return SIMD4<Float>(
+            Float(red) / 255.0,
+            Float(green) / 255.0,
+            Float(blue) / 255.0,
+            Float(clampedAlpha) / 255.0
+        )
+    }
+
+    private struct SizePalette {
+        var red: UInt8
+        var green: UInt8
+        var blue: UInt8
+        var dstBlend: Int32
+        var textureV: Float
+        var alphaOverride: Int16?
+
+        private init(
+            red: UInt8 = 255,
+            green: UInt8 = 255,
+            blue: UInt8 = 255,
+            dstBlend: Int32 = 2,
+            textureV: Float = 1.0,
+            alphaOverride: Int16? = nil
+        ) {
+            self.red = red
+            self.green = green
+            self.blue = blue
+            self.dstBlend = dstBlend
+            self.textureV = textureV
+            self.alphaOverride = alphaOverride
+        }
+
+        init(sizeKey: Int) {
+            self = switch sizeKey {
+            case 0: SizePalette(dstBlend: 6)
+            case 1: SizePalette(red: 255, green: 175, blue: 175)
+            case 2: SizePalette(red: 195, green: 195, blue: 255, dstBlend: 6)
+            case 3: SizePalette(dstBlend: 6, alphaOverride: 80)
+            case 4: SizePalette(red: 100, green: 100, blue: 255)
+            case 6: SizePalette(red: 255, green: 100, blue: 100)
+            case 7: SizePalette(red: 100, green: 255, blue: 100)
+            case 8: SizePalette(red: 255, green: 255, blue: 170)
+            case 9: SizePalette(red: 140, green: 210, blue: 140)
+            case 10: SizePalette(red: 255, green: 89, blue: 182)
+            case 11: SizePalette(red: 170, green: 170, blue: 255)
+            case 12: SizePalette(red: 50, green: 50, blue: 50, dstBlend: 6)
+            case 13: SizePalette(red: 255, green: 50, blue: 255, dstBlend: 6)
+            case 14: SizePalette(red: 120, green: 120, blue: 255, dstBlend: 6)
+            case 15: SizePalette(red: 10, green: 255, blue: 10)
+            case 16: SizePalette(red: 20, green: 255, blue: 20)
+            case 17: SizePalette(red: 0, green: 0, blue: 255)
+            case 18: SizePalette(red: 255, green: 0, blue: 0)
+            case 19: SizePalette(red: 0, green: 255, blue: 0)
+            case 20: SizePalette(red: 255, green: 255, blue: 0)
+            case 21: SizePalette(red: 255, green: 0, blue: 255)
+            case 22: SizePalette(red: 0, green: 255, blue: 255)
+            case 23: SizePalette(red: 41, green: 94, blue: 188, dstBlend: 6)
+            case 24: SizePalette(red: 10, green: 66, blue: 114)
+            case 25: SizePalette(red: 35, green: 146, blue: 185)
+            case 26: SizePalette(red: 164, green: 205, blue: 254)
+            case 27: SizePalette(red: 84, green: 169, blue: 205)
+            case 28: SizePalette(red: 108, green: 26, blue: 255)
+            case 29: SizePalette(red: 177, green: 255, blue: 58)
+            case 30: SizePalette(red: 85, green: 30, blue: 185)
+            case 31: SizePalette(red: 244, green: 187, blue: 124)
+            case 32: SizePalette(red: 0, green: 0, blue: 0, dstBlend: 6)
+            case 40: SizePalette(red: 70, green: 70, blue: 255)
+            case 41: SizePalette(red: 30, green: 30, blue: 255)
+            case 42: SizePalette(red: 43, green: 40, blue: 46, dstBlend: 6)
+            case 43: SizePalette(red: 125, green: 182, blue: 160, dstBlend: 6)
+            case 44: SizePalette(red: 180, green: 55, blue: 30, dstBlend: 6)
+            case 45: SizePalette(red: 65, green: 141, blue: 231)
+            case 46: SizePalette(red: 164, green: 47, blue: 29)
+            case 47: SizePalette(red: 172, green: 154, blue: 56)
+            case 48: SizePalette(red: 80, green: 20, blue: 20)
+            case 49: SizePalette(red: 200, green: 130, blue: 84)
+            case 50: SizePalette(red: 255, green: 198, blue: 91)
+            case 100: SizePalette(red: 250, green: 250, blue: 255, dstBlend: 6, textureV: 0.9)
+            default: SizePalette()
+            }
+        }
+    }
+}
+
+extension EffectPrimitiveRenderState {
+    init(
+        srcBlend: EffectBlendFactor,
+        dstBlend: EffectBlendFactor,
+        extra: Int8
+    ) {
+        let depthTest: Bool
+        let depthBias: Float
+        if extra == 1 || extra == 3 {
+            depthTest = false
+            depthBias = 0
+        } else if extra == 2 {
+            depthTest = true
+            depthBias = 0.05
+        } else {
+            depthTest = true
+            depthBias = 0
+        }
+
+        self.init(
+            srcBlend: srcBlend,
+            dstBlend: dstBlend,
+            depthTest: depthTest,
+            depthWrite: false,
+            cullMode: .none,
+            bucket: .translucent,
+            depthBias: depthBias
+        )
+    }
+}

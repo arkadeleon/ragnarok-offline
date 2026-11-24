@@ -18,6 +18,7 @@ final class EffectViewerEffectWorldContext: EffectWorldContext {
 
     var cameraWorldPosition: SIMD3<Float> = SIMD3<Float>(0, 10, 20)
     var cameraYawDegrees: Float = 0
+    var cameraPitchDegrees: Float = 20
 
     private let targets: [EffectTargetID : EffectTargetState] = [
         targetObjectID: EffectTargetState(

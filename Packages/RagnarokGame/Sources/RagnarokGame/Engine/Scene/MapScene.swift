@@ -832,6 +832,10 @@ extension MapScene: EffectWorldContext {
         degrees(camera.azimuth)
     }
 
+    public var cameraPitchDegrees: Float {
+        degrees(camera.elevation)
+    }
+
     public func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float {
         let worldX = x * EffectSpace.effectToWorldScale
         let worldZ = -z * EffectSpace.effectToWorldScale
