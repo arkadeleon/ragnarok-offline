@@ -227,13 +227,15 @@ public final class EffectManager {
         modelMatrix: simd_float4x4 = matrix_identity_float4x4,
         world: any EffectWorldContext
     ) -> [EffectPrimitiveBatchRenderer.RenderPayload] {
-        var collector = EffectPrimitiveBatchCollector(fog: fog, modelMatrix: modelMatrix)
+        var payloads: [EffectPrimitiveBatchRenderer.RenderPayload] = []
         for effect in activeEffects {
             if let renderable = effect as? any EffectPrimitiveRenderable {
+                var collector = EffectPrimitiveBatchCollector(fog: fog, modelMatrix: modelMatrix)
                 renderable.collectPrimitiveBatches(into: &collector, fog: fog, modelMatrix: modelMatrix, world: world)
+                payloads.append(contentsOf: collector.batches)
             }
         }
-        return collector.batches
+        return payloads
     }
 
     @discardableResult

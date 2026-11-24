@@ -7,6 +7,7 @@
 
 import Foundation
 import Metal
+import RagnarokRendering
 import RagnarokResources
 import simd
 import Testing
@@ -178,5 +179,68 @@ struct EffectManagerTests {
         #expect(await store.preloadSTRAsset(atPath: "missing.str") == nil)
 
         store.removeAll()
+    }
+
+    @Test("collectPrimitivePayloads keeps batches separate per effect instance for depth sorting")
+    func collectPrimitivePayloadsSeparatesEffects() {
+        final class StubPrimitiveEffect: EffectPrimitiveRenderable {
+            let id: UUID
+            let effectID: EffectID
+            let ownerObjectID: EffectTargetID?
+            let attachmentKey: EffectAttachmentKey
+            let worldPosition: SIMD3<Float>
+            var isAlive: Bool = true
+
+            init(id: UUID, request: EffectSpawnRequest) {
+                self.id = id
+                self.effectID = request.effectID
+                self.ownerObjectID = request.ownerObjectID
+                self.attachmentKey = request.attachmentKey
+                self.worldPosition = request.worldPosition
+            }
+
+            func tick(context: EffectTickContext) {}
+            func stop() { isAlive = false }
+
+            func collectPrimitiveBatches(
+                into collector: inout EffectPrimitiveBatchCollector,
+                fog: Fog,
+                modelMatrix: simd_float4x4,
+                world: any EffectWorldContext
+            ) {
+                let white = SIMD4<Float>(1, 1, 1, 1)
+                let center = EffectSpace.toEffectPosition(worldPosition)
+                collector.appendEffectBillboardQuad(
+                    anchorEffectPosition: center,
+                    sizeEffect: SIMD2<Float>(5, 5),
+                    color: white,
+                    texture: nil,
+                    renderState: .alpha
+                )
+                collector.appendEffectBillboardQuad(
+                    anchorEffectPosition: center,
+                    sizeEffect: SIMD2<Float>(5, 5),
+                    color: white,
+                    texture: nil,
+                    renderState: .alpha
+                )
+            }
+        }
+
+        let manager = EffectManager()
+        let world = MockWorldContext()
+        manager.registerRagEffect(for: .ef_hit1) { id, request in
+            StubPrimitiveEffect(id: id, request: request)
+        }
+
+        manager.spawn(EffectSpawnRequest(effectID: .ef_hit1, worldPosition: [0, 0, 0]))
+        manager.spawn(EffectSpawnRequest(effectID: .ef_hit1, worldPosition: [20, 0, -10]))
+
+        let payloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(payloads.count == 2)
+        #expect(payloads[0].vertices.count == 12)
+        #expect(payloads[1].vertices.count == 12)
+        #expect(payloads[0].worldCenter == SIMD3<Float>(0, 0, 0))
+        #expect(payloads[1].worldCenter == SIMD3<Float>(20, 0, -10))
     }
 }
