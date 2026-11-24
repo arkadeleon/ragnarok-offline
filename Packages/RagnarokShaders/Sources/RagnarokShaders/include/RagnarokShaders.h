@@ -11,6 +11,7 @@
 #include "../Effect/CylinderEffectShaderTypes.h"
 #include "../Effect/SPREffectShaderTypes.h"
 #include "../Effect/STREffectShaderTypes.h"
+#include "../Effect/EffectPrimitiveShaderTypes.h"
 #include "../Ground/GroundShaderTypes.h"
 #include "../Model/ModelShaderTypes.h"
 #include "../Sprite/SpriteShaderTypes.h"

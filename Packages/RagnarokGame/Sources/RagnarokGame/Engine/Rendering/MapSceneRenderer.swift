@@ -24,6 +24,7 @@ final class MapSceneRenderer {
         case sprite(SpriteRenderer.RenderPayload)
         case effect(EffectRenderer.RenderPayload)
         case strEffect(STREffectRenderer.RenderPayload)
+        case primitiveEffect(EffectPrimitiveBatchRenderer.RenderPayload)
         case tileSelector(MapSceneRenderSnapshot.TileSelector, fog: Fog, modelMatrix: simd_float4x4)
         case targetSelector(MapSceneRenderSnapshot.TargetSelector, modelMatrix: simd_float4x4)
         case bars([MapSceneRenderSnapshot.Bar], modelMatrix: simd_float4x4)
@@ -42,6 +43,7 @@ final class MapSceneRenderer {
     private let barRenderer: BarRenderer
     private let effectRenderer: EffectRenderer
     private let strEffectRenderer: STREffectRenderer
+    private let primitiveBatchRenderer: EffectPrimitiveBatchRenderer
     private let tileSelectorRenderer: TileSelectorRenderer
     private let targetSelectorRenderer: TargetSelectorRenderer
 
@@ -58,6 +60,7 @@ final class MapSceneRenderer {
         barRenderer = try BarRenderer(device: device, configuration: configuration)
         effectRenderer = try EffectRenderer(device: device, configuration: configuration)
         strEffectRenderer = try STREffectRenderer(device: device, configuration: configuration)
+        primitiveBatchRenderer = try EffectPrimitiveBatchRenderer(device: device, configuration: configuration)
         tileSelectorRenderer = try TileSelectorRenderer(device: device, configuration: configuration)
         targetSelectorRenderer = try TargetSelectorRenderer(device: device, configuration: configuration)
     }
@@ -196,6 +199,14 @@ final class MapSceneRenderer {
                 payload: payload,
                 into: renderQueue,
                 transformPayload: RenderPayload.strEffect
+            )
+        }
+
+        for payload in snapshot.primitiveEffectPayloads {
+            primitiveBatchRenderer.submit(
+                payload: payload,
+                into: renderQueue,
+                transformPayload: RenderPayload.primitiveEffect
             )
         }
 
@@ -351,6 +362,12 @@ final class MapSceneRenderer {
                 )
             case .strEffect(let payload):
                 strEffectRenderer.render(
+                    payload: payload,
+                    camera: camera,
+                    renderCommandEncoder: renderCommandEncoder
+                )
+            case .primitiveEffect(let payload):
+                primitiveBatchRenderer.render(
                     payload: payload,
                     camera: camera,
                     renderCommandEncoder: renderCommandEncoder

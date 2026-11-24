@@ -95,6 +95,10 @@ final class MapSceneRenderResources {
         effectManager.collectSTRPayloads(fog: fog, world: world)
     }
 
+    func collectPrimitivePayloads(fog: Fog, world: any EffectWorldContext) -> [EffectPrimitiveBatchRenderer.RenderPayload] {
+        effectManager.collectPrimitivePayloads(fog: fog, world: world)
+    }
+
     func loadWorldEffects(_ effects: [WorldEffect]) async {
         guard let effectAssetLoader else {
             return

@@ -55,6 +55,7 @@ struct MapSceneRenderSnapshot {
     var spriteDrawables: [SpriteDrawable] = []
     var effects: [Effect] = []
     var strEffectPayloads: [STREffectRenderer.RenderPayload] = []
+    var primitiveEffectPayloads: [EffectPrimitiveBatchRenderer.RenderPayload] = []
     var bars: [Bar] = []
     var texts: [Text] = []
     var combatTexts: [CombatText] = []

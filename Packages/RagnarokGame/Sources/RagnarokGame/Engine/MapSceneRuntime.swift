@@ -137,6 +137,7 @@ final class MapSceneRuntime {
         snapshot.spriteDrawables = renderResources.spriteDrawables
         snapshot.effects = makeEffects(atTime: currentTime)
         snapshot.strEffectPayloads = renderResources.collectSTRPayloads(fog: scene.world.fog, world: scene)
+        snapshot.primitiveEffectPayloads = renderResources.collectPrimitivePayloads(fog: scene.world.fog, world: scene)
         snapshot.bars = makeBars(atTime: currentTime)
         snapshot.texts = makeTexts()
         snapshot.combatTexts = makeCombatTexts(atTime: currentTime)

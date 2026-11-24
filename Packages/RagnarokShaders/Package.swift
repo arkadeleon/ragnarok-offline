@@ -20,6 +20,7 @@ let package = Package(
                 .process("Effect/CylinderEffectShaders.metal"),
                 .process("Effect/SPREffectShaders.metal"),
                 .process("Effect/STREffectShaders.metal"),
+                .process("Effect/EffectPrimitiveShaders.metal"),
                 .process("Ground/GroundShaders.metal"),
                 .process("Model/ModelShaders.metal"),
                 .process("Sprite/SpriteShaders.metal"),

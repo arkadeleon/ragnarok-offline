@@ -107,7 +107,7 @@ public final class STREffectRenderer {
     public let device: any MTLDevice
     public let configuration: RenderConfiguration
 
-    private var renderPipelineStates: [SIMD2<Int32> : any MTLRenderPipelineState] = [:]
+    private var renderPipelineStates: [EffectBlendKey : any MTLRenderPipelineState] = [:]
     private let depthStencilState: (any MTLDepthStencilState)?
     private let screenDepthStencilState: (any MTLDepthStencilState)?
 
@@ -125,7 +125,7 @@ public final class STREffectRenderer {
         screenDepthDescriptor.isDepthWriteEnabled = false
         screenDepthStencilState = device.makeDepthStencilState(descriptor: screenDepthDescriptor)
 
-        let commonBlendKey = SIMD2<Int32>(5, 6)
+        let commonBlendKey = EffectBlendKey(srcBlend: .sourceAlpha, dstBlend: .oneMinusSourceAlpha)
         renderPipelineStates[commonBlendKey] = try makeRenderPipelineState(for: commonBlendKey)
     }
 
@@ -253,7 +253,10 @@ public final class STREffectRenderer {
                 continue
             }
 
-            let blendKey = SIMD2(sprite.sourceAlpha, sprite.destinationAlpha)
+            let blendKey = EffectBlendKey(
+                d3dSourceBlend: sprite.sourceAlpha,
+                d3dDestinationBlend: sprite.destinationAlpha
+            )
             guard let renderPipelineState = renderPipelineState(for: blendKey) else {
                 continue
             }
@@ -287,7 +290,7 @@ public final class STREffectRenderer {
             )
 
             // D3DBLEND_ONE as destination is additive; blending fog color in would brighten it.
-            let isAdditive = sprite.destinationAlpha == 2
+            let isAdditive = blendKey.isAdditive
             let modulatedColor = SIMD4<Float>(
                 sprite.color.x,
                 sprite.color.y,
@@ -417,7 +420,7 @@ public final class STREffectRenderer {
         ]
     }
 
-    private func renderPipelineState(for blendKey: SIMD2<Int32>) -> (any MTLRenderPipelineState)? {
+    private func renderPipelineState(for blendKey: EffectBlendKey) -> (any MTLRenderPipelineState)? {
         if let renderPipelineState = renderPipelineStates[blendKey] {
             return renderPipelineState
         }
@@ -430,7 +433,7 @@ public final class STREffectRenderer {
         return renderPipelineState
     }
 
-    private func makeRenderPipelineState(for blendKey: SIMD2<Int32>) throws -> any MTLRenderPipelineState {
+    private func makeRenderPipelineState(for blendKey: EffectBlendKey) throws -> any MTLRenderPipelineState {
         let library = RagnarokShadersLibrary(device)!
 
         let renderPipelineDescriptor = MTLRenderPipelineDescriptor()
@@ -439,33 +442,12 @@ public final class STREffectRenderer {
         renderPipelineDescriptor.maxVertexAmplificationCount = configuration.amplificationCount
         renderPipelineDescriptor.colorAttachments[0].pixelFormat = configuration.colorPixelFormat
         renderPipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
-        renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = mtlBlendFactor(blendKey.x)
-        renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = mtlBlendFactor(blendKey.x)
-        renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = mtlBlendFactor(blendKey.y)
-        renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = mtlBlendFactor(blendKey.y)
+        renderPipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = blendKey.srcBlend.mtlBlendFactor
+        renderPipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = blendKey.srcBlend.mtlBlendFactor
+        renderPipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = blendKey.dstBlend.mtlBlendFactor
+        renderPipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = blendKey.dstBlend.mtlBlendFactor
         renderPipelineDescriptor.depthAttachmentPixelFormat = configuration.depthStencilPixelFormat
 
         return try device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
-    }
-
-    private func mtlBlendFactor(_ d3dBlend: Int32) -> MTLBlendFactor {
-        switch d3dBlend {
-        case 1:  .zero
-        case 2:  .one
-        case 3:  .sourceColor
-        case 4:  .oneMinusSourceColor
-        case 5:  .sourceAlpha
-        case 6:  .oneMinusSourceAlpha
-        case 7:  .destinationAlpha
-        case 8:  .oneMinusDestinationAlpha
-        case 9:  .destinationColor
-        case 10: .oneMinusDestinationColor
-        case 11: .sourceAlphaSaturated
-        case 12: .sourceAlpha
-        case 13: .oneMinusSourceAlpha
-        case 14: .blendColor
-        case 15: .oneMinusBlendColor
-        default: .sourceAlpha
-        }
     }
 }

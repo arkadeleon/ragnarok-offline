@@ -22,11 +22,17 @@ class EffectViewerEffectRenderer: Renderer {
     private enum RenderPayload {
         case legacy(EffectRenderer.RenderPayload)
         case str(STREffectRenderer.RenderPayload)
+        case primitive(EffectPrimitiveBatchRenderer.RenderPayload)
     }
 
     private enum Backend {
         case legacy(renderer: EffectRenderer, resourceGroup: EffectRenderResourceGroup)
-        case managed(manager: EffectManager, world: EffectViewerEffectWorldContext, strRenderer: STREffectRenderer)
+        case managed(
+            manager: EffectManager,
+            world: EffectViewerEffectWorldContext,
+            strRenderer: STREffectRenderer,
+            primitiveRenderer: EffectPrimitiveBatchRenderer
+        )
     }
 
     let device: any MTLDevice
@@ -67,6 +73,7 @@ class EffectViewerEffectRenderer: Renderer {
         let manager = EffectManager(assetStore: assetStore, ez2strEffectCatalog: ez2strEffectCatalog)
         let world = EffectViewerEffectWorldContext()
         let strRenderer = try STREffectRenderer(device: device, configuration: configuration)
+        let primitiveRenderer = try EffectPrimitiveBatchRenderer(device: device, configuration: configuration)
 
         let request = EffectSpawnRequest(
             effectID: effectID,
@@ -78,7 +85,12 @@ class EffectViewerEffectRenderer: Renderer {
         )
         manager.spawn(request)
 
-        self.backend = .managed(manager: manager, world: world, strRenderer: strRenderer)
+        self.backend = .managed(
+            manager: manager,
+            world: world,
+            strRenderer: strRenderer,
+            primitiveRenderer: primitiveRenderer
+        )
         self.camera = Self.makeDefaultCamera()
     }
 
@@ -98,7 +110,7 @@ class EffectViewerEffectRenderer: Renderer {
         camera.update(atTime: time)
         camera.update(size: viewport.size)
 
-        if case .managed(_, let world, _) = backend {
+        if case .managed(_, let world, _, _) = backend {
             let inverseView = camera.viewMatrix.inverse
             world.cameraWorldPosition = [
                 inverseView.columns.3.x,
@@ -139,13 +151,20 @@ class EffectViewerEffectRenderer: Renderer {
                 into: renderQueue,
                 transform: RenderPayload.legacy
             )
-        case .managed(let manager, let world, let strRenderer):
+        case .managed(let manager, let world, let strRenderer, let primitiveRenderer):
             manager.update(atTime: frame.time, world: world)
             for payload in manager.collectSTRPayloads(fog: fog, world: world) {
                 strRenderer.submit(
                     payload: payload,
                     into: renderQueue,
                     transformPayload: RenderPayload.str
+                )
+            }
+            for payload in manager.collectPrimitivePayloads(fog: fog, world: world) {
+                primitiveRenderer.submit(
+                    payload: payload,
+                    into: renderQueue,
+                    transformPayload: RenderPayload.primitive
                 )
             }
         }
@@ -164,8 +183,14 @@ class EffectViewerEffectRenderer: Renderer {
                             camera: view.camera,
                             renderCommandEncoder: renderCommandEncoder
                         )
-                    case (.str(let payload), .managed(_, _, let strRenderer)):
+                    case (.str(let payload), .managed(_, _, let strRenderer, _)):
                         strRenderer.render(
+                            payload: payload,
+                            camera: view.camera,
+                            renderCommandEncoder: renderCommandEncoder
+                        )
+                    case (.primitive(let payload), .managed(_, _, _, let primitiveRenderer)):
+                        primitiveRenderer.render(
                             payload: payload,
                             camera: view.camera,
                             renderCommandEncoder: renderCommandEncoder
@@ -184,7 +209,7 @@ class EffectViewerEffectRenderer: Renderer {
         switch backend {
         case .legacy(_, let resourceGroup):
             resourceGroup.isExpired(atTime: time)
-        case .managed(let manager, _, _):
+        case .managed(let manager, _, _, _):
             !manager.hasEffects
         }
     }

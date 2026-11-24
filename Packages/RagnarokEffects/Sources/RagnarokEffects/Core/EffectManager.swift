@@ -222,6 +222,20 @@ public final class EffectManager {
         return payloads
     }
 
+    public func collectPrimitivePayloads(
+        fog: Fog,
+        modelMatrix: simd_float4x4 = matrix_identity_float4x4,
+        world: any EffectWorldContext
+    ) -> [EffectPrimitiveBatchRenderer.RenderPayload] {
+        var collector = EffectPrimitiveBatchCollector(fog: fog, modelMatrix: modelMatrix)
+        for effect in activeEffects {
+            if let renderable = effect as? any EffectPrimitiveRenderable {
+                renderable.collectPrimitiveBatches(into: &collector, fog: fog, modelMatrix: modelMatrix, world: world)
+            }
+        }
+        return collector.batches
+    }
+
     @discardableResult
     private func spawnImmediately(id: UUID, request: EffectSpawnRequest) -> UUID? {
         let effect: any EffectInstance
