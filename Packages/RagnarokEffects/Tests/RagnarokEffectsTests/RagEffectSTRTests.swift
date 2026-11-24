@@ -521,4 +521,112 @@ struct RagEffectSTRTests {
             #expect(blue < 20, "Expected no blue channel in mode \(mode), got BGRA=\(bgra)")
         }
     }
+
+    @Test("STREffectRenderer uses (320, 240) origin for screen/billboard while preserving Classic yOffset")
+    func rendererUses240VerticalOriginAndClassicOffset() throws {
+        guard let device = MTLCreateSystemDefaultDevice(),
+              let commandQueue = device.makeCommandQueue() else {
+            return
+        }
+
+        let renderer = try STREffectRenderer(device: device, configuration: .default)
+        let centeredSprite = STREffectAnimation.Sprite(
+            uv: [0, 0, 1, 1, 0, 0, 1, 1],
+            xy: [-16, 16, 16, -16, -16, -16, 16, 16],
+            textureName: "white.bmp",
+            position: [320, 240],
+            angle: 0,
+            color: [1, 1, 1, 1],
+            sourceAlpha: 5,
+            destinationAlpha: 6,
+            multiTexturePreset: 0
+        )
+
+        // Modern default (zero offset, scale 1) lands directly on anchor (0, 0)
+        #expect(renderer.makeSpriteOffset(for: centeredSprite, transform: .identity) == .zero)
+
+        // Classic default (yOffset = -80) produces net -80 offset without double-shifting
+        let classicTransform = STREffectTransform(offset: SIMD2<Float>(0, -80))
+        #expect(renderer.makeSpriteOffset(for: centeredSprite, transform: classicTransform) == SIMD2<Float>(0, -80))
+
+        // Offscreen screen-mode render: a small 32x32 design-pixel quad at (320, 240) must hit the viewport center
+        let sourceDescriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: .rgba8Unorm,
+            width: 2,
+            height: 2,
+            mipmapped: false
+        )
+        sourceDescriptor.usage = [.shaderRead]
+        let whiteTexture = try #require(device.makeTexture(descriptor: sourceDescriptor))
+        let whitePixels = [UInt8](repeating: 255, count: 2 * 2 * 4)
+        whiteTexture.replace(
+            region: MTLRegionMake2D(0, 0, 2, 2),
+            mipmapLevel: 0,
+            withBytes: whitePixels,
+            bytesPerRow: 2 * 4
+        )
+
+        let targetSize = 32
+        let colorDescriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: .bgra8Unorm,
+            width: targetSize,
+            height: targetSize,
+            mipmapped: false
+        )
+        colorDescriptor.usage = [.renderTarget]
+        colorDescriptor.storageMode = .shared
+        let colorTarget = try #require(device.makeTexture(descriptor: colorDescriptor))
+
+        let depthDescriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: .depth32Float,
+            width: targetSize,
+            height: targetSize,
+            mipmapped: false
+        )
+        depthDescriptor.usage = [.renderTarget]
+        depthDescriptor.storageMode = .private
+        let depthTarget = try #require(device.makeTexture(descriptor: depthDescriptor))
+
+        let passDescriptor = MTLRenderPassDescriptor()
+        passDescriptor.colorAttachments[0].texture = colorTarget
+        passDescriptor.colorAttachments[0].loadAction = .clear
+        passDescriptor.colorAttachments[0].storeAction = .store
+        passDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
+        passDescriptor.depthAttachment.texture = depthTarget
+        passDescriptor.depthAttachment.loadAction = .clear
+        passDescriptor.depthAttachment.storeAction = .dontCare
+        passDescriptor.depthAttachment.clearDepth = 1.0
+
+        let screenCamera = RenderCamera(
+            viewMatrix: matrix_identity_float4x4,
+            projectionMatrix: matrix_identity_float4x4,
+            position: .zero
+        )
+        let commandBuffer = try #require(commandQueue.makeCommandBuffer())
+        let encoder = try #require(commandBuffer.makeRenderCommandEncoder(descriptor: passDescriptor))
+        renderer.render(
+            frame: STREffectAnimation.Frame(sprites: [centeredSprite]),
+            textures: ["white.bmp": whiteTexture],
+            mode: .screen,
+            worldPosition: .zero,
+            transform: .identity,
+            fog: Fog(),
+            modelMatrix: matrix_identity_float4x4,
+            terrainHeight: nil,
+            camera: screenCamera,
+            renderCommandEncoder: encoder
+        )
+        encoder.endEncoding()
+        commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()
+
+        var bgra: [UInt8] = [0, 0, 0, 0]
+        colorTarget.getBytes(
+            &bgra,
+            bytesPerRow: targetSize * 4,
+            from: MTLRegionMake2D(targetSize / 2, targetSize / 2, 1, 1),
+            mipmapLevel: 0
+        )
+        #expect(bgra[0] > 200 && bgra[1] > 200 && bgra[2] > 200, "Expected centered screen-mode quad at (320, 240) to hit viewport center, got BGRA=\(bgra)")
+    }
 }

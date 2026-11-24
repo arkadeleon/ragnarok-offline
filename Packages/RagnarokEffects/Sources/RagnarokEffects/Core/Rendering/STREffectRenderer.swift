@@ -219,7 +219,7 @@ public final class STREffectRenderer {
             textures: resource.textures,
             mode: .billboard,
             worldPosition: spritePosition,
-            transform: .identity,
+            transform: STREffectTransform(offset: SIMD2<Float>(0, -80)),
             fog: fog,
             modelMatrix: modelMatrix,
             terrainHeight: nil,
@@ -273,8 +273,7 @@ public final class STREffectRenderer {
             }
 
             let spriteRotation = makeSpriteTransformMatrix(spriteAngleDegrees: sprite.angle, transform: transform)
-            let localOffset = (sprite.position - SIMD2<Float>(320, 320)) * transform.scale + transform.offset
-            let adjustedOffset = SIMD2<Float>(localOffset.x, localOffset.y - transform.lift)
+            let adjustedOffset = makeSpriteOffset(for: sprite, transform: transform)
 
             var vertexUniforms = STREffectVertexUniforms(
                 modelMatrix: modelMatrix,
@@ -396,6 +395,14 @@ public final class STREffectRenderer {
             matrix = matrix_scale(matrix, [scaleX, scaleY, 1])
         }
         return matrix
+    }
+
+    func makeSpriteOffset(
+        for sprite: STREffectAnimation.Sprite,
+        transform: STREffectTransform
+    ) -> SIMD2<Float> {
+        let localOffset = (sprite.position - SIMD2<Float>(320, 240)) * transform.scale + transform.offset
+        return SIMD2<Float>(localOffset.x, localOffset.y - transform.lift)
     }
 
     func makeQuadVertices(for sprite: STREffectAnimation.Sprite) -> [STREffectVertex] {

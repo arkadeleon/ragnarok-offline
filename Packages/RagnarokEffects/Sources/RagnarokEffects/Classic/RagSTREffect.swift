@@ -116,7 +116,7 @@ public final class RagSTREffect: STREffectRenderable {
             return []
         }
 
-        let transform = STREffectTransform(offset: SIMD2<Float>(0, definition.yOffset + 80))
+        let transform = STREffectTransform(offset: SIMD2<Float>(0, definition.yOffset))
         let payload = STREffectRenderer.RenderPayload(
             asset: asset,
             frameIndex: max(0, playbackState.frameCounter - 1),
