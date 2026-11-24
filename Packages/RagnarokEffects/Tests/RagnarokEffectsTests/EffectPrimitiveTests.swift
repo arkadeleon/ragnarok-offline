@@ -19,6 +19,7 @@ struct EffectPrimitiveTests {
         var cameraYawDegrees: Float = 0
         var cameraPitchDegrees: Float = 0
         var targets: [EffectTargetID : EffectTargetState] = [:]
+        var playedSounds: [String] = []
 
         func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float {
             0
@@ -29,6 +30,7 @@ struct EffectPrimitiveTests {
         }
 
         func playSound(named name: String, atWorldPosition position: SIMD3<Float>?, delay: TimeInterval) {
+            playedSounds.append(name)
         }
 
         func shakeCamera(amplitude: Float, duration: TimeInterval, frequency: Float) {
@@ -366,5 +368,108 @@ struct EffectPrimitiveTests {
         #expect(manager.hasEffects)
         manager.stepOneTick(world: world)
         #expect(!manager.hasEffects)
+    }
+
+    @Test("EF_HEAL vertical slice drives pulsing columns, rising particles, sound, and clean retirement")
+    func healVerticalSlice() {
+        #expect(EffectManager.hasBuiltInDefinition(for: .ef_heal))
+        #expect(EffectManager.builtInEffectIDs.contains(.ef_heal))
+
+        let world = MockWorldContext()
+        world.cameraYawDegrees = 45
+        world.cameraPitchDegrees = 25
+        let manager = EffectManager()
+
+        let spawnID = manager.spawn(EffectSpawnRequest(effectID: .ef_heal, worldPosition: SIMD3<Float>(2, 0, -1)))
+        #expect(spawnID != nil)
+
+        // Tick 1 (stateCnt == 0): launches primitive 60 (pulsing columns) and plays heal sound.
+        manager.stepOneTick(world: world)
+        #expect(world.playedSounds == ["_heal_effect.wav"])
+        let ragEffect = manager.activeEffects.first as? RagEffect
+        #expect(ragEffect?.primitives.count == 1)
+        #expect(ragEffect?.primitives.first?.id == EffectPrimitiveID(rawValue: 60))
+        #expect(ragEffect?.primitives.first?.state.size == 9.0)
+        #expect(ragEffect?.primitives.first?.state.texturePaths == ["effect\\alpha_down.tga"])
+
+        // 2 active slots * 20 casting segments = 40 quads = 240 vertices with green additive palette.
+        let columnPayloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(columnPayloads.count == 1)
+        #expect(columnPayloads[0].vertices.count == 40 * 6)
+        #expect(columnPayloads[0].renderState.srcBlend == .sourceAlpha)
+        #expect(columnPayloads[0].renderState.dstBlend == .one)
+        #expect(approxEqual(columnPayloads[0].vertices[0].color.x, 140.0 / 255.0, tolerance: 1e-3))
+        #expect(approxEqual(columnPayloads[0].vertices[0].color.y, 210.0 / 255.0, tolerance: 1e-3))
+        #expect(approxEqual(columnPayloads[0].vertices[0].color.z, 140.0 / 255.0, tolerance: 1e-3))
+
+        // Advance to tick 7 (stateCnt == 6): spawns first pp_particle_up burst.
+        for _ in 0..<6 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(ragEffect?.primitives.count == 2)
+        let particlePrim = ragEffect?.primitives.last
+        #expect(particlePrim?.id == .pp_particle_up)
+        #expect(particlePrim?.state.texturePaths == ["effect\\pok1.tga"])
+
+        // Advance one more tick so pp_particle_up reaches process == 2 and alphaB == 15 (> 0).
+        manager.stepOneTick(world: world)
+        let combinedPayloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        let totalVertices = combinedPayloads.reduce(0) { $0 + $1.vertices.count }
+        // 40 column quads + 4 rising particle quads = 44 quads = 264 vertices.
+        #expect(totalVertices == 44 * 6)
+
+        // Advance through full lifecycle (default lifetime 100 ticks + child primitives).
+        for _ in 0..<250 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(!manager.hasEffects)
+    }
+
+    @Test("EF_HEAL3 uses white pulsing columns and dual-texture flashing rising particles")
+    func heal3VerticalSlice() {
+        #expect(EffectManager.hasBuiltInDefinition(for: .ef_heal3))
+        #expect(EffectManager.builtInEffectIDs.contains(.ef_heal3))
+
+        let world = MockWorldContext()
+        let manager = EffectManager()
+
+        let spawnID = manager.spawn(EffectSpawnRequest(effectID: .ef_heal3, worldPosition: .zero))
+        #expect(spawnID != nil)
+
+        // Tick 1: primitive 60 with size == 5 (white palette) and alphaT == 30.
+        manager.stepOneTick(world: world)
+        let ragEffect = manager.activeEffects.first as? RagEffect
+        let columnPrim = ragEffect?.primitives.first
+        #expect(columnPrim?.state.size == 5.0)
+        #expect(columnPrim?.state.slots[0].alphaT == 30)
+        #expect(columnPrim?.state.slots[1].alphaT == 30)
+
+        let payloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(payloads.count == 1)
+        #expect(approxEqual(payloads[0].vertices[0].color.x, 1.0, tolerance: 1e-3))
+        #expect(approxEqual(payloads[0].vertices[0].color.y, 1.0, tolerance: 1e-3))
+        #expect(approxEqual(payloads[0].vertices[0].color.z, 1.0, tolerance: 1e-3))
+
+        // Advance to tick 7 (stateCnt == 6): spawns pp_particle_up with 2 textures and flash enabled.
+        for _ in 0..<6 {
+            manager.stepOneTick(world: world)
+        }
+        let particlePrim = ragEffect?.primitives.last
+        #expect(particlePrim?.id == .pp_particle_up)
+        #expect(particlePrim?.state.texturePaths == ["effect\\pok1.tga", "effect\\pok3.tga"])
+        #expect(particlePrim?.state.slots[0].flag1[1] == 1)
+
+        // Slot 3 has flash = 36 - 3 * 7 = 15, so at process == 14 (13 ticks after spawn tick 7) flag1[0] flips to 1.
+        for _ in 0..<13 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(particlePrim?.state.slots[3].process == 14)
+        #expect(particlePrim?.state.slots[3].flag1[0] == 1)
+
+        // Verify limit = 25 stops spawning new particle bursts after stateCnt > 25 (ticks 6, 12, 18, 24 => 4 bursts + 1 column = 5).
+        for _ in 0..<20 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(ragEffect?.primitives.count == 5)
     }
 }

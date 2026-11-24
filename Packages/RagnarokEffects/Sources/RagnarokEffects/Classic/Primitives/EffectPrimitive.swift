@@ -70,6 +70,15 @@ public final class EffectPrimitive {
                 isAlive = false
                 return
             }
+        } else {
+            switch id {
+            case EffectPrimitiveID(rawValue: 60), .pp_heal_low:
+                primPulsingColumns(context: context)
+            case .pp_particle_up:
+                primParticleUp(context: context)
+            default:
+                break
+            }
         }
 
         state.stateCnt += 1
@@ -89,6 +98,16 @@ public final class EffectPrimitive {
 
         if let customRender {
             customRender(self, &collector, world, assets)
+            return
+        }
+
+        switch id {
+        case EffectPrimitiveID(rawValue: 60):
+            render3DCasting(into: &collector, assets: assets)
+        case .pp_particle_up:
+            renderFieldPanel(into: &collector, assets: assets)
+        default:
+            break
         }
     }
 

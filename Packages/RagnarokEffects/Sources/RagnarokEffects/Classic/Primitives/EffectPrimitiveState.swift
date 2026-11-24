@@ -49,6 +49,19 @@ public struct EffectPrimitiveSlot: Sendable {
 
 /// Complete mutable state of an `EffectPrimitive`, preserving native effect-space defaults.
 public struct EffectPrimitiveState: Sendable {
+    public enum RenderFlag {
+        public static let alpha: UInt32 = 0x1
+        public static let additive: UInt32 = 0x2
+        public static let customBlend: UInt32 = 0x4
+        public static let topmost: UInt32 = 0x8
+        public static let alphaRefHigh: UInt32 = 0x10
+        public static let secondary: UInt32 = 0x20
+        public static let depthSorted: UInt32 = 0x100
+        public static let noDepth: UInt32 = 0x200
+        public static let preOpaque: UInt32 = 0x800
+        public static let postOpaque: UInt32 = 0x1000
+    }
+
     public static let slotCount = 4
     public static let recordCapacity = 50
     public static let defaultChangeSentinel: Float = 0.0001
