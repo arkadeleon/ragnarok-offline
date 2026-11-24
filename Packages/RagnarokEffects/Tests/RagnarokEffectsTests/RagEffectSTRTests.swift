@@ -669,4 +669,56 @@ struct RagEffectSTRTests {
         #expect(abs(groundVertices[2].position.y - 0.08) < 0.001)
         #expect(abs(groundVertices[3].position.y - 1.08) < 0.001)
     }
+
+    @Test("STREffectRenderer ground vertices combine cameraAzimuth with transform.angle")
+    func rendererGroundVerticesCombineCameraAzimuthAndTransformAngle() throws {
+        guard let device = MTLCreateSystemDefaultDevice() else {
+            return
+        }
+
+        let renderer = try STREffectRenderer(device: device, configuration: .default)
+        let sprite = STREffectAnimation.Sprite(
+            uv: [0, 0, 1, 1, 0, 0, 1, 1],
+            xy: [35, 35, 35, 35, 0, 0, 0, 0],
+            textureName: "ground.bmp",
+            position: [320, 240],
+            angle: 0,
+            color: [1, 1, 1, 1],
+            sourceAlpha: 5,
+            destinationAlpha: 6,
+            multiTexturePreset: 0
+        )
+
+        let baseline = renderer.makeGroundVertices(
+            for: sprite,
+            worldPosition: .zero,
+            transform: .identity,
+            cameraAzimuth: 0,
+            terrainHeight: nil
+        )
+        #expect(abs(baseline[0].position.x - 1.0) < 0.001)
+        #expect(abs(baseline[0].position.z - 0.0) < 0.001)
+
+        // Rotating cameraAzimuth by +90 deg rotates (1, 0) -> (0, 1)
+        let rotated = renderer.makeGroundVertices(
+            for: sprite,
+            worldPosition: .zero,
+            transform: .identity,
+            cameraAzimuth: .pi * 0.5,
+            terrainHeight: nil
+        )
+        #expect(abs(rotated[0].position.x - 0.0) < 0.001)
+        #expect(abs(rotated[0].position.z - 1.0) < 0.001)
+
+        // Compensating transform.angle by -90 deg cancels cameraAzimuth (matching followCamera behavior)
+        let compensated = renderer.makeGroundVertices(
+            for: sprite,
+            worldPosition: .zero,
+            transform: STREffectTransform(angle: -90),
+            cameraAzimuth: .pi * 0.5,
+            terrainHeight: nil
+        )
+        #expect(abs(compensated[0].position.x - 1.0) < 0.001)
+        #expect(abs(compensated[0].position.z - 0.0) < 0.001)
+    }
 }

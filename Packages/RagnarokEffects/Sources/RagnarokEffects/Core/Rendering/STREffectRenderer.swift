@@ -270,6 +270,7 @@ public final class STREffectRenderer {
                     for: sprite,
                     worldPosition: worldPosition,
                     transform: transform,
+                    cameraAzimuth: camera.azimuth,
                     terrainHeight: terrainHeight
                 )
             }
@@ -331,6 +332,7 @@ public final class STREffectRenderer {
         for sprite: STREffectAnimation.Sprite,
         worldPosition: SIMD3<Float>,
         transform: STREffectTransform,
+        cameraAzimuth: Float = 0,
         terrainHeight: ((_ worldX: Float, _ worldZ: Float) -> Float)?
     ) -> [STREffectVertex] {
         let rawCorners = clipCorners(for: sprite)
@@ -339,7 +341,7 @@ public final class STREffectRenderer {
         let cosSprite = cosf(spriteAngle)
         let sinSprite = sinf(spriteAngle)
 
-        let worldYaw = radians(transform.angle)
+        let worldYaw = cameraAzimuth + radians(transform.angle)
         let cosYaw = cosf(worldYaw)
         let sinYaw = sinf(worldYaw)
 
