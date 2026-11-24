@@ -127,7 +127,7 @@ public struct STREffectPlaybackState: Sendable {
                     currentKey[layerIndex] = activeIndex
                 }
                 key = layer.keyframes[activeIndex]
-            } else if keyCount == 1 {
+            } else if activeIndex >= keyCount - 1 {
                 currentKey[layerIndex] = -1
                 currentLayer += 1
             }

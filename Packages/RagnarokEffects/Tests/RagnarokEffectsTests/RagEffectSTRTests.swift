@@ -219,6 +219,38 @@ struct RagEffectSTRTests {
         #expect(pingPongPlaybackState.makeFrame(for: pingPongSTR).sprites[0].textureName == "f1.bmp")
     }
 
+    @Test("STREffectPlaybackState completes when a layer ends with same-frame base and delta keyframes")
+    func playbackStateCompletesOnTrailingSameFrameKeyframes() throws {
+        let str = try Self.makeSTR(layers: [
+            (
+                textures: ["tex0.bmp"],
+                keyframes: [
+                    SyntheticKeyframe(frameIndex: 0, type: 0, position: [100, 200], textureIndex: 0),
+                    SyntheticKeyframe(frameIndex: 0, type: 1, position: [5, -2], rawColor: [0, 0, 0, 0]),
+                ]
+            ),
+        ])
+
+        var playbackState = STREffectPlaybackState(loopLimit: 0)
+
+        // Frame 0: applies type 0 base keyframe and advances cursor to the trailing same-frame type 1 keyframe
+        #expect(playbackState.step(str: str) == true)
+        var frame = playbackState.makeFrame(for: str)
+        #expect(frame.sprites.count == 1)
+        #expect(frame.sprites[0].position == SIMD2<Float>(100, 200))
+
+        // Frame 1: applies the trailing type 1 keyframe and marks the layer complete
+        #expect(playbackState.step(str: str) == true)
+        frame = playbackState.makeFrame(for: str)
+        #expect(frame.sprites.count == 1)
+        #expect(frame.sprites[0].position == SIMD2<Float>(105, 198))
+        #expect(playbackState.currentLayer == playbackState.endLayer)
+
+        // Frame 2: playback finishes instead of looping forever
+        #expect(playbackState.step(str: str) == false)
+        #expect(playbackState.makeFrame(for: str).sprites.isEmpty)
+    }
+
     @Test("RagSTREffectDefinition covers all 199 pure-STR entries with expected overrides")
     func definitionCoverageAndResolution() {
         #expect(RagSTREffectDefinition.definitions.count == 199)
