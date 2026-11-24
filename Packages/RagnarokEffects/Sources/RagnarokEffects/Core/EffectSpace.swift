@@ -126,7 +126,7 @@ public enum EffectSpace: Sendable {
         for index in 0...360 {
             let value = cosf(radTable[index])
             table[index] = value
-            table[index + 361] = -value
+            table[index + 361] = value
         }
         return table
     }()
@@ -143,7 +143,7 @@ public enum EffectSpace: Sendable {
     public static func radian(degrees: Int) -> Float {
         let wrapped = wrapClientDegrees(degrees)
         if wrapped < 0 {
-            return radTable[361 + wrapped]
+            return radTable[361 - wrapped]
         }
         return radTable[wrapped]
     }
@@ -152,7 +152,7 @@ public enum EffectSpace: Sendable {
     public static func sine(degrees: Int) -> Float {
         let wrapped = wrapClientDegrees(degrees)
         if wrapped < 0 {
-            return sinTable[361 + wrapped]
+            return sinTable[361 - wrapped]
         }
         return sinTable[wrapped]
     }
@@ -161,7 +161,7 @@ public enum EffectSpace: Sendable {
     public static func cosine(degrees: Int) -> Float {
         let wrapped = wrapClientDegrees(degrees)
         if wrapped < 0 {
-            return cosTable[361 + wrapped]
+            return cosTable[361 - wrapped]
         }
         return cosTable[wrapped]
     }

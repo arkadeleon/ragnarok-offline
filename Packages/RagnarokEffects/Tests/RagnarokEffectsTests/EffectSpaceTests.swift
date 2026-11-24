@@ -65,11 +65,11 @@ struct EffectSpaceTests {
         #expect(EffectSpace.sinTable.count == 722)
         #expect(EffectSpace.cosTable.count == 722)
 
-        // Second half (361...721) is exact negation of first half (0...360)
+        // Second half (361...721) stores negative angles (-0...-360)
         for index in [0, 30, 90, 180, 270, 360] {
             #expect(EffectSpace.radTable[index + 361] == -EffectSpace.radTable[index])
             #expect(EffectSpace.sinTable[index + 361] == -EffectSpace.sinTable[index])
-            #expect(EffectSpace.cosTable[index + 361] == -EffectSpace.cosTable[index])
+            #expect(EffectSpace.cosTable[index + 361] == EffectSpace.cosTable[index])
         }
 
         // Standard positive degrees
@@ -85,11 +85,15 @@ struct EffectSpaceTests {
         #expect(EffectSpace.cosine(degrees: 720) == EffectSpace.cosine(degrees: 0))
         #expect(EffectSpace.radian(degrees: -450) == EffectSpace.radian(degrees: -90))
 
-        // Exact ClientAngles.cpp negative lookup rule: index = 361 + degrees
-        #expect(EffectSpace.radian(degrees: -90) == EffectSpace.radTable[271])
-        #expect(EffectSpace.sine(degrees: -90) == EffectSpace.sinTable[271])
-        #expect(EffectSpace.cosine(degrees: -90) == EffectSpace.cosTable[271])
-        #expect(EffectSpace.sine(degrees: -360) == EffectSpace.sinTable[1])
+        // Negative degrees lookup: index = 361 - degrees
+        #expect(EffectSpace.radian(degrees: -90) == EffectSpace.radTable[361 + 90])
+        #expect(approxEqual(EffectSpace.radian(degrees: -90), -Float.pi * 0.5, tolerance: 1e-4))
+        #expect(EffectSpace.sine(degrees: -90) == EffectSpace.sinTable[361 + 90])
+        #expect(approxEqual(EffectSpace.sine(degrees: -30), -0.5, tolerance: 1e-4))
+        #expect(EffectSpace.cosine(degrees: -90) == EffectSpace.cosTable[361 + 90])
+        #expect(approxEqual(EffectSpace.cosine(degrees: -60), 0.5, tolerance: 1e-4))
+        #expect(EffectSpace.sine(degrees: -360) == EffectSpace.sinTable[361 + 360])
+        #expect(approxEqual(EffectSpace.sine(degrees: -360), 0.0, tolerance: 1e-4))
     }
 
     @Test("Client X -> Y -> Z Euler rotation matches AffineMatrix.cpp row-vector convention")
