@@ -267,7 +267,6 @@ public final class STREffectRenderer {
                     for: sprite,
                     worldPosition: worldPosition,
                     transform: transform,
-                    cameraAzimuth: camera.azimuth,
                     terrainHeight: terrainHeight
                 )
             }
@@ -329,7 +328,6 @@ public final class STREffectRenderer {
         for sprite: STREffectAnimation.Sprite,
         worldPosition: SIMD3<Float>,
         transform: STREffectTransform,
-        cameraAzimuth: Float,
         terrainHeight: ((_ worldX: Float, _ worldZ: Float) -> Float)?
     ) -> [STREffectVertex] {
         let rawCorners = clipCorners(for: sprite)
@@ -338,15 +336,18 @@ public final class STREffectRenderer {
         let cosSprite = cosf(spriteAngle)
         let sinSprite = sinf(spriteAngle)
 
-        let worldYaw = cameraAzimuth + radians(transform.angle)
+        let worldYaw = radians(transform.angle)
         let cosYaw = cosf(worldYaw)
         let sinYaw = sinf(worldYaw)
 
         let scaleX = transform.flipX ? -transform.scale : transform.scale
         let scaleY = transform.flipY ? -transform.scale : transform.scale
         let centerOffset = sprite.position - SIMD2<Float>(320, 240)
+        let heightOffset = Self.groundHeightOffset + transform.lift * Self.pixelRatio
+        let centerY = (terrainHeight?(worldPosition.x, worldPosition.z) ?? worldPosition.y) + heightOffset
+        let minGroundY = centerY - Self.groundCliffClampDelta
+        let maxGroundY = centerY + Self.groundCliffClampDelta
 
-        var previousHeight: Float?
         return rawCorners.map { corner, uv in
             let rx = corner.x * cosSprite - corner.y * sinSprite
             let ry = corner.x * sinSprite + corner.y * cosSprite
@@ -357,17 +358,8 @@ public final class STREffectRenderer {
             let worldX = worldPosition.x + localX * cosYaw - localZ * sinYaw
             let worldZ = worldPosition.z + localX * sinYaw + localZ * cosYaw
 
-            var worldY: Float
-            if let terrainHeight {
-                worldY = terrainHeight(worldX, worldZ) + Self.groundHeightOffset + transform.lift * Self.pixelRatio
-            } else {
-                worldY = worldPosition.y + Self.groundHeightOffset + transform.lift * Self.pixelRatio
-            }
-
-            if let prev = previousHeight, prev - worldY > Self.groundCliffClampDelta {
-                worldY = prev
-            }
-            previousHeight = worldY
+            let rawWorldY = (terrainHeight?(worldX, worldZ) ?? worldPosition.y) + heightOffset
+            let worldY = min(max(rawWorldY, minGroundY), maxGroundY)
 
             return STREffectVertex(position: [worldX, worldY, worldZ], textureCoordinate: uv)
         }
@@ -469,8 +461,10 @@ public final class STREffectRenderer {
         case 9:  .destinationColor
         case 10: .oneMinusDestinationColor
         case 11: .sourceAlphaSaturated
+        case 12: .sourceAlpha
+        case 13: .oneMinusSourceAlpha
         case 14: .blendColor
-        case 15: .oneMinusBlendAlpha
+        case 15: .oneMinusBlendColor
         default: .sourceAlpha
         }
     }

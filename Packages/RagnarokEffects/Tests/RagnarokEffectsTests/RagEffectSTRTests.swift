@@ -361,7 +361,6 @@ struct RagEffectSTRTests {
             for: sprite,
             worldPosition: .zero,
             transform: .identity,
-            cameraAzimuth: 0,
             terrainHeight: nil
         )
         #expect(groundVertices.map(\.textureCoordinate) == expectedUVs)
@@ -628,5 +627,46 @@ struct RagEffectSTRTests {
             mipmapLevel: 0
         )
         #expect(bgra[0] > 200 && bgra[1] > 200 && bgra[2] > 200, "Expected centered screen-mode quad at (320, 240) to hit viewport center, got BGRA=\(bgra)")
+    }
+
+    @Test("STREffectRenderer ground vertices clamp cliffs symmetrically relative to center height")
+    func strEffectRendererGroundCliffClamping() throws {
+        guard let device = MTLCreateSystemDefaultDevice() else {
+            return
+        }
+
+        let renderer = try STREffectRenderer(device: device, configuration: .default)
+        let sprite = STREffectAnimation.Sprite(
+            uv: [0, 0, 1, 1, 0, 0, 0, 0],
+            xy: [-35, 35, 35, -35, -35, -35, 35, 35],
+            textureName: "ground.bmp",
+            position: [320, 240],
+            angle: 0,
+            color: [1, 1, 1, 1],
+            sourceAlpha: 5,
+            destinationAlpha: 6,
+            multiTexturePreset: 0
+        )
+
+        let groundVertices = renderer.makeGroundVertices(
+            for: sprite,
+            worldPosition: .zero,
+            transform: .identity,
+            terrainHeight: { worldX, worldZ in
+                if worldX < 0 && worldZ < 0 {
+                    return -5.0
+                }
+                if worldX > 0 && worldZ > 0 {
+                    return 5.0
+                }
+                return 0.0
+            }
+        )
+
+        // Center height is 0.0 + 0.08 = 0.08; cliff clamp is +/- 1.0 -> [-0.92, 1.08].
+        #expect(abs(groundVertices[0].position.y - (-0.92)) < 0.001)
+        #expect(abs(groundVertices[1].position.y - 0.08) < 0.001)
+        #expect(abs(groundVertices[2].position.y - 0.08) < 0.001)
+        #expect(abs(groundVertices[3].position.y - 1.08) < 0.001)
     }
 }

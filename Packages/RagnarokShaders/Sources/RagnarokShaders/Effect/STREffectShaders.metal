@@ -45,8 +45,8 @@ strEffectVertexShader(const device STREffectVertex *vertices [[buffer(0)]],
     if (uniforms.renderMode == 1) {
         // Ground mode: vertices are already placed in world space with terrain heights.
         float4 viewPosition = uniforms.viewMatrix * uniforms.modelMatrix * float4(in.position, 1.0);
+        viewPosition.z += uniforms.depthBias;
         float4 position = uniforms.projectionMatrix * viewPosition;
-        position.z -= uniforms.depthBias;
         out.position = position;
         out.fogDepth = -viewPosition.z;
         return out;
@@ -55,7 +55,12 @@ strEffectVertexShader(const device STREffectVertex *vertices [[buffer(0)]],
     if (uniforms.renderMode == 2) {
         // Screen mode: anchor to projected world position in NDC and apply 2D/3D screen transform.
         float4 clipAnchor = uniforms.projectionMatrix * uniforms.viewMatrix * uniforms.modelMatrix * float4(uniforms.spritePosition, 1.0);
-        float2 ndcAnchor = abs(clipAnchor.w) > 0.0001 ? (clipAnchor.xy / clipAnchor.w) : float2(0.0, 0.0);
+        if (clipAnchor.w <= 0.0001) {
+            out.position = float4(2.0, 2.0, 2.0, 1.0);
+            out.fogDepth = 0.0;
+            return out;
+        }
+        float2 ndcAnchor = clipAnchor.xy / clipAnchor.w;
 
         float4 local = uniforms.spriteAngle * float4(in.position.x, -in.position.y, 0.0, 1.0);
         float2 offsetPixels = float2(local.x + uniforms.spriteOffset.x, local.y - uniforms.spriteOffset.y);
@@ -69,11 +74,11 @@ strEffectVertexShader(const device STREffectVertex *vertices [[buffer(0)]],
     // Billboard mode (default): spherical billboard facing the camera.
     float4 position = uniforms.spriteAngle * float4(in.position.x * pixelRatio, -in.position.y * pixelRatio, 0.0, 1.0);
     position.x += uniforms.spriteOffset.x * pixelRatio;
-    position.y -= uniforms.spriteOffset.y * pixelRatio + 0.5;
+    position.y -= uniforms.spriteOffset.y * pixelRatio;
 
     float4 viewPosition = project(uniforms.viewMatrix * uniforms.modelMatrix, uniforms.spritePosition) * position;
+    viewPosition.z += uniforms.depthBias;
     position = uniforms.projectionMatrix * viewPosition;
-    position.z -= uniforms.depthBias;
 
     out.position = position;
     out.fogDepth = -viewPosition.z;
@@ -87,7 +92,7 @@ strEffectFragmentShader(RasterizerData in [[stage_in]],
 {
     constexpr sampler textureSampler(mag_filter::linear, min_filter::linear, address::repeat);
     float4 color = colorTexture.sample(textureSampler, in.textureCoordinate);
-    if (color.r < 0.1 && color.g < 0.1 && color.b < 0.1) {
+    if (color.a <= 0.001) {
         discard_fragment();
     }
 
