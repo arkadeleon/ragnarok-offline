@@ -85,7 +85,7 @@ strEffectFragmentShader(RasterizerData in [[stage_in]],
                         constant STREffectFragmentUniforms &uniforms [[buffer(0)]],
                         texture2d<float> colorTexture [[texture(0)]])
 {
-    constexpr sampler textureSampler(mag_filter::linear, min_filter::linear);
+    constexpr sampler textureSampler(mag_filter::linear, min_filter::linear, address::repeat);
     float4 color = colorTexture.sample(textureSampler, in.textureCoordinate);
     if (color.r < 0.1 && color.g < 0.1 && color.b < 0.1) {
         discard_fragment();

@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import Metal
 import RagnarokCore
 import RagnarokFileFormats
+import RagnarokRendering
 import simd
 import Testing
 @testable import RagnarokEffects
@@ -50,7 +52,7 @@ struct RagEffectSTRTests {
         var frameIndex: Int32
         var type: Int32
         var position: SIMD2<Float> = [320, 240]
-        var uv: SIMD8<Float> = [0, 0, 1, 0, 1, 1, 0, 1]
+        var uv: SIMD8<Float> = [0, 0, 1, 1, 0, 0, 1, 1]
         var xy: SIMD8<Float> = [-10, 10, 10, -10, -10, -10, 10, 10]
         var textureIndex: Float = 0
         var animationType: Int32 = 0
@@ -323,5 +325,200 @@ struct RagEffectSTRTests {
         manager.stepOneTick(world: world)
         let suicide = manager.activeEffects.compactMap { $0 as? RagSTREffect }.first { $0.effectID == .ef_suicide }
         #expect(suicide?.worldPosition == SIMD3<Float>(8, 0, -4))
+    }
+
+    @Test("STREffectRenderer preserves keyframe UV sub-regions and scrolling offsets across all three render modes")
+    func rendererAppliesKeyframeUVAcrossAllModes() throws {
+        guard let device = MTLCreateSystemDefaultDevice(),
+              let commandQueue = device.makeCommandQueue() else {
+            return
+        }
+
+        let renderer = try STREffectRenderer(device: device, configuration: .default)
+        let sprite = STREffectAnimation.Sprite(
+            uv: [0.5, 0.0, 0.5, 1.0, 0.0, 0.0, 0.0, 0.0],
+            xy: [-180, 180, 180, -180, -180, -180, 180, 180],
+            textureName: "split.bmp",
+            position: [320, 240],
+            angle: 0,
+            color: [1, 1, 1, 1],
+            sourceAlpha: 5,
+            destinationAlpha: 6,
+            multiTexturePreset: 0
+        )
+
+        let expectedUVs: [SIMD2<Float>] = [
+            [0.5, 0.0],
+            [1.0, 0.0],
+            [0.5, 1.0],
+            [1.0, 1.0],
+        ]
+
+        let quadVertices = renderer.makeQuadVertices(for: sprite)
+        #expect(quadVertices.map(\.textureCoordinate) == expectedUVs)
+
+        let groundVertices = renderer.makeGroundVertices(
+            for: sprite,
+            worldPosition: .zero,
+            transform: .identity,
+            cameraAzimuth: 0,
+            terrainHeight: nil
+        )
+        #expect(groundVertices.map(\.textureCoordinate) == expectedUVs)
+
+        // Verify scrolled UV offset (u + us > 1.0) is emitted verbatim
+        let scrolledSprite = STREffectAnimation.Sprite(
+            uv: [0.75, 0.25, 0.5, 0.5, 0.0, 0.0, 0.0, 0.0],
+            xy: sprite.xy,
+            textureName: "split.bmp",
+            position: sprite.position,
+            angle: 0,
+            color: [1, 1, 1, 1],
+            sourceAlpha: 5,
+            destinationAlpha: 6,
+            multiTexturePreset: 0
+        )
+        let expectedScrolledUVs: [SIMD2<Float>] = [
+            [0.75, 0.25],
+            [1.25, 0.25],
+            [0.75, 0.75],
+            [1.25, 0.75],
+        ]
+        #expect(renderer.makeQuadVertices(for: scrolledSprite).map(\.textureCoordinate) == expectedScrolledUVs)
+
+        // Build a 4x4 texture: left half (x = 0, 1) solid red, right half (x = 2, 3) solid green
+        let sourceDescriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: .rgba8Unorm,
+            width: 4,
+            height: 4,
+            mipmapped: false
+        )
+        sourceDescriptor.usage = [.shaderRead]
+        let splitTexture = try #require(device.makeTexture(descriptor: sourceDescriptor))
+        var pixels: [UInt8] = []
+        for _ in 0..<4 {
+            for x in 0..<4 {
+                if x < 2 {
+                    pixels.append(contentsOf: [255, 0, 0, 255]) // left half: red
+                } else {
+                    pixels.append(contentsOf: [0, 255, 0, 255]) // right half: green
+                }
+            }
+        }
+        splitTexture.replace(
+            region: MTLRegionMake2D(0, 0, 4, 4),
+            mipmapLevel: 0,
+            withBytes: pixels,
+            bytesPerRow: 4 * 4
+        )
+
+        let targetSize = 32
+        let colorDescriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: .bgra8Unorm,
+            width: targetSize,
+            height: targetSize,
+            mipmapped: false
+        )
+        colorDescriptor.usage = [.renderTarget]
+        colorDescriptor.storageMode = .shared
+        let colorTarget = try #require(device.makeTexture(descriptor: colorDescriptor))
+
+        let depthDescriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: .depth32Float,
+            width: targetSize,
+            height: targetSize,
+            mipmapped: false
+        )
+        depthDescriptor.usage = [.renderTarget]
+        depthDescriptor.storageMode = .private
+        let depthTarget = try #require(device.makeTexture(descriptor: depthDescriptor))
+
+        let ortho = simd_float4x4(
+            columns: (
+                SIMD4<Float>(0.2, 0, 0, 0),
+                SIMD4<Float>(0, 0.2, 0, 0),
+                SIMD4<Float>(0, 0, -0.05, 0),
+                SIMD4<Float>(0, 0, 0, 1)
+            )
+        )
+        let billboardView = matrix_translate(matrix_identity_float4x4, [0, 0, -10])
+        let groundView = simd_float4x4(
+            columns: (
+                SIMD4<Float>(1, 0, 0, 0),
+                SIMD4<Float>(0, 0, 1, 0),
+                SIMD4<Float>(0, -1, 0, 0),
+                SIMD4<Float>(0, 0, -10, 1)
+            )
+        )
+        let billboardCamera = RenderCamera(
+            viewMatrix: billboardView,
+            projectionMatrix: ortho,
+            position: [0, 0, 10]
+        )
+        let groundCamera = RenderCamera(
+            viewMatrix: groundView,
+            projectionMatrix: ortho,
+            position: [0, 10, 0]
+        )
+        let screenCamera = RenderCamera(
+            viewMatrix: matrix_identity_float4x4,
+            projectionMatrix: matrix_identity_float4x4,
+            position: .zero
+        )
+
+        let cases: [(STREffectRenderMode, RenderCamera)] = [
+            (.billboard, billboardCamera),
+            (.ground, groundCamera),
+            (.screen, screenCamera),
+        ]
+
+        let frame = STREffectAnimation.Frame(sprites: [sprite])
+        let textures: [String : any MTLTexture] = ["split.bmp": splitTexture]
+        let fog = Fog()
+
+        for (mode, camera) in cases {
+            let passDescriptor = MTLRenderPassDescriptor()
+            passDescriptor.colorAttachments[0].texture = colorTarget
+            passDescriptor.colorAttachments[0].loadAction = .clear
+            passDescriptor.colorAttachments[0].storeAction = .store
+            passDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
+            passDescriptor.depthAttachment.texture = depthTarget
+            passDescriptor.depthAttachment.loadAction = .clear
+            passDescriptor.depthAttachment.storeAction = .dontCare
+            passDescriptor.depthAttachment.clearDepth = 1.0
+
+            let commandBuffer = try #require(commandQueue.makeCommandBuffer())
+            let encoder = try #require(commandBuffer.makeRenderCommandEncoder(descriptor: passDescriptor))
+            renderer.render(
+                frame: frame,
+                textures: textures,
+                mode: mode,
+                worldPosition: .zero,
+                transform: .identity,
+                fog: fog,
+                modelMatrix: matrix_identity_float4x4,
+                terrainHeight: nil,
+                camera: camera,
+                renderCommandEncoder: encoder
+            )
+            encoder.endEncoding()
+            commandBuffer.commit()
+            commandBuffer.waitUntilCompleted()
+
+            // Read back center pixel (BGRA8Unorm)
+            var bgra: [UInt8] = [0, 0, 0, 0]
+            colorTarget.getBytes(
+                &bgra,
+                bytesPerRow: targetSize * 4,
+                from: MTLRegionMake2D(targetSize / 2, targetSize / 2, 1, 1),
+                mipmapLevel: 0
+            )
+            let blue = bgra[0]
+            let green = bgra[1]
+            let red = bgra[2]
+            #expect(green > 200, "Expected green right-half sample in mode \(mode), got BGRA=\(bgra)")
+            #expect(red < 20, "Expected no red left-half sample in mode \(mode), got BGRA=\(bgra)")
+            #expect(blue < 20, "Expected no blue channel in mode \(mode), got BGRA=\(bgra)")
+        }
     }
 }

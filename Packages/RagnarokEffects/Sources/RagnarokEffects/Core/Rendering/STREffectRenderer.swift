@@ -326,20 +326,14 @@ public final class STREffectRenderer {
 
     // MARK: - Geometry & Pipeline Helpers
 
-    private func makeGroundVertices(
+    func makeGroundVertices(
         for sprite: STREffectAnimation.Sprite,
         worldPosition: SIMD3<Float>,
         transform: STREffectTransform,
         cameraAzimuth: Float,
         terrainHeight: ((_ worldX: Float, _ worldZ: Float) -> Float)?
     ) -> [STREffectVertex] {
-        let xy = sprite.xy
-        let rawCorners: [(SIMD2<Float>, SIMD2<Float>)] = [
-            ([xy[0], xy[4]], [0, 0]),
-            ([xy[1], xy[5]], [1, 0]),
-            ([xy[3], xy[7]], [0, 1]),
-            ([xy[2], xy[6]], [1, 1]),
-        ]
+        let rawCorners = clipCorners(for: sprite)
 
         let spriteAngle = radians(-sprite.angle)
         let cosSprite = cosf(spriteAngle)
@@ -404,13 +398,23 @@ public final class STREffectRenderer {
         return matrix
     }
 
-    private func makeQuadVertices(for sprite: STREffectAnimation.Sprite) -> [STREffectVertex] {
+    func makeQuadVertices(for sprite: STREffectAnimation.Sprite) -> [STREffectVertex] {
+        clipCorners(for: sprite).map { corner, uv in
+            STREffectVertex(position: [corner.x, corner.y, 0], textureCoordinate: uv)
+        }
+    }
+
+    private func clipCorners(for sprite: STREffectAnimation.Sprite) -> [(SIMD2<Float>, SIMD2<Float>)] {
         let xy = sprite.xy
+        let u0 = sprite.uv[0]
+        let v0 = sprite.uv[1]
+        let u1 = u0 + sprite.uv[2]
+        let v1 = v0 + sprite.uv[3]
         return [
-            STREffectVertex(position: [xy[0], xy[4], 0], textureCoordinate: [0, 0]),
-            STREffectVertex(position: [xy[1], xy[5], 0], textureCoordinate: [1, 0]),
-            STREffectVertex(position: [xy[3], xy[7], 0], textureCoordinate: [0, 1]),
-            STREffectVertex(position: [xy[2], xy[6], 0], textureCoordinate: [1, 1]),
+            ([xy[0], xy[4]], [u0, v0]),
+            ([xy[1], xy[5]], [u1, v0]),
+            ([xy[3], xy[7]], [u0, v1]),
+            ([xy[2], xy[6]], [u1, v1]),
         ]
     }
 
