@@ -35,7 +35,7 @@ final class GameAudioCache {
                 return
             }
 
-            let wavPath = ResourcePath(components: ["data", "wav", soundName])
+            let wavPath = ResourcePath(components: ["data", "wav"]).appending(subpath: soundName)
             guard let wavData = try? await resourceManager.contentsOfResource(at: wavPath) else {
                 return
             }

@@ -854,7 +854,8 @@ extension MapScene: EffectWorldContext {
     }
 
     public func playSound(named name: String, atWorldPosition position: SIMD3<Float>?, delay: TimeInterval) {
-        audioPlayer.playSoundEffect(named: name, afterDelay: delay)
+        let source = position.map { GameAudio.Source(position: $0, range: .infinity) }
+        audioPlayer.playSoundEffect(named: name, from: source, afterDelay: delay)
     }
 
     public func shakeCamera(amplitude: Float, duration: TimeInterval, frequency: Float) {
