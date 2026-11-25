@@ -86,6 +86,26 @@ public final class EffectPrimitive {
                 }
             case .pp_3dsphere:
                 prim3DSphere()
+            case .pp_3dcasting:
+                prim3DCasting()
+            case .pp_3dcasting_2:
+                prim3DCasting2()
+            case .pp_3dcasting_3:
+                prim3DCasting3()
+            case .pp_3dcasting_4:
+                prim3DCasting4()
+            case .pp_3dcasting_5:
+                prim3DCasting5()
+            case .pp_gi_3:
+                primGI3()
+            case .pp_grandcross2:
+                primGrandCross2()
+            case .pp_guard:
+                primGuard(context: context)
+            case .pp_halfsphere:
+                primHalfSphere(context: context)
+            case .pp_hermode:
+                primHermode()
             case EffectPrimitiveID(rawValue: 60), .pp_heal_low:
                 primPulsingColumns(context: context)
             case .pp_particle_up:
@@ -122,8 +142,18 @@ public final class EffectPrimitive {
             renderArcBand(into: &collector, assets: assets)
         case .pp_3dsphere:
             renderSphere(into: &collector, assets: assets)
-        case EffectPrimitiveID(rawValue: 60):
+        case .pp_halfsphere:
+            renderHalfSphere(into: &collector, assets: assets)
+        case .pp_guard:
+            renderSphereCage(into: &collector, assets: assets)
+        case .pp_hermode:
+            renderHermode(into: &collector, assets: assets)
+        case .pp_3dcasting, .pp_3dcasting_2, .pp_3dcasting_3, .pp_3dcasting_4, .pp_3dcasting_5, EffectPrimitiveID(rawValue: 60):
             render3DCasting(into: &collector, assets: assets)
+        case .pp_gi_3:
+            render3DCasting2(into: &collector, assets: assets)
+        case .pp_grandcross2:
+            renderGrandCross2(into: &collector, assets: assets)
         case .pp_particle_up:
             renderFieldPanel(into: &collector, assets: assets)
         default:

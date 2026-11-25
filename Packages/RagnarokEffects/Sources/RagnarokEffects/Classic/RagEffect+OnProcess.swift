@@ -11,6 +11,8 @@ import simd
 extension RagEffect {
     public nonisolated static let supportedEffectIDs: [EffectID] = [
         .ef_entry,
+        .ef_grandcross2,
+        .ef_guard,
         .ef_heal,
         .ef_heal3,
         .ef_waterball3,
@@ -36,6 +38,11 @@ extension RagEffect {
         switch effectID {
         case .ef_entry:
             entry(context: context)
+        case .ef_grandcross2:
+            grandCrossRings(angle: 0, kind: 1, context: context)
+            grandCross2(flag: 1, context: context)
+        case .ef_guard:
+            kyrieGuard(texturePath: "effect\\guardK.tga", kind: 0, context: context)
         case .ef_heal:
             healBurst(texturePath: "effect\\alpha_down.tga", flag: 0, context: context)
         case .ef_heal3:
@@ -46,6 +53,114 @@ extension RagEffect {
             return false
         }
         return true
+    }
+
+    private func kyrieGuard(texturePath: String, kind: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        context.world.playSound(
+            named: "effect\\kyrie_guard.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+
+        let secondaryTexture = "effect\\guardK2.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+        _ = context.assets?.texture(atPath: secondaryTexture)
+
+        let primitive = launchPrimitive(.pp_guard)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.totalTexture = 2
+        primitive.state.texturePaths = [texturePath, secondaryTexture]
+        primitive.state.size = 11.0
+        primitive.state.slots[0].life = 1
+        primitive.state.slots[0].process = 0
+        primitive.state.slots[0].maxHeight = 7.8
+        primitive.state.slots[0].alphaB = 0
+        primitive.state.slots[0].distance = 1.0
+        primitive.state.slots[0].height[0] = 0
+        primitive.state.slots[1].life = 0
+        primitive.state.slots[2].life = 0
+        primitive.state.slots[3].life = 0
+
+        if kind == 2 || kind == 3 || kind == 4 || kind == 5 {
+            primitive.state.slots[0].flag1[0] = kind
+        } else {
+            primitive.state.slots[0].flag1[0] = 0
+        }
+    }
+
+    private func grandCrossRings(angle: Int16, kind: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        context.world.playSound(
+            named: "effect\\cru_grand cross.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+
+        let texturePath = kind == 0 ? "effect\\ring_white.tga" : "effect\\ring_black.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_gi_3)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = kind == 0 ? 1.0 : 12.0
+
+        let configs: [(rotStart: Int16, offsetX: Int8, offsetZ: Int8)] = [
+            (180, 23, 23),
+            (90, 23, -23),
+            (0, -23, -23),
+            (270, -23, 23),
+        ]
+
+        for (index, config) in configs.enumerated() {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = 0
+            primitive.state.slots[index].fullDisplayAngle = 90
+            primitive.state.slots[index].maxHeight = 120.0
+            primitive.state.slots[index].alphaB = angle
+            primitive.state.slots[index].distance = 19.9
+            primitive.state.slots[index].riseAngle = 90
+            primitive.state.slots[index].flag1[4] = kind
+            primitive.state.slots[index].rotStart = config.rotStart
+            primitive.state.slots[index].flag1[0] = config.offsetX
+            primitive.state.slots[index].flag1[1] = config.offsetZ
+        }
+    }
+
+    private func grandCross2(flag: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let texturePath = flag == 0 ? "effect\\ring_yellow.tga" : "effect\\ring_black.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_grandcross2)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 1.0
+
+        for index in 0..<2 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = 0
+            primitive.state.slots[index].maxHeight = 60.0
+            primitive.state.slots[index].rotStart = Int16(index * 90)
+            primitive.state.slots[index].alphaB = 0
+            primitive.state.slots[index].height[0] = 24.0
+            primitive.state.slots[index].height[1] = 3.2
+            primitive.state.slots[index].height[2] = 0
+        }
+        primitive.state.slots[2].life = 0
+        primitive.state.slots[3].life = 0
     }
 
     private func entry(context: EffectTickContext) {

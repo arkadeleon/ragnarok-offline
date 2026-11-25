@@ -604,4 +604,139 @@ struct EffectPrimitiveTests {
         prim.prim3DCylinderHalf()
         #expect(approxEqual(prim.state.outerSize, 10.0))
     }
+
+    @Test("EF_GUARD drives a 3-layer 5x3 sphere cage with dual textures and post-tick-26 spread")
+    func guardVerticalSlice() {
+        #expect(EffectManager.hasBuiltInDefinition(for: .ef_guard))
+        #expect(EffectManager.builtInEffectIDs.contains(.ef_guard))
+
+        let world = MockWorldContext()
+        world.targets[1] = EffectTargetState(objectID: 1, worldPosition: .zero, facingAngle: 45)
+        let manager = EffectManager()
+
+        let spawnID = manager.spawn(EffectSpawnRequest(effectID: .ef_guard, worldPosition: .zero, targetObjectID: 1))
+        #expect(spawnID != nil)
+
+        // Tick 1: plays guard sound and spawns pp_guard with 2 textures.
+        manager.stepOneTick(world: world)
+        #expect(world.playedSounds == ["effect\\kyrie_guard.wav"])
+        let ragEffect = manager.activeEffects.first as? RagEffect
+        #expect(ragEffect?.primitives.count == 1)
+        let guardPrim = ragEffect?.primitives[0]
+        #expect(guardPrim?.id == .pp_guard)
+        #expect(guardPrim?.state.texturePaths == ["effect\\guardK.tga", "effect\\guardK2.tga"])
+        #expect(guardPrim?.state.slots[0].rotStart == 315)
+        #expect(guardPrim?.state.slots[0].alphaB == 20)
+
+        // 3 lat rows * 5 lon columns * 3 concentric layers = 45 quads = 270 vertices.
+        let payloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        let totalVertices = payloads.reduce(0) { $0 + $1.vertices.count }
+        #expect(totalVertices == 45 * 6)
+
+        // Advance past tick 26 so outer layer spreads (height[0] += 0.1) and fades out.
+        for _ in 0..<26 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(guardPrim?.state.slots[0].process == 27)
+        #expect(approxEqual(guardPrim?.state.slots[0].height[0] ?? 0, 0.1))
+        #expect(guardPrim?.state.slots[0].alphaB == 94)
+    }
+
+    @Test("EF_GRANDCROSS2 spawns corner casting rings (pp_gi_3) and cross pillars (pp_grandcross2)")
+    func grandCross2VerticalSlice() {
+        #expect(EffectManager.hasBuiltInDefinition(for: .ef_grandcross2))
+        #expect(EffectManager.builtInEffectIDs.contains(.ef_grandcross2))
+
+        let world = MockWorldContext()
+        let manager = EffectManager()
+
+        let spawnID = manager.spawn(EffectSpawnRequest(effectID: .ef_grandcross2, worldPosition: .zero))
+        #expect(spawnID != nil)
+
+        // Tick 1: plays sound, launches pp_gi_3 (4 slots) and pp_grandcross2 (2 slots).
+        manager.stepOneTick(world: world)
+        #expect(world.playedSounds == ["effect\\cru_grand cross.wav"])
+        let ragEffect = manager.activeEffects.first as? RagEffect
+        #expect(ragEffect?.primitives.count == 2)
+        #expect(ragEffect?.primitives[0].id == .pp_gi_3)
+        #expect(ragEffect?.primitives[1].id == .pp_grandcross2)
+
+        // pp_gi_3: 4 slots * 8 segments (90 / 10 = 9 steps, order 1..8) = 32 quads.
+        // pp_grandcross2: 2 slots * 6 faces (4 sides + 2 caps) = 12 quads.
+        // Total = 44 quads = 264 vertices.
+        let payloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        let totalVertices = payloads.reduce(0) { $0 + $1.vertices.count }
+        #expect(totalVertices == 44 * 6)
+
+        // Verify cross pillars expand width/length and fade out smoothly after tick 10.
+        for _ in 0..<9 {
+            manager.stepOneTick(world: world)
+        }
+        let crossPrim = ragEffect?.primitives[1]
+        #expect(crossPrim?.state.slots[0].process == 10)
+        #expect(crossPrim?.state.slots[0].alphaB == 80)
+        #expect(approxEqual(crossPrim?.state.slots[0].height[0] ?? 0, 24.05, tolerance: 1e-3))
+    }
+
+    @Test("Group B casting variants, pp_halfsphere, and pp_hermode update state and emit expected geometry")
+    func groupBCastingHalfSphereAndHermode() {
+        let world = MockWorldContext()
+        world.targets[1] = EffectTargetState(objectID: 1, worldPosition: .zero, facingAngle: 30)
+        let request = EffectSpawnRequest(effectID: .ef_guard, worldPosition: .zero, targetObjectID: 1)
+        let host = RagEffect(id: UUID(), request: request, duration: 80)
+        let context = EffectTickContext(
+            world: world,
+            assets: nil,
+            currentTick: 0,
+            usesMinimalEffects: false,
+            onSpawnChild: { _ in }
+        )
+
+        // pp_3dcasting_4 (inward shrinking ring) & pp_3dcasting_5 (outward expanding wave).
+        let cast4 = host.launchPrimitive(.pp_3dcasting_4)
+        cast4.state.slots[0].life = 1
+        cast4.state.slots[0].fullDisplayAngle = 360
+        cast4.state.slots[0].distance = 5.0
+        cast4.tick(context: context)
+        #expect(approxEqual(cast4.state.slots[0].distance, 4.95))
+        #expect(cast4.state.slots[0].alphaB == 1)
+        var castCollector = EffectPrimitiveBatchCollector(fog: Fog())
+        cast4.collectBatches(into: &castCollector, world: world, assets: nil)
+        #expect(castCollector.batches.reduce(0) { $0 + $1.vertices.count } == 20 * 6)
+
+        let cast5 = host.launchPrimitive(.pp_3dcasting_5)
+        cast5.state.slots[0].life = 1
+        cast5.state.slots[0].fullDisplayAngle = 360
+        cast5.state.slots[0].distance = 4.0
+        cast5.tick(context: context)
+        #expect(approxEqual(cast5.state.slots[0].distance, 4.1))
+        #expect(approxEqual(cast5.state.slots[0].maxHeight, 2.2))
+        #expect(cast5.state.slots[0].alphaB == 2)
+
+        // pp_halfsphere: 10 lat rings (0..<180 step 18) * 10 lon segments = 100 quads = 600 vertices.
+        let halfSphere = host.launchPrimitive(.pp_halfsphere)
+        halfSphere.state.slots[0].life = 1
+        halfSphere.state.slots[0].fullDisplayAngle = 360
+        halfSphere.state.slots[0].distance = 10.0
+        halfSphere.state.slots[0].maxHeight = 5.0
+        halfSphere.tick(context: context)
+        #expect(halfSphere.state.slots[0].rotStart == 210)
+        #expect(halfSphere.state.slots[0].alphaB == 5)
+        var halfCollector = EffectPrimitiveBatchCollector(fog: Fog())
+        halfSphere.collectBatches(into: &halfCollector, world: world, assets: nil)
+        #expect(halfCollector.batches.reduce(0) { $0 + $1.vertices.count } == 100 * 6)
+
+        // pp_hermode: rotating 6-face cube = 6 quads = 36 vertices.
+        let hermode = host.launchPrimitive(.pp_hermode)
+        hermode.state.slots[0].life = 1
+        hermode.state.slots[0].distance = 8.0
+        hermode.state.slots[0].flag1[0] = 100
+        hermode.tick(context: context)
+        #expect(hermode.state.slots[0].alphaB == 2)
+        #expect(hermode.state.slots[0].rotStart == 1)
+        #expect(hermode.state.slots[0].riseAngle == 1)
+        var hermodeCollector = EffectPrimitiveBatchCollector(fog: Fog())
+        hermode.collectBatches(into: &hermodeCollector, world: world, assets: nil)
+        #expect(hermodeCollector.batches.reduce(0) { $0 + $1.vertices.count } == 6 * 6)
+    }
 }
