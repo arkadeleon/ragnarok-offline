@@ -126,6 +126,8 @@ public final class EffectPrimitive {
                 primSlash1()
             case 86:
                 primFloorSquare86()
+            case 89:
+                primFanBeam()
             case .pp_rect_up2:
                 primFadingColumns()
             case 92:
@@ -154,12 +156,22 @@ public final class EffectPrimitive {
                 primRisingFan2(context: context)
             case 132:
                 primColorPanel()
+            case 133:
+                primAnimatedFlash(context: context)
+            case 134:
+                primBladeTrail(context: context)
+            case 135:
+                primTrailShift()
+            case 136:
+                primRandomSpin(context: context)
             case 137:
                 primHeightRamp()
             case 138:
                 primChookgi(context: context)
             case 140:
                 primFrameFade(context: context)
+            case 141:
+                primRiseFollow(context: context)
             case 142:
                 primWaterFall()
             case 143:
@@ -176,14 +188,28 @@ public final class EffectPrimitive {
                 primWaveHeights()
             case 150:
                 primFallingPetals2(context: context)
+            case 154:
+                primFlashFade(context: context)
             case 155:
                 primWanderingFlames(context: context)
+            case 156:
+                primHoverFollow(context: context)
             case 157:
                 primOrbitFade(context: context)
             case 158:
                 primGI4()
+            case 159:
+                primSpiralCollapse()
             case 160:
                 primGlowFollow(context: context)
+            case 162:
+                followMasterAndTickSlots()
+            case 163:
+                primTextureFrames()
+            case 164:
+                primFrameScroll()
+            case 165:
+                primScrollTexture()
             case 166:
                 primFramePhase()
             case 170:
@@ -252,6 +278,8 @@ public final class EffectPrimitive {
             renderSlash1(into: &collector, assets: assets)
         case 86:
             renderFloorSquare(into: &collector, assets: assets)
+        case 89:
+            renderFanBeam(into: &collector, assets: assets)
         case .pp_rect_up2:
             renderRectUp2(into: &collector, assets: assets)
         case 92:
@@ -276,12 +304,22 @@ public final class EffectPrimitive {
             renderRipple(into: &collector, assets: assets)
         case 132:
             renderColorPanel(into: &collector, assets: assets)
+        case 133:
+            renderSpiralBlades(into: &collector, assets: assets)
+        case 134:
+            renderBladeTrail(into: &collector, assets: assets)
+        case 135:
+            renderJitterSweeps(into: &collector, assets: assets)
+        case 136:
+            renderSpinSquares(into: &collector, assets: assets)
         case 137:
             renderArcWalls(into: &collector, assets: assets)
         case 138:
             renderTwinFacingSquares(into: &collector, assets: assets)
         case 140:
             renderTeiFacingSlots(into: &collector, assets: assets)
+        case 141:
+            renderTaperedQuad(into: &collector, assets: assets)
         case 142:
             renderStandingPanels(into: &collector, assets: assets)
         case 143:
@@ -298,14 +336,28 @@ public final class EffectPrimitive {
             renderGroundArcGlow(into: &collector, assets: assets, usesMinimalEffects: lastUsesMinimalEffects)
         case 150:
             renderHoverSquares(into: &collector, assets: assets)
+        case 154:
+            renderBladeFins(into: &collector, assets: assets)
         case 155:
             renderTwinGlowSquares(into: &collector, assets: assets)
+        case 156:
+            renderJitterQuads(into: &collector, assets: assets)
         case 157:
             renderGlowSquare(into: &collector, assets: assets)
         case 158:
             renderGroundArc(into: &collector, assets: assets)
+        case 159:
+            renderBladeQuads(into: &collector, assets: assets)
         case 160:
             renderPolygonFrames(into: &collector, assets: assets)
+        case 162:
+            renderFanSlice(into: &collector, assets: assets)
+        case 163:
+            renderFanWedge(into: &collector, assets: assets)
+        case 164:
+            renderFanTrail(into: &collector, assets: assets)
+        case 165:
+            renderCurvedFanTrail(into: &collector, assets: assets)
         case 166:
             renderFoldingRibbon(into: &collector, assets: assets)
         case 170:

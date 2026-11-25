@@ -33,8 +33,11 @@ extension RagEffect {
         .ef_hitline7,
         .ef_grandcross2,
         .ef_kaizel,
+        .ef_infraredscan,
         .ef_beginspell_n1,
         .ef_water_fade,
+        .ef_primecharge,
+        .ef_dq9_charge4,
         .ef_selfscroll,
         .ef_waterball3,
     ]
@@ -109,6 +112,16 @@ extension RagEffect {
                 jobLvUp50Pair(angle: 0, context: context)
                 jobLvUp50Pair(angle: 45, context: context)
             }
+        case .ef_infraredscan:
+            if stateCnt == 0 {
+                context.world.playSound(
+                    named: "effect\\INFRAREDSCAN.wav",
+                    atWorldPosition: EffectSpace.toWorldPosition(position),
+                    delay: 0
+                )
+            }
+            electricFan(fade: 0, context: context)
+            electricFan(fade: 1, context: context)
         case .ef_beginspell_n1:
             if stateCnt == 1 {
                 context.world.playSound(
@@ -125,6 +138,19 @@ extension RagEffect {
                 secondTexturePath: "effect\\W_Comp_24.tga",
                 context: context
             )
+        case .ef_primecharge:
+            if stateCnt == 10 {
+                context.world.playSound(
+                    named: "effect\\LG_EXEEDBREAK.wav",
+                    atWorldPosition: EffectSpace.toWorldPosition(position),
+                    delay: 0
+                )
+            }
+            for _ in 0..<40 {
+                texturedScatterSphere(texturePath: "effect\\alpha_center.tga", flag: 0, context: context)
+            }
+        case .ef_dq9_charge4:
+            texturedSpiralFade(texturePath: "effect\\shockwave_c.bmp", context: context)
         case .ef_selfscroll:
             texturedDoubleSpiral(texturePath: "effect\\shockwave_c.bmp", context: context)
         case .ef_waterball3:
@@ -1147,6 +1173,121 @@ extension RagEffect {
                 primitive.state.slots[index].height[2] = layer.phaseSpeed
                 primitive.state.slots[index].height[3] = layer.shadeFlag
             }
+        }
+    }
+
+    // MARK: - EF_INFRAREDSCAN (794)
+
+    /// Spawns primitive `135` sweeping electric jitter arcs for `EF_INFRAREDSCAN` (794).
+    private func electricFan(fade: Int16, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let texturePath = "effect\\elec1.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(135)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.totalTexture = 1
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 0
+
+        let facingDegrees = (targetObjectID ?? ownerObjectID)
+            .flatMap { context.world.targetState(for: $0)?.facingAngle } ?? 0
+        var initialAngle = Int16(Int(facingDegrees) - 90)
+        if initialAngle < 0 {
+            initialAngle += 360
+        }
+
+        for index in 0..<4 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = 0
+            primitive.state.slots[index].maxHeight = 0.1
+            primitive.state.slots[index].alphaB = index == 0 ? 250 : Int16(140 - index * 30)
+            primitive.state.slots[index].riseAngle = initialAngle
+            primitive.state.slots[index].distance = 20.0
+            primitive.state.slots[index].height[0] = 0
+            primitive.state.slots[index].vecTNow.x = Float(Int.random(in: 0..<11)) * 0.01
+            primitive.state.slots[index].vecBNow = SIMD3<Float>(position.x, position.y - 10.0, position.z)
+            primitive.state.slots[index].vecTNow.y = 20.0
+            for step in 1...20 {
+                primitive.state.slots[index].height[step] = 0
+                primitive.state.slots[index].flag1[step] = 0
+            }
+            primitive.state.slots[index].flag1[0] = 0
+            primitive.state.slots[index].alphaT = fade
+            primitive.state.slots[index].fullDisplayAngle = 0
+        }
+    }
+
+    // MARK: - EF_PRIMECHARGE (882)
+
+    /// Spawns primitive `159` inward-collapsing spiral blades for `EF_PRIMECHARGE` (882).
+    private func texturedScatterSphere(texturePath: String, flag: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(159)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+
+        for index in 0..<4 {
+            let riseAngle = Int16(Int.random(in: 0..<360))
+            let rotStart = Int16(Int.random(in: 0..<360))
+            let radius = EffectSpace.cosine(degrees: Int(riseAngle)) * 70.0
+            let z = EffectSpace.sine(degrees: Int(riseAngle)) * 70.0
+            let x = radius * EffectSpace.cosine(degrees: Int(rotStart))
+            let y = radius * EffectSpace.sine(degrees: Int(rotStart)) - 5.0
+
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].height[4] = 0
+            primitive.state.slots[index].process = -Int.random(in: 0..<101)
+            primitive.state.slots[index].distance = 4.0
+            primitive.state.slots[index].alphaB = 0
+            primitive.state.slots[index].riseAngle = riseAngle
+            primitive.state.slots[index].rotStart = rotStart
+            primitive.state.slots[index].height[0] = -5.0
+            primitive.state.slots[index].height[1] = 0.5
+            primitive.state.slots[index].flag1[0] = 0
+            primitive.state.slots[index].flag1[1] = 0
+            primitive.state.slots[index].flag1[2] = flag
+            primitive.state.slots[index].vecBNow = SIMD3<Float>(x, y, z)
+        }
+    }
+
+    // MARK: - EF_DQ9_CHARGE4 (898)
+
+    /// Spawns primitive `165` dual-layer curved fan trails for `EF_DQ9_CHARGE4` (898).
+    private func texturedSpiralFade(texturePath: String, context: EffectTickContext) {
+        guard stateCnt <= 2 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(165)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.totalTexture = 1
+        primitive.state.texturePaths = [texturePath]
+
+        for slot in 0..<4 {
+            primitive.state.slots[slot].life = 1
+            primitive.state.slots[slot].process = 0
+            primitive.state.slots[slot].distance = 0
+            primitive.state.slots[slot].height[10] = 0
+            primitive.state.slots[slot].maxHeight = 15.0
+            primitive.state.slots[slot].alphaB = 0
+            primitive.state.slots[slot].riseAngle = Int16((stateCnt * 4 + slot) * 30)
+            primitive.state.slots[slot].rotStart = 0
+            primitive.state.slots[slot].height[0] = -5.0
+            primitive.state.slots[slot].height[1] = 0
         }
     }
 }

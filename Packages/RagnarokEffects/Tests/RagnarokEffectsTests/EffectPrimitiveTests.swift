@@ -1379,4 +1379,165 @@ struct EffectPrimitiveTests {
         p157.collectBatches(into: &c157, world: world, assets: nil)
         #expect(c157.batches.reduce(0) { $0 + $1.vertices.count } == 2 * 6)
     }
+
+    @Test("Step 5.2.4c +Sweeps primitives (89/133-136/141/154/156/159/162-165) and demo effects")
+    func sweepsPrimitivesAndDemoEffects() {
+        let world = MockWorldContext()
+
+        // EF_INFRAREDSCAN (794): plays sound and launches primitive 135
+        let scanManager = EffectManager()
+        #expect(scanManager.spawn(EffectSpawnRequest(effectID: .ef_infraredscan, worldPosition: .zero)) != nil)
+        scanManager.stepOneTick(world: world)
+        #expect(world.playedSounds == ["effect\\INFRAREDSCAN.wav"])
+        let scanHost = scanManager.activeEffects.first as? RagEffect
+        #expect(scanHost?.primitives.first?.id == 135)
+        let scanPayloads = scanManager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(scanPayloads.reduce(0) { $0 + $1.vertices.count } > 0)
+
+        // EF_PRIMECHARGE (882): launches 40 primitive 159 instances on tick 0 and plays sound on stateCnt == 10
+        world.playedSounds.removeAll()
+        let chargeManager = EffectManager()
+        #expect(chargeManager.spawn(EffectSpawnRequest(effectID: .ef_primecharge, worldPosition: .zero)) != nil)
+        for _ in 0..<11 {
+            chargeManager.stepOneTick(world: world)
+        }
+        #expect(world.playedSounds == ["effect\\LG_EXEEDBREAK.wav"])
+        let chargeHost = chargeManager.activeEffects.first as? RagEffect
+        #expect(chargeHost?.primitives.count == 40)
+        #expect(chargeHost?.primitives.first?.id == 159)
+        let chargePayloads = chargeManager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(chargePayloads.reduce(0) { $0 + $1.vertices.count } > 0)
+
+        // EF_DQ9_CHARGE4 (898): launches primitive 165 and emits curved fan trails
+        let dq9Manager = EffectManager()
+        #expect(dq9Manager.spawn(EffectSpawnRequest(effectID: .ef_dq9_charge4, worldPosition: .zero)) != nil)
+        dq9Manager.stepOneTick(world: world)
+        let dq9Host = dq9Manager.activeEffects.first as? RagEffect
+        #expect(dq9Host?.primitives.first?.id == 165)
+        let dq9Payloads = dq9Manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(dq9Payloads.reduce(0) { $0 + $1.vertices.count } > 0)
+
+        let dummyHost = RagEffect(id: UUID(), request: EffectSpawnRequest(effectID: .ef_none, worldPosition: .zero), duration: 200)
+        let ctx = EffectTickContext(world: world, assets: nil, currentTick: 0, usesMinimalEffects: false) { _ in }
+
+        // 89: RenderFanBeam (2 wedges)
+        let p89 = dummyHost.launchPrimitive(89)
+        p89.state.slots[0].life = 1
+        p89.state.slots[0].distance = 10.0
+        p89.state.slots[0].alphaB = 120
+        p89.state.slots[0].fullDisplayAngle = 15
+        p89.tick(context: ctx)
+        var c89 = EffectPrimitiveBatchCollector(fog: Fog())
+        p89.collectBatches(into: &c89, world: world, assets: nil)
+        #expect(c89.batches.reduce(0) { $0 + $1.vertices.count } == 2 * 6)
+
+        // 133: RenderSpiralBlades (14 blades for style 0)
+        let p133 = dummyHost.launchPrimitive(133)
+        p133.state.slots[0].life = 1
+        p133.state.slots[0].distance = 5.0
+        p133.state.slots[0].maxHeight = 15.0
+        p133.state.slots[0].alphaB = 150
+        p133.state.slots[0].alphaT = 0
+        p133.tick(context: ctx)
+        var c133 = EffectPrimitiveBatchCollector(fog: Fog())
+        p133.collectBatches(into: &c133, world: world, assets: nil)
+        #expect(c133.batches.reduce(0) { $0 + $1.vertices.count } == 14 * 6)
+
+        // 134: RenderBladeTrail (5 trail quads)
+        let p134 = dummyHost.launchPrimitive(134)
+        p134.state.slots[0].life = 1
+        p134.state.slots[0].distance = 4.0
+        p134.state.slots[0].maxHeight = 10.0
+        p134.state.slots[0].alphaB = 180
+        p134.tick(context: ctx)
+        var c134 = EffectPrimitiveBatchCollector(fog: Fog())
+        p134.collectBatches(into: &c134, world: world, assets: nil)
+        #expect(c134.batches.reduce(0) { $0 + $1.vertices.count } == 5 * 6)
+
+        // 136: RenderSpinSquares (36 tiers * 2 passes = 72 quads)
+        let p136 = dummyHost.launchPrimitive(136)
+        p136.state.slots[0].life = 1
+        p136.state.slots[0].distance = 5.0
+        p136.state.slots[0].alphaB = 150
+        p136.tick(context: ctx)
+        var c136 = EffectPrimitiveBatchCollector(fog: Fog())
+        p136.collectBatches(into: &c136, world: world, assets: nil)
+        #expect(c136.batches.reduce(0) { $0 + $1.vertices.count } == 72 * 6)
+
+        // 141: RenderTaperedQuad (1 quad)
+        let p141 = dummyHost.launchPrimitive(141)
+        p141.state.slots[0].life = 1
+        p141.state.slots[0].distance = 5.0
+        p141.state.slots[0].maxHeight = 10.0
+        p141.state.slots[0].alphaB = 150
+        p141.tick(context: ctx)
+        var c141 = EffectPrimitiveBatchCollector(fog: Fog())
+        p141.collectBatches(into: &c141, world: world, assets: nil)
+        #expect(c141.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // 154: RenderBladeFins (2 fins * 2 layers = 4 quads)
+        let p154 = dummyHost.launchPrimitive(154)
+        p154.state.slots[0].life = 1
+        p154.state.slots[0].distance = 5.0
+        p154.state.slots[0].maxHeight = 10.0
+        p154.state.slots[0].alphaB = 150
+        p154.tick(context: ctx)
+        var c154 = EffectPrimitiveBatchCollector(fog: Fog())
+        p154.collectBatches(into: &c154, world: world, assets: nil)
+        #expect(c154.batches.reduce(0) { $0 + $1.vertices.count } == 4 * 6)
+
+        // 156: RenderJitterQuads (1 primary + 4 cardinal halo = 5 quads)
+        let p156 = dummyHost.launchPrimitive(156)
+        p156.state.slots[0].life = 1
+        p156.state.slots[0].distance = 5.0
+        p156.state.slots[0].alphaB = 150
+        p156.tick(context: ctx)
+        var c156 = EffectPrimitiveBatchCollector(fog: Fog())
+        p156.collectBatches(into: &c156, world: world, assets: nil)
+        #expect(c156.batches.reduce(0) { $0 + $1.vertices.count } == 5 * 6)
+
+        // 159: RenderBladeQuads (inner + outer = 2 quads)
+        let p159 = dummyHost.launchPrimitive(159)
+        p159.state.slots[0].life = 1
+        p159.state.slots[0].distance = 5.0
+        p159.state.slots[0].maxHeight = 10.0
+        p159.state.slots[0].alphaB = 150
+        p159.tick(context: ctx)
+        var c159 = EffectPrimitiveBatchCollector(fog: Fog())
+        p159.collectBatches(into: &c159, world: world, assets: nil)
+        #expect(c159.batches.reduce(0) { $0 + $1.vertices.count } == 2 * 6)
+
+        // 162: RenderFanSlice (1 quad)
+        let p162 = dummyHost.launchPrimitive(162)
+        p162.state.slots[0].life = 1
+        p162.state.slots[0].distance = 5.0
+        p162.state.slots[0].maxHeight = 12.0
+        p162.state.slots[0].alphaB = 150
+        p162.tick(context: ctx)
+        var c162 = EffectPrimitiveBatchCollector(fog: Fog())
+        p162.collectBatches(into: &c162, world: world, assets: nil)
+        #expect(c162.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // 163: RenderFanWedge (1 quad)
+        let p163 = dummyHost.launchPrimitive(163)
+        p163.state.slots[0].life = 1
+        p163.state.slots[0].distance = 5.0
+        p163.state.slots[0].maxHeight = 12.0
+        p163.state.slots[0].alphaB = 150
+        p163.tick(context: ctx)
+        var c163 = EffectPrimitiveBatchCollector(fog: Fog())
+        p163.collectBatches(into: &c163, world: world, assets: nil)
+        #expect(c163.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // 164: RenderFanTrail (distance 1.0 -> 0.0 after 1 tick, step 0 skipped => 5 quads)
+        let p164 = dummyHost.launchPrimitive(164)
+        p164.state.slots[0].life = 1
+        p164.state.slots[0].distance = 1.0
+        p164.state.slots[0].maxHeight = 15.0
+        p164.state.slots[0].alphaB = 150
+        p164.tick(context: ctx)
+        var c164 = EffectPrimitiveBatchCollector(fog: Fog())
+        p164.collectBatches(into: &c164, world: world, assets: nil)
+        #expect(c164.batches.reduce(0) { $0 + $1.vertices.count } == 5 * 6)
+    }
 }
