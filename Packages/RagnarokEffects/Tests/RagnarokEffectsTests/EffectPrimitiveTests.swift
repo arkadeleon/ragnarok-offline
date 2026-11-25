@@ -353,20 +353,19 @@ struct EffectPrimitiveTests {
         #expect(payloads.count == 1)
         #expect(payloads[0].vertices.count == 6)
 
-        // Tick 2 & 3: host retires at stateCnt == 3, detaching primitive, which still has 2 ticks left.
-        manager.stepOneTick(world: world)
+        // Tick 2: host and primitive remain active.
         manager.stepOneTick(world: world)
         let ragEffect = manager.activeEffects.first as? RagEffect
         #expect(ragEffect != nil)
-        #expect(ragEffect?.isMasterAlive == false)
+        #expect(ragEffect?.isMasterAlive == true)
         #expect(ragEffect?.primitives.count == 1)
-        #expect(ragEffect?.primitives.first?.master == nil)
+        #expect(ragEffect?.primitives.first?.master === ragEffect)
         #expect(manager.hasEffects)
 
-        // Tick 4 & 5: primitive completes its duration (5) and the effect retires completely.
+        // Tick 3: host retires at stateCnt == 3, detaching primitive, which retires on the same tick.
         manager.stepOneTick(world: world)
-        #expect(manager.hasEffects)
-        manager.stepOneTick(world: world)
+        #expect(ragEffect?.isMasterAlive == false)
+        #expect(ragEffect?.primitives.isEmpty == true)
         #expect(!manager.hasEffects)
     }
 
@@ -418,8 +417,8 @@ struct EffectPrimitiveTests {
         // 40 column quads + 4 rising particle quads = 44 quads = 264 vertices.
         #expect(totalVertices == 44 * 6)
 
-        // Advance through full lifecycle (default lifetime 100 ticks + child primitives).
-        for _ in 0..<250 {
+        // Advance through remaining host lifetime (8 + 92 = 100 ticks); child primitives retire with host.
+        for _ in 0..<92 {
             manager.stepOneTick(world: world)
         }
         #expect(!manager.hasEffects)

@@ -61,7 +61,8 @@ public final class EffectPrimitive {
     // MARK: - 60Hz Tick & Render Dispatch
 
     public func tick(context: EffectTickContext) {
-        guard isAlive else {
+        guard isAlive, master != nil else {
+            isAlive = false
             return
         }
 
