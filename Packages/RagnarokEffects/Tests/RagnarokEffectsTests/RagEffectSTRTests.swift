@@ -281,7 +281,7 @@ struct RagEffectSTRTests {
         #expect(lord?.cameraShakeTicks == [50, 100, 150, 200, 250])
         #expect(lord?.sounds.filter { $0.tick == 0 }.count == 2)
 
-        // Hybrid STR+Prim effects remain excluded until Step 5.3
+        // Hybrid STR+Prim effects remain excluded from pure-STR definitions
         #expect(RagSTREffectDefinition.definition(for: .ef_stormgust) == nil)
         #expect(RagSTREffectDefinition.definition(for: .ef_aspersio) == nil)
     }

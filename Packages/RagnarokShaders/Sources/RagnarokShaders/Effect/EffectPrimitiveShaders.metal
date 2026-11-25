@@ -25,6 +25,17 @@ effectPrimitiveVertexShader(const device EffectPrimitiveVertex *vertices [[buffe
     EffectPrimitiveVertex in = vertices[vertexIndex];
     EffectPrimitiveRasterizerData out;
 
+    if (uniforms.renderMode == 3) {
+        // Screen2DAbsolute: classic 640x480 top-left pixel coordinates mapped directly to Metal NDC.
+        float2 pixel = in.position.xy + in.billboardOffset;
+        float2 ndc = float2(pixel.x / 320.0 - 1.0, 1.0 - pixel.y / 240.0);
+        out.position = float4(ndc, 0.5, 1.0);
+        out.textureCoordinate = in.textureCoordinate;
+        out.color = in.color;
+        out.fogDepth = 0.0;
+        return out;
+    }
+
     float4 viewPosition;
     if (uniforms.renderMode == 1) {
         // Billboard3D: expand billboardOffset along camera-aligned world right/up axes.
@@ -34,17 +45,24 @@ effectPrimitiveVertexShader(const device EffectPrimitiveVertex *vertices [[buffe
         float3 worldPosition = anchor + cameraRight * in.billboardOffset.x + cameraUp * in.billboardOffset.y;
         viewPosition = uniforms.viewMatrix * float4(worldPosition, 1.0);
     } else {
-        // World3D: vertices are already placed in world space.
+        // World3D (0) & Screen2D anchor (2): transform position into view space.
         viewPosition = uniforms.viewMatrix * uniforms.modelMatrix * float4(in.position, 1.0);
     }
 
     // Apply depthBias in view space so it remains compatible with Reversed-Z projections.
     viewPosition.z += uniforms.depthBias;
 
-    out.position = uniforms.projectionMatrix * viewPosition;
+    float4 clipPosition = uniforms.projectionMatrix * viewPosition;
+    if (uniforms.renderMode == 2) {
+        // Screen2D: offset projected 3D anchor by classic 640x480 screen pixels (+Y down -> -Y in NDC).
+        clipPosition.x += (in.billboardOffset.x / 320.0) * clipPosition.w;
+        clipPosition.y -= (in.billboardOffset.y / 240.0) * clipPosition.w;
+    }
+
+    out.position = clipPosition;
     out.textureCoordinate = in.textureCoordinate;
     out.color = in.color;
-    out.fogDepth = -viewPosition.z;
+    out.fogDepth = uniforms.renderMode == 2 ? 0.0 : -viewPosition.z;
     return out;
 }
 

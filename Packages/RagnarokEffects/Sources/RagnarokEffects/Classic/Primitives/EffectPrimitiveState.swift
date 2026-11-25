@@ -38,11 +38,12 @@ public struct EffectPrimitiveSlot: Sendable {
     public var flag1: [Int8] = Array(repeating: 0, count: 21)
     public var riseAngle: Int16 = 0
     public var distance: Float = 0
-    public var targetObjectID: EffectTargetID?
     public var vecBNow: SIMD3<Float> = .zero
     public var vecTNow: SIMD3<Float> = .zero
     public var vecBPre: SIMD3<Float> = .zero
     public var vecTPre: SIMD3<Float> = .zero
+
+    public var targetObjectID: EffectTargetID?
 
     public init() {
     }
@@ -184,6 +185,8 @@ public struct EffectPrimitiveState: Sendable {
     public var slots: [EffectPrimitiveSlot] = Array(repeating: EffectPrimitiveSlot(), count: EffectPrimitiveState.slotCount)
     public var records: [EffectPrimitiveRecord] = Array(repeating: EffectPrimitiveRecord(), count: EffectPrimitiveState.recordCapacity)
     public var spriteLift: Int64 = 0
+
+    public var cooldownSkillID: Int?
 
     public init() {
     }

@@ -11,6 +11,8 @@ import RagnarokRendering
 public enum EffectPrimitiveRenderMode: Int32, Hashable, Sendable {
     case world3D = 0
     case billboard3D = 1
+    case screen2D = 2
+    case screen2DAbsolute = 3
 }
 
 public struct EffectPrimitiveRenderState: Hashable, Sendable {

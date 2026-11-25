@@ -76,6 +76,25 @@ public final class EffectPrimitive {
             }
         } else {
             switch id {
+            case .pp_2dtexture:
+                if !move2DPrimitive() {
+                    isAlive = false
+                    return
+                }
+            case .pp_2dtextureorbit:
+                if !prim2DTextureOrbit() {
+                    isAlive = false
+                    return
+                }
+            case .pp_2dquad:
+                if !move2DPrimitive() {
+                    isAlive = false
+                    return
+                }
+            case .pp_2dflash:
+                prim2DFlash()
+            case .pp_2dcircle:
+                prim2DCircle()
             case .pp_3dcircle:
                 prim3DCircle()
             case .pp_3dcylinder:
@@ -85,8 +104,18 @@ public final class EffectPrimitive {
                 }
             case .pp_3dsphere:
                 prim3DSphere()
+            case .pp_3dtexture, .pp_3dcrosstexture:
+                if !moveEffectPrimitive(context: context) {
+                    isAlive = false
+                    return
+                }
             case .pp_3dcylinderhalf:
                 if !prim3DCylinderHalf() {
+                    isAlive = false
+                    return
+                }
+            case .pp_3dtexture_nomaster:
+                if !prim3DTextureNoMaster(context: context) {
                     isAlive = false
                     return
                 }
@@ -108,6 +137,10 @@ public final class EffectPrimitive {
                 primBottom2()
             case .pp_bottomout:
                 primBottomOut(context: context)
+            case .pp_pokjuk:
+                primPokJuk(context: context)
+            case .pp_throwitem:
+                primThrowItem(context: context)
             case .pp_particle_up:
                 primParticleUp(context: context)
             case 60:
@@ -120,10 +153,14 @@ public final class EffectPrimitive {
                 prim3DCasting4()
             case .pp_hitline:
                 primHitLine()
+            case .pp_blind:
+                primFadeInFollow(context: context)
             case .pp_magnum2:
                 primMagnum2()
             case .pp_slash1:
                 primSlash1()
+            case .pp_colorpaper:
+                primColorPaper()
             case 86:
                 primFloorSquare86()
             case 89:
@@ -148,6 +185,8 @@ public final class EffectPrimitive {
                 primSTIN3(context: context)
             case .pp_stin4:
                 primSTIN4(context: context)
+            case .pp_bubble_drop:
+                primBubbleDrop(context: context)
             case 129:
                 primBobbing()
             case 130:
@@ -188,6 +227,8 @@ public final class EffectPrimitive {
                 primWaveHeights()
             case 150:
                 primFallingPetals2(context: context)
+            case 151:
+                primSpiralFade(context: context)
             case 154:
                 primFlashFade(context: context)
             case 155:
@@ -242,12 +283,26 @@ public final class EffectPrimitive {
         }
 
         switch id {
+        case .pp_2dtexture, .pp_2dtextureorbit:
+            render2DPrimitive(into: &collector, assets: assets)
+        case .pp_2dquad:
+            render2DDiamond(into: &collector, assets: assets)
+        case .pp_2dflash:
+            render2DFlash(into: &collector, assets: assets)
+        case .pp_2dcircle:
+            render2DCircle(into: &collector, assets: assets)
         case .pp_3dcircle:
             renderRecordRings(into: &collector, assets: assets)
         case .pp_3dcylinder:
             renderArcBand(into: &collector, assets: assets)
         case .pp_3dsphere:
             renderSphere(into: &collector, assets: assets)
+        case .pp_3dtexture:
+            render3DTexture(into: &collector, assets: assets)
+        case .pp_3dcrosstexture:
+            renderCrossPlanes(into: &collector, assets: assets)
+        case .pp_3dtexture_nomaster:
+            render3DTextureNoMaster(into: &collector, assets: assets)
         case .pp_3dcasting, .pp_3dcasting_2, .pp_3dcasting_3:
             render3DCasting(into: &collector, assets: assets)
         case .pp_gi_3:
@@ -260,7 +315,11 @@ public final class EffectPrimitive {
             renderFieldPanel(into: &collector, assets: assets)
         case .pp_bottom2:
             renderColorPlane(into: &collector, assets: assets)
-        case .pp_bottomout, .pp_particle_up:
+        case .pp_bottomout:
+            renderFieldPanel(into: &collector, assets: assets)
+        case .pp_pokjuk:
+            renderTrailSquares(into: &collector, assets: assets)
+        case .pp_throwitem, .pp_particle_up:
             renderFieldPanel(into: &collector, assets: assets)
         case 60:
             render3DCasting(into: &collector, assets: assets)
@@ -272,10 +331,14 @@ public final class EffectPrimitive {
             render3DCasting(into: &collector, assets: assets)
         case .pp_hitline:
             renderHitLine(into: &collector, assets: assets)
+        case .pp_blind:
+            renderBlind(into: &collector, assets: assets)
         case .pp_magnum2:
             renderMagnum2(into: &collector, assets: assets)
         case .pp_slash1:
             renderSlash1(into: &collector, assets: assets)
+        case .pp_colorpaper:
+            renderColorPaper(into: &collector, assets: assets)
         case 86:
             renderFloorSquare(into: &collector, assets: assets)
         case 89:
@@ -296,6 +359,8 @@ public final class EffectPrimitive {
             renderHermode(into: &collector, assets: assets)
         case 119, 122, .pp_stin4:
             renderFloorSquare2(into: &collector, assets: assets)
+        case .pp_bubble_drop:
+            renderFieldPanel(into: &collector, assets: assets)
         case 129:
             renderBobbingRing(into: &collector, assets: assets)
         case 130:

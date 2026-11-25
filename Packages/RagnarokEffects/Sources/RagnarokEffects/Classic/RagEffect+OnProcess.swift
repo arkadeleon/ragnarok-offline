@@ -14,6 +14,7 @@ extension RagEffect {
 
     public nonisolated static let supportedEffectIDs: [EffectID] = [
         .ef_entry,
+        .ef_bash,
         .ef_bottom_dissonance,
         .ef_bottom_rokisweil,
         .ef_bottom_whistle,
@@ -62,6 +63,8 @@ extension RagEffect {
         switch effectID {
         case .ef_entry:
             entry(context: context)
+        case .ef_bash:
+            bash(context: context)
         case .ef_bottom_dissonance:
             texturedMagicRing(texturePath: "effect\\ring_blue.tga", kind: 0, context: context)
         case .ef_bottom_rokisweil:
@@ -202,6 +205,59 @@ extension RagEffect {
         inner.state.alpha = 160.0
         inner.state.fadeOutCnt = inner.state.duration - inner.state.duration / 3
         inner.state.texturePaths = [texturePath]
+    }
+
+    // MARK: - EF_BASH (16)
+
+    /// Spawns a `PP_2DCIRCLE` (4) flash ring and 20 `PP_2DFLASH` (3) radial sparks for `EF_BASH` (16).
+    private func bash(context: EffectTickContext) {
+        guard !context.usesMinimalEffects else {
+            return
+        }
+
+        guard stateCnt == 0 else {
+            return
+        }
+
+        context.world.playSound(
+            named: "effect\\EF_Bash.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+
+        let ringTexture = "effect\\alpha_down.tga"
+        let sparkTexture = "EFFECT\\alpha_center.tga"
+        _ = context.assets?.texture(atPath: ringTexture)
+        _ = context.assets?.texture(atPath: sparkTexture)
+
+        let ring = launchPrimitive(.pp_2dcircle)
+        ring.state.duration = 40
+        ring.state.pattern |= 1
+        ring.state.deltaPos2.y = -40.0
+        ring.state.radius = 100.0
+        ring.state.alpha = 0
+        ring.state.maxAlpha = 170.0
+        ring.state.alphaSpeed = ring.state.maxAlpha / 6.0
+        ring.state.fadeOutCnt = ring.state.duration - 10
+        ring.state.texturePaths = [ringTexture]
+
+        let sparkCount = 20
+        for _ in 0..<sparkCount {
+            let spark = launchPrimitive(.pp_2dflash)
+            spark.state.duration = 40
+            spark.state.deltaPos2.y = -40.0
+            spark.state.longitude = Float(Int.random(in: 0..<360))
+            spark.state.longSpeed = Float(Int.random(in: 0..<60) + 10) / 10.0
+            spark.state.longAccel = -(spark.state.longSpeed / Float(spark.state.duration)) / 1.5
+            spark.state.arcAngle = Float(Int.random(in: 0..<25) + 5) / 10.0
+            spark.state.heightSize = Float(Int.random(in: 0..<40) + 20)
+            spark.state.heightSpeed = Float(Int.random(in: 0..<30) + 20) / 10.0
+            spark.state.alpha = 0
+            spark.state.maxAlpha = 200.0
+            spark.state.alphaSpeed = spark.state.maxAlpha / 10.0
+            spark.state.fadeOutCnt = spark.state.duration - spark.state.duration / 3
+            spark.state.texturePaths = [sparkTexture]
+        }
     }
 
     // MARK: - EF_BOTTOM_DISSONANCE (277) / EF_BOTTOM_ASSASSINCROSS (287)

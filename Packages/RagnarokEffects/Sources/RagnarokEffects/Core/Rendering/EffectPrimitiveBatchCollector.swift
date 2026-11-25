@@ -186,6 +186,82 @@ public struct EffectPrimitiveBatchCollector {
         )
     }
 
+    public mutating func appendScreen2DTriangle(
+        anchorEffectPosition: SIMD3<Float>,
+        offset0: SIMD2<Float>,
+        offset1: SIMD2<Float>,
+        offset2: SIMD2<Float>,
+        uv0: SIMD2<Float>,
+        uv1: SIMD2<Float>,
+        uv2: SIMD2<Float>,
+        color0: SIMD4<Float>,
+        color1: SIMD4<Float>,
+        color2: SIMD4<Float>,
+        texture: (any MTLTexture)?,
+        renderState: EffectPrimitiveRenderState,
+        isAbsoluteScreen: Bool = false
+    ) {
+        let basePosition = isAbsoluteScreen
+            ? SIMD3<Float>(anchorEffectPosition.x, anchorEffectPosition.y, 0)
+            : EffectSpace.toWorldPosition(anchorEffectPosition)
+        let worldCenter = isAbsoluteScreen ? .zero : basePosition
+        let mode: EffectPrimitiveRenderMode = isAbsoluteScreen ? .screen2DAbsolute : .screen2D
+
+        let vertices = [
+            EffectPrimitiveVertex(position: basePosition, billboardOffset: offset0, textureCoordinate: uv0, color: color0),
+            EffectPrimitiveVertex(position: basePosition, billboardOffset: offset1, textureCoordinate: uv1, color: color1),
+            EffectPrimitiveVertex(position: basePosition, billboardOffset: offset2, textureCoordinate: uv2, color: color2),
+        ]
+        appendVertices(
+            vertices,
+            mode: mode,
+            texture: texture,
+            renderState: renderState,
+            worldCenter: worldCenter
+        )
+    }
+
+    public mutating func appendScreen2DQuad(
+        anchorEffectPosition: SIMD3<Float>,
+        offset0: SIMD2<Float>,
+        offset1: SIMD2<Float>,
+        offset2: SIMD2<Float>,
+        offset3: SIMD2<Float>,
+        uv0: SIMD2<Float> = SIMD2<Float>(0, 0),
+        uv1: SIMD2<Float> = SIMD2<Float>(1, 0),
+        uv2: SIMD2<Float> = SIMD2<Float>(1, 1),
+        uv3: SIMD2<Float> = SIMD2<Float>(0, 1),
+        color0: SIMD4<Float>,
+        color1: SIMD4<Float>,
+        color2: SIMD4<Float>,
+        color3: SIMD4<Float>,
+        texture: (any MTLTexture)?,
+        renderState: EffectPrimitiveRenderState,
+        isAbsoluteScreen: Bool = false
+    ) {
+        let basePosition = isAbsoluteScreen
+            ? SIMD3<Float>(anchorEffectPosition.x, anchorEffectPosition.y, 0)
+            : EffectSpace.toWorldPosition(anchorEffectPosition)
+        let worldCenter = isAbsoluteScreen ? .zero : basePosition
+        let mode: EffectPrimitiveRenderMode = isAbsoluteScreen ? .screen2DAbsolute : .screen2D
+
+        let vertices = [
+            EffectPrimitiveVertex(position: basePosition, billboardOffset: offset0, textureCoordinate: uv0, color: color0),
+            EffectPrimitiveVertex(position: basePosition, billboardOffset: offset1, textureCoordinate: uv1, color: color1),
+            EffectPrimitiveVertex(position: basePosition, billboardOffset: offset2, textureCoordinate: uv2, color: color2),
+            EffectPrimitiveVertex(position: basePosition, billboardOffset: offset0, textureCoordinate: uv0, color: color0),
+            EffectPrimitiveVertex(position: basePosition, billboardOffset: offset2, textureCoordinate: uv2, color: color2),
+            EffectPrimitiveVertex(position: basePosition, billboardOffset: offset3, textureCoordinate: uv3, color: color3),
+        ]
+        appendVertices(
+            vertices,
+            mode: mode,
+            texture: texture,
+            renderState: renderState,
+            worldCenter: worldCenter
+        )
+    }
+
     private mutating func appendVertices(
         _ vertices: [EffectPrimitiveVertex],
         mode: EffectPrimitiveRenderMode,

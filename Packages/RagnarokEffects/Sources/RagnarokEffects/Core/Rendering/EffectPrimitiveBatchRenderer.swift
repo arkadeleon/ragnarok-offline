@@ -179,6 +179,8 @@ public final class EffectPrimitiveBatchRenderer {
         let shouldApplyFog = payload.fog.isEnabled
             && !payload.renderState.isAdditive
             && payload.renderState.bucket != .overlay
+            && payload.mode != .screen2D
+            && payload.mode != .screen2DAbsolute
         var fragmentUniforms = EffectPrimitiveFragmentUniforms(
             fogUse: shouldApplyFog ? 1 : 0,
             fogNear: payload.fog.near,

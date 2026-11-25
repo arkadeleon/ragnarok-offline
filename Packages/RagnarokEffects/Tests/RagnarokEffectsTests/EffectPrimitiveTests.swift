@@ -1052,7 +1052,7 @@ struct EffectPrimitiveTests {
         #expect(linkPrim?.state.slots[0].alphaB == 0)
     }
 
-    @Test("Step 5.2.4b +Arcs primitives (137/144/146/149/158/160/173) and EF_BEGINSPELL_N1")
+    @Test("Arc primitives (137/144/146/149/158/160/173) and EF_BEGINSPELL_N1")
     func arcsPrimitivesAndBeginSpellDemo() {
         let world = MockWorldContext()
 
@@ -1160,7 +1160,7 @@ struct EffectPrimitiveTests {
         #expect(c160.batches.reduce(0) { $0 + $1.vertices.count } == 2 * 6)
     }
 
-    @Test("Step 5.2.4b +Ground primitives (86/92/119/122/125/131/143/148) and EF_WATER_FADE")
+    @Test("Ground primitives (86/92/119/122/125/131/143/148) and EF_WATER_FADE")
     func groundPrimitivesAndWaterFadeDemo() {
         let world = MockWorldContext()
         world.targets[1] = EffectTargetState(objectID: 1, worldPosition: SIMD3<Float>(6, 0, 4), facingAngle: 0)
@@ -1246,7 +1246,7 @@ struct EffectPrimitiveTests {
         #expect(c143.batches.reduce(0) { $0 + $1.vertices.count } == 6)
     }
 
-    @Test("Step 5.2.4b +Panels primitives (129/130/132/138/140/142/145/150/155/157/166/170) and EF_SELFSCROLL")
+    @Test("Panel primitives (129/130/132/138/140/142/145/150/155/157/166/170) and EF_SELFSCROLL")
     func panelPrimitivesAndSelfScrollDemo() {
         let world = MockWorldContext()
 
@@ -1380,7 +1380,7 @@ struct EffectPrimitiveTests {
         #expect(c157.batches.reduce(0) { $0 + $1.vertices.count } == 2 * 6)
     }
 
-    @Test("Step 5.2.4c +Sweeps primitives (89/133-136/141/154/156/159/162-165) and demo effects")
+    @Test("Sweep primitives (89/133-136/141/154/156/159/162-165) and demo effects")
     func sweepsPrimitivesAndDemoEffects() {
         let world = MockWorldContext()
 
@@ -1539,5 +1539,170 @@ struct EffectPrimitiveTests {
         var c164 = EffectPrimitiveBatchCollector(fog: Fog())
         p164.collectBatches(into: &c164, world: world, assets: nil)
         #expect(c164.batches.reduce(0) { $0 + $1.vertices.count } == 5 * 6)
+    }
+
+    @Test("Screen2D, 2D primitives (0..4), pure-texture sprite primitives (15/16/22/52/53/71/78/127/151), and EF_BASH")
+    func twoDAndPureTextureSpritesAndBashDemo() {
+        let world = MockWorldContext()
+
+        // EF_BASH (16): plays sound, spawns 1 PP_2DCIRCLE + 20 PP_2DFLASH in .screen2D mode
+        let bashManager = EffectManager()
+        #expect(bashManager.spawn(EffectSpawnRequest(effectID: .ef_bash, worldPosition: SIMD3<Float>(1, 0, 2))) != nil)
+        bashManager.stepOneTick(world: world)
+        #expect(world.playedSounds == ["effect\\EF_Bash.wav"])
+        let bashHost = bashManager.activeEffects.first as? RagEffect
+        #expect(bashHost?.primitives.count == 21)
+        #expect(bashHost?.primitives.first?.id == .pp_2dcircle)
+        let bashPayloads = bashManager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(bashPayloads.allSatisfy { $0.mode == .screen2D })
+        // 10 ring quads (60 verts) + 20 flash triangles (60 verts) = 120 verts
+        #expect(bashPayloads.reduce(0) { $0 + $1.vertices.count } == 120)
+
+        // EF_BASH skips spawning under minimal effects
+        let minBashManager = EffectManager(usesMinimalEffects: true)
+        #expect(minBashManager.spawn(EffectSpawnRequest(effectID: .ef_bash, worldPosition: .zero)) != nil)
+        minBashManager.stepOneTick(world: world)
+        let minBashHost = minBashManager.activeEffects.first as? RagEffect
+        #expect(minBashHost?.primitives.isEmpty == true)
+
+        let dummyHost = RagEffect(id: UUID(), request: EffectSpawnRequest(effectID: .ef_none, worldPosition: .zero), duration: 200)
+        var spawnedChildren: [EffectSpawnRequest] = []
+        let ctx = EffectTickContext(world: world, assets: nil, currentTick: 0, usesMinimalEffects: false) { request in
+            spawnedChildren.append(request)
+        }
+
+        // 0: PP_2DTEXTURE (world-anchored + absolute screen + strong-typed cooldownSkillID)
+        let p0 = dummyHost.launchPrimitive(.pp_2dtexture)
+        p0.state.widthSize = 20
+        p0.state.heightSize = 20
+        p0.state.cooldownSkillID = 42
+        p0.currentMotion = 2
+        p0.tick(context: ctx)
+        #expect(p0.state.slots[0].process == 999)
+        var c0 = EffectPrimitiveBatchCollector(fog: Fog())
+        p0.collectBatches(into: &c0, world: world, assets: nil)
+        #expect(p0.currentMotion == 0)
+        #expect(c0.batches.first?.mode == .screen2D)
+        #expect(c0.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        p0.state.pattern |= 4
+        var c0Abs = EffectPrimitiveBatchCollector(fog: Fog())
+        p0.collectBatches(into: &c0Abs, world: world, assets: nil)
+        #expect(c0Abs.batches.first?.mode == .screen2DAbsolute)
+
+        // 1: PP_2DTEXTUREORBIT
+        let p1 = dummyHost.launchPrimitive(.pp_2dtextureorbit)
+        p1.state.widthSize = 12
+        p1.state.heightSize = 12
+        p1.state.radius = 25
+        p1.state.longSpeed = 10
+        p1.tick(context: ctx)
+        var c1 = EffectPrimitiveBatchCollector(fog: Fog())
+        p1.collectBatches(into: &c1, world: world, assets: nil)
+        #expect(c1.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // 2: PP_2DQUAD (notched diamond = 2 triangles = 6 verts)
+        let p2 = dummyHost.launchPrimitive(.pp_2dquad)
+        p2.state.widthSize = 16
+        p2.state.heightSize = 24
+        p2.tick(context: ctx)
+        var c2 = EffectPrimitiveBatchCollector(fog: Fog())
+        p2.collectBatches(into: &c2, world: world, assets: nil)
+        #expect(c2.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // 15: PP_3DTEXTURE (1 world3D quad = 6 verts)
+        let p15 = dummyHost.launchPrimitive(.pp_3dtexture)
+        p15.state.widthSize = 5
+        p15.state.heightSize = 5
+        p15.tick(context: ctx)
+        var c15 = EffectPrimitiveBatchCollector(fog: Fog())
+        p15.collectBatches(into: &c15, world: world, assets: nil)
+        #expect(c15.batches.first?.mode == .world3D)
+        #expect(c15.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // 16: PP_3DCROSSTEXTURE (2 crossed world3D quads = 12 verts)
+        let p16 = dummyHost.launchPrimitive(.pp_3dcrosstexture)
+        p16.state.widthSize = 5
+        p16.state.heightSize = 5
+        p16.tick(context: ctx)
+        var c16 = EffectPrimitiveBatchCollector(fog: Fog())
+        p16.collectBatches(into: &c16, world: world, assets: nil)
+        #expect(c16.batches.reduce(0) { $0 + $1.vertices.count } == 12)
+
+        // 22: PP_3DTEXTURE_NOMASTER (1 world-anchored screen2D quad = 6 verts)
+        let p22 = dummyHost.launchPrimitive(.pp_3dtexture_nomaster)
+        p22.state.widthSize = 18
+        p22.state.heightSize = 18
+        p22.tick(context: ctx)
+        var c22 = EffectPrimitiveBatchCollector(fog: Fog())
+        p22.collectBatches(into: &c22, world: world, assets: nil)
+        #expect(c22.batches.first?.mode == .screen2D)
+        #expect(c22.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // 52: PP_POKJUK (2 trailing firework squares = 12 verts)
+        let p52 = dummyHost.launchPrimitive(.pp_pokjuk)
+        p52.state.slots[0].life = 1
+        p52.state.slots[0].alphaB = 200
+        p52.state.slots[0].maxHeight = 4
+        p52.tick(context: ctx)
+        var c52 = EffectPrimitiveBatchCollector(fog: Fog())
+        p52.collectBatches(into: &c52, world: world, assets: nil)
+        #expect(c52.batches.reduce(0) { $0 + $1.vertices.count } == 2 * 6)
+
+        // 53: PP_THROWITEM (parabolic throw via renderFieldPanel = 1 quad)
+        let p53 = dummyHost.launchPrimitive(.pp_throwitem)
+        p53.state.slots[0].life = 1
+        p53.state.slots[0].alphaB = 220
+        p53.state.slots[0].distance = 3
+        p53.state.slots[0].flag1[1] = 20
+        p53.state.slots[0].height[1] = 1.0
+        p53.tick(context: ctx)
+        var c53 = EffectPrimitiveBatchCollector(fog: Fog())
+        p53.collectBatches(into: &c53, world: world, assets: nil)
+        #expect(c53.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // 71: PP_BLIND (8 dark tunnel quads = 48 verts)
+        let p71 = dummyHost.launchPrimitive(.pp_blind)
+        p71.state.slots[0].life = 1
+        p71.state.slots[0].distance = 10
+        p71.tick(context: ctx)
+        var c71 = EffectPrimitiveBatchCollector(fog: Fog())
+        p71.collectBatches(into: &c71, world: world, assets: nil)
+        #expect(c71.batches.reduce(0) { $0 + $1.vertices.count } == 8 * 6)
+
+        // 78: PP_COLORPAPER (1 tumbling confetti quad = 6 verts)
+        let p78 = dummyHost.launchPrimitive(.pp_colorpaper)
+        p78.state.slots[0].life = 1
+        p78.state.slots[0].maxHeight = 2
+        p78.state.slots[0].distance = 0.5
+        p78.state.slots[0].vecBNow = SIMD3<Float>(0, -40, 0)
+        p78.tick(context: ctx)
+        var c78 = EffectPrimitiveBatchCollector(fog: Fog())
+        p78.collectBatches(into: &c78, world: world, assets: nil)
+        #expect(c78.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // 127: PP_BUBBLE_DROP (falling bubble via renderFieldPanel = 1 quad)
+        let p127 = dummyHost.launchPrimitive(.pp_bubble_drop)
+        p127.state.slots[0].life = 1
+        p127.state.slots[0].distance = 2.5
+        p127.state.slots[0].flag1[4] = 30
+        p127.state.slots[0].height[1] = 0.5
+        p127.tick(context: ctx)
+        var c127 = EffectPrimitiveBatchCollector(fog: Fog())
+        p127.collectBatches(into: &c127, world: world, assets: nil)
+        #expect(c127.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // 151: PrimSpiralFade spawns EF_SOULLIGHT2 child via strong-typed targetObjectID during tick
+        let p151 = dummyHost.launchPrimitive(151)
+        p151.state.slots[0].life = 1
+        p151.state.slots[0].distance = 2.0
+        p151.state.slots[0].targetObjectID = 110_000_005
+        p151.tick(context: ctx)
+        #expect(spawnedChildren.count == 1)
+        #expect(spawnedChildren[0].effectID == .ef_soullight2)
+        #expect(spawnedChildren[0].targetObjectID == 110_000_005)
+        var c151 = EffectPrimitiveBatchCollector(fog: Fog())
+        p151.collectBatches(into: &c151, world: world, assets: nil)
+        #expect(c151.batches.isEmpty)
     }
 }
