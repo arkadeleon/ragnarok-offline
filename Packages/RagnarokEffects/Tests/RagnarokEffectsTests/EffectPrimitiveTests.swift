@@ -744,4 +744,43 @@ struct EffectPrimitiveTests {
         hermode.collectBatches(into: &hermodeCollector, world: world, assets: nil)
         #expect(hermodeCollector.batches.reduce(0) { $0 + $1.vertices.count } == 6 * 6)
     }
+
+    @Test("PP_HEAL_LOW ticks pulsing columns and renders 10-segment low-polygon casting with camera offset")
+    func healLowPolygonCasting() {
+        let world = MockWorldContext()
+        world.cameraYawDegrees = 90
+        let request = EffectSpawnRequest(effectID: .ef_heal, worldPosition: .zero)
+        let host = RagEffect(id: UUID(), request: request, duration: 80)
+        let context = EffectTickContext(
+            world: world,
+            assets: nil,
+            currentTick: 0,
+            usesMinimalEffects: false,
+            onSpawnChild: { _ in }
+        )
+
+        let healLow = host.launchPrimitive(.pp_heal_low)
+        healLow.state.size = 10.0
+        healLow.state.slots[0].life = 1
+        healLow.state.slots[0].fullDisplayAngle = 360
+        healLow.state.slots[0].maxHeight = 12.0
+        healLow.state.slots[0].rotStart = 0
+        healLow.state.slots[0].distance = 2.0
+        healLow.state.slots[0].riseAngle = 90
+        healLow.state.slots[0].alphaT = 50
+        healLow.state.slots[0].vecBNow = SIMD3<Float>(4.0, 1234.5, 0.0)
+        healLow.state.slots[0].flag1 = Array(repeating: 33, count: 21)
+
+        healLow.tick(context: context)
+        #expect(healLow.state.slots[2].alphaT == 270)
+        #expect(healLow.state.slots[0].process == 1)
+        #expect(healLow.state.slots[0].alphaB == 5)
+
+        var collector = EffectPrimitiveBatchCollector(fog: Fog())
+        healLow.collectBatches(into: &collector, world: world, assets: nil)
+        #expect(collector.batches.count == 1)
+        #expect(collector.batches[0].vertices.count == 10 * 6)
+        // First quad starts at effect-space (2.0, 0, 0) shifted by vecBNow (4, 0) rotated 270 deg -> effect (2.0, 0, -4.0) -> world (0.4, 0, 0.8).
+        #expect(approxEqual(collector.batches[0].vertices[0].position, SIMD3<Float>(0.4, 0.0, 0.8), tolerance: 1e-3))
+    }
 }

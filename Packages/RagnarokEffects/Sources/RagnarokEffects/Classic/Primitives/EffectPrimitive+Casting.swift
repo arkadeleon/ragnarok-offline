@@ -174,6 +174,96 @@ extension EffectPrimitive {
         }
     }
 
+    func render3DCastingLowPolygon(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        let heartAngle = Int(state.slots[2].alphaT)
+        let heartCos = EffectSpace.cosine(degrees: heartAngle)
+        let heartSin = EffectSpace.sine(degrees: heartAngle)
+
+        for slot in state.slots where slot.life == 1 {
+            let fullDisplayAngle = Int(slot.fullDisplayAngle)
+            let basicAngle = fullDisplayAngle / 10
+            guard basicAngle > 0 else {
+                continue
+            }
+
+            let riseAngle = Int(slot.riseAngle)
+            let riseCos = EffectSpace.cosine(degrees: riseAngle)
+            let riseSin = EffectSpace.sine(degrees: riseAngle)
+
+            var order = 0
+            var vec1 = SIMD3<Float>.zero
+            var vec3 = SIMD3<Float>.zero
+
+            var count = 0
+            while count <= fullDisplayAngle {
+                var angle = (Int(slot.rotStart) + count) % 360
+                if angle < 0 {
+                    angle += 360
+                }
+                if fullDisplayAngle == 360 && order == 10 {
+                    angle = Int(slot.rotStart)
+                }
+
+                let cs1 = EffectSpace.cosine(degrees: angle)
+                let sn1 = EffectSpace.sine(degrees: angle)
+
+                var vec2 = SIMD3<Float>(
+                    cs1 * slot.distance,
+                    0,
+                    sn1 * slot.distance
+                )
+
+                let height = slot.height[order]
+                let rx = riseCos * height
+                let ry = riseSin * height
+
+                var vec4 = SIMD3<Float>(
+                    vec2.x + cs1 * rx,
+                    -ry,
+                    vec2.z + sn1 * rx
+                )
+
+                if slot.vecBNow.y == 1234.5 {
+                    let lx = slot.vecBNow.x
+                    let lz = slot.vecBNow.z
+                    let offsetX = heartCos * lx - heartSin * lz
+                    let offsetZ = heartSin * lx + heartCos * lz
+                    vec2.x += offsetX
+                    vec4.x += offsetX
+                    vec2.z += offsetZ
+                    vec4.z += offsetZ
+                }
+
+                if order > 0 {
+                    renderTeiRect(
+                        into: &collector,
+                        assets: assets,
+                        texPart: order - 1,
+                        alphaB: slot.alphaB,
+                        alphaT: slot.alphaB,
+                        v1: vec1,
+                        v2: vec2,
+                        v3: vec4,
+                        v4: vec3,
+                        textureIndex: 0
+                    )
+                }
+
+                order += 1
+                if order > 10 {
+                    order = 10
+                }
+
+                vec1 = vec2
+                vec3 = vec4
+                count += basicAngle
+            }
+        }
+    }
+
     // MARK: - 3D Casting Motion Variants (`pp_3dcasting` .. `pp_3dcasting_5`, `pp_gi_3`)
 
     func prim3DCasting() {

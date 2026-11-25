@@ -151,6 +151,8 @@ public final class EffectPrimitive {
             renderHermode(into: &collector, assets: assets)
         case .pp_3dcasting, .pp_3dcasting_2, .pp_3dcasting_3, .pp_3dcasting_4, .pp_3dcasting_5, EffectPrimitiveID(rawValue: 60):
             render3DCasting(into: &collector, assets: assets)
+        case .pp_heal_low:
+            render3DCastingLowPolygon(into: &collector, assets: assets)
         case .pp_gi_3:
             render3DCasting2(into: &collector, assets: assets)
         case .pp_grandcross2:
