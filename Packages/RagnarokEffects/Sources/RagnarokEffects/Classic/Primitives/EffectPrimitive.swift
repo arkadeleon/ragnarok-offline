@@ -117,7 +117,7 @@ public final class EffectPrimitive {
         }
 
         state.stateCnt += 1
-        if state.duration > 0 && state.stateCnt >= state.duration {
+        if state.duration > 0 && state.stateCnt > state.duration {
             isAlive = false
         }
     }

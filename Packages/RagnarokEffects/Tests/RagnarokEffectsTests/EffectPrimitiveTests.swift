@@ -508,7 +508,7 @@ struct EffectPrimitiveTests {
         #expect(payloads[0].renderState.dstBlend == .oneMinusSourceAlpha)
         #expect(payloads[0].renderState.depthTest == true)
 
-        // Both cylinders have duration 55; after 55 total ticks they retire while host retires at default lifetime.
+        // Both cylinders have duration 55; after 56 total ticks (stateCnt > 55) they retire while host retires at default lifetime.
         for _ in 0..<55 {
             manager.stepOneTick(world: world)
         }
@@ -549,19 +549,25 @@ struct EffectPrimitiveTests {
         #expect(noDepthVertices == 20 * 6)
         #expect(depthVertices == 50 * 6)
 
-        // After 20 total ticks, the second ring (duration 20) retires while ring1 and sphere remain.
+        // At 20 total ticks (stateCnt == 20), secondRing (duration 20) is still alive; it retires at tick 21 (stateCnt > 20).
         for _ in 0..<19 {
             manager.stepOneTick(world: world)
         }
+        #expect(ragEffect?.primitives.count == 3)
+
+        manager.stepOneTick(world: world)
         #expect(ragEffect?.primitives.count == 2)
         let remainingPayloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
         let remainingVertices = remainingPayloads.reduce(0) { $0 + $1.vertices.count }
         #expect(remainingVertices == 60 * 6)
 
-        // After 30 total ticks, all 3 primitives have retired.
-        for _ in 0..<10 {
+        // At 30 total ticks (stateCnt == 30), ring1 and sphere remain alive; all 3 primitives retire at tick 31 (stateCnt > 30).
+        for _ in 0..<9 {
             manager.stepOneTick(world: world)
         }
+        #expect(ragEffect?.primitives.count == 2)
+
+        manager.stepOneTick(world: world)
         #expect(ragEffect?.primitives.isEmpty == true)
     }
 
