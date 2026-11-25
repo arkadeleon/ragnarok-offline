@@ -7,11 +7,15 @@
 
 /// Primitive type identifier used by `EffectPrimitive`, covering named `pp_*` constants
 /// as well as unnamed numeric primitive IDs dispatched by the classic effect engine.
-public struct EffectPrimitiveID: RawRepresentable, Hashable, Comparable, Sendable {
+public struct EffectPrimitiveID: RawRepresentable, Hashable, Comparable, Sendable, ExpressibleByIntegerLiteral {
     public let rawValue: Int
 
     public init(rawValue: Int) {
         self.rawValue = rawValue
+    }
+
+    public init(integerLiteral value: Int) {
+        self.rawValue = value
     }
 
     public static func < (lhs: EffectPrimitiveID, rhs: EffectPrimitiveID) -> Bool {

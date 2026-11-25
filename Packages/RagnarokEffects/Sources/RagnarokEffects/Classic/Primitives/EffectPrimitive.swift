@@ -31,6 +31,7 @@ public final class EffectPrimitive {
 
     var customTick: TickHandler?
     var customRender: RenderHandler?
+    private var lastUsesMinimalEffects: Bool = false
 
     public init(id: EffectPrimitiveID = .pp_2dtexture) {
         self.id = id
@@ -66,6 +67,8 @@ public final class EffectPrimitive {
             return
         }
 
+        lastUsesMinimalEffects = context.usesMinimalEffects
+
         if let customTick {
             if !customTick(self, context) {
                 isAlive = false
@@ -80,37 +83,23 @@ public final class EffectPrimitive {
                     isAlive = false
                     return
                 }
+            case .pp_3dsphere:
+                prim3DSphere()
             case .pp_3dcylinderhalf:
                 if !prim3DCylinderHalf() {
                     isAlive = false
                     return
                 }
-            case .pp_3dsphere:
-                prim3DSphere()
             case .pp_3dcasting:
                 prim3DCasting()
             case .pp_3dcasting_2:
                 prim3DCasting2()
             case .pp_3dcasting_3:
                 prim3DCasting3()
-            case .pp_3dcasting_4:
-                prim3DCasting4()
-            case .pp_3dcasting_5:
-                prim3DCasting5()
             case .pp_gi_3:
                 primGI3()
             case .pp_grandcross2:
                 primGrandCross2()
-            case .pp_guard:
-                primGuard(context: context)
-            case .pp_halfsphere:
-                primHalfSphere(context: context)
-            case .pp_hermode:
-                primHermode()
-            case EffectPrimitiveID(rawValue: 60), .pp_heal_low:
-                primPulsingColumns(context: context)
-            case .pp_particle_up:
-                primParticleUp(context: context)
             case .pp_linelink:
                 primLineLink(context: context)
             case .pp_bottom:
@@ -119,18 +108,88 @@ public final class EffectPrimitive {
                 primBottom2()
             case .pp_bottomout:
                 primBottomOut(context: context)
+            case .pp_particle_up:
+                primParticleUp(context: context)
+            case 60:
+                primPulsingColumns(context: context)
+            case .pp_guard:
+                primGuard(context: context)
             case .pp_rect_up:
                 primPulseRing()
+            case .pp_3dcasting_4:
+                prim3DCasting4()
             case .pp_hitline:
                 primHitLine()
             case .pp_magnum2:
                 primMagnum2()
             case .pp_slash1:
                 primSlash1()
+            case 86:
+                primFloorSquare86()
             case .pp_rect_up2:
                 primFadingColumns()
+            case 92:
+                primFloorSquare92()
             case .pp_hitline3:
                 primHitLine3()
+            case .pp_halfsphere:
+                primHalfSphere(context: context)
+            case .pp_3dcasting_5:
+                prim3DCasting5()
+            case .pp_heal_low:
+                primPulsingColumns(context: context)
+            case .pp_hermode:
+                primHermode()
+            case 119:
+                primFloorSquare119()
+            case 122:
+                primSTIN3(context: context)
+            case .pp_stin4:
+                primSTIN4(context: context)
+            case 129:
+                primBobbing()
+            case 130:
+                primDriftingSquares(context: context)
+            case 131:
+                primRisingFan2(context: context)
+            case 132:
+                primColorPanel()
+            case 137:
+                primHeightRamp()
+            case 138:
+                primChookgi(context: context)
+            case 140:
+                primFrameFade(context: context)
+            case 142:
+                primWaterFall()
+            case 143:
+                primTextureSpin()
+            case 144:
+                primGI1()
+            case 145:
+                primDriftingSparks(context: context)
+            case 146:
+                primDriftingRings(context: context)
+            case 148:
+                followMasterAndTickSlots()
+            case 149:
+                primWaveHeights()
+            case 150:
+                primFallingPetals2(context: context)
+            case 155:
+                primWanderingFlames(context: context)
+            case 157:
+                primOrbitFade(context: context)
+            case 158:
+                primGI4()
+            case 160:
+                primGlowFollow(context: context)
+            case 166:
+                primFramePhase()
+            case 170:
+                primWanderingFlames2(context: context)
+            case 173:
+                primWaveHeightsSlow(context: context)
             default:
                 break
             }
@@ -163,38 +222,96 @@ public final class EffectPrimitive {
             renderArcBand(into: &collector, assets: assets)
         case .pp_3dsphere:
             renderSphere(into: &collector, assets: assets)
-        case .pp_halfsphere:
-            renderHalfSphere(into: &collector, assets: assets)
-        case .pp_guard:
-            renderSphereCage(into: &collector, assets: assets)
-        case .pp_hermode:
-            renderHermode(into: &collector, assets: assets)
-        case .pp_3dcasting, .pp_3dcasting_2, .pp_3dcasting_3, .pp_3dcasting_4, .pp_3dcasting_5, EffectPrimitiveID(rawValue: 60):
+        case .pp_3dcasting, .pp_3dcasting_2, .pp_3dcasting_3:
             render3DCasting(into: &collector, assets: assets)
-        case .pp_heal_low:
-            render3DCastingLowPolygon(into: &collector, assets: assets)
         case .pp_gi_3:
             render3DCasting2(into: &collector, assets: assets)
         case .pp_grandcross2:
             renderGrandCross2(into: &collector, assets: assets)
-        case .pp_particle_up, .pp_bottom, .pp_bottomout:
-            renderFieldPanel(into: &collector, assets: assets)
         case .pp_linelink:
             renderTube(into: &collector, assets: assets)
+        case .pp_bottom:
+            renderFieldPanel(into: &collector, assets: assets)
         case .pp_bottom2:
             renderColorPlane(into: &collector, assets: assets)
+        case .pp_bottomout, .pp_particle_up:
+            renderFieldPanel(into: &collector, assets: assets)
+        case 60:
+            render3DCasting(into: &collector, assets: assets)
+        case .pp_guard:
+            renderSphereCage(into: &collector, assets: assets)
         case .pp_rect_up:
             renderRectUp(into: &collector, assets: assets)
+        case .pp_3dcasting_4:
+            render3DCasting(into: &collector, assets: assets)
         case .pp_hitline:
             renderHitLine(into: &collector, assets: assets)
         case .pp_magnum2:
             renderMagnum2(into: &collector, assets: assets)
         case .pp_slash1:
             renderSlash1(into: &collector, assets: assets)
+        case 86:
+            renderFloorSquare(into: &collector, assets: assets)
         case .pp_rect_up2:
             renderRectUp2(into: &collector, assets: assets)
+        case 92:
+            renderFloorSquare(into: &collector, assets: assets)
         case .pp_hitline3:
             renderHitLine3(into: &collector, assets: assets)
+        case .pp_halfsphere:
+            renderHalfSphere(into: &collector, assets: assets)
+        case .pp_3dcasting_5:
+            render3DCasting(into: &collector, assets: assets)
+        case .pp_heal_low:
+            render3DCastingLowPolygon(into: &collector, assets: assets)
+        case .pp_hermode:
+            renderHermode(into: &collector, assets: assets)
+        case 119, 122, .pp_stin4:
+            renderFloorSquare2(into: &collector, assets: assets)
+        case 129:
+            renderBobbingRing(into: &collector, assets: assets)
+        case 130:
+            renderFacingQuads(into: &collector, assets: assets)
+        case 131:
+            renderRipple(into: &collector, assets: assets)
+        case 132:
+            renderColorPanel(into: &collector, assets: assets)
+        case 137:
+            renderArcWalls(into: &collector, assets: assets)
+        case 138:
+            renderTwinFacingSquares(into: &collector, assets: assets)
+        case 140:
+            renderTeiFacingSlots(into: &collector, assets: assets)
+        case 142:
+            renderStandingPanels(into: &collector, assets: assets)
+        case 143:
+            renderGroundSquare(into: &collector, assets: assets)
+        case 144:
+            renderGroundArcStep(into: &collector, assets: assets)
+        case 145:
+            renderPillarSquares(into: &collector, assets: assets)
+        case 146:
+            renderTrailingArc(into: &collector, assets: assets)
+        case 148:
+            renderGroundSquareBlend(into: &collector, assets: assets)
+        case 149:
+            renderGroundArcGlow(into: &collector, assets: assets, usesMinimalEffects: lastUsesMinimalEffects)
+        case 150:
+            renderHoverSquares(into: &collector, assets: assets)
+        case 155:
+            renderTwinGlowSquares(into: &collector, assets: assets)
+        case 157:
+            renderGlowSquare(into: &collector, assets: assets)
+        case 158:
+            renderGroundArc(into: &collector, assets: assets)
+        case 160:
+            renderPolygonFrames(into: &collector, assets: assets)
+        case 166:
+            renderFoldingRibbon(into: &collector, assets: assets)
+        case 170:
+            renderTwinGlowSquares(into: &collector, assets: assets)
+        case 173:
+            renderGroundArc2(into: &collector, assets: assets)
         default:
             break
         }
