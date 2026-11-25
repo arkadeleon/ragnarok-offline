@@ -44,10 +44,9 @@ extension EffectPrimitive {
             state.slots[0].alphaB -= 2
         }
 
-        let targetID = state.slots[0].height[0]
         let targetPosition: SIMD3<Float>?
-        if targetID > 0 {
-            targetPosition = context.world.targetState(for: UInt32(targetID))?.effectPosition
+        if let targetObjectID = state.slots[0].targetObjectID {
+            targetPosition = context.world.targetState(for: targetObjectID)?.effectPosition
         } else {
             targetPosition = master?.sourcePosition
         }

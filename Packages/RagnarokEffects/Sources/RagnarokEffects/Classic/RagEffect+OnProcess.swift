@@ -9,6 +9,7 @@ import Foundation
 import simd
 
 extension RagEffect {
+
     // MARK: - Dispatch
 
     public nonisolated static let supportedEffectIDs: [EffectID] = [
@@ -762,15 +763,16 @@ extension RagEffect {
         primitive.state.slots[0].height[4] = 2.0
         primitive.state.slots[0].vecTNow = position
 
-        let resolvedTargetID: UInt32
-        if sourceObjectID != nil || sourcePosition != nil {
-            resolvedTargetID = sourceObjectID ?? 0
+        let resolvedTargetObjectID: EffectTargetID? = if sourceObjectID != nil || sourcePosition != nil {
+            sourceObjectID
         } else {
-            resolvedTargetID = targetObjectID ?? 0
+            targetObjectID
         }
-        primitive.state.slots[0].height[0] = Float(resolvedTargetID)
+        primitive.state.slots[0].targetObjectID = resolvedTargetObjectID
 
-        let targetWorldPos = (resolvedTargetID > 0 ? context.world.targetState(for: resolvedTargetID)?.effectPosition : nil) ?? sourcePosition
+        let targetWorldPos = resolvedTargetObjectID.flatMap {
+            context.world.targetState(for: $0)?.effectPosition
+        } ?? sourcePosition
         if let targetWorldPos {
             primitive.state.slots[0].vecTPre = targetWorldPos
         } else {
