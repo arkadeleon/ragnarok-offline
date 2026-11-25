@@ -186,6 +186,38 @@ public struct EffectPrimitiveBatchCollector {
         )
     }
 
+    public mutating func appendBillboardQuad(
+        anchorEffectPosition: SIMD3<Float>,
+        offset0: SIMD2<Float>,
+        offset1: SIMD2<Float>,
+        offset2: SIMD2<Float>,
+        offset3: SIMD2<Float>,
+        uv0: SIMD2<Float> = SIMD2<Float>(0, 0),
+        uv1: SIMD2<Float> = SIMD2<Float>(1, 0),
+        uv2: SIMD2<Float> = SIMD2<Float>(1, 1),
+        uv3: SIMD2<Float> = SIMD2<Float>(0, 1),
+        color: SIMD4<Float>,
+        texture: (any MTLTexture)?,
+        renderState: EffectPrimitiveRenderState
+    ) {
+        let worldAnchor = EffectSpace.toWorldPosition(anchorEffectPosition)
+        let vertices = [
+            EffectPrimitiveVertex(position: worldAnchor, billboardOffset: offset0, textureCoordinate: uv0, color: color),
+            EffectPrimitiveVertex(position: worldAnchor, billboardOffset: offset1, textureCoordinate: uv1, color: color),
+            EffectPrimitiveVertex(position: worldAnchor, billboardOffset: offset2, textureCoordinate: uv2, color: color),
+            EffectPrimitiveVertex(position: worldAnchor, billboardOffset: offset0, textureCoordinate: uv0, color: color),
+            EffectPrimitiveVertex(position: worldAnchor, billboardOffset: offset2, textureCoordinate: uv2, color: color),
+            EffectPrimitiveVertex(position: worldAnchor, billboardOffset: offset3, textureCoordinate: uv3, color: color),
+        ]
+        appendVertices(
+            vertices,
+            mode: .billboard3D,
+            texture: texture,
+            renderState: renderState,
+            worldCenter: worldAnchor
+        )
+    }
+
     public mutating func appendScreen2DTriangle(
         anchorEffectPosition: SIMD3<Float>,
         offset0: SIMD2<Float>,

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RagnarokCore
 import simd
 
 extension RagEffect {
@@ -14,7 +15,9 @@ extension RagEffect {
 
     public nonisolated static let supportedEffectIDs: [EffectID] = [
         .ef_entry,
+        .ef_soulstrike,
         .ef_bash,
+        .ef_steal,
         .ef_bottom_dissonance,
         .ef_bottom_rokisweil,
         .ef_bottom_whistle,
@@ -63,8 +66,12 @@ extension RagEffect {
         switch effectID {
         case .ef_entry:
             entry(context: context)
+        case .ef_soulstrike:
+            soulStrike(flag: 0, context: context)
         case .ef_bash:
             bash(context: context)
+        case .ef_steal:
+            steal(context: context)
         case .ef_bottom_dissonance:
             texturedMagicRing(texturePath: "effect\\ring_blue.tga", kind: 0, context: context)
         case .ef_bottom_rokisweil:
@@ -257,6 +264,115 @@ extension RagEffect {
             spark.state.alphaSpeed = spark.state.maxAlpha / 10.0
             spark.state.fadeOutCnt = spark.state.duration - spark.state.duration / 3
             spark.state.texturePaths = [sparkTexture]
+        }
+    }
+
+    // MARK: - EF_SOULSTRIKE (15)
+
+    /// Spawns arcing `PP_3DPARTICLESPLINE` (8) sprite missiles with 12-segment trails for `EF_SOULSTRIKE` (15).
+    private func soulStrike(flag: Int8, context: EffectTickContext) {
+        let missileCount = count > 0 ? Int(count) : max(1, min(7, level > 0 ? level : 5))
+        let (total, base, step): (Int, Int, Int) = switch missileCount {
+        case 1: (1, 0, 1)
+        case 2: (2, -90, 180)
+        case 3: (3, -90, 90)
+        case 4: (4, -90, 60)
+        case 5: (5, -90, 45)
+        case 6: (6, -90, 30)
+        case 7: (7, -90, 25)
+        default: (0, 0, 0)
+        }
+
+        let dist = 11
+        let delay = 5
+        guard (stateCnt + delay) % dist == 0, (stateCnt + delay) / dist <= total else {
+            return
+        }
+
+        let rollAngle = base + (stateCnt + delay) / dist * step
+        context.world.playSound(
+            named: "effect\\EF_SoulStrike.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+
+        let spritePath = flag == 0 ? K2L("이팩트\\particle1.spr") : K2L("이팩트\\particle5.spr")
+        let actionPath = flag == 0 ? K2L("이팩트\\particle1.act") : K2L("이팩트\\particle5.act")
+        _ = context.assets?.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+
+        let launchOrigin = sourcePosition ?? position
+        let destination = sourcePosition != nil ? position : (deltaPos == .zero ? position + SIMD3<Float>(25, 0, 0) : deltaPos)
+        let dx = destination.x - launchOrigin.x
+        let dz = destination.z - launchOrigin.z
+        let travelDistance = hypotf(dx, dz)
+        let facingDegrees = atan2f(dx, dz) * (180.0 / .pi)
+
+        let primitive = launchPrimitive(.pp_3dparticlespline)
+        primitive.state.duration = 40
+        primitive.state.deltaPos2 = (launchOrigin - position) + SIMD3<Float>(0, -10.0, 0)
+        primitive.state.radius = travelDistance
+        primitive.angle = facingDegrees
+        primitive.state.longitude = -facingDegrees
+        primitive.state.speed = travelDistance / Float(primitive.state.duration)
+        primitive.state.gravSpeed = 3.5
+        let rise = -(primitive.state.gravSpeed / Float(primitive.state.duration))
+        primitive.state.gravAccel = rise + rise
+        primitive.state.latiSpeed = -2.0
+        let spread = -(primitive.state.latiSpeed / Float(primitive.state.duration))
+        primitive.state.latiAccel = spread + spread
+        primitive.state.roll = Float(rollAngle)
+        primitive.state.transform = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(primitive.state.longitude)))
+        let forward = EffectSpace.transformVector(SIMD3<Float>(0, 0, 1), by: primitive.state.transform)
+        primitive.state.deltaPos3 = forward
+        primitive.state.rotAxis = forward
+        primitive.state.size = 2.75
+        primitive.state.spritePath = spritePath
+        primitive.state.actionPath = actionPath
+        primitive.state.numSegment = 12
+        primitive.position = launchOrigin + SIMD3<Float>(0, -10.0, 0)
+        primitive.initSegment()
+    }
+
+    // MARK: - EF_STEAL (18)
+
+    /// Spawns 10 bouncing `PP_3DPARTICLEGRAVITY` (6) sprite particles for `EF_STEAL` (18).
+    private func steal(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        context.world.playSound(
+            named: "effect\\EF_Steal.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+
+        let spritePath = K2L("이팩트\\particle7.spr")
+        let actionPath = K2L("이팩트\\particle7.act")
+        _ = context.assets?.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+
+        for _ in 0..<10 {
+            let primitive = launchPrimitive(.pp_3dparticlegravity)
+            primitive.state.longitude = Float(Int.random(in: 0..<360))
+            primitive.state.latitude = Float(Int.random(in: 0..<100) - 50)
+            let rotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(primitive.state.longitude)))
+            let rotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(primitive.state.latitude)))
+            primitive.state.transform = rotX * rotY
+            let radial = Float(Int.random(in: 0..<4) + 4)
+            primitive.state.deltaPos3 = EffectSpace.transformVector(SIMD3<Float>(0, 0, radial), by: primitive.state.transform)
+            primitive.state.deltaPos2 = SIMD3<Float>(primitive.state.deltaPos3.x, primitive.state.deltaPos3.y - 10.0, primitive.state.deltaPos3.z)
+            primitive.state.transform = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(primitive.state.longitude)))
+            primitive.state.duration = duration
+            primitive.state.speed = Float(Int.random(in: 0..<50) + 50) / 100.0
+            primitive.state.accel = -(primitive.state.speed / Float(max(1, primitive.state.duration))) * 0.5
+            primitive.state.gravSpeed = -Float(Int.random(in: 0..<90) + 60) / 100.0
+            primitive.state.gravAccel = -(primitive.state.gravSpeed / Float(max(1, primitive.state.duration))) * 2.0
+            primitive.state.size = Float(Int.random(in: 0..<100) + 100) / 100.0
+            primitive.state.sizeSpeed = -(primitive.state.size / Float(max(1, primitive.state.duration)))
+            primitive.state.fadeOutCnt = primitive.state.duration - primitive.state.duration / 3
+            primitive.state.spritePath = spritePath
+            primitive.state.actionPath = actionPath
+            primitive.initSegment()
         }
     }
 

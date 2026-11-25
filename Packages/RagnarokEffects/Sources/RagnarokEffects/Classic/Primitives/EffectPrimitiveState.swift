@@ -186,6 +186,8 @@ public struct EffectPrimitiveState: Sendable {
     public var records: [EffectPrimitiveRecord] = Array(repeating: EffectPrimitiveRecord(), count: EffectPrimitiveState.recordCapacity)
     public var spriteLift: Int64 = 0
 
+    public var spritePath: String?
+    public var actionPath: String?
     public var cooldownSkillID: Int?
 
     public init() {

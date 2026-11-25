@@ -19,6 +19,11 @@ public final class EffectAssetStore {
         let usesMinimalEffects: Bool
     }
 
+    private struct SpriteCacheKey: Hashable {
+        let spritePath: String
+        let actionPath: String
+    }
+
     private struct SendableTexture: @unchecked Sendable {
         let texture: any MTLTexture
     }
@@ -33,6 +38,7 @@ public final class EffectAssetStore {
     public let resourceManager: ResourceManager
 
     private var strAssets: [STRCacheKey : EffectAssetStore.Phase<STREffectAsset>] = [:]
+    private var spriteAssets: [SpriteCacheKey : EffectAssetStore.Phase<EffectSpriteAsset>] = [:]
     private var textures: [String : EffectAssetStore.Phase<SendableTexture>] = [:]
 
     public init(device: any MTLDevice, resourceManager: ResourceManager) {
@@ -112,6 +118,40 @@ public final class EffectAssetStore {
         return false
     }
 
+    public func spriteAsset(spritePath: String, actionPath: String) -> EffectSpriteAsset? {
+        let key = SpriteCacheKey(
+            spritePath: Self.normalizedTextureKey(forPath: spritePath),
+            actionPath: Self.normalizedTextureKey(forPath: actionPath)
+        )
+        switch spriteAssets[key] {
+        case .loaded(let asset):
+            return asset
+        case .inProgress, .failed:
+            return nil
+        case nil:
+            _ = startSpriteLoad(spritePath: spritePath, actionPath: actionPath, key: key)
+            return nil
+        }
+    }
+
+    @discardableResult
+    public func preloadSpriteAsset(spritePath: String, actionPath: String) async -> EffectSpriteAsset? {
+        let key = SpriteCacheKey(
+            spritePath: Self.normalizedTextureKey(forPath: spritePath),
+            actionPath: Self.normalizedTextureKey(forPath: actionPath)
+        )
+        switch spriteAssets[key] {
+        case .loaded(let asset):
+            return asset
+        case .failed:
+            return nil
+        case .inProgress(let task):
+            return await task.value
+        case nil:
+            return await startSpriteLoad(spritePath: spritePath, actionPath: actionPath, key: key).value
+        }
+    }
+
     public func removeAll() {
         for phase in strAssets.values {
             if case .inProgress(let task) = phase {
@@ -119,6 +159,13 @@ public final class EffectAssetStore {
             }
         }
         strAssets.removeAll()
+
+        for phase in spriteAssets.values {
+            if case .inProgress(let task) = phase {
+                task.cancel()
+            }
+        }
+        spriteAssets.removeAll()
 
         for phase in textures.values {
             if case .inProgress(let task) = phase {
@@ -176,6 +223,84 @@ public final class EffectAssetStore {
             return nil
         }
         return SendableTexture(texture: texture)
+    }
+
+    private func startSpriteLoad(
+        spritePath: String,
+        actionPath: String,
+        key: SpriteCacheKey
+    ) -> Task<EffectSpriteAsset?, Never> {
+        let device = self.device
+        let resourceManager = self.resourceManager
+
+        let task = Task<EffectSpriteAsset?, Never> { [weak self] in
+            let asset = await Self.loadSpriteAsset(
+                spritePath: spritePath,
+                actionPath: actionPath,
+                device: device,
+                resourceManager: resourceManager
+            )
+            guard let self, !Task.isCancelled else {
+                return nil
+            }
+            if let asset {
+                self.spriteAssets[key] = .loaded(asset)
+            } else {
+                self.spriteAssets[key] = .failed
+            }
+            return asset
+        }
+
+        spriteAssets[key] = .inProgress(task)
+        return task
+    }
+
+    private nonisolated static func loadSpriteAsset(
+        spritePath: String,
+        actionPath: String,
+        device: any MTLDevice,
+        resourceManager: ResourceManager
+    ) async -> EffectSpriteAsset? {
+        let normalizedSprite = spritePath.replacingOccurrences(of: "\\", with: "/")
+        let normalizedAction = actionPath.replacingOccurrences(of: "\\", with: "/")
+        let sprResourcePath = ResourcePath.spriteDirectory.appending(subpath: normalizedSprite)
+        let actResourcePath = ResourcePath.spriteDirectory.appending(subpath: normalizedAction)
+
+        guard let sprData = try? await resourceManager.contentsOfResource(at: sprResourcePath),
+              !Task.isCancelled,
+              let actData = try? await resourceManager.contentsOfResource(at: actResourcePath),
+              !Task.isCancelled,
+              let spr = try? SPR(data: sprData),
+              let act = try? ACT(data: actData) else {
+            return nil
+        }
+
+        let imagesByType = spr.imagesBySpriteType()
+
+        func convert(_ cgImages: [CGImage?], prefix: String) -> [EffectSpriteAsset.SpriteImage?] {
+            cgImages.enumerated().map { index, cgImage in
+                guard let cgImage else {
+                    return nil
+                }
+                let straightImage = cgImage.unpremultiplyingAlpha() ?? cgImage
+                guard let texture = MetalTextureFactory.makeTexture(
+                    from: straightImage,
+                    device: device,
+                    label: "\(normalizedSprite)[\(prefix):\(index)]"
+                ) else {
+                    return nil
+                }
+                return EffectSpriteAsset.SpriteImage(
+                    texture: texture,
+                    width: straightImage.width,
+                    height: straightImage.height
+                )
+            }
+        }
+
+        let indexed = convert(imagesByType[.indexed] ?? [], prefix: "idx")
+        let rgba = convert(imagesByType[.rgba] ?? [], prefix: "rgba")
+        return EffectSpriteAsset(act: act, indexedSprites: indexed, rgbaSprites: rgba)
     }
 
     private func startSTRLoad(for key: STRCacheKey) -> Task<STREffectAsset?, Never> {

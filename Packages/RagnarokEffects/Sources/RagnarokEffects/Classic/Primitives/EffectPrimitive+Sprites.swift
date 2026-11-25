@@ -12,16 +12,147 @@ import simd
 extension EffectPrimitive {
 
     // MARK: - PP_3DPARTICLE (5)
-    // Prim3DParticle / RenderSegmentSprites2
+
+    /// Motion update for `PP_3DPARTICLE` (5) 3D sprite particle with trail segments at 60Hz.
+    @discardableResult
+    func prim3DParticle(context: EffectTickContext) -> Bool {
+        syncSpriteFrameCount(assets: context.assets)
+        let basePosition = master?.position ?? state.orgPos
+        state.orgPos = basePosition + state.deltaPos2
+
+        return advanceSpriteParticle(
+            origin: state.orgPos,
+            context: context,
+            checksMasterReach: true
+        )
+    }
 
     // MARK: - PP_3DPARTICLEGRAVITY (6)
-    // Prim3DParticleGravity / RenderSegmentSprites2
+
+    /// Motion update for `PP_3DPARTICLEGRAVITY` (6) bouncing gravity sprite particle at 60Hz.
+    @discardableResult
+    func prim3DParticleGravity(context: EffectTickContext) -> Bool {
+        syncSpriteFrameCount(assets: context.assets)
+        let basePosition = master?.position ?? state.orgPos
+        state.orgPos = basePosition + state.deltaPos2
+
+        state.speed = max(0, state.speed + state.accel)
+        state.gravSpeed += state.gravAccel
+
+        state.speed3d = EffectSpace.transformVector(SIMD3<Float>(0, 0, state.speed), by: state.transform)
+        state.deltaPos.x += state.speed3d.x
+        state.deltaPos.y += state.gravSpeed
+        state.deltaPos.z += state.speed3d.z
+
+        position = state.orgPos + state.deltaPos
+        state.size += state.sizeSpeed
+
+        let terrainY = context.world.terrainHeight(atEffectX: position.x, effectZ: position.z)
+        if state.gravSpeed > 0 && position.y > terrainY {
+            state.gravSpeed /= -1.5
+            if state.playWaveType == 1 {
+                let variant = Int.random(in: 1...3)
+                context.world.playSound(
+                    named: "effect\\EF_Coin\(variant).wav",
+                    atWorldPosition: EffectSpace.toWorldPosition(position),
+                    delay: 0
+                )
+            }
+        }
+
+        processAlpha()
+        shiftSegment()
+        return animMotion()
+    }
 
     // MARK: - PP_3DPARTICLEORBIT (7)
-    // Prim3DParticleOrbit / RenderSegmentSprites2
+
+    /// Motion update for `PP_3DPARTICLEORBIT` (7) orbiting 3D sprite particle at 60Hz.
+    @discardableResult
+    func prim3DParticleOrbit(context: EffectTickContext) -> Bool {
+        syncSpriteFrameCount(assets: context.assets)
+        state.orgPos = master?.position ?? state.orgPos
+
+        state.radiusSpeed += state.radiusAccel
+        state.gravSpeed += state.gravAccel
+        state.longSpeed += state.longAccel
+
+        state.radius += state.radiusSpeed
+        state.longitude += state.longSpeed
+        state.deltaPos2.y += state.gravSpeed
+        state.orgPos += state.deltaPos2
+        state.roll += state.rollSpeed
+
+        if state.stateCnt == state.changePoint {
+            state.gravSpeed = state.changeSpeed
+            state.gravAccel = state.changeAccel
+        }
+
+        if state.chRadiSpeed != 0 && !state.chPoint.isEmpty {
+            var index = state.colorCycleIndex
+            if index < 0 || index >= state.chPoint.count {
+                state.colorCycleIndex = 0
+                index = 0
+            }
+            if Float(state.stateCnt) == state.chPoint[index] {
+                if index < state.chVal1.count {
+                    state.radiusSpeed = state.chVal1[index]
+                }
+                if index < state.chVal2.count {
+                    state.radiusAccel = state.chVal2[index]
+                }
+                state.colorCycleIndex = index + 1
+            }
+        }
+
+        state.transform = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(state.longitude)))
+        state.deltaPos = EffectSpace.transformVector(SIMD3<Float>(0, 0, state.radius), by: state.transform)
+        position = state.orgPos + state.deltaPos
+        state.size += state.sizeSpeed
+
+        state.latitude += state.latiSpeed
+        state.transform = EffectSpace.rotationZ(radians: state.latitude) * state.transform
+
+        processAlpha()
+        shiftSegment()
+        return animMotion()
+    }
 
     // MARK: - PP_3DPARTICLESPLINE (8)
-    // Prim3DParticleSpline / RenderSegmentSprites2
+
+    /// Motion update for `PP_3DPARTICLESPLINE` (8) curved arcing sprite projectile at 60Hz.
+    @discardableResult
+    func prim3DParticleSpline(context: EffectTickContext) -> Bool {
+        syncSpriteFrameCount(assets: context.assets)
+        let basePosition = master?.position ?? state.orgPos
+        state.orgPos = basePosition + state.deltaPos2
+
+        state.speed += state.accel
+        state.latitude += state.latiSpeed
+        state.latiSpeed += state.latiAccel
+        state.gravSpeed += state.gravAccel
+
+        state.speed3d = EffectSpace.transformVector(
+            SIMD3<Float>(0, 0, state.speed - state.gravSpeed),
+            by: state.transform
+        )
+        state.rotTransform = Self.axisAngleRotation(
+            axis: state.rotAxis,
+            radians: EffectSpace.radian(degrees: Int(state.roll))
+        )
+        state.deltaPos3 = EffectSpace.transformVector(
+            SIMD3<Float>(0, state.latitude, 0),
+            by: state.rotTransform
+        )
+
+        state.size += state.sizeSpeed
+        state.deltaPos -= state.speed3d
+        position = state.orgPos + state.deltaPos + state.deltaPos3
+
+        processAlpha()
+        shiftSegment()
+        return animMotion()
+    }
 
     // MARK: - PP_3DTEXTURE (15) / PP_3DCROSSTEXTURE (16)
 
@@ -179,7 +310,18 @@ extension EffectPrimitive {
     }
 
     // MARK: - PP_3DPARTICLE_NOMASTER (21)
-    // Prim3DParticleNoMaster / RenderSegmentSprites2
+
+    /// Motion update for `PP_3DPARTICLE_NOMASTER` (21) detached 3D sprite particle at 60Hz.
+    @discardableResult
+    func prim3DParticleNoMaster(context: EffectTickContext) -> Bool {
+        syncSpriteFrameCount(assets: context.assets)
+        let origin = state.orgPos + state.deltaPos2
+        return advanceSpriteParticle(
+            origin: origin,
+            context: context,
+            checksMasterReach: false
+        )
+    }
 
     // MARK: - PP_3DTEXTURE_NOMASTER (22)
 
@@ -261,13 +403,91 @@ extension EffectPrimitive {
     }
 
     // MARK: - PP_SAKURA (40)
-    // PrimSakura / RenderSegmentSprites2
+
+    /// Motion update for `PP_SAKURA` (40) swaying cherry blossom petals at 60Hz.
+    @discardableResult
+    func primSakura(context: EffectTickContext) -> Bool {
+        syncSpriteFrameCount(assets: context.assets)
+        followMaster()
+
+        if state.slots[0].life == 1 {
+            driftSwayAngles(slotIndex: 0)
+            state.slots[0].vecBPre.y += state.slots[0].maxHeight
+
+            let a0 = Int(state.slots[0].height[0])
+            let a2 = Int(state.slots[0].height[2])
+            if state.slots[0].flag1[0] == 0 {
+                state.slots[0].vecBPre.x += 0.24 * EffectSpace.sine(degrees: a0)
+                state.slots[0].vecBPre.z += 0.30 * EffectSpace.sine(degrees: a2)
+            } else {
+                state.slots[0].vecBPre.x += 0.12 * EffectSpace.sine(degrees: a0)
+                state.slots[0].vecBPre.z += 0.15 * EffectSpace.sine(degrees: a2)
+            }
+
+            if state.slots[0].vecBPre.y > position.y {
+                state.slots[0].vecBPre.x = position.x + Float(Int.random(in: 0..<300) - 150)
+                state.slots[0].vecBPre.y = position.y - 200
+                state.slots[0].vecBPre.z = position.z + Float(Int.random(in: 0..<300) - 150)
+            }
+
+            state.deltaPos = state.slots[0].vecBPre
+        }
+
+        position = state.deltaPos
+        if (state.pattern & 0x20) != 0 {
+            state.roll = angle - context.world.cameraYawDegrees
+        }
+
+        processAlpha()
+        shiftSegment()
+        return animMotion()
+    }
 
     // MARK: - Primitive 46
-    // ProcessAlpha, ShiftSegment / RenderSegmentSprites2
+
+    /// Motion update for primitive `46` slot-anchored sprite at 60Hz.
+    func primSpriteSlotFollow(context: EffectTickContext) {
+        syncSpriteFrameCount(assets: context.assets)
+        followMaster()
+
+        if state.slots[0].life == 1 {
+            state.deltaPos = state.slots[0].vecBPre
+        }
+
+        position = state.deltaPos
+        if (state.pattern & 0x20) != 0 {
+            state.roll = angle - context.world.cameraYawDegrees
+        }
+
+        processAlpha()
+        shiftSegment()
+        _ = animMotion()
+    }
 
     // MARK: - Primitive 51
-    // ProcessAlpha, ShiftSegment / RenderSegmentSprites2
+
+    /// Motion update for primitive `51` slot-processed sprite at 60Hz.
+    func primSpriteSlotProcess(context: EffectTickContext) {
+        syncSpriteFrameCount(assets: context.assets)
+        followMaster()
+
+        if state.slots[0].life == 1 {
+            state.slots[0].process += 1
+            if state.slots[0].flag1[4] == 1 {
+                followMaster()
+            } else {
+                position = state.slots[0].vecBPre
+            }
+        }
+
+        if (state.pattern & 0x20) != 0 {
+            state.roll = angle - context.world.cameraYawDegrees
+        }
+
+        processAlpha()
+        shiftSegment()
+        _ = animMotion()
+    }
 
     // MARK: - PP_POKJUK (52)
 
@@ -623,13 +843,183 @@ extension EffectPrimitive {
     }
 
     // MARK: - PP_GHOST (84)
-    // PrimGhost / RenderSegmentSprites2
+
+    /// Motion update for `PP_GHOST` (84) orbiting floating spirit sprite at 60Hz.
+    @discardableResult
+    func primGhost(context: EffectTickContext) -> Bool {
+        syncSpriteFrameCount(assets: context.assets)
+        followMaster()
+
+        if state.slots[0].life == 1 {
+            state.slots[0].process += 1
+            let process = state.slots[0].process
+
+            if process <= 250 && state.slots[0].height[1] > state.alpha {
+                state.alpha += 1.0
+            }
+
+            if process >= 2600 {
+                let step = max(1, Int(state.slots[0].flag1[0]))
+                let period = max(1, 360 / step)
+                if state.slots[0].flag1[2] <= 1 {
+                    if process % period == 0 {
+                        state.slots[0].flag1[0] &+= 1
+                    }
+                    state.slots[0].distance *= 1.002
+                }
+                if process % 15 == 0 {
+                    let drop: Float = state.slots[0].flag1[2] == 2 ? 5.0 : 1.0
+                    state.alpha = max(0, state.alpha - drop)
+                }
+            }
+
+            state.slots[0].riseAngle = (state.slots[0].riseAngle + 3) % 360
+            state.slots[0].rotStart = Int16((Int(state.slots[0].rotStart) + Int(state.slots[0].flag1[0]) + 360) % 360)
+
+            let rotAngle = Int(state.slots[0].rotStart)
+            if state.slots[0].flag1[2] == 1 {
+                let doubled = (rotAngle * 2) % 360
+                state.slots[0].vecBPre.x += state.slots[0].distance * EffectSpace.cosine(degrees: doubled)
+                state.slots[0].vecBPre.z += state.slots[0].distance * EffectSpace.sine(degrees: doubled)
+            } else {
+                state.slots[0].vecBPre.x += state.slots[0].distance * EffectSpace.cosine(degrees: rotAngle)
+                state.slots[0].vecBPre.z += state.slots[0].distance * EffectSpace.sine(degrees: rotAngle)
+            }
+
+            state.slots[0].vecBPre.y += state.slots[0].maxHeight * EffectSpace.sine(degrees: Int(state.slots[0].riseAngle))
+            state.deltaPos = state.slots[0].vecBPre
+
+            var facingAngle = (rotAngle + Int(context.world.cameraYawDegrees)) % 360
+            if facingAngle < 0 {
+                facingAngle += 360
+            }
+
+            if state.slots[0].flag1[2] == 0 {
+                if facingAngle >= 180 {
+                    previousAnimation = 6
+                } else {
+                    previousAnimation = 0
+                }
+            } else {
+                if Int.random(in: 0..<999) == 1 {
+                    previousAnimation = 1
+                }
+                if Int.random(in: 0..<1001) == 0 {
+                    previousAnimation = 0
+                }
+            }
+        }
+
+        position = state.deltaPos
+        processAlpha()
+        shiftSegment()
+        return animMotion()
+    }
 
     // MARK: - PP_SUPERANGEL (85)
-    // PrimSuperAngel / RenderSegmentSprites2
+
+    /// Motion update for `PP_SUPERANGEL` (85) ascending guardian angel sprite at 60Hz.
+    @discardableResult
+    func primSuperAngel(context: EffectTickContext) -> Bool {
+        syncSpriteFrameCount(assets: context.assets)
+        followMaster()
+
+        if state.slots[0].life == 1 {
+            state.slots[0].process += 1
+            let process = state.slots[0].process
+            state.slots[0].vecBNow.y -= 0.1
+            state.slots[0].vecBPre = state.slots[0].vecBNow
+            state.deltaPos = state.slots[0].vecBPre
+
+            let kind = state.slots[0].flag1[0]
+            let subKind = state.slots[0].flag1[1]
+
+            if process < 50 {
+                if subKind == 0 {
+                    if kind == 1 {
+                        if state.alpha < 200 {
+                            state.alpha += 5
+                        }
+                    } else if kind == 10 {
+                        state.alpha = min(255, state.alpha + 10)
+                    } else if kind == 11 {
+                        state.alpha = 0
+                    } else if kind >= 2 {
+                        if process < 30 && state.alpha < 150 {
+                            state.alpha += 5
+                        }
+                    } else if state.alpha < 245 {
+                        state.alpha += 5
+                    }
+                } else if state.alpha < Float(40 - Int(subKind)) {
+                    state.alpha += 1
+                }
+            }
+
+            if process > 30 {
+                if kind == 10 || kind == 11 {
+                    if process % 4 == 0 {
+                        currentMotion = min(15, currentMotion + 1)
+                    }
+                } else {
+                    if process % 3 == 0 {
+                        currentMotion = min(29, currentMotion + 1)
+                    }
+                }
+            }
+
+            if kind == 0 && process > 100 {
+                state.alpha = max(0, state.alpha - 4)
+            } else if kind == 2 && process > 30 {
+                state.alpha = max(0, state.alpha - 3)
+            } else if kind == 3 && process > 60 {
+                state.alpha = max(0, state.alpha - 3)
+            } else if kind == 4 && process > 70 {
+                state.alpha = max(0, state.alpha - 3)
+            } else if kind == 10 && process > 100 {
+                state.alpha = max(0, state.alpha - 6)
+            } else if subKind != 0 && process > 75 {
+                state.alpha = max(0, state.alpha - 3)
+            } else if process > 75 {
+                state.alpha = max(0, state.alpha - 6)
+            }
+        }
+
+        position = state.deltaPos
+        processAlpha()
+        shiftSegment()
+        return true
+    }
 
     // MARK: - PP_KOUENKA (124)
-    // PrimKouenka / RenderSegmentSprites2
+
+    /// Motion update for `PP_KOUENKA` (124) swaying rising flame petals at 60Hz.
+    @discardableResult
+    func primKouenka(context: EffectTickContext) -> Bool {
+        syncSpriteFrameCount(assets: context.assets)
+        followMaster()
+
+        if state.slots[0].life == 1 {
+            driftSwayAngles(slotIndex: 0)
+            state.slots[0].vecBPre.y -= state.slots[0].maxHeight
+            state.alpha = state.alpha < 3 ? 0 : state.alpha - 3
+
+            let a0 = Int(state.slots[0].height[0])
+            let a2 = Int(state.slots[0].height[2])
+            state.slots[0].vecBPre.x += 0.15 * EffectSpace.sine(degrees: a0)
+            state.slots[0].vecBPre.z += 0.15 * EffectSpace.sine(degrees: a2)
+            state.deltaPos = state.slots[0].vecBPre
+        }
+
+        position = state.deltaPos
+        if (state.pattern & 0x20) != 0 {
+            state.roll = angle - context.world.cameraYawDegrees
+        }
+
+        processAlpha()
+        shiftSegment()
+        return animMotion()
+    }
 
     // MARK: - PP_BUBBLE_DROP (127)
 
@@ -715,7 +1105,6 @@ extension EffectPrimitive {
             )
             state.slots[index].vecBPre = base
 
-            // Trigger child effect spawning during tick (keeping collectBatches read-only).
             let rx = state.slots[index].distance
             var v1 = SIMD3<Float>(rx * EffectSpace.cosine(degrees: 45), 0, rx * EffectSpace.sine(degrees: 45))
             var v2 = SIMD3<Float>(rx * EffectSpace.cosine(degrees: 135), 0, rx * EffectSpace.sine(degrees: 135))
@@ -739,18 +1128,552 @@ extension EffectPrimitive {
     }
 
     // MARK: - Primitive 152
-    // PrimWanderingSlots / RenderSegmentSpriteTrail
+
+    /// Motion update for primitive `152` wandering 6-axis sprite trail at 60Hz.
+    @discardableResult
+    func primWanderingSlots(context: EffectTickContext) -> Bool {
+        syncSpriteFrameCount(assets: context.assets)
+
+        for index in 0..<4 where state.slots[index].life == 1 {
+            state.slots[index].process += 1
+            let process = state.slots[index].process
+
+            if state.slots[index].riseAngle >= 360 {
+                state.slots[index].riseAngle -= 360
+            }
+            if state.slots[index].rotStart >= 360 {
+                state.slots[index].rotStart -= 360
+            }
+
+            if process < 30 {
+                if state.slots[index].flag1[0] == 2 {
+                    state.alpha = min(100, state.alpha + 3)
+                } else {
+                    state.alpha = min(10, state.alpha + 1)
+                }
+            } else if process > state.duration - 30 {
+                state.alpha = max(0, state.alpha - 3)
+            }
+
+            for axis in 0..<6 {
+                var current = state.slots[index].height[axis]
+                var target = state.slots[index].height[axis + 6]
+                if target > current {
+                    current += 2.0
+                    if current >= target {
+                        target = Float(Int.random(in: 0..<360))
+                    }
+                    if current >= 360 {
+                        current -= 360
+                    }
+                } else {
+                    current -= 2.0
+                    if current <= target {
+                        target = Float(Int.random(in: 0..<360))
+                    }
+                    if current < 0 {
+                        current += 360
+                    }
+                }
+                state.slots[index].height[axis] = current
+                state.slots[index].height[axis + 6] = target
+            }
+
+            let dist = state.slots[index].distance
+            state.slots[index].vecBPre.x += dist * EffectSpace.cosine(degrees: Int(state.slots[index].height[0]))
+            state.slots[index].vecBPre.y += dist * EffectSpace.sine(degrees: Int(state.slots[index].height[1]))
+            state.slots[index].vecBNow.x -= dist * EffectSpace.cosine(degrees: Int(state.slots[index].height[2]))
+            state.slots[index].vecBNow.y += dist * EffectSpace.sine(degrees: Int(state.slots[index].height[3]))
+            state.slots[index].vecTPre.x -= dist * EffectSpace.cosine(degrees: Int(state.slots[index].height[4]))
+            state.slots[index].vecTPre.y -= dist * EffectSpace.sine(degrees: Int(state.slots[index].height[5]))
+        }
+
+        processAlpha()
+        shiftSegment()
+        return animMotion()
+    }
+
+    /// Geometry submission for primitive `152` multi-pass offset sprite trails with green outer glow.
+    func renderSegmentSpriteTrail(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        guard state.alpha > 0, let spriteAsset = resolveSpriteAsset(assets: assets),
+              let frame = spriteAsset.frame(actionIndex: previousAnimation, frameIndex: currentMotion) else {
+            return
+        }
+
+        let segmentCount = min(max(0, state.numSegment), state.records.count)
+        let alphaNorm = min(1.0, max(0.0, state.alpha / 255.0))
+        let halfAlphaNorm = alphaNorm * 0.5
+        let baseState = EffectPrimitiveRenderState(renderFlag: EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.depthSorted)
+        let glowState = EffectPrimitiveRenderState(srcBlend: .sourceAlpha, dstBlend: .one, depthBias: 0.02)
+
+        for slot in state.slots where slot.life > 0 {
+            let glowColor = slot.flag1[0] == 2
+                ? SIMD4<Float>(10.0 / 255.0, 1.0, 10.0 / 255.0, alphaNorm)
+                : SIMD4<Float>(100.0 / 255.0, 1.0, 100.0 / 255.0, alphaNorm)
+
+            let passes: [(offset: SIMD3<Float>, alpha: Float)] = [
+                (slot.vecBPre, alphaNorm),
+                (slot.vecBNow, halfAlphaNorm),
+                (slot.vecTPre, alphaNorm),
+            ]
+
+            for seg in 0..<segmentCount {
+                let record = state.records[seg]
+                for pass in passes {
+                    let screenOffsetPixels = SIMD2<Float>(pass.offset.x, pass.offset.y)
+                    emitSpriteCells(
+                        frame: frame,
+                        spriteAsset: spriteAsset,
+                        anchorEffectPosition: record.position,
+                        recordScale: record.scale,
+                        extraPixelOffset: screenOffsetPixels,
+                        borderPixels: 0,
+                        colorResolver: { cell in
+                            SIMD4<Float>(cell.color.x, cell.color.y, cell.color.z, pass.alpha)
+                        },
+                        renderState: baseState,
+                        into: &collector
+                    )
+                    emitSpriteCells(
+                        frame: frame,
+                        spriteAsset: spriteAsset,
+                        anchorEffectPosition: record.position,
+                        recordScale: record.scale,
+                        extraPixelOffset: screenOffsetPixels,
+                        borderPixels: 2.0,
+                        colorResolver: { _ in glowColor },
+                        renderState: glowState,
+                        into: &collector
+                    )
+                }
+            }
+        }
+    }
 
     // MARK: - Primitive 153
-    // PrimFadeAlpha / RenderSegmentSpriteGlow
+
+    /// Motion update for primitive `153` fading glow sprite at 60Hz.
+    @discardableResult
+    func primFadeAlpha(context: EffectTickContext) -> Bool {
+        syncSpriteFrameCount(assets: context.assets)
+
+        for index in 0..<4 where state.slots[index].life == 1 {
+            state.slots[index].process += 1
+            let process = state.slots[index].process
+            if process < 50 {
+                state.alpha = min(150, state.alpha + 5)
+            } else if process > state.duration - 50 {
+                state.alpha = max(0, state.alpha - 5)
+            }
+        }
+
+        processAlpha()
+        shiftSegment()
+        return animMotion()
+    }
+
+    /// Geometry submission for primitive `153` sprite with 1px outer glow pass.
+    func renderSegmentSpriteGlow(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        guard state.alpha > 0, let spriteAsset = resolveSpriteAsset(assets: assets),
+              let frame = spriteAsset.frame(actionIndex: previousAnimation, frameIndex: currentMotion) else {
+            return
+        }
+
+        let segmentCount = min(max(0, state.numSegment), state.records.count)
+        let alphaNorm = min(1.0, max(0.0, state.alpha / 255.0))
+        let baseState = EffectPrimitiveRenderState(renderFlag: state.renderFlag)
+        let glowState = EffectPrimitiveRenderState(srcBlend: .sourceAlpha, dstBlend: .one, depthBias: 0.01)
+
+        for slot in state.slots where slot.life > 0 {
+            let glowColor = SIMD4<Float>(1.0, 1.0, 1.0, alphaNorm * 0.5)
+            for seg in 0..<segmentCount {
+                let record = state.records[seg]
+                emitSpriteCells(
+                    frame: frame,
+                    spriteAsset: spriteAsset,
+                    anchorEffectPosition: record.position,
+                    recordScale: record.scale,
+                    extraPixelOffset: .zero,
+                    borderPixels: 0,
+                    colorResolver: { cell in
+                        SIMD4<Float>(cell.color.x, cell.color.y, cell.color.z, alphaNorm)
+                    },
+                    renderState: baseState,
+                    into: &collector
+                )
+                emitSpriteCells(
+                    frame: frame,
+                    spriteAsset: spriteAsset,
+                    anchorEffectPosition: record.position,
+                    recordScale: record.scale,
+                    extraPixelOffset: .zero,
+                    borderPixels: 1.0,
+                    colorResolver: { _ in glowColor },
+                    renderState: glowState,
+                    into: &collector
+                )
+            }
+        }
+    }
 
     // MARK: - Primitive 167
-    // Prim3DSlotParticle / RenderSegmentSprites
+
+    /// Motion update for primitive `167` slot-offset 3D sprite particle at 60Hz.
+    @discardableResult
+    func prim3DSlotParticle(context: EffectTickContext) -> Bool {
+        syncSpriteFrameCount(assets: context.assets)
+
+        for index in 0..<4 where state.slots[index].life == 1 {
+            let step = state.slots[index].height[0]
+            let rot = Int(state.slots[index].rotStart)
+            state.slots[index].vecBNow.x += step * EffectSpace.cosine(degrees: rot)
+            state.slots[index].vecBNow.z += step * EffectSpace.sine(degrees: rot)
+        }
+
+        let basePosition = master?.position ?? state.orgPos
+        state.orgPos = basePosition + state.deltaPos2
+
+        return advanceSpriteParticle(
+            origin: state.orgPos,
+            context: context,
+            checksMasterReach: true
+        )
+    }
+
+    /// Geometry submission for primitive `167` 4-slot segment sprites with 4px additive halo.
+    func renderSegmentSprites(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        guard let spriteAsset = resolveSpriteAsset(assets: assets),
+              let frame = spriteAsset.frame(actionIndex: previousAnimation, frameIndex: currentMotion) else {
+            return
+        }
+
+        let segmentCount = min(max(0, state.numSegment), state.records.count)
+        let primaryState = EffectPrimitiveRenderState(srcBlend: .sourceAlpha, dstBlend: .one, depthBias: 0.01)
+        let haloState = EffectPrimitiveRenderState(srcBlend: .sourceAlpha, dstBlend: .one, depthBias: 0.02)
+        let usesCellColor = (state.pattern & 0x200) != 0
+
+        for slot in state.slots {
+            for seg in 0..<segmentCount {
+                let record = state.records[seg]
+                let anchor = record.position + slot.vecBNow
+                let recordColor = EffectPrimitiveBatchCollector.unpackARGB(record.color)
+
+                emitSpriteCells(
+                    frame: frame,
+                    spriteAsset: spriteAsset,
+                    anchorEffectPosition: anchor,
+                    recordScale: record.scale,
+                    extraPixelOffset: .zero,
+                    borderPixels: 0,
+                    colorResolver: { cell in
+                        guard usesCellColor else {
+                            return recordColor
+                        }
+                        let alpha = cell.color.w * 0.85
+                        if slot.flag1[0] == 1 {
+                            return SIMD4<Float>(55.0 / 255.0, 55.0 / 255.0, 1.0, alpha)
+                        }
+                        return SIMD4<Float>(cell.color.x, cell.color.y, cell.color.z, alpha)
+                    },
+                    renderState: primaryState,
+                    into: &collector
+                )
+
+                emitSpriteCells(
+                    frame: frame,
+                    spriteAsset: spriteAsset,
+                    anchorEffectPosition: anchor,
+                    recordScale: record.scale,
+                    extraPixelOffset: .zero,
+                    borderPixels: 4.0,
+                    colorResolver: { cell in
+                        guard usesCellColor else {
+                            return recordColor
+                        }
+                        let alpha = cell.color.w * 0.5
+                        if slot.flag1[0] == 1 {
+                            return SIMD4<Float>(55.0 / 255.0, 55.0 / 255.0, 1.0, alpha)
+                        }
+                        return SIMD4<Float>(cell.color.x, 55.0 / 255.0, 55.0 / 255.0, alpha)
+                    },
+                    renderState: haloState,
+                    into: &collector
+                )
+            }
+        }
+    }
 
     // MARK: - Primitive 168
-    // FollowMasterAndAdvance / RenderGroundSprite
+
+    /// Geometry submission for primitive `168` terrain-snapped sprite with vertical lift.
+    func renderGroundSprite(
+        into collector: inout EffectPrimitiveBatchCollector,
+        world: any EffectWorldContext,
+        assets: EffectAssetStore?
+    ) {
+        if let master {
+            position = master.position
+        }
+
+        guard let spriteAsset = resolveSpriteAsset(assets: assets),
+              let frame = spriteAsset.frame(actionIndex: previousAnimation, frameIndex: currentMotion) else {
+            return
+        }
+
+        let groundY = world.terrainHeight(atEffectX: position.x, effectZ: position.z)
+        let anchor = SIMD3<Float>(position.x, groundY, position.z)
+        let alphaScale = min(1.0, max(0.0, state.alpha / 255.0))
+        let liftPixels = Float(state.spriteLift)
+        let renderState = EffectPrimitiveRenderState(renderFlag: state.renderFlag)
+
+        emitSpriteCells(
+            frame: frame,
+            spriteAsset: spriteAsset,
+            anchorEffectPosition: anchor,
+            recordScale: 1.0,
+            extraPixelOffset: SIMD2<Float>(0, -liftPixels),
+            borderPixels: 0,
+            colorResolver: { cell in
+                SIMD4<Float>(cell.color.x, cell.color.y, cell.color.z, cell.color.w * alphaScale)
+            },
+            renderState: renderState,
+            into: &collector
+        )
+    }
+
+    // MARK: - Shared Segment Sprite Renderer (`RenderSegmentSprites2`)
+
+    /// Geometry submission shared by `PP_3DPARTICLE*`, `PP_SAKURA`, `46`, `51`, `PP_GHOST`, `PP_SUPERANGEL`, `PP_KOUENKA`.
+    func renderSegmentSprites2(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        let segmentCount = min(max(0, state.numSegment), state.records.count)
+        guard segmentCount > 0,
+              let spriteAsset = resolveSpriteAsset(assets: assets),
+              let frame = spriteAsset.frame(actionIndex: previousAnimation, frameIndex: currentMotion) else {
+            return
+        }
+
+        let renderState = EffectPrimitiveRenderState(renderFlag: state.renderFlag)
+        let usesCellColor = (state.pattern & 0x200) != 0
+
+        for seg in 0..<segmentCount {
+            let record = state.records[seg]
+            let recordColor = EffectPrimitiveBatchCollector.unpackARGB(record.color)
+            emitSpriteCells(
+                frame: frame,
+                spriteAsset: spriteAsset,
+                anchorEffectPosition: record.position,
+                recordScale: record.scale,
+                extraPixelOffset: .zero,
+                borderPixels: 0,
+                colorResolver: { cell in
+                    usesCellColor ? cell.color : recordColor
+                },
+                renderState: renderState,
+                into: &collector
+            )
+        }
+    }
 
     // MARK: - Shared Helpers
+
+    func resolveSpriteAsset(assets: EffectAssetStore?) -> EffectSpriteAsset? {
+        guard let assets,
+              let spritePath = state.spritePath,
+              let actionPath = state.actionPath else {
+            return nil
+        }
+        return assets.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+    }
+
+    func syncSpriteFrameCount(assets: EffectAssetStore?) {
+        if let asset = resolveSpriteAsset(assets: assets) {
+            let count = asset.frameCount(forAction: previousAnimation)
+            if count > 0 {
+                spriteFrameCount = count
+            }
+        }
+    }
+
+    private func emitSpriteCells(
+        frame: EffectSpriteAsset.Frame,
+        spriteAsset: EffectSpriteAsset,
+        anchorEffectPosition: SIMD3<Float>,
+        recordScale: Float,
+        extraPixelOffset: SIMD2<Float>,
+        borderPixels: Float,
+        colorResolver: (EffectSpriteAsset.Cell) -> SIMD4<Float>,
+        renderState: EffectPrimitiveRenderState,
+        into collector: inout EffectPrimitiveBatchCollector
+    ) {
+        let pixelToWorld: Float = 1.0 / 35.0
+
+        for cell in frame.cells {
+            guard let spriteImage = spriteAsset.spriteImage(
+                spriteType: cell.spriteType,
+                spriteIndex: cell.spriteIndex
+            ) else {
+                continue
+            }
+
+            let halfW = (Float(spriteImage.width) * 0.5 * cell.scale.x * recordScale + borderPixels) * pixelToWorld
+            let halfH = (Float(spriteImage.height) * 0.5 * cell.scale.y * recordScale + borderPixels) * pixelToWorld
+            let centerX = (cell.offset.x * recordScale + extraPixelOffset.x) * pixelToWorld
+            let centerY = -(cell.offset.y * recordScale + extraPixelOffset.y) * pixelToWorld
+
+            let radians = -(cell.rotationDegrees + state.roll) * (.pi / 180.0)
+            let c = cosf(radians)
+            let s = sinf(radians)
+            func corner(_ x: Float, _ y: Float) -> SIMD2<Float> {
+                SIMD2<Float>(centerX + x * c - y * s, centerY + x * s + y * c)
+            }
+
+            let u0: Float = cell.isMirrored ? 1.0 : 0.0
+            let u1: Float = cell.isMirrored ? 0.0 : 1.0
+
+            collector.appendBillboardQuad(
+                anchorEffectPosition: anchorEffectPosition,
+                offset0: corner(-halfW, halfH),
+                offset1: corner(halfW, halfH),
+                offset2: corner(halfW, -halfH),
+                offset3: corner(-halfW, -halfH),
+                uv0: SIMD2<Float>(u0, 0),
+                uv1: SIMD2<Float>(u1, 0),
+                uv2: SIMD2<Float>(u1, 1),
+                uv3: SIMD2<Float>(u0, 1),
+                color: colorResolver(cell),
+                texture: spriteImage.texture,
+                renderState: renderState
+            )
+        }
+    }
+
+    private func advanceSpriteParticle(
+        origin: SIMD3<Float>,
+        context: EffectTickContext,
+        checksMasterReach: Bool
+    ) -> Bool {
+        let frame = state.stateCnt
+        if frame == state.changePoint {
+            state.speed3d = state.changeSpeed3d
+            state.deltaPosAccel = state.changeAccel3d
+        }
+
+        state.speed += state.accel
+        state.sizeSpeed += state.sizeAccel
+
+        if (state.pattern & 0x400) != 0 {
+            state.speed3d += state.deltaPosAccel
+            state.deltaPos += state.speed3d
+            state.roll += state.rollSpeed
+            state.size += state.sizeSpeed
+        } else if (state.pattern & 1) != 0 || frame > state.fadeInCnt {
+            state.speed3d = EffectSpace.transformVector(SIMD3<Float>(0, 0, state.speed), by: state.transform)
+            state.deltaPos += state.speed3d
+            state.roll += state.rollSpeed
+            state.size += state.sizeSpeed
+        }
+
+        if (state.pattern & 2) != 0 && state.chCnt > 0 {
+            if frame % Int(state.chCnt) == 0 {
+                state.chCnt = UInt32(Int.random(in: 0..<8) + 12)
+                var dx = Float(Int.random(in: 0..<5) + 5) / 100.0
+                var dz = Float(Int.random(in: 0..<5) + 5) / 100.0
+                if Int.random(in: 0..<2) == 0 {
+                    dx = -dx
+                }
+                if Int.random(in: 0..<2) == 0 {
+                    dz = -dz
+                }
+                state.deltaPos3.x = dx
+                state.deltaPos3.z = dz
+            }
+            state.deltaPos.x += state.deltaPos3.x
+        }
+
+        if (state.pattern & 4) != 0 && state.chCnt > 0 && frame % Int(state.chCnt) == 0 {
+            state.speed = Float(Int.random(in: 0..<35) + 15) / 100.0
+            state.longitude = (state.longitude - 40.0) + Float(Int.random(in: 0..<80))
+            state.latitude = (state.latitude - 40.0) + Float(Int.random(in: 0..<80))
+            let rotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(state.longitude)))
+            let rotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(state.latitude)))
+            state.transform = rotX * rotY
+            state.chCnt = UInt32(Int.random(in: 0..<10) + 5)
+        }
+
+        if (state.pattern & 8) != 0 && state.chCnt > 0 && frame % Int(state.chCnt) == 0 {
+            state.longitude = (state.longitude - 5.0) + Float(Int.random(in: 0..<10))
+            state.latitude = (state.latitude - 5.0) + Float(Int.random(in: 0..<10))
+            let rotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(state.latitude)))
+            let rotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(state.longitude)))
+            state.transform = rotY * rotX
+            state.chCnt = UInt32(Int.random(in: 0..<15) + 5)
+        }
+
+        position = origin + state.deltaPos
+
+        if checksMasterReach && (state.pattern & 0x100) != 0, let master {
+            let dx = master.deltaPos.x - position.x
+            let dz = master.deltaPos.z - position.z
+            if hypotf(dx, dz) <= 3.0 {
+                return false
+            }
+        }
+
+        if (state.pattern & 0x20) != 0 {
+            state.roll = angle - context.world.cameraYawDegrees
+        }
+
+        processAlpha()
+        shiftSegment()
+        return animMotion()
+    }
+
+    private func driftSwayAngles(slotIndex: Int) {
+        for i in stride(from: 0, to: 4, by: 2) {
+            if state.slots[slotIndex].height[i + 1] > state.slots[slotIndex].height[i] {
+                state.slots[slotIndex].height[i] = min(359, state.slots[slotIndex].height[i] + 3)
+                if state.slots[slotIndex].height[i] > state.slots[slotIndex].height[i + 1] {
+                    let bound = max(1, Int(state.slots[slotIndex].height[i]))
+                    state.slots[slotIndex].height[i + 1] = Float(Int.random(in: 0..<bound))
+                }
+            } else {
+                state.slots[slotIndex].height[i] = max(0, state.slots[slotIndex].height[i] - 2)
+                if state.slots[slotIndex].height[i] <= state.slots[slotIndex].height[i + 1] {
+                    let bound = max(1, Int(state.slots[slotIndex].height[i]))
+                    state.slots[slotIndex].height[i + 1] = Float(359 - Int.random(in: 0..<bound))
+                }
+            }
+        }
+    }
+
+    static func axisAngleRotation(axis: SIMD3<Float>, radians: Float) -> simd_float4x4 {
+        let len = simd_length(axis)
+        guard len > 1e-6 else {
+            return matrix_identity_float4x4
+        }
+        let u = axis / len
+        let c = cosf(radians)
+        let s = sinf(radians)
+        let t = 1.0 - c
+        return simd_float4x4(
+            SIMD4<Float>(t * u.x * u.x + c, t * u.x * u.y + s * u.z, t * u.x * u.z - s * u.y, 0),
+            SIMD4<Float>(t * u.x * u.y - s * u.z, t * u.y * u.y + c, t * u.y * u.z + s * u.x, 0),
+            SIMD4<Float>(t * u.x * u.z + s * u.y, t * u.y * u.z - s * u.x, t * u.z * u.z + c, 0),
+            SIMD4<Float>(0, 0, 0, 1)
+        )
+    }
 
     private func advanceTextured3DPrimitive(
         origin: SIMD3<Float>,

@@ -6,7 +6,10 @@
 //
 
 import Foundation
+import Metal
+import RagnarokCore
 import RagnarokRendering
+import RagnarokResources
 import simd
 import Testing
 @testable import RagnarokEffects
@@ -1704,5 +1707,168 @@ struct EffectPrimitiveTests {
         var c151 = EffectPrimitiveBatchCollector(fog: Fog())
         p151.collectBatches(into: &c151, world: world, assets: nil)
         #expect(c151.batches.isEmpty)
+    }
+
+    @Test("ACT/SPR sprite primitives (5..8/21/40/46/51/84/85/124/152/153/167/168) and EF_STEAL / EF_SOULSTRIKE")
+    func spritePrimitivesAndDemoEffects() async throws {
+        let particle1Spr = K2L("이팩트\\particle1.spr")
+        let particle1Act = K2L("이팩트\\particle1.act")
+        let particle7Spr = K2L("이팩트\\particle7.spr")
+        let particle7Act = K2L("이팩트\\particle7.act")
+
+        let assets: EffectAssetStore?
+        let p1CellCount: Int
+        let p7CellCount: Int
+        if let device = MTLCreateSystemDefaultDevice() {
+            let store = EffectAssetStore(device: device, resourceManager: .testing)
+            let p1Asset = try #require(await store.preloadSpriteAsset(spritePath: particle1Spr, actionPath: particle1Act))
+            let p7Asset = try #require(await store.preloadSpriteAsset(spritePath: particle7Spr, actionPath: particle7Act))
+            p1CellCount = try #require(p1Asset.frame(actionIndex: 0, frameIndex: 0)?.cells.filter { $0.spriteIndex >= 0 }.count)
+            p7CellCount = try #require(p7Asset.frame(actionIndex: 0, frameIndex: 0)?.cells.filter { $0.spriteIndex >= 0 }.count)
+            #expect(p1CellCount > 0)
+            #expect(p7CellCount > 0)
+            assets = store
+        } else {
+            assets = nil
+            p1CellCount = 0
+            p7CellCount = 0
+        }
+
+        let world = MockWorldContext()
+
+        // EF_STEAL (18): plays sound and launches 10 bouncing PP_3DPARTICLEGRAVITY primitives
+        let stealManager = EffectManager(assetStore: assets)
+        #expect(stealManager.spawn(EffectSpawnRequest(effectID: .ef_steal, worldPosition: .zero)) != nil)
+        stealManager.stepOneTick(world: world)
+        #expect(world.playedSounds == ["effect\\EF_Steal.wav"])
+        let stealHost = stealManager.activeEffects.first as? RagEffect
+        #expect(stealHost?.primitives.count == 10)
+        #expect(stealHost?.primitives.allSatisfy { $0.id == .pp_3dparticlegravity } == true)
+        if assets != nil {
+            let stealPayloads = stealManager.collectPrimitivePayloads(fog: Fog(), world: world)
+            #expect(stealPayloads.allSatisfy { $0.mode == .billboard3D })
+            #expect(stealPayloads.reduce(0) { $0 + $1.vertices.count } == 10 * p7CellCount * 6)
+        }
+
+        // EF_SOULSTRIKE (15): fires first 12-segment PP_3DPARTICLESPLINE missile on stateCnt == 6
+        world.playedSounds.removeAll()
+        let soulManager = EffectManager(assetStore: assets)
+        #expect(soulManager.spawn(
+            EffectSpawnRequest(
+                effectID: .ef_soulstrike,
+                worldPosition: .zero,
+                sourceWorldPosition: SIMD3<Float>(-5, 0, -5)
+            )
+        ) != nil)
+        for _ in 0..<7 {
+            soulManager.stepOneTick(world: world)
+        }
+        #expect(world.playedSounds == ["effect\\EF_SoulStrike.wav"])
+        let soulHost = soulManager.activeEffects.first as? RagEffect
+        #expect(soulHost?.primitives.count == 1)
+        let missile = soulHost?.primitives.first
+        #expect(missile?.id == .pp_3dparticlespline)
+        #expect(missile?.state.numSegment == 12)
+        if assets != nil {
+            let soulPayloads = soulManager.collectPrimitivePayloads(fog: Fog(), world: world)
+            #expect(soulPayloads.reduce(0) { $0 + $1.vertices.count } == 12 * p1CellCount * 6)
+        }
+
+        let dummyHost = RagEffect(id: UUID(), request: EffectSpawnRequest(effectID: .ef_none, worldPosition: .zero), duration: 200)
+        let ctx = EffectTickContext(world: world, assets: assets, currentTick: 0, usesMinimalEffects: false) { _ in }
+
+        // RenderSegmentSprites2 family: 5, 6, 7, 8, 21, 40, 46, 51, 84, 85, 124
+        let segmentSpriteIDs: [EffectPrimitiveID] = [
+            .pp_3dparticle,
+            .pp_3dparticlegravity,
+            .pp_3dparticleorbit,
+            .pp_3dparticlespline,
+            .pp_3dparticle_nomaster,
+            .pp_sakura,
+            46,
+            51,
+            .pp_ghost,
+            .pp_superangel,
+            .pp_kouenka,
+        ]
+        for primID in segmentSpriteIDs {
+            let prim = dummyHost.launchPrimitive(primID)
+            prim.state.spritePath = particle1Spr
+            prim.state.actionPath = particle1Act
+            prim.state.numSegment = 3
+            prim.state.alpha = 200
+            prim.state.slots[0].life = 1
+            prim.state.slots[0].flag1[0] = 1
+            prim.state.slots[0].distance = 1.0
+            prim.state.slots[0].maxHeight = 1.0
+            prim.initSegment()
+            prim.tick(context: ctx)
+            #expect(prim.isAlive)
+            if let assets {
+                var collector = EffectPrimitiveBatchCollector(fog: Fog())
+                prim.collectBatches(into: &collector, world: world, assets: assets)
+                #expect(collector.batches.reduce(0) { $0 + $1.vertices.count } == 3 * p1CellCount * 6)
+            }
+        }
+
+        // 152: RenderSegmentSpriteTrail (1 active slot * 3 offset passes * 2 layers = 6 quads per cell)
+        let p152 = dummyHost.launchPrimitive(152)
+        p152.state.spritePath = particle1Spr
+        p152.state.actionPath = particle1Act
+        p152.state.alpha = 80
+        p152.state.slots[0].life = 1
+        p152.state.slots[0].distance = 0.5
+        p152.initSegment()
+        p152.tick(context: ctx)
+        #expect(p152.isAlive)
+        if let assets {
+            var c152 = EffectPrimitiveBatchCollector(fog: Fog())
+            p152.collectBatches(into: &c152, world: world, assets: assets)
+            #expect(c152.batches.reduce(0) { $0 + $1.vertices.count } == 6 * p1CellCount * 6)
+        }
+
+        // 153: RenderSegmentSpriteGlow (1 active slot * 2 layers = 2 quads per cell)
+        let p153 = dummyHost.launchPrimitive(153)
+        p153.state.spritePath = particle1Spr
+        p153.state.actionPath = particle1Act
+        p153.state.alpha = 100
+        p153.state.slots[0].life = 1
+        p153.initSegment()
+        p153.tick(context: ctx)
+        #expect(p153.isAlive)
+        if let assets {
+            var c153 = EffectPrimitiveBatchCollector(fog: Fog())
+            p153.collectBatches(into: &c153, world: world, assets: assets)
+            #expect(c153.batches.reduce(0) { $0 + $1.vertices.count } == 2 * p1CellCount * 6)
+        }
+
+        // 167: RenderSegmentSprites (4 slots * 1 segment * 2 layers = 8 quads per cell)
+        let p167 = dummyHost.launchPrimitive(167)
+        p167.state.spritePath = particle1Spr
+        p167.state.actionPath = particle1Act
+        p167.state.alpha = 200
+        p167.state.slots[0].life = 1
+        p167.initSegment()
+        p167.tick(context: ctx)
+        #expect(p167.isAlive)
+        if let assets {
+            var c167 = EffectPrimitiveBatchCollector(fog: Fog())
+            p167.collectBatches(into: &c167, world: world, assets: assets)
+            #expect(c167.batches.reduce(0) { $0 + $1.vertices.count } == 8 * p1CellCount * 6)
+        }
+
+        // 168: RenderGroundSprite (1 terrain-snapped quad per cell with lift)
+        let p168 = dummyHost.launchPrimitive(168)
+        p168.state.spritePath = particle1Spr
+        p168.state.actionPath = particle1Act
+        p168.state.alpha = 200
+        p168.state.spriteLift = 12
+        p168.tick(context: ctx)
+        #expect(p168.isAlive)
+        if let assets {
+            var c168 = EffectPrimitiveBatchCollector(fog: Fog())
+            p168.collectBatches(into: &c168, world: world, assets: assets)
+            #expect(c168.batches.reduce(0) { $0 + $1.vertices.count } == p1CellCount * 6)
+        }
     }
 }

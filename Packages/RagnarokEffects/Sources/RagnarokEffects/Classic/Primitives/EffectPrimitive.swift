@@ -95,6 +95,26 @@ public final class EffectPrimitive {
                 prim2DFlash()
             case .pp_2dcircle:
                 prim2DCircle()
+            case .pp_3dparticle:
+                if !prim3DParticle(context: context) {
+                    isAlive = false
+                    return
+                }
+            case .pp_3dparticlegravity:
+                if !prim3DParticleGravity(context: context) {
+                    isAlive = false
+                    return
+                }
+            case .pp_3dparticleorbit:
+                if !prim3DParticleOrbit(context: context) {
+                    isAlive = false
+                    return
+                }
+            case .pp_3dparticlespline:
+                if !prim3DParticleSpline(context: context) {
+                    isAlive = false
+                    return
+                }
             case .pp_3dcircle:
                 prim3DCircle()
             case .pp_3dcylinder:
@@ -111,6 +131,11 @@ public final class EffectPrimitive {
                 }
             case .pp_3dcylinderhalf:
                 if !prim3DCylinderHalf() {
+                    isAlive = false
+                    return
+                }
+            case .pp_3dparticle_nomaster:
+                if !prim3DParticleNoMaster(context: context) {
                     isAlive = false
                     return
                 }
@@ -131,12 +156,21 @@ public final class EffectPrimitive {
                 primGrandCross2()
             case .pp_linelink:
                 primLineLink(context: context)
+            case .pp_sakura:
+                if !primSakura(context: context) {
+                    isAlive = false
+                    return
+                }
+            case 46:
+                primSpriteSlotFollow(context: context)
             case .pp_bottom:
                 primBottom(context: context)
             case .pp_bottom2:
                 primBottom2()
             case .pp_bottomout:
                 primBottomOut(context: context)
+            case 51:
+                primSpriteSlotProcess(context: context)
             case .pp_pokjuk:
                 primPokJuk(context: context)
             case .pp_throwitem:
@@ -161,6 +195,16 @@ public final class EffectPrimitive {
                 primSlash1()
             case .pp_colorpaper:
                 primColorPaper()
+            case .pp_ghost:
+                if !primGhost(context: context) {
+                    isAlive = false
+                    return
+                }
+            case .pp_superangel:
+                if !primSuperAngel(context: context) {
+                    isAlive = false
+                    return
+                }
             case 86:
                 primFloorSquare86()
             case 89:
@@ -183,6 +227,11 @@ public final class EffectPrimitive {
                 primFloorSquare119()
             case 122:
                 primSTIN3(context: context)
+            case .pp_kouenka:
+                if !primKouenka(context: context) {
+                    isAlive = false
+                    return
+                }
             case .pp_stin4:
                 primSTIN4(context: context)
             case .pp_bubble_drop:
@@ -229,6 +278,16 @@ public final class EffectPrimitive {
                 primFallingPetals2(context: context)
             case 151:
                 primSpiralFade(context: context)
+            case 152:
+                if !primWanderingSlots(context: context) {
+                    isAlive = false
+                    return
+                }
+            case 153:
+                if !primFadeAlpha(context: context) {
+                    isAlive = false
+                    return
+                }
             case 154:
                 primFlashFade(context: context)
             case 155:
@@ -253,6 +312,17 @@ public final class EffectPrimitive {
                 primScrollTexture()
             case 166:
                 primFramePhase()
+            case 167:
+                if !prim3DSlotParticle(context: context) {
+                    isAlive = false
+                    return
+                }
+            case 168:
+                syncSpriteFrameCount(assets: context.assets)
+                if !followMasterAndAdvance() {
+                    isAlive = false
+                    return
+                }
             case 170:
                 primWanderingFlames2(context: context)
             case 173:
@@ -291,6 +361,8 @@ public final class EffectPrimitive {
             render2DFlash(into: &collector, assets: assets)
         case .pp_2dcircle:
             render2DCircle(into: &collector, assets: assets)
+        case .pp_3dparticle, .pp_3dparticlegravity, .pp_3dparticleorbit, .pp_3dparticlespline:
+            renderSegmentSprites2(into: &collector, assets: assets)
         case .pp_3dcircle:
             renderRecordRings(into: &collector, assets: assets)
         case .pp_3dcylinder:
@@ -301,6 +373,8 @@ public final class EffectPrimitive {
             render3DTexture(into: &collector, assets: assets)
         case .pp_3dcrosstexture:
             renderCrossPlanes(into: &collector, assets: assets)
+        case .pp_3dparticle_nomaster:
+            renderSegmentSprites2(into: &collector, assets: assets)
         case .pp_3dtexture_nomaster:
             render3DTextureNoMaster(into: &collector, assets: assets)
         case .pp_3dcasting, .pp_3dcasting_2, .pp_3dcasting_3:
@@ -311,12 +385,16 @@ public final class EffectPrimitive {
             renderGrandCross2(into: &collector, assets: assets)
         case .pp_linelink:
             renderTube(into: &collector, assets: assets)
+        case .pp_sakura, 46:
+            renderSegmentSprites2(into: &collector, assets: assets)
         case .pp_bottom:
             renderFieldPanel(into: &collector, assets: assets)
         case .pp_bottom2:
             renderColorPlane(into: &collector, assets: assets)
         case .pp_bottomout:
             renderFieldPanel(into: &collector, assets: assets)
+        case 51:
+            renderSegmentSprites2(into: &collector, assets: assets)
         case .pp_pokjuk:
             renderTrailSquares(into: &collector, assets: assets)
         case .pp_throwitem, .pp_particle_up:
@@ -339,6 +417,8 @@ public final class EffectPrimitive {
             renderSlash1(into: &collector, assets: assets)
         case .pp_colorpaper:
             renderColorPaper(into: &collector, assets: assets)
+        case .pp_ghost, .pp_superangel:
+            renderSegmentSprites2(into: &collector, assets: assets)
         case 86:
             renderFloorSquare(into: &collector, assets: assets)
         case 89:
@@ -357,7 +437,11 @@ public final class EffectPrimitive {
             render3DCastingLowPolygon(into: &collector, assets: assets)
         case .pp_hermode:
             renderHermode(into: &collector, assets: assets)
-        case 119, 122, .pp_stin4:
+        case 119, 122:
+            renderFloorSquare2(into: &collector, assets: assets)
+        case .pp_kouenka:
+            renderSegmentSprites2(into: &collector, assets: assets)
+        case .pp_stin4:
             renderFloorSquare2(into: &collector, assets: assets)
         case .pp_bubble_drop:
             renderFieldPanel(into: &collector, assets: assets)
@@ -401,6 +485,10 @@ public final class EffectPrimitive {
             renderGroundArcGlow(into: &collector, assets: assets, usesMinimalEffects: lastUsesMinimalEffects)
         case 150:
             renderHoverSquares(into: &collector, assets: assets)
+        case 152:
+            renderSegmentSpriteTrail(into: &collector, assets: assets)
+        case 153:
+            renderSegmentSpriteGlow(into: &collector, assets: assets)
         case 154:
             renderBladeFins(into: &collector, assets: assets)
         case 155:
@@ -425,6 +513,10 @@ public final class EffectPrimitive {
             renderCurvedFanTrail(into: &collector, assets: assets)
         case 166:
             renderFoldingRibbon(into: &collector, assets: assets)
+        case 167:
+            renderSegmentSprites(into: &collector, assets: assets)
+        case 168:
+            renderGroundSprite(into: &collector, world: world, assets: assets)
         case 170:
             renderTwinGlowSquares(into: &collector, assets: assets)
         case 173:
