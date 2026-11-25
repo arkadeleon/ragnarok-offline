@@ -72,6 +72,20 @@ public final class EffectPrimitive {
             }
         } else {
             switch id {
+            case .pp_3dcircle:
+                prim3DCircle()
+            case .pp_3dcylinder:
+                if !prim3DCylinder() {
+                    isAlive = false
+                    return
+                }
+            case .pp_3dcylinderhalf:
+                if !prim3DCylinderHalf() {
+                    isAlive = false
+                    return
+                }
+            case .pp_3dsphere:
+                prim3DSphere()
             case EffectPrimitiveID(rawValue: 60), .pp_heal_low:
                 primPulsingColumns(context: context)
             case .pp_particle_up:
@@ -102,6 +116,12 @@ public final class EffectPrimitive {
         }
 
         switch id {
+        case .pp_3dcircle:
+            renderRecordRings(into: &collector, assets: assets)
+        case .pp_3dcylinder:
+            renderArcBand(into: &collector, assets: assets)
+        case .pp_3dsphere:
+            renderSphere(into: &collector, assets: assets)
         case EffectPrimitiveID(rawValue: 60):
             render3DCasting(into: &collector, assets: assets)
         case .pp_particle_up:

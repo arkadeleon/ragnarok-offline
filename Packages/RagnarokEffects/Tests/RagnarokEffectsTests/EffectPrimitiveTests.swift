@@ -472,4 +472,136 @@ struct EffectPrimitiveTests {
         }
         #expect(ragEffect?.primitives.count == 5)
     }
+
+    @Test("EF_ENTRY spawns dual counter-rotating 3D cylinders, renders 18 arc-band quads, and retires cleanly")
+    func entryVerticalSlice() {
+        #expect(EffectManager.hasBuiltInDefinition(for: .ef_entry))
+        #expect(EffectManager.builtInEffectIDs.contains(.ef_entry))
+
+        let world = MockWorldContext()
+        let manager = EffectManager()
+
+        let spawnID = manager.spawn(EffectSpawnRequest(effectID: .ef_entry, worldPosition: SIMD3<Float>(1, 0, 2)))
+        #expect(spawnID != nil)
+
+        // Tick 1: launches outer (arcAngle 36 => 10 quads) and inner (arcAngle 45 => 8 quads) pp_3dcylinder.
+        manager.stepOneTick(world: world)
+        let ragEffect = manager.activeEffects.first as? RagEffect
+        #expect(ragEffect?.primitives.count == 2)
+        let outer = ragEffect?.primitives[0]
+        let inner = ragEffect?.primitives[1]
+        #expect(outer?.id == .pp_3dcylinder)
+        #expect(inner?.id == .pp_3dcylinder)
+        #expect(outer?.state.texturePaths == ["effect\\ring_blue.tga"])
+        #expect(inner?.state.texturePaths == ["effect\\ring_blue.tga"])
+        #expect(outer?.state.arcAngle == 36.0)
+        #expect(inner?.state.arcAngle == 45.0)
+        // Prim3DCylinder adds longSpeed to longitude twice per tick (-20 and +20 on tick 1).
+        #expect(approxEqual(outer?.state.longitude ?? 0, -20.0))
+        #expect(approxEqual(inner?.state.longitude ?? 0, 20.0))
+        #expect(approxEqual(outer?.state.outerSize ?? 0, 6.08))
+        #expect(approxEqual(outer?.state.heightSize ?? 0, 6.4))
+
+        let payloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(payloads.count == 1)
+        #expect(payloads[0].vertices.count == 18 * 6)
+        #expect(payloads[0].renderState.srcBlend == .sourceAlpha)
+        #expect(payloads[0].renderState.dstBlend == .oneMinusSourceAlpha)
+        #expect(payloads[0].renderState.depthTest == true)
+
+        // Both cylinders have duration 55; after 55 total ticks they retire while host retires at default lifetime.
+        for _ in 0..<55 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(ragEffect?.primitives.isEmpty == true)
+
+        for _ in 0..<100 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(!manager.hasEffects)
+    }
+
+    @Test("EF_WATERBALL3 drives two 3D circle rings and one 3D sphere with distinct lifetimes and render flags")
+    func waterBall3VerticalSlice() {
+        #expect(EffectManager.hasBuiltInDefinition(for: .ef_waterball3))
+        #expect(EffectManager.builtInEffectIDs.contains(.ef_waterball3))
+
+        let world = MockWorldContext()
+        let manager = EffectManager()
+
+        let spawnID = manager.spawn(EffectSpawnRequest(effectID: .ef_waterball3, worldPosition: .zero))
+        #expect(spawnID != nil)
+
+        // Tick 1: plays waterball sound and launches ring1 (dur 30), sphere (dur 30), ring2 (dur 20).
+        manager.stepOneTick(world: world)
+        #expect(world.playedSounds == ["effect\\wizard_waterball_chulung.wav"])
+        let ragEffect = manager.activeEffects.first as? RagEffect
+        #expect(ragEffect?.primitives.count == 3)
+        #expect(ragEffect?.primitives[0].id == .pp_3dcircle)
+        #expect(ragEffect?.primitives[1].id == .pp_3dsphere)
+        #expect(ragEffect?.primitives[2].id == .pp_3dcircle)
+
+        // Two no-depth rings (10 quads each = 20 quads) + one depth-tested sphere (5 * 10 = 50 quads) = 70 quads.
+        let payloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        let totalVertices = payloads.reduce(0) { $0 + $1.vertices.count }
+        #expect(totalVertices == 70 * 6)
+        let noDepthVertices = payloads.filter { !$0.renderState.depthTest }.reduce(0) { $0 + $1.vertices.count }
+        let depthVertices = payloads.filter { $0.renderState.depthTest }.reduce(0) { $0 + $1.vertices.count }
+        #expect(noDepthVertices == 20 * 6)
+        #expect(depthVertices == 50 * 6)
+
+        // After 20 total ticks, the second ring (duration 20) retires while ring1 and sphere remain.
+        for _ in 0..<19 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(ragEffect?.primitives.count == 2)
+        let remainingPayloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        let remainingVertices = remainingPayloads.reduce(0) { $0 + $1.vertices.count }
+        #expect(remainingVertices == 60 * 6)
+
+        // After 30 total ticks, all 3 primitives have retired.
+        for _ in 0..<10 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(ragEffect?.primitives.isEmpty == true)
+    }
+
+    @Test("PP_3DCYLINDERHALF advances longitude once per tick and shrinks outerSize at fadeOutCnt")
+    func cylinderHalfMotion() {
+        let request = EffectSpawnRequest(effectID: .ef_entry, worldPosition: .zero)
+        let host = RagEffect(id: UUID(), request: request, duration: 50)
+        let prim = host.launchPrimitive(.pp_3dcylinderhalf)
+        prim.state.duration = 20
+        prim.state.fadeOutCnt = 10
+        prim.state.pattern = 1
+        prim.state.longSpeed = 5.0
+        prim.state.outerSize = 11.0
+        prim.state.outerSpeed = 0
+        prim.state.heightSize = 4.0
+        prim.state.heightSpeed = 1.0
+        prim.state.maxHeightSize = 4.5
+
+        let context = EffectTickContext(
+            world: MockWorldContext(),
+            assets: nil,
+            currentTick: 0,
+            usesMinimalEffects: false,
+            onSpawnChild: { _ in }
+        )
+        prim.tick(context: context)
+        #expect(prim.isAlive)
+        // Longitude advances once per tick (not twice like pp_3dcylinder), and heightSize clamps to maxHeightSize.
+        #expect(approxEqual(prim.state.longitude, 5.0))
+        #expect(approxEqual(prim.state.heightSize, 4.5))
+
+        // Advance to stateCnt == fadeOutCnt (10): pattern & 1 sets outerSpeed = -(outerSize / (20 - 10 + 1)) = -1.0.
+        prim.state.stateCnt = 10
+        prim.prim3DCylinderHalf()
+        #expect(approxEqual(prim.state.outerSpeed, -1.0))
+        #expect(approxEqual(prim.state.outerSize, 11.0))
+
+        // Next tick shrinks outerSize by 1.0.
+        prim.prim3DCylinderHalf()
+        #expect(approxEqual(prim.state.outerSize, 10.0))
+    }
 }
