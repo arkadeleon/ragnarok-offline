@@ -10,270 +10,6 @@ import simd
 
 extension EffectPrimitive {
 
-    // MARK: - Primitive 60 / PP_HEAL_LOW (110)
-
-    /// Motion update for primitive `60` and `PP_HEAL_LOW` (110) pulsing casting columns at 60Hz.
-    func primPulsingColumns(context: EffectTickContext) {
-        if state.slots[0].flag1[0] == 33 {
-            let yaw = Int(context.world.cameraYawDegrees)
-            state.slots[2].alphaT = Int16(((360 - yaw) % 360 + 360) % 360)
-        }
-
-        followMaster()
-
-        for index in 0..<4 where state.slots[index].life == 1 {
-            state.slots[index].process += 1
-            let process = state.slots[index].process
-
-            let mode = state.slots[index].flag1[0]
-            if mode == 1 {
-                state.slots[index].rotStart += Int16(index + 8)
-            } else if mode == 2 {
-                state.slots[index].rotStart += Int16(index < 2 ? index + 4 : index + 2)
-            } else if mode == 3 {
-                state.slots[index].rotStart += Int16(index + 6)
-            }
-
-            if state.slots[index].rotStart >= 360 {
-                state.slots[index].rotStart -= 360
-            }
-
-            if process < Int(state.slots[index].alphaT) || state.slots[index].alphaT < 0 {
-                if process < 16 {
-                    if mode == 2 {
-                        state.slots[index].alphaB += 3
-                    } else if mode == 3 {
-                        state.slots[index].alphaB += 2
-                    } else {
-                        state.slots[index].alphaB += 5
-                    }
-
-                    if state.slots[index].alphaB > 180 {
-                        state.slots[index].alphaB = 180
-                    }
-                }
-            } else {
-                state.slots[index].alphaB -= 2
-                if state.slots[index].alphaB < 0 {
-                    state.slots[index].alphaB = 0
-                }
-            }
-
-            let maxHeight = state.slots[index].maxHeight
-            for column in 0..<21 {
-                let kind = state.slots[index].flag1[column]
-                if kind == 0 || kind == 33 {
-                    let phase: Int
-                    if index == 0 {
-                        phase = column * 34 + process * 4
-                    } else if index == 1 {
-                        phase = column * 34 + process * 3
-                    } else {
-                        phase = (process + column * 17) * 2
-                    }
-
-                    var height = maxHeight * 0.25 * EffectSpace.sine(degrees: phase % 360) + maxHeight * 0.75
-                    if process <= 90 {
-                        height *= EffectSpace.sine(degrees: process)
-                    }
-                    state.slots[index].height[column] = max(0, height)
-                } else if kind == 1 || kind == 3 {
-                    var height = maxHeight
-                    if process <= 90 {
-                        height *= EffectSpace.sine(degrees: process)
-                    }
-                    state.slots[index].height[column] = height
-                } else if kind == 2 {
-                    if process <= 45 {
-                        state.slots[index].height[column] = maxHeight * EffectSpace.sine(degrees: process * 4)
-                    } else {
-                        state.slots[index].height[column] = 0
-                    }
-                }
-            }
-        }
-    }
-
-    // MARK: - 3D Casting Renderer (PP_3DCASTING (23) .. PP_3DCASTING_5 (107), 60)
-
-    /// Geometry submission for `PP_3DCASTING` (23) .. `PP_3DCASTING_5` (107) and primitive `60` 20-segment casting rings.
-    func render3DCasting(
-        into collector: inout EffectPrimitiveBatchCollector,
-        assets: EffectAssetStore?
-    ) {
-        for slot in state.slots where slot.life == 1 {
-            let fullDisplayAngle = Int(slot.fullDisplayAngle)
-            let basicAngle = fullDisplayAngle / 20
-            guard basicAngle > 0 else {
-                continue
-            }
-
-            let baseY: Float
-            if slot.maxHeight == 6.001 {
-                baseY = -2.0
-            } else if slot.maxHeight == 24.001 {
-                baseY = -1.0
-            } else {
-                baseY = 0.0
-            }
-
-            let riseAngle = Int(slot.riseAngle)
-            let riseCos = EffectSpace.cosine(degrees: riseAngle)
-            let riseSin = EffectSpace.sine(degrees: riseAngle)
-
-            var order = 0
-            var vec1 = SIMD3<Float>.zero
-            var vec3 = SIMD3<Float>.zero
-
-            var count = 0
-            while count <= fullDisplayAngle {
-                var angle = (count + Int(slot.rotStart)) % 360
-                if angle < 0 {
-                    angle += 360
-                }
-                if fullDisplayAngle == 360 && order == 20 {
-                    angle = Int(slot.rotStart)
-                }
-
-                let cs1 = EffectSpace.cosine(degrees: angle)
-                let sn1 = EffectSpace.sine(degrees: angle)
-
-                let vec2 = SIMD3<Float>(
-                    cs1 * slot.distance,
-                    baseY,
-                    sn1 * slot.distance
-                )
-
-                let height = slot.height[order]
-                let rx = riseCos * height
-                let ry = riseSin * height
-
-                let vec4 = SIMD3<Float>(
-                    vec2.x + cs1 * rx,
-                    baseY - ry,
-                    vec2.z + sn1 * rx
-                )
-
-                if order > 0 {
-                    renderTeiRect(
-                        into: &collector,
-                        assets: assets,
-                        texPart: order - 1,
-                        alphaB: slot.alphaB,
-                        alphaT: slot.alphaB,
-                        v1: vec1,
-                        v2: vec2,
-                        v3: vec4,
-                        v4: vec3,
-                        textureIndex: 0
-                    )
-                }
-
-                order += 1
-                if order >= 21 {
-                    order = 20
-                }
-
-                vec1 = vec2
-                vec3 = vec4
-                count += basicAngle
-            }
-        }
-    }
-
-    // MARK: - PP_HEAL_LOW (110)
-
-    /// Geometry submission for `PP_HEAL_LOW` (110) 10-segment low-polygon casting rings.
-    func render3DCastingLowPolygon(
-        into collector: inout EffectPrimitiveBatchCollector,
-        assets: EffectAssetStore?
-    ) {
-        let heartAngle = Int(state.slots[2].alphaT)
-        let heartCos = EffectSpace.cosine(degrees: heartAngle)
-        let heartSin = EffectSpace.sine(degrees: heartAngle)
-
-        for slot in state.slots where slot.life == 1 {
-            let fullDisplayAngle = Int(slot.fullDisplayAngle)
-            let basicAngle = fullDisplayAngle / 10
-            guard basicAngle > 0 else {
-                continue
-            }
-
-            let riseAngle = Int(slot.riseAngle)
-            let riseCos = EffectSpace.cosine(degrees: riseAngle)
-            let riseSin = EffectSpace.sine(degrees: riseAngle)
-
-            var order = 0
-            var vec1 = SIMD3<Float>.zero
-            var vec3 = SIMD3<Float>.zero
-
-            var count = 0
-            while count <= fullDisplayAngle {
-                var angle = (Int(slot.rotStart) + count) % 360
-                if angle < 0 {
-                    angle += 360
-                }
-                if fullDisplayAngle == 360 && order == 10 {
-                    angle = Int(slot.rotStart)
-                }
-
-                let cs1 = EffectSpace.cosine(degrees: angle)
-                let sn1 = EffectSpace.sine(degrees: angle)
-
-                var vec2 = SIMD3<Float>(
-                    cs1 * slot.distance,
-                    0,
-                    sn1 * slot.distance
-                )
-
-                let height = slot.height[order]
-                let rx = riseCos * height
-                let ry = riseSin * height
-
-                var vec4 = SIMD3<Float>(
-                    vec2.x + cs1 * rx,
-                    -ry,
-                    vec2.z + sn1 * rx
-                )
-
-                if slot.vecBNow.y == 1234.5 {
-                    let lx = slot.vecBNow.x
-                    let lz = slot.vecBNow.z
-                    let offsetX = heartCos * lx - heartSin * lz
-                    let offsetZ = heartSin * lx + heartCos * lz
-                    vec2.x += offsetX
-                    vec4.x += offsetX
-                    vec2.z += offsetZ
-                    vec4.z += offsetZ
-                }
-
-                if order > 0 {
-                    renderTeiRect(
-                        into: &collector,
-                        assets: assets,
-                        texPart: order - 1,
-                        alphaB: slot.alphaB,
-                        alphaT: slot.alphaB,
-                        v1: vec1,
-                        v2: vec2,
-                        v3: vec4,
-                        v4: vec3,
-                        textureIndex: 0
-                    )
-                }
-
-                order += 1
-                if order > 10 {
-                    order = 10
-                }
-
-                vec1 = vec2
-                vec3 = vec4
-                count += basicAngle
-            }
-        }
-    }
-
     // MARK: - PP_3DCASTING (23)
 
     /// Motion update for `PP_3DCASTING` (23) rising casting rings at 60Hz.
@@ -460,75 +196,11 @@ extension EffectPrimitive {
         }
     }
 
-    // MARK: - PP_3DCASTING_4 (65)
+    // MARK: - Primitive 30
+    // Render3DCasting
 
-    /// Motion update for `PP_3DCASTING_4` (65) inward-shrinking casting rings at 60Hz.
-    func prim3DCasting4() {
-        followMaster()
-
-        for index in 0..<4 where state.slots[index].life == 1 {
-            state.slots[index].process += 1
-            state.slots[index].distance -= 0.05
-
-            if state.slots[index].distance <= 0 {
-                state.slots[index].distance = 10.0
-                state.slots[index].alphaB = 0
-            }
-
-            state.slots[index].riseAngle = Int16(90.0 - state.slots[index].distance * 9.0)
-            state.slots[index].maxHeight = state.slots[index].distance
-
-            if state.slots[index].process >= state.duration - 40 {
-                state.slots[index].alphaB = max(0, state.slots[index].alphaB - 3)
-            } else if state.slots[index].alphaB < 70 {
-                state.slots[index].alphaB += 1
-            }
-
-            let height = max(0, state.slots[index].maxHeight)
-            for sample in 0..<21 where state.slots[index].flag1[sample] == 0 {
-                state.slots[index].height[sample] = height
-            }
-        }
-    }
-
-    // MARK: - PP_3DCASTING_5 (107)
-
-    /// Motion update for `PP_3DCASTING_5` (107) outward-expanding wave rings at 60Hz.
-    func prim3DCasting5() {
-        followMaster()
-
-        for index in 0..<4 where state.slots[index].life == 1 {
-            state.slots[index].process += 1
-            state.slots[index].distance += 0.1
-
-            if state.slots[index].distance >= 13.0 {
-                state.slots[index].distance = 3.0
-                state.slots[index].alphaB = 0
-                if state.slots[index].process > 50 {
-                    state.slots[index].life = 0
-                }
-            }
-
-            var maxHeight = state.slots[index].distance - 3.0
-            if maxHeight > 5.0 {
-                maxHeight = 10.0 - maxHeight
-                if state.slots[index].alphaB > 0 {
-                    state.slots[index].alphaB -= 2
-                }
-            } else {
-                state.slots[index].alphaB += 2
-            }
-
-            maxHeight *= 2.0
-            state.slots[index].maxHeight = maxHeight
-            state.slots[index].riseAngle = Int16(90.0 - (state.slots[index].distance - 3.0) * 5.0)
-
-            let height = max(0, maxHeight)
-            for sample in 0..<21 where state.slots[index].flag1[sample] == 0 {
-                state.slots[index].height[sample] = height
-            }
-        }
-    }
+    // MARK: - Primitive 31
+    // PrimWaveSpin / Render3DCasting
 
     // MARK: - PP_GI_3 (34)
 
@@ -648,6 +320,376 @@ extension EffectPrimitive {
 
                 state.slots[ec].vecTPre = top
                 state.slots[ec].vecBPre = base
+                count += basicAngle
+            }
+        }
+    }
+
+    // MARK: - Primitive 36
+    // Render3DCasting_LowPolygon
+
+    // MARK: - Primitive 41
+    // Render3DCasting
+
+    // MARK: - Primitive 50
+    // Render3DCasting
+
+    // MARK: - Primitive 57
+    // Render3DCasting
+
+    // MARK: - Primitive 60
+
+    /// Motion update for primitive `60` and `PP_HEAL_LOW` (110) pulsing casting columns at 60Hz.
+    func primPulsingColumns(context: EffectTickContext) {
+        if state.slots[0].flag1[0] == 33 {
+            let yaw = Int(context.world.cameraYawDegrees)
+            state.slots[2].alphaT = Int16(((360 - yaw) % 360 + 360) % 360)
+        }
+
+        followMaster()
+
+        for index in 0..<4 where state.slots[index].life == 1 {
+            state.slots[index].process += 1
+            let process = state.slots[index].process
+
+            let mode = state.slots[index].flag1[0]
+            if mode == 1 {
+                state.slots[index].rotStart += Int16(index + 8)
+            } else if mode == 2 {
+                state.slots[index].rotStart += Int16(index < 2 ? index + 4 : index + 2)
+            } else if mode == 3 {
+                state.slots[index].rotStart += Int16(index + 6)
+            }
+
+            if state.slots[index].rotStart >= 360 {
+                state.slots[index].rotStart -= 360
+            }
+
+            if process < Int(state.slots[index].alphaT) || state.slots[index].alphaT < 0 {
+                if process < 16 {
+                    if mode == 2 {
+                        state.slots[index].alphaB += 3
+                    } else if mode == 3 {
+                        state.slots[index].alphaB += 2
+                    } else {
+                        state.slots[index].alphaB += 5
+                    }
+
+                    if state.slots[index].alphaB > 180 {
+                        state.slots[index].alphaB = 180
+                    }
+                }
+            } else {
+                state.slots[index].alphaB -= 2
+                if state.slots[index].alphaB < 0 {
+                    state.slots[index].alphaB = 0
+                }
+            }
+
+            let maxHeight = state.slots[index].maxHeight
+            for column in 0..<21 {
+                let kind = state.slots[index].flag1[column]
+                if kind == 0 || kind == 33 {
+                    let phase: Int
+                    if index == 0 {
+                        phase = column * 34 + process * 4
+                    } else if index == 1 {
+                        phase = column * 34 + process * 3
+                    } else {
+                        phase = (process + column * 17) * 2
+                    }
+
+                    var height = maxHeight * 0.25 * EffectSpace.sine(degrees: phase % 360) + maxHeight * 0.75
+                    if process <= 90 {
+                        height *= EffectSpace.sine(degrees: process)
+                    }
+                    state.slots[index].height[column] = max(0, height)
+                } else if kind == 1 || kind == 3 {
+                    var height = maxHeight
+                    if process <= 90 {
+                        height *= EffectSpace.sine(degrees: process)
+                    }
+                    state.slots[index].height[column] = height
+                } else if kind == 2 {
+                    if process <= 45 {
+                        state.slots[index].height[column] = maxHeight * EffectSpace.sine(degrees: process * 4)
+                    } else {
+                        state.slots[index].height[column] = 0
+                    }
+                }
+            }
+        }
+    }
+
+    // MARK: - Primitive 63
+    // PrimRippleRings / Render3DCasting
+
+    // MARK: - PP_3DCASTING_4 (65)
+
+    /// Motion update for `PP_3DCASTING_4` (65) inward-shrinking casting rings at 60Hz.
+    func prim3DCasting4() {
+        followMaster()
+
+        for index in 0..<4 where state.slots[index].life == 1 {
+            state.slots[index].process += 1
+            state.slots[index].distance -= 0.05
+
+            if state.slots[index].distance <= 0 {
+                state.slots[index].distance = 10.0
+                state.slots[index].alphaB = 0
+            }
+
+            state.slots[index].riseAngle = Int16(90.0 - state.slots[index].distance * 9.0)
+            state.slots[index].maxHeight = state.slots[index].distance
+
+            if state.slots[index].process >= state.duration - 40 {
+                state.slots[index].alphaB = max(0, state.slots[index].alphaB - 3)
+            } else if state.slots[index].alphaB < 70 {
+                state.slots[index].alphaB += 1
+            }
+
+            let height = max(0, state.slots[index].maxHeight)
+            for sample in 0..<21 where state.slots[index].flag1[sample] == 0 {
+                state.slots[index].height[sample] = height
+            }
+        }
+    }
+
+    // MARK: - PP_ASURACASTING (68)
+    // PrimAsuraCasting / RenderHaloLayers
+
+    // MARK: - PP_3DCASTING_5 (107)
+
+    /// Motion update for `PP_3DCASTING_5` (107) outward-expanding wave rings at 60Hz.
+    func prim3DCasting5() {
+        followMaster()
+
+        for index in 0..<4 where state.slots[index].life == 1 {
+            state.slots[index].process += 1
+            state.slots[index].distance += 0.1
+
+            if state.slots[index].distance >= 13.0 {
+                state.slots[index].distance = 3.0
+                state.slots[index].alphaB = 0
+                if state.slots[index].process > 50 {
+                    state.slots[index].life = 0
+                }
+            }
+
+            var maxHeight = state.slots[index].distance - 3.0
+            if maxHeight > 5.0 {
+                maxHeight = 10.0 - maxHeight
+                if state.slots[index].alphaB > 0 {
+                    state.slots[index].alphaB -= 2
+                }
+            } else {
+                state.slots[index].alphaB += 2
+            }
+
+            maxHeight *= 2.0
+            state.slots[index].maxHeight = maxHeight
+            state.slots[index].riseAngle = Int16(90.0 - (state.slots[index].distance - 3.0) * 5.0)
+
+            let height = max(0, maxHeight)
+            for sample in 0..<21 where state.slots[index].flag1[sample] == 0 {
+                state.slots[index].height[sample] = height
+            }
+        }
+    }
+
+    // MARK: - PP_FLOWERCAST (108)
+    // PrimFlowerCast / Render3DCasting
+
+    // MARK: - PP_HEAL_LOW (110)
+
+    /// Geometry submission for `PP_HEAL_LOW` (110) 10-segment low-polygon casting rings.
+    func render3DCastingLowPolygon(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        let heartAngle = Int(state.slots[2].alphaT)
+        let heartCos = EffectSpace.cosine(degrees: heartAngle)
+        let heartSin = EffectSpace.sine(degrees: heartAngle)
+
+        for slot in state.slots where slot.life == 1 {
+            let fullDisplayAngle = Int(slot.fullDisplayAngle)
+            let basicAngle = fullDisplayAngle / 10
+            guard basicAngle > 0 else {
+                continue
+            }
+
+            let riseAngle = Int(slot.riseAngle)
+            let riseCos = EffectSpace.cosine(degrees: riseAngle)
+            let riseSin = EffectSpace.sine(degrees: riseAngle)
+
+            var order = 0
+            var vec1 = SIMD3<Float>.zero
+            var vec3 = SIMD3<Float>.zero
+
+            var count = 0
+            while count <= fullDisplayAngle {
+                var angle = (Int(slot.rotStart) + count) % 360
+                if angle < 0 {
+                    angle += 360
+                }
+                if fullDisplayAngle == 360 && order == 10 {
+                    angle = Int(slot.rotStart)
+                }
+
+                let cs1 = EffectSpace.cosine(degrees: angle)
+                let sn1 = EffectSpace.sine(degrees: angle)
+
+                var vec2 = SIMD3<Float>(
+                    cs1 * slot.distance,
+                    0,
+                    sn1 * slot.distance
+                )
+
+                let height = slot.height[order]
+                let rx = riseCos * height
+                let ry = riseSin * height
+
+                var vec4 = SIMD3<Float>(
+                    vec2.x + cs1 * rx,
+                    -ry,
+                    vec2.z + sn1 * rx
+                )
+
+                if slot.vecBNow.y == 1234.5 {
+                    let lx = slot.vecBNow.x
+                    let lz = slot.vecBNow.z
+                    let offsetX = heartCos * lx - heartSin * lz
+                    let offsetZ = heartSin * lx + heartCos * lz
+                    vec2.x += offsetX
+                    vec4.x += offsetX
+                    vec2.z += offsetZ
+                    vec4.z += offsetZ
+                }
+
+                if order > 0 {
+                    renderTeiRect(
+                        into: &collector,
+                        assets: assets,
+                        texPart: order - 1,
+                        alphaB: slot.alphaB,
+                        alphaT: slot.alphaB,
+                        v1: vec1,
+                        v2: vec2,
+                        v3: vec4,
+                        v4: vec3,
+                        textureIndex: 0
+                    )
+                }
+
+                order += 1
+                if order > 10 {
+                    order = 10
+                }
+
+                vec1 = vec2
+                vec3 = vec4
+                count += basicAngle
+            }
+        }
+    }
+
+    // MARK: - Primitive 113
+    // Render3DCasting
+
+    // MARK: - PP_ACIDDEMON (118)
+    // PrimAcidDemon / Render3DCasting
+
+    // MARK: - Primitive 139
+    // PrimBreathingWave / Render3DCasting
+
+    // MARK: - Primitive 147
+    // PrimRisingFan / RenderHaloLayers
+
+    // MARK: - Primitive 169
+    // Render3DCasting_LowPolygon
+
+    // MARK: - Shared Renderers
+
+    /// Geometry submission for `PP_3DCASTING` (23) .. `PP_3DCASTING_5` (107) and primitive `60` 20-segment casting rings.
+    func render3DCasting(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        for slot in state.slots where slot.life == 1 {
+            let fullDisplayAngle = Int(slot.fullDisplayAngle)
+            let basicAngle = fullDisplayAngle / 20
+            guard basicAngle > 0 else {
+                continue
+            }
+
+            let baseY: Float
+            if slot.maxHeight == 6.001 {
+                baseY = -2.0
+            } else if slot.maxHeight == 24.001 {
+                baseY = -1.0
+            } else {
+                baseY = 0.0
+            }
+
+            let riseAngle = Int(slot.riseAngle)
+            let riseCos = EffectSpace.cosine(degrees: riseAngle)
+            let riseSin = EffectSpace.sine(degrees: riseAngle)
+
+            var order = 0
+            var vec1 = SIMD3<Float>.zero
+            var vec3 = SIMD3<Float>.zero
+
+            var count = 0
+            while count <= fullDisplayAngle {
+                var angle = (count + Int(slot.rotStart)) % 360
+                if angle < 0 {
+                    angle += 360
+                }
+                if fullDisplayAngle == 360 && order == 20 {
+                    angle = Int(slot.rotStart)
+                }
+
+                let cs1 = EffectSpace.cosine(degrees: angle)
+                let sn1 = EffectSpace.sine(degrees: angle)
+
+                let vec2 = SIMD3<Float>(
+                    cs1 * slot.distance,
+                    baseY,
+                    sn1 * slot.distance
+                )
+
+                let height = slot.height[order]
+                let rx = riseCos * height
+                let ry = riseSin * height
+
+                let vec4 = SIMD3<Float>(
+                    vec2.x + cs1 * rx,
+                    baseY - ry,
+                    vec2.z + sn1 * rx
+                )
+
+                if order > 0 {
+                    renderTeiRect(
+                        into: &collector,
+                        assets: assets,
+                        texPart: order - 1,
+                        alphaB: slot.alphaB,
+                        alphaT: slot.alphaB,
+                        v1: vec1,
+                        v2: vec2,
+                        v3: vec4,
+                        v4: vec3,
+                        textureIndex: 0
+                    )
+                }
+
+                order += 1
+                if order >= 21 {
+                    order = 20
+                }
+
+                vec1 = vec2
+                vec3 = vec4
                 count += basicAngle
             }
         }

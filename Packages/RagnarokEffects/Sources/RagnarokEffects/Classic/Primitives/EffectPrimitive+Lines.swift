@@ -9,6 +9,12 @@ import simd
 
 extension EffectPrimitive {
 
+    // MARK: - PP_3DFLASH (19)
+    // ProcessAlpha / RenderGlowDisc
+
+    // MARK: - PP_3DLINE (20)
+    // RenderGlowDisc
+
     // MARK: - PP_LINELINK (38)
 
     /// Motion update for `PP_LINELINK` (38), mirroring `CEffectPrim::PrimLineLink` at 60Hz.
@@ -89,7 +95,7 @@ extension EffectPrimitive {
                 let finish = SIMD3<Float>(end.x + offsetX, end.y + up, end.z + offsetZ)
 
                 if step > 0 {
-                    let (alpha, blendSelector, red, green, blue) = Self.tubeStyle(
+                    let (alpha, blendSelector, red, green, blue) = tubeStyle(
                         pass: pass,
                         kind: slot.height[4],
                         alphaB: slot.alphaB
@@ -114,6 +120,36 @@ extension EffectPrimitive {
                 prevStart = start
                 prevEnd = finish
             }
+        }
+    }
+
+    private func tubeStyle(
+        pass: Int,
+        kind: Float,
+        alphaB: Int16
+    ) -> (alpha: Int16, blendSelector: Int16, red: UInt8, green: UInt8, blue: UInt8) {
+        if pass == 0 {
+            switch kind {
+            case 2.0:
+                return (alphaB, 0, 0, 100, 150)
+            case 3.0:
+                return (alphaB, 0, 255, 89, 182)
+            case 4.0:
+                return (alphaB / 2, 1, 50, 50, 50)
+            default:
+                return (alphaB, 0, 255, 255, 0)
+            }
+        }
+
+        switch kind {
+        case 2.0:
+            return (Int16(truncatingIfNeeded: Int(alphaB) * 2), 0, 255, 50, 0)
+        case 3.0:
+            return (Int16(truncatingIfNeeded: Int(alphaB) * 2), 0, 255, 89, 182)
+        case 4.0:
+            return (alphaB, 1, 50, 50, 50)
+        default:
+            return (Int16(truncatingIfNeeded: Int(alphaB) * 2), 0, 0, 0, 255)
         }
     }
 
@@ -154,8 +190,8 @@ extension EffectPrimitive {
             }
 
             for segment in 0..<20 {
-                let pointA = Self.hitLinePoint(slot: slot, index: segment)
-                let pointB = Self.hitLinePoint(slot: slot, index: segment + 1)
+                let pointA = hitLinePoint(slot: slot, index: segment)
+                let pointB = hitLinePoint(slot: slot, index: segment + 1)
 
                 let angle = (Self.angle(dx: pointA.x - pointB.x, dy: pointA.z - pointB.z) + 90) % 360
                 let worldA = pointA + slot.vecBNow
@@ -191,104 +227,30 @@ extension EffectPrimitive {
         }
     }
 
-    // MARK: - PP_HITLINE3 (100)
+    private func hitLinePoint(slot: EffectPrimitiveSlot, index: Int) -> SIMD3<Float> {
+        var speed: Float = 0.0
+        var radius: Float = 1.0
+        let bounces = max(0, Int(slot.flag1[index]))
 
-    /// Motion update for `PP_HITLINE3` (100) short spark streaks at 60Hz.
-    func primHitLine3() {
-        for index in 0..<4 where state.slots[index].life == 1 {
-            state.slots[index].process += 1
-            let process = state.slots[index].process
-            guard process > 0 else {
-                continue
-            }
-
-            if process > 35 {
-                state.slots[index].alphaB = max(0, state.slots[index].alphaB - 5)
-            }
-
-            state.slots[index].height[0] = min(180.0, state.slots[index].height[0] + 6.0)
-
-            let tailCount = min(20, max(0, Int(state.slots[index].vecTNow.y)))
-            if tailCount >= 1 {
-                for value in stride(from: tailCount, through: 1, by: -1) {
-                    state.slots[index].height[value] = state.slots[index].height[value - 1]
-                    state.slots[index].flag1[value] = state.slots[index].flag1[value - 1]
-                }
-            }
-
-            if let master {
-                state.slots[index].vecBNow = master.position
-            }
+        for _ in 0..<bounces {
+            speed += slot.distance * 2.0 * radius
+            radius *= 0.7
         }
-    }
 
-    /// Geometry submission for `PP_HITLINE3` (100), mirroring `CEffectPrim::RenderHitLine3`.
-    func renderHitLine3(into collector: inout EffectPrimitiveBatchCollector, assets: EffectAssetStore?) {
-        for index in 0..<4 {
-            let slot = state.slots[index]
-            guard slot.life == 1, slot.alphaB > 0, slot.process > 0 else {
-                continue
-            }
-
-            let tailLimit = min(20, max(0, Int(slot.vecTNow.y)))
-            for segment in 0..<tailLimit where Float(segment) < slot.vecTNow.y {
-                let pointA = Self.hitLine3Point(slot: slot, index: segment)
-                let pointB = Self.hitLine3Point(slot: slot, index: segment + 1)
-
-                let angle = (Self.angle(dx: pointA.x - pointB.x, dy: pointA.z - pointB.z) + 90) % 360
-                let worldA = pointA + slot.vecBNow
-                let worldB = pointB + slot.vecBNow
-
-                let alpha = Int(slot.alphaB) - segment * 10
-                let colors: (UInt8, UInt8, UInt8)
-                switch slot.alphaT {
-                case 0:
-                    colors = (255, 200, UInt8(clamping: 150 - (5 - segment) * 30))
-                case 1:
-                    let rg = UInt8(clamping: 120 - (5 - segment) * 22)
-                    colors = (rg, rg, 255)
-                case 2:
-                    colors = (255, 200, UInt8(clamping: 150 - (3 - segment) * 50))
-                default:
-                    let grey = UInt8(clamping: 255 - (5 - segment) * 30)
-                    colors = (grey, grey, grey)
-                }
-
-                emitTriangularPrism(
-                    into: &collector,
-                    assets: assets,
-                    worldA: worldA,
-                    worldB: worldB,
-                    angle: Int(angle),
-                    radius: slot.maxHeight,
-                    yBias: -5.0,
-                    alpha: alpha,
-                    red: colors.0,
-                    green: colors.1,
-                    blue: colors.2,
-                    reverseWinding: true
-                )
-
-                if slot.alphaT >= 3 {
-                    let outerAlpha = Int(Float(Int(slot.alphaB) - segment * 10) * 0.5)
-                    emitTriangularPrism(
-                        into: &collector,
-                        assets: assets,
-                        worldA: worldA,
-                        worldB: worldB,
-                        angle: Int(angle),
-                        radius: slot.maxHeight * 4.0,
-                        yBias: -5.0,
-                        alpha: outerAlpha,
-                        red: 0,
-                        green: 0,
-                        blue: 255,
-                        reverseWinding: true,
-                        emitQuads: slot.alphaT == 3
-                    )
-                }
-            }
+        let phase = slot.height[index]
+        if phase > 0.0 {
+            speed += (phase / 90.0) * slot.distance * radius
         }
+
+        let riseAngle = Int(slot.riseAngle)
+        var y = -slot.distance * EffectSpace.sine(degrees: Int(phase)) * 1.5
+        y *= radius
+
+        return SIMD3<Float>(
+            speed * EffectSpace.cosine(degrees: riseAngle),
+            y,
+            speed * EffectSpace.sine(degrees: riseAngle)
+        )
     }
 
     // MARK: - PP_SLASH1 (75)
@@ -379,65 +341,107 @@ extension EffectPrimitive {
         }
     }
 
-    // MARK: - Private Helpers
+    // MARK: - PP_HITLINE3 (100)
 
-    private static func tubeStyle(
-        pass: Int,
-        kind: Float,
-        alphaB: Int16
-    ) -> (alpha: Int16, blendSelector: Int16, red: UInt8, green: UInt8, blue: UInt8) {
-        if pass == 0 {
-            switch kind {
-            case 2.0:
-                return (alphaB, 0, 0, 100, 150)
-            case 3.0:
-                return (alphaB, 0, 255, 89, 182)
-            case 4.0:
-                return (alphaB / 2, 1, 50, 50, 50)
-            default:
-                return (alphaB, 0, 255, 255, 0)
+    /// Motion update for `PP_HITLINE3` (100) short spark streaks at 60Hz.
+    func primHitLine3() {
+        for index in 0..<4 where state.slots[index].life == 1 {
+            state.slots[index].process += 1
+            let process = state.slots[index].process
+            guard process > 0 else {
+                continue
+            }
+
+            if process > 35 {
+                state.slots[index].alphaB = max(0, state.slots[index].alphaB - 5)
+            }
+
+            state.slots[index].height[0] = min(180.0, state.slots[index].height[0] + 6.0)
+
+            let tailCount = min(20, max(0, Int(state.slots[index].vecTNow.y)))
+            if tailCount >= 1 {
+                for value in stride(from: tailCount, through: 1, by: -1) {
+                    state.slots[index].height[value] = state.slots[index].height[value - 1]
+                    state.slots[index].flag1[value] = state.slots[index].flag1[value - 1]
+                }
+            }
+
+            if let master {
+                state.slots[index].vecBNow = master.position
             }
         }
+    }
 
-        switch kind {
-        case 2.0:
-            return (Int16(truncatingIfNeeded: Int(alphaB) * 2), 0, 255, 50, 0)
-        case 3.0:
-            return (Int16(truncatingIfNeeded: Int(alphaB) * 2), 0, 255, 89, 182)
-        case 4.0:
-            return (alphaB, 1, 50, 50, 50)
-        default:
-            return (Int16(truncatingIfNeeded: Int(alphaB) * 2), 0, 0, 0, 255)
+    /// Geometry submission for `PP_HITLINE3` (100), mirroring `CEffectPrim::RenderHitLine3`.
+    func renderHitLine3(into collector: inout EffectPrimitiveBatchCollector, assets: EffectAssetStore?) {
+        for index in 0..<4 {
+            let slot = state.slots[index]
+            guard slot.life == 1, slot.alphaB > 0, slot.process > 0 else {
+                continue
+            }
+
+            let tailLimit = min(20, max(0, Int(slot.vecTNow.y)))
+            for segment in 0..<tailLimit where Float(segment) < slot.vecTNow.y {
+                let pointA = hitLine3Point(slot: slot, index: segment)
+                let pointB = hitLine3Point(slot: slot, index: segment + 1)
+
+                let angle = (Self.angle(dx: pointA.x - pointB.x, dy: pointA.z - pointB.z) + 90) % 360
+                let worldA = pointA + slot.vecBNow
+                let worldB = pointB + slot.vecBNow
+
+                let alpha = Int(slot.alphaB) - segment * 10
+                let colors: (UInt8, UInt8, UInt8)
+                switch slot.alphaT {
+                case 0:
+                    colors = (255, 200, UInt8(clamping: 150 - (5 - segment) * 30))
+                case 1:
+                    let rg = UInt8(clamping: 120 - (5 - segment) * 22)
+                    colors = (rg, rg, 255)
+                case 2:
+                    colors = (255, 200, UInt8(clamping: 150 - (3 - segment) * 50))
+                default:
+                    let grey = UInt8(clamping: 255 - (5 - segment) * 30)
+                    colors = (grey, grey, grey)
+                }
+
+                emitTriangularPrism(
+                    into: &collector,
+                    assets: assets,
+                    worldA: worldA,
+                    worldB: worldB,
+                    angle: Int(angle),
+                    radius: slot.maxHeight,
+                    yBias: -5.0,
+                    alpha: alpha,
+                    red: colors.0,
+                    green: colors.1,
+                    blue: colors.2,
+                    reverseWinding: true
+                )
+
+                if slot.alphaT >= 3 {
+                    let outerAlpha = Int(Float(Int(slot.alphaB) - segment * 10) * 0.5)
+                    emitTriangularPrism(
+                        into: &collector,
+                        assets: assets,
+                        worldA: worldA,
+                        worldB: worldB,
+                        angle: Int(angle),
+                        radius: slot.maxHeight * 4.0,
+                        yBias: -5.0,
+                        alpha: outerAlpha,
+                        red: 0,
+                        green: 0,
+                        blue: 255,
+                        reverseWinding: true,
+                        emitQuads: slot.alphaT == 3
+                    )
+                }
+            }
         }
     }
 
-    private static func hitLinePoint(slot: EffectPrimitiveSlot, index: Int) -> SIMD3<Float> {
-        var speed: Float = 0.0
-        var radius: Float = 1.0
-        let bounces = max(0, Int(slot.flag1[index]))
-
-        for _ in 0..<bounces {
-            speed += slot.distance * 2.0 * radius
-            radius *= 0.7
-        }
-
-        let phase = slot.height[index]
-        if phase > 0.0 {
-            speed += (phase / 90.0) * slot.distance * radius
-        }
-
-        let riseAngle = Int(slot.riseAngle)
-        var y = -slot.distance * EffectSpace.sine(degrees: Int(phase)) * 1.5
-        y *= radius
-
-        return SIMD3<Float>(
-            speed * EffectSpace.cosine(degrees: riseAngle),
-            y,
-            speed * EffectSpace.sine(degrees: riseAngle)
-        )
-    }
-
-    private static func hitLine3Point(slot: EffectPrimitiveSlot, index: Int) -> SIMD3<Float> {
+    private func hitLine3Point(slot: EffectPrimitiveSlot, index: Int) -> SIMD3<Float> {
         let phase = slot.height[index]
         let speed = phase > 0.0 ? (phase / 90.0) * slot.distance : 0.0
         let riseAngle = Int(slot.riseAngle)
@@ -448,6 +452,17 @@ extension EffectPrimitive {
             speed * EffectSpace.sine(degrees: riseAngle)
         )
     }
+
+    // MARK: - PP_ELECTRIC (101)
+    // RenderLightningArc
+
+    // MARK: - PP_ELECTRIC2 (102)
+    // PrimElectric2 / RenderLightningTube
+
+    // MARK: - Primitive 171
+    // RenderGlowDisc
+
+    // MARK: - Shared Helpers
 
     private func emitTriangularPrism(
         into collector: inout EffectPrimitiveBatchCollector,

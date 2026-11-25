@@ -10,6 +10,21 @@ import simd
 
 extension EffectPrimitive {
 
+    // MARK: - Primitive 26
+    // RenderSizedSquare
+
+    // MARK: - Primitive 28
+    // RenderSizedSquare
+
+    // MARK: - Primitive 32
+    // PrimDriftingOrbs / RenderLayeredGlow
+
+    // MARK: - Primitive 33
+    // PrimFieldFireflies / RenderFieldPanel
+
+    // MARK: - Primitive 39
+    // RenderSizedSquare
+
     // MARK: - PP_PARTICLE_UP (59)
 
     /// Motion update for `PP_PARTICLE_UP` (59) floating field particles at 60Hz.
@@ -60,6 +75,69 @@ extension EffectPrimitive {
             state.slots[index].vecBNow.z += state.slots[index].height[1] * EffectSpace.sine(degrees: rotStart)
         }
     }
+
+    // MARK: - Primitive 67
+    // RenderSizedSquare
+
+    // MARK: - Primitive 79
+    // RenderTeiRect
+
+    // MARK: - Primitive 82
+    // PrimAuraGlow / RenderTeiFacingSlots
+
+    // MARK: - Primitive 87
+    // PrimBubbleSwirl / RenderFieldPanel
+
+    // MARK: - Primitive 88
+    // PrimGrowFollow / RenderSizedSquare
+
+    // MARK: - PP_EFFECTTEXTURE2 (95)
+    // PrimEffectTexture2 / RenderTeiFacingSlots
+
+    // MARK: - PP_EFFECTTEXTURE_ANI (128)
+    // PrimEffectTexture_Ani / RenderTeiFacingSlots
+
+    // MARK: - Primitive 129
+    // PrimBobbing / RenderTeiRect
+
+    // MARK: - Primitive 130
+    // PrimDriftingSquares / RenderFacingQuads
+
+    // MARK: - Primitive 132
+    // RenderColorPanel
+
+    // MARK: - Primitive 138
+    // PrimCHOOKGI / RenderTwinFacingSquares
+
+    // MARK: - Primitive 140
+    // PrimFrameFade / RenderTeiFacingSlots
+
+    // MARK: - Primitive 142
+    // PrimWaterFall / RenderStandingPanels
+
+    // MARK: - Primitive 145
+    // PrimDriftingSparks / RenderPillarSquares
+
+    // MARK: - Primitive 150
+    // PrimFallingPetals2 / RenderHoverSquares
+
+    // MARK: - Primitive 155
+    // PrimWanderingFlames / RenderTwinGlowSquares
+
+    // MARK: - Primitive 157
+    // PrimOrbitFade / RenderGlowSquare
+
+    // MARK: - Primitive 161
+    // PrimTwinSpin / RenderSizedSquare
+
+    // MARK: - Primitive 166
+    // PrimFramePhase / RenderFoldingRibbon
+
+    // MARK: - Primitive 170
+    // PrimWanderingFlames2 / RenderTwinGlowSquares
+
+    // MARK: - Primitive 172
+    // PrimPoison / Tei_TowardScreen
 
     // MARK: - Field Panel Renderer (PP_PARTICLE_UP (59) / PP_BOTTOM (47) / PP_BOTTOMOUT (49))
 

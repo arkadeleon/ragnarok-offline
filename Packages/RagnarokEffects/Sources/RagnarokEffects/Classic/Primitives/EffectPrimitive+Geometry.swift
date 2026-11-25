@@ -11,6 +11,15 @@ import simd
 
 extension EffectPrimitive {
 
+    // MARK: - PP_3DQUADHORN (9)
+    // AdvanceEffectPrimitive / RenderPyramid
+
+    // MARK: - PP_3DSPLINE (10)
+    // ProcessAlpha, ShiftSegment / RenderRecordQuads
+
+    // MARK: - PP_3DSPIRAL (11)
+    // ProcessAlpha, ShiftSegment / RenderRecordQuads
+
     // MARK: - PP_3DCIRCLE (12)
 
     /// Motion update for `PP_3DCIRCLE` (12) record rings at 60Hz.
@@ -31,7 +40,7 @@ extension EffectPrimitive {
         state.radius += state.radiusSpeed
         state.innerSize += state.innerSpeed
 
-        state.transform = Self.makeXYRotation(
+        state.transform = makeXYRotation(
             xDegrees: Int(state.latitude),
             yDegrees: Int(state.longitude)
         )
@@ -139,7 +148,7 @@ extension EffectPrimitive {
         state.longitude += state.longSpeed
         state.latitude += state.latiSpeed
 
-        state.transform = Self.makeXYRotation(
+        state.transform = makeXYRotation(
             xDegrees: Int(state.latitude),
             yDegrees: Int(state.longitude)
         )
@@ -179,7 +188,7 @@ extension EffectPrimitive {
         state.innerSpeed += state.innerAccel
         state.heightSpeed += state.heightAccel
 
-        state.transform = Self.makeXYRotation(
+        state.transform = makeXYRotation(
             xDegrees: Int(state.latitude),
             yDegrees: Int(state.longitude)
         )
@@ -274,6 +283,24 @@ extension EffectPrimitive {
         }
     }
 
+    private func advanceTextureAnimation() -> Bool {
+        let speed = max(1, state.animSpeed)
+        guard state.stateCnt % speed == 0 else {
+            return true
+        }
+
+        let total = max(1, state.texturePaths.isEmpty ? state.totalTexture : state.texturePaths.count)
+        currentMotion += 1
+        if !state.repeatAnim {
+            if currentMotion == total {
+                return false
+            }
+        } else {
+            currentMotion %= total
+        }
+        return true
+    }
+
     // MARK: - PP_3DSPHERE (14)
 
     /// Motion update for `PP_3DSPHERE` (14) expanding textured sphere at 60Hz.
@@ -316,10 +343,10 @@ extension EffectPrimitive {
                 let yaw1 = Int(lon + state.arcAngle + 0.25 + state.longitude)
                 let pitch1 = Int(lat + state.arcAngle)
 
-                let vec1 = EffectSpace.transformVector(radiusVector, by: Self.makeXYRotation(xDegrees: pitch0, yDegrees: yaw0)) + position
-                let vec2 = EffectSpace.transformVector(radiusVector, by: Self.makeXYRotation(xDegrees: pitch1, yDegrees: yaw0)) + position
-                let vec3 = EffectSpace.transformVector(radiusVector, by: Self.makeXYRotation(xDegrees: pitch0, yDegrees: yaw1)) + position
-                let vec4 = EffectSpace.transformVector(radiusVector, by: Self.makeXYRotation(xDegrees: pitch1, yDegrees: yaw1)) + position
+                let vec1 = EffectSpace.transformVector(radiusVector, by: makeXYRotation(xDegrees: pitch0, yDegrees: yaw0)) + position
+                let vec2 = EffectSpace.transformVector(radiusVector, by: makeXYRotation(xDegrees: pitch1, yDegrees: yaw0)) + position
+                let vec3 = EffectSpace.transformVector(radiusVector, by: makeXYRotation(xDegrees: pitch0, yDegrees: yaw1)) + position
+                let vec4 = EffectSpace.transformVector(radiusVector, by: makeXYRotation(xDegrees: pitch1, yDegrees: yaw1)) + position
 
                 let center = (vec1 + vec2 + vec3 + vec4) * 0.25
                 collector.appendEffectQuad(
@@ -348,6 +375,238 @@ extension EffectPrimitive {
             lat += state.arcAngle
         }
     }
+
+    // MARK: - PP_GRANDCROSS2 (37)
+
+    /// Motion update for `PP_GRANDCROSS2` (37) cross pillars at 60Hz.
+    func primGrandCross2() {
+        for index in 0..<4 where state.slots[index].life == 1 {
+            state.slots[index].process += 1
+            let process = state.slots[index].process
+
+            if process < 10 {
+                state.slots[index].alphaB += 9
+            } else {
+                state.slots[index].alphaB -= 1
+                if state.slots[index].alphaB < 1 {
+                    state.slots[index].alphaB = 0
+                    if process > 30 {
+                        state.slots[index].life = 0
+                    }
+                }
+            }
+
+            state.slots[index].height[1] += 0.005
+            state.slots[index].height[0] += 0.005
+            state.slots[index].height[2] = EffectSpace.sine(degrees: process) * state.slots[index].maxHeight
+        }
+    }
+
+    /// Geometry submission for `PP_GRANDCROSS2` (37) pillar walls and end caps.
+    func renderGrandCross2(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        for ec in 0..<4 where state.slots[ec].life == 1 && state.slots[ec].alphaB > 0 {
+            let cs1 = EffectSpace.cosine(degrees: Int(state.slots[ec].rotStart))
+            let sn1 = EffectSpace.sine(degrees: Int(state.slots[ec].rotStart))
+            let halfLength = state.slots[ec].height[0]
+            let halfWidth = state.slots[ec].height[1]
+            let pillarHeight = state.slots[ec].height[2]
+
+            let bPre = SIMD3<Float>(cs1 * halfLength - sn1 * halfWidth, -1.0, sn1 * halfLength + cs1 * halfWidth)
+            let bNow = SIMD3<Float>(cs1 * halfLength + sn1 * halfWidth, -1.0, sn1 * halfLength - cs1 * halfWidth)
+            let tNow = SIMD3<Float>(-cs1 * halfLength + sn1 * halfWidth, -1.0, -sn1 * halfLength - cs1 * halfWidth)
+            let tPre = SIMD3<Float>(-cs1 * halfLength - sn1 * halfWidth, -1.0, -sn1 * halfLength + cs1 * halfWidth)
+
+            state.slots[ec].vecBPre = bPre
+            state.slots[ec].vecBNow = bNow
+            state.slots[ec].vecTNow = tNow
+            state.slots[ec].vecTPre = tPre
+
+            let vec1 = SIMD3<Float>(bPre.x, bPre.y - pillarHeight, bPre.z)
+            let vec2 = SIMD3<Float>(bNow.x, bNow.y - pillarHeight, bNow.z)
+            let vec3 = SIMD3<Float>(tPre.x, tPre.y - pillarHeight, tPre.z)
+            let vec4 = SIMD3<Float>(tNow.x, tNow.y - pillarHeight, tNow.z)
+
+            let alpha = state.slots[ec].alphaB
+            renderTeiRect(into: &collector, assets: assets, alpha: alpha, v1: bPre, v2: bNow, v3: vec2, v4: vec1, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 255, green: 255, blue: 255)
+            renderTeiRect(into: &collector, assets: assets, alpha: alpha, v1: bNow, v2: tNow, v3: vec4, v4: vec2, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 255, green: 255, blue: 255)
+            renderTeiRect(into: &collector, assets: assets, alpha: alpha, v1: tNow, v2: tPre, v3: vec3, v4: vec4, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 255, green: 255, blue: 255)
+            renderTeiRect(into: &collector, assets: assets, alpha: alpha, v1: tPre, v2: bPre, v3: vec1, v4: vec3, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 255, green: 255, blue: 255)
+
+            let capAlpha = alpha / 2
+            renderTeiRect(into: &collector, assets: assets, alpha: capAlpha, v1: bPre, v2: bNow, v3: tNow, v4: tPre, blendSelector: 0, textureIndex: 0, isWorldPosition: false, red: 255, green: 255, blue: 255)
+            renderTeiRect(into: &collector, assets: assets, alpha: capAlpha, v1: tPre, v2: tNow, v3: bNow, v4: bPre, blendSelector: 0, textureIndex: 0, isWorldPosition: false, red: 255, green: 255, blue: 255)
+        }
+    }
+
+    // MARK: - PP_GUARD (61)
+
+    /// Motion update for `PP_GUARD` (61) multi-layer defensive sphere cage at 60Hz.
+    func primGuard(context: EffectTickContext) {
+        followMaster()
+        let parentAngle = parentFacingAngle(world: context.world)
+
+        for index in 0..<4 where state.slots[index].life == 1 {
+            state.slots[index].process += 1
+            let process = state.slots[index].process
+
+            if process <= 1 {
+                state.slots[index].rotStart = Int16(parentAngle + 270.0)
+            } else if state.slots[index].flag1[0] == 1 {
+                state.slots[index].rotStart += 10
+            } else {
+                state.slots[index].rotStart = Int16(parentAngle + 270.0)
+            }
+
+            if state.slots[index].rotStart >= 360 {
+                state.slots[index].rotStart -= 360
+            }
+
+            if process < 10 {
+                if state.slots[index].alphaB < 100 {
+                    state.slots[index].alphaB += 20
+                }
+            } else if process > 26 {
+                state.slots[index].height[0] += 0.1
+                if state.slots[index].alphaB > 0 {
+                    state.slots[index].alphaB -= 6
+                }
+                if state.slots[index].alphaB < 0 {
+                    state.slots[index].alphaB = 0
+                }
+            }
+        }
+    }
+
+    /// Geometry submission for `PP_GUARD` (61) concentric sphere cage panels.
+    func renderSphereCage(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        for ec in 0..<4 where state.slots[ec].life == 1 {
+            let alpha = state.slots[ec].alphaB
+            let maxHeight = state.slots[ec].maxHeight
+            let rotStart = Int(state.slots[ec].rotStart)
+            let kind = state.slots[ec].flag1[0]
+            let spread = state.slots[ec].height[0]
+
+            for count2 in 0..<3 {
+                for count in 0..<5 {
+                    let add = count * 45 - 90
+                    let add2 = count2 * 45 - 45
+
+                    var dist = Float(count2 - 1)
+                    if dist < 0 {
+                        dist = -dist
+                    }
+                    dist = 1.5 - dist + 1.5
+                    state.slots[ec].distance = dist
+
+                    let quadSize = Int(dist)
+                    let negQuadSize = Int(-dist)
+
+                    let layers: [(radius: Float, yOffset: Float, blendSelector: Int16, textureIndex: Int, defaultColor: (UInt8, UInt8, UInt8))] = [
+                        (maxHeight, -(maxHeight + 2.0), 0, 0, (205, 255, 205)),
+                        (maxHeight + 0.2, -maxHeight, 0, 0, (155, 255, 155)),
+                        (maxHeight + 0.4 + spread, -maxHeight, kind == 5 ? 0 : 1, kind == 5 ? 0 : 1, (225, 255, 225)),
+                    ]
+
+                    for layer in layers {
+                        let latAngle = ((add2 % 360) + 360) % 360
+                        let snLat = EffectSpace.sine(degrees: latAngle)
+                        let csLat = EffectSpace.cosine(degrees: latAngle)
+
+                        let lonAngle = (((rotStart + add) % 360) + 360) % 360
+                        let csLon = EffectSpace.cosine(degrees: lonAngle)
+                        let snLon = EffectSpace.sine(degrees: lonAngle)
+
+                        let rz = layer.radius * csLat
+                        let center = SIMD3<Float>(
+                            rz * csLon,
+                            layer.radius * snLat + layer.yOffset,
+                            rz * snLon
+                        )
+
+                        let tangLat = (((90 + add2) % 360) + 360) % 360
+                        let cs2 = EffectSpace.cosine(degrees: tangLat)
+                        let sn2 = EffectSpace.sine(degrees: tangLat)
+
+                        let tangLon = (((rotStart + add - 90) % 360) + 360) % 360
+                        let cs1 = EffectSpace.cosine(degrees: tangLon)
+                        let sn1 = EffectSpace.sine(degrees: tangLon)
+
+                        let vec1 = guardPoint(rx: quadSize, ry: quadSize, sn2: sn2, cs2: cs2, sn1: sn1, cs1: cs1, center: center)
+                        let vec2 = guardPoint(rx: negQuadSize, ry: quadSize, sn2: sn2, cs2: cs2, sn1: sn1, cs1: cs1, center: center)
+                        let vec3 = guardPoint(rx: negQuadSize, ry: negQuadSize, sn2: sn2, cs2: cs2, sn1: sn1, cs1: cs1, center: center)
+                        let vec4 = guardPoint(rx: quadSize, ry: negQuadSize, sn2: sn2, cs2: cs2, sn1: sn1, cs1: cs1, center: center)
+
+                        let (red, green, blue): (UInt8, UInt8, UInt8) = switch kind {
+                        case 3: (255, 100, 0)
+                        case 2: (255, 155, 0)
+                        case 4: (255, 150, 255)
+                        case 5: (100, 100, 255)
+                        default: layer.defaultColor
+                        }
+
+                        renderTeiRect(
+                            into: &collector,
+                            assets: assets,
+                            alpha: alpha,
+                            v1: vec1,
+                            v2: vec2,
+                            v3: vec3,
+                            v4: vec4,
+                            blendSelector: layer.blendSelector,
+                            textureIndex: layer.textureIndex,
+                            isWorldPosition: false,
+                            red: red,
+                            green: green,
+                            blue: blue
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private func guardPoint(
+        rx: Int,
+        ry: Int,
+        sn2: Float,
+        cs2: Float,
+        sn1: Float,
+        cs1: Float,
+        center: SIMD3<Float>
+    ) -> SIMD3<Float> {
+        let localY = Float(ry) * sn2
+        let localZ = Float(ry) * cs2
+        let localX = Float(rx)
+        return SIMD3<Float>(
+            localX * cs1 - localZ * sn1 + center.x,
+            localY + center.y,
+            localX * sn1 + localZ * cs1 + center.z
+        )
+    }
+
+    // MARK: - PP_FOREST (66)
+    // PrimForest / RenderPentagon
+
+    // MARK: - Primitive 69
+    // RenderPentaRing
+
+    // MARK: - Primitive 74
+    // RenderHalfSphere2
+
+    // MARK: - Primitive 81
+    // RenderBeam
+
+    // MARK: - Primitive 98
+    // RenderRing
+
+    // MARK: - Primitive 103
+    // PrimSpinFade / RenderStackedRings
 
     // MARK: - PP_HALFSPHERE (104)
 
@@ -452,200 +711,8 @@ extension EffectPrimitive {
         }
     }
 
-    // MARK: - PP_GUARD (61)
-
-    /// Motion update for `PP_GUARD` (61) multi-layer defensive sphere cage at 60Hz.
-    func primGuard(context: EffectTickContext) {
-        followMaster()
-        let parentAngle = parentFacingAngle(world: context.world)
-
-        for index in 0..<4 where state.slots[index].life == 1 {
-            state.slots[index].process += 1
-            let process = state.slots[index].process
-
-            if process <= 1 {
-                state.slots[index].rotStart = Int16(parentAngle + 270.0)
-            } else if state.slots[index].flag1[0] == 1 {
-                state.slots[index].rotStart += 10
-            } else {
-                state.slots[index].rotStart = Int16(parentAngle + 270.0)
-            }
-
-            if state.slots[index].rotStart >= 360 {
-                state.slots[index].rotStart -= 360
-            }
-
-            if process < 10 {
-                if state.slots[index].alphaB < 100 {
-                    state.slots[index].alphaB += 20
-                }
-            } else if process > 26 {
-                state.slots[index].height[0] += 0.1
-                if state.slots[index].alphaB > 0 {
-                    state.slots[index].alphaB -= 6
-                }
-                if state.slots[index].alphaB < 0 {
-                    state.slots[index].alphaB = 0
-                }
-            }
-        }
-    }
-
-    /// Geometry submission for `PP_GUARD` (61) concentric sphere cage panels.
-    func renderSphereCage(
-        into collector: inout EffectPrimitiveBatchCollector,
-        assets: EffectAssetStore?
-    ) {
-        for ec in 0..<4 where state.slots[ec].life == 1 {
-            let alpha = state.slots[ec].alphaB
-            let maxHeight = state.slots[ec].maxHeight
-            let rotStart = Int(state.slots[ec].rotStart)
-            let kind = state.slots[ec].flag1[0]
-            let spread = state.slots[ec].height[0]
-
-            for count2 in 0..<3 {
-                for count in 0..<5 {
-                    let add = count * 45 - 90
-                    let add2 = count2 * 45 - 45
-
-                    var dist = Float(count2 - 1)
-                    if dist < 0 {
-                        dist = -dist
-                    }
-                    dist = 1.5 - dist + 1.5
-                    state.slots[ec].distance = dist
-
-                    let quadSize = Int(dist)
-                    let negQuadSize = Int(-dist)
-
-                    let layers: [(radius: Float, yOffset: Float, blendSelector: Int16, textureIndex: Int, defaultColor: (UInt8, UInt8, UInt8))] = [
-                        (maxHeight, -(maxHeight + 2.0), 0, 0, (205, 255, 205)),
-                        (maxHeight + 0.2, -maxHeight, 0, 0, (155, 255, 155)),
-                        (maxHeight + 0.4 + spread, -maxHeight, kind == 5 ? 0 : 1, kind == 5 ? 0 : 1, (225, 255, 225)),
-                    ]
-
-                    for layer in layers {
-                        let latAngle = ((add2 % 360) + 360) % 360
-                        let snLat = EffectSpace.sine(degrees: latAngle)
-                        let csLat = EffectSpace.cosine(degrees: latAngle)
-
-                        let lonAngle = (((rotStart + add) % 360) + 360) % 360
-                        let csLon = EffectSpace.cosine(degrees: lonAngle)
-                        let snLon = EffectSpace.sine(degrees: lonAngle)
-
-                        let rz = layer.radius * csLat
-                        let center = SIMD3<Float>(
-                            rz * csLon,
-                            layer.radius * snLat + layer.yOffset,
-                            rz * snLon
-                        )
-
-                        let tangLat = (((90 + add2) % 360) + 360) % 360
-                        let cs2 = EffectSpace.cosine(degrees: tangLat)
-                        let sn2 = EffectSpace.sine(degrees: tangLat)
-
-                        let tangLon = (((rotStart + add - 90) % 360) + 360) % 360
-                        let cs1 = EffectSpace.cosine(degrees: tangLon)
-                        let sn1 = EffectSpace.sine(degrees: tangLon)
-
-                        let vec1 = Self.guardPoint(rx: quadSize, ry: quadSize, sn2: sn2, cs2: cs2, sn1: sn1, cs1: cs1, center: center)
-                        let vec2 = Self.guardPoint(rx: negQuadSize, ry: quadSize, sn2: sn2, cs2: cs2, sn1: sn1, cs1: cs1, center: center)
-                        let vec3 = Self.guardPoint(rx: negQuadSize, ry: negQuadSize, sn2: sn2, cs2: cs2, sn1: sn1, cs1: cs1, center: center)
-                        let vec4 = Self.guardPoint(rx: quadSize, ry: negQuadSize, sn2: sn2, cs2: cs2, sn1: sn1, cs1: cs1, center: center)
-
-                        let (red, green, blue): (UInt8, UInt8, UInt8) = switch kind {
-                        case 3: (255, 100, 0)
-                        case 2: (255, 155, 0)
-                        case 4: (255, 150, 255)
-                        case 5: (100, 100, 255)
-                        default: layer.defaultColor
-                        }
-
-                        renderTeiRect(
-                            into: &collector,
-                            assets: assets,
-                            alpha: alpha,
-                            v1: vec1,
-                            v2: vec2,
-                            v3: vec3,
-                            v4: vec4,
-                            blendSelector: layer.blendSelector,
-                            textureIndex: layer.textureIndex,
-                            isWorldPosition: false,
-                            red: red,
-                            green: green,
-                            blue: blue
-                        )
-                    }
-                }
-            }
-        }
-    }
-
-    // MARK: - PP_GRANDCROSS2 (37)
-
-    /// Motion update for `PP_GRANDCROSS2` (37) cross pillars at 60Hz.
-    func primGrandCross2() {
-        for index in 0..<4 where state.slots[index].life == 1 {
-            state.slots[index].process += 1
-            let process = state.slots[index].process
-
-            if process < 10 {
-                state.slots[index].alphaB += 9
-            } else {
-                state.slots[index].alphaB -= 1
-                if state.slots[index].alphaB < 1 {
-                    state.slots[index].alphaB = 0
-                    if process > 30 {
-                        state.slots[index].life = 0
-                    }
-                }
-            }
-
-            state.slots[index].height[1] += 0.005
-            state.slots[index].height[0] += 0.005
-            state.slots[index].height[2] = EffectSpace.sine(degrees: process) * state.slots[index].maxHeight
-        }
-    }
-
-    /// Geometry submission for `PP_GRANDCROSS2` (37) pillar walls and end caps.
-    func renderGrandCross2(
-        into collector: inout EffectPrimitiveBatchCollector,
-        assets: EffectAssetStore?
-    ) {
-        for ec in 0..<4 where state.slots[ec].life == 1 && state.slots[ec].alphaB > 0 {
-            let cs1 = EffectSpace.cosine(degrees: Int(state.slots[ec].rotStart))
-            let sn1 = EffectSpace.sine(degrees: Int(state.slots[ec].rotStart))
-            let halfLength = state.slots[ec].height[0]
-            let halfWidth = state.slots[ec].height[1]
-            let pillarHeight = state.slots[ec].height[2]
-
-            let bPre = SIMD3<Float>(cs1 * halfLength - sn1 * halfWidth, -1.0, sn1 * halfLength + cs1 * halfWidth)
-            let bNow = SIMD3<Float>(cs1 * halfLength + sn1 * halfWidth, -1.0, sn1 * halfLength - cs1 * halfWidth)
-            let tNow = SIMD3<Float>(-cs1 * halfLength + sn1 * halfWidth, -1.0, -sn1 * halfLength - cs1 * halfWidth)
-            let tPre = SIMD3<Float>(-cs1 * halfLength - sn1 * halfWidth, -1.0, -sn1 * halfLength + cs1 * halfWidth)
-
-            state.slots[ec].vecBPre = bPre
-            state.slots[ec].vecBNow = bNow
-            state.slots[ec].vecTNow = tNow
-            state.slots[ec].vecTPre = tPre
-
-            let vec1 = SIMD3<Float>(bPre.x, bPre.y - pillarHeight, bPre.z)
-            let vec2 = SIMD3<Float>(bNow.x, bNow.y - pillarHeight, bNow.z)
-            let vec3 = SIMD3<Float>(tPre.x, tPre.y - pillarHeight, tPre.z)
-            let vec4 = SIMD3<Float>(tNow.x, tNow.y - pillarHeight, tNow.z)
-
-            let alpha = state.slots[ec].alphaB
-            renderTeiRect(into: &collector, assets: assets, alpha: alpha, v1: bPre, v2: bNow, v3: vec2, v4: vec1, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 255, green: 255, blue: 255)
-            renderTeiRect(into: &collector, assets: assets, alpha: alpha, v1: bNow, v2: tNow, v3: vec4, v4: vec2, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 255, green: 255, blue: 255)
-            renderTeiRect(into: &collector, assets: assets, alpha: alpha, v1: tNow, v2: tPre, v3: vec3, v4: vec4, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 255, green: 255, blue: 255)
-            renderTeiRect(into: &collector, assets: assets, alpha: alpha, v1: tPre, v2: bPre, v3: vec1, v4: vec3, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 255, green: 255, blue: 255)
-
-            let capAlpha = alpha / 2
-            renderTeiRect(into: &collector, assets: assets, alpha: capAlpha, v1: bPre, v2: bNow, v3: tNow, v4: tPre, blendSelector: 0, textureIndex: 0, isWorldPosition: false, red: 255, green: 255, blue: 255)
-            renderTeiRect(into: &collector, assets: assets, alpha: capAlpha, v1: tPre, v2: tNow, v3: bNow, v4: bPre, blendSelector: 0, textureIndex: 0, isWorldPosition: false, red: 255, green: 255, blue: 255)
-        }
-    }
+    // MARK: - Primitive 105
+    // RenderCone
 
     // MARK: - PP_HERMODE (114)
 
@@ -711,31 +778,18 @@ extension EffectPrimitive {
         }
     }
 
-    // MARK: - Helpers
+    // MARK: - PP_3DQUADHORN2 (117)
+    // ProcessAlpha / RenderPyramid
 
-    private static func makeXYRotation(xDegrees: Int, yDegrees: Int) -> simd_float4x4 {
+    // MARK: - Primitive 126
+    // Get_Angle / RenderRotatedRing
+
+    // MARK: - Shared Helpers
+
+    private func makeXYRotation(xDegrees: Int, yDegrees: Int) -> simd_float4x4 {
         let rotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: xDegrees))
         let rotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: yDegrees))
         return rotY * rotX
-    }
-
-    private static func guardPoint(
-        rx: Int,
-        ry: Int,
-        sn2: Float,
-        cs2: Float,
-        sn1: Float,
-        cs1: Float,
-        center: SIMD3<Float>
-    ) -> SIMD3<Float> {
-        let localY = Float(ry) * sn2
-        let localZ = Float(ry) * cs2
-        let localX = Float(rx)
-        return SIMD3<Float>(
-            localX * cs1 - localZ * sn1 + center.x,
-            localY + center.y,
-            localX * sn1 + localZ * cs1 + center.z
-        )
     }
 
     private func parentFacingAngle(world: any EffectWorldContext) -> Float {
@@ -744,24 +798,6 @@ extension EffectPrimitive {
             return 0
         }
         return targetState.facingAngle
-    }
-
-    private func advanceTextureAnimation() -> Bool {
-        let speed = max(1, state.animSpeed)
-        guard state.stateCnt % speed == 0 else {
-            return true
-        }
-
-        let total = max(1, state.texturePaths.isEmpty ? state.totalTexture : state.texturePaths.count)
-        currentMotion += 1
-        if !state.repeatAnim {
-            if currentMotion == total {
-                return false
-            }
-        } else {
-            currentMotion %= total
-        }
-        return true
     }
 }
 

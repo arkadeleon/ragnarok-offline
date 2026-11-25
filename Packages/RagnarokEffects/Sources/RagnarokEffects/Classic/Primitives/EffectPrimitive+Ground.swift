@@ -9,6 +9,15 @@ import simd
 
 extension EffectPrimitive {
 
+    // MARK: - PP_MAPPARTICLE (27)
+    // PrimMapParticle / RenderGroundBubbles
+
+    // MARK: - Primitive 29
+    // PrimFloatingMotes / RenderGroundFog
+
+    // MARK: - Primitive 44
+    // PrimExpandPulse / RenderRotatedPlate
+
     // MARK: - PP_BOTTOM (47)
 
     /// Motion update for `PP_BOTTOM` (47), mirroring `CEffectPrim::PrimBottom` at 60Hz.
@@ -174,96 +183,11 @@ extension EffectPrimitive {
         }
     }
 
-    // MARK: - PP_MAGNUM2 (73)
+    // MARK: - PP_CHEMICAL2 (55)
+    // PrimChemical2 / RenderFloorRect
 
-    /// Motion update for `PP_MAGNUM2` (73) radial shockwave cone at 60Hz.
-    func primMagnum2() {
-        followMaster()
-
-        for index in 0..<4 where state.slots[index].life == 1 {
-            state.slots[index].process += 1
-
-            if state.slots[index].riseAngle < 0 {
-                state.slots[index].riseAngle = 0
-            }
-            if state.slots[index].rotStart >= 360 {
-                state.slots[index].rotStart -= 360
-            }
-
-            if state.slots[index].process < 9 {
-                if state.slots[index].alphaT == 0 {
-                    state.slots[index].alphaB = min(80, state.slots[index].alphaB + 10)
-                } else {
-                    state.slots[index].alphaB = min(40, state.slots[index].alphaB + 5)
-                }
-            } else {
-                state.slots[index].alphaB -= 30
-                if state.slots[index].alphaB < 0 {
-                    state.slots[index].alphaB = 0
-                    state.slots[index].life = 0
-                }
-            }
-        }
-    }
-
-    /// Geometry submission for `PP_MAGNUM2` (73), mirroring `CEffectPrim::RenderMagnum2`.
-    func renderMagnum2(into collector: inout EffectPrimitiveBatchCollector, assets: EffectAssetStore?) {
-        for index in 0..<4 where state.slots[index].life == 1 {
-            let fullAngle = Int(state.slots[index].fullDisplayAngle)
-            let step = fullAngle / 20
-            guard step > 0 else {
-                continue
-            }
-
-            var order = 0
-            var count = 0
-            while count <= fullAngle {
-                var angle = Int(state.slots[index].rotStart) + count
-                if angle >= 360 {
-                    angle -= 360
-                }
-                if fullAngle == 360 && order == 20 {
-                    angle = Int(state.slots[index].rotStart)
-                }
-
-                let cs1 = EffectSpace.cosine(degrees: angle)
-                let sn1 = EffectSpace.sine(degrees: angle)
-                let distance = state.slots[index].distance
-                let base = SIMD3<Float>(cs1 * distance, -3.0, sn1 * distance)
-                state.slots[index].vecBNow = base
-
-                let riseAngle = Int(state.slots[index].riseAngle)
-                let rx = EffectSpace.cosine(degrees: riseAngle) * state.slots[index].maxHeight
-                let ry = EffectSpace.sine(degrees: riseAngle) * state.slots[index].maxHeight
-                let top = SIMD3<Float>(cs1 * rx + base.x, -(ry + 3.0), sn1 * rx + base.z)
-                state.slots[index].vecTNow = top
-
-                if order > 0 && state.slots[index].alphaB > 0 {
-                    renderTeiRect(
-                        into: &collector,
-                        assets: assets,
-                        texPart: order - 1,
-                        alphaB: state.slots[index].alphaB,
-                        alphaT: state.slots[index].alphaB,
-                        v1: state.slots[index].vecBPre,
-                        v2: base,
-                        v3: top,
-                        v4: state.slots[index].vecTPre,
-                        textureIndex: 0
-                    )
-                }
-
-                order += 1
-                if order >= 21 {
-                    order = 20
-                }
-
-                state.slots[index].vecBPre = base
-                state.slots[index].vecTPre = top
-                count += step
-            }
-        }
-    }
+    // MARK: - PP_CHEMICAL3 (56)
+    // PrimChemical3 / RenderGroundBar
 
     // MARK: - PP_RECT_UP (64)
 
@@ -390,6 +314,106 @@ extension EffectPrimitive {
             }
         }
     }
+
+    // MARK: - Primitive 72
+    // PrimPoison / RenderGrid
+
+    // MARK: - PP_MAGNUM2 (73)
+
+    /// Motion update for `PP_MAGNUM2` (73) radial shockwave cone at 60Hz.
+    func primMagnum2() {
+        followMaster()
+
+        for index in 0..<4 where state.slots[index].life == 1 {
+            state.slots[index].process += 1
+
+            if state.slots[index].riseAngle < 0 {
+                state.slots[index].riseAngle = 0
+            }
+            if state.slots[index].rotStart >= 360 {
+                state.slots[index].rotStart -= 360
+            }
+
+            if state.slots[index].process < 9 {
+                if state.slots[index].alphaT == 0 {
+                    state.slots[index].alphaB = min(80, state.slots[index].alphaB + 10)
+                } else {
+                    state.slots[index].alphaB = min(40, state.slots[index].alphaB + 5)
+                }
+            } else {
+                state.slots[index].alphaB -= 30
+                if state.slots[index].alphaB < 0 {
+                    state.slots[index].alphaB = 0
+                    state.slots[index].life = 0
+                }
+            }
+        }
+    }
+
+    /// Geometry submission for `PP_MAGNUM2` (73), mirroring `CEffectPrim::RenderMagnum2`.
+    func renderMagnum2(into collector: inout EffectPrimitiveBatchCollector, assets: EffectAssetStore?) {
+        for index in 0..<4 where state.slots[index].life == 1 {
+            let fullAngle = Int(state.slots[index].fullDisplayAngle)
+            let step = fullAngle / 20
+            guard step > 0 else {
+                continue
+            }
+
+            var order = 0
+            var count = 0
+            while count <= fullAngle {
+                var angle = Int(state.slots[index].rotStart) + count
+                if angle >= 360 {
+                    angle -= 360
+                }
+                if fullAngle == 360 && order == 20 {
+                    angle = Int(state.slots[index].rotStart)
+                }
+
+                let cs1 = EffectSpace.cosine(degrees: angle)
+                let sn1 = EffectSpace.sine(degrees: angle)
+                let distance = state.slots[index].distance
+                let base = SIMD3<Float>(cs1 * distance, -3.0, sn1 * distance)
+                state.slots[index].vecBNow = base
+
+                let riseAngle = Int(state.slots[index].riseAngle)
+                let rx = EffectSpace.cosine(degrees: riseAngle) * state.slots[index].maxHeight
+                let ry = EffectSpace.sine(degrees: riseAngle) * state.slots[index].maxHeight
+                let top = SIMD3<Float>(cs1 * rx + base.x, -(ry + 3.0), sn1 * rx + base.z)
+                state.slots[index].vecTNow = top
+
+                if order > 0 && state.slots[index].alphaB > 0 {
+                    renderTeiRect(
+                        into: &collector,
+                        assets: assets,
+                        texPart: order - 1,
+                        alphaB: state.slots[index].alphaB,
+                        alphaT: state.slots[index].alphaB,
+                        v1: state.slots[index].vecBPre,
+                        v2: base,
+                        v3: top,
+                        v4: state.slots[index].vecTPre,
+                        textureIndex: 0
+                    )
+                }
+
+                order += 1
+                if order >= 21 {
+                    order = 20
+                }
+
+                state.slots[index].vecBPre = base
+                state.slots[index].vecTPre = top
+                count += step
+            }
+        }
+    }
+
+    // MARK: - Primitive 80
+    // PrimFallingPetals / RenderGroundFog
+
+    // MARK: - Primitive 86
+    // Get_Angle / RenderFloorSquare
 
     // MARK: - PP_RECT_UP2 (90)
 
@@ -581,8 +605,6 @@ extension EffectPrimitive {
         }
     }
 
-    // MARK: - Private Helpers
-
     private func fadeColumnHeight(at index: Int, groundOffset: Float, projectionDepthOffset: Float) {
         let kind = state.slots[index].height[4]
         let process = state.slots[index].process
@@ -616,6 +638,32 @@ extension EffectPrimitive {
             state.slots[index].height[2] = maxHeight
         }
     }
+
+    // MARK: - Primitive 92
+    // RenderFloorSquare
+
+    // MARK: - Primitive 112
+    // RenderMagicTarget
+
+    // MARK: - Primitive 119
+    // Get_Angle / RenderFloorSquare2
+
+    // MARK: - Primitive 122
+    // PrimSTIN3 / RenderFloorSquare2
+
+    // MARK: - PP_STIN4 (125)
+    // PrimSTIN4 / RenderFloorSquare2
+
+    // MARK: - Primitive 131
+    // PrimRisingFan2 / RenderRipple
+
+    // MARK: - Primitive 143
+    // PrimTextureSpin / RenderGroundSquare
+
+    // MARK: - Primitive 148
+    // FollowMasterAndTickSlots2 / RenderGroundSquareBlend
+
+    // MARK: - Shared Helpers
 
     private func emitFourColumnWalls(
         into collector: inout EffectPrimitiveBatchCollector,
