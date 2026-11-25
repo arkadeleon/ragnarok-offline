@@ -9,31 +9,11 @@ import Foundation
 import RagnarokRendering
 import simd
 
-extension EffectPrimitiveRenderState {
-    init(renderFlag: UInt32) {
-        let isAdditive = (renderFlag & EffectPrimitiveState.RenderFlag.additive) != 0
-        let depthTest = (renderFlag & EffectPrimitiveState.RenderFlag.noDepth) == 0
-
-        self.init(
-            srcBlend: .sourceAlpha,
-            dstBlend: isAdditive ? .one : .oneMinusSourceAlpha,
-            depthTest: depthTest,
-            depthWrite: false,
-            cullMode: .none,
-            bucket: .translucent
-        )
-    }
-}
-
 extension EffectPrimitive {
-    private static func makeXYRotation(xDegrees: Int, yDegrees: Int) -> simd_float4x4 {
-        let rotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: xDegrees))
-        let rotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: yDegrees))
-        return rotY * rotX
-    }
 
-    // MARK: - 3D Circle (`pp_3dcircle`)
+    // MARK: - PP_3DCIRCLE (12)
 
+    /// Motion update for `PP_3DCIRCLE` (12) record rings at 60Hz.
     func prim3DCircle() {
         let basePosition = master?.position ?? state.orgPos
         state.orgPos = basePosition + state.deltaPos2
@@ -70,6 +50,7 @@ extension EffectPrimitive {
         shiftSegment()
     }
 
+    /// Geometry submission for `PP_3DCIRCLE` (12) recorded trail rings.
     func renderRecordRings(
         into collector: inout EffectPrimitiveBatchCollector,
         assets: EffectAssetStore?
@@ -141,8 +122,9 @@ extension EffectPrimitive {
         }
     }
 
-    // MARK: - 3D Cylinder (`pp_3dcylinder` / `pp_3dcylinderhalf`)
+    // MARK: - PP_3DCYLINDER (13) / PP_3DCYLINDERHALF (18)
 
+    /// Motion update for `PP_3DCYLINDER` (13) spinning arc bands at 60Hz.
     @discardableResult
     func prim3DCylinder() -> Bool {
         let basePosition = master?.position ?? state.orgPos
@@ -186,6 +168,7 @@ extension EffectPrimitive {
         return advanceTextureAnimation()
     }
 
+    /// Motion update for `PP_3DCYLINDERHALF` (18) single-step arc bands at 60Hz.
     @discardableResult
     func prim3DCylinderHalf() -> Bool {
         let basePosition = master?.position ?? state.orgPos
@@ -225,6 +208,7 @@ extension EffectPrimitive {
         return advanceTextureAnimation()
     }
 
+    /// Geometry submission for `PP_3DCYLINDER` (13) extruded arc bands.
     func renderArcBand(
         into collector: inout EffectPrimitiveBatchCollector,
         assets: EffectAssetStore?
@@ -290,8 +274,9 @@ extension EffectPrimitive {
         }
     }
 
-    // MARK: - 3D Sphere (`pp_3dsphere`)
+    // MARK: - PP_3DSPHERE (14)
 
+    /// Motion update for `PP_3DSPHERE` (14) expanding textured sphere at 60Hz.
     func prim3DSphere() {
         let basePosition = master?.position ?? state.orgPos
         state.orgPos = basePosition + state.deltaPos2
@@ -302,6 +287,7 @@ extension EffectPrimitive {
         processAlpha()
     }
 
+    /// Geometry submission for `PP_3DSPHERE` (14) latitude/longitude mesh quads.
     func renderSphere(
         into collector: inout EffectPrimitiveBatchCollector,
         assets: EffectAssetStore?
@@ -363,8 +349,9 @@ extension EffectPrimitive {
         }
     }
 
-    // MARK: - Half Sphere (`pp_halfsphere`)
+    // MARK: - PP_HALFSPHERE (104)
 
+    /// Motion update for `PP_HALFSPHERE` (104) forward dome facing the target at 60Hz.
     func primHalfSphere(context: EffectTickContext) {
         followMaster()
         let parentAngle = parentFacingAngle(world: context.world)
@@ -387,6 +374,7 @@ extension EffectPrimitive {
         }
     }
 
+    /// Geometry submission for `PP_HALFSPHERE` (104) hemisphere mesh.
     func renderHalfSphere(
         into collector: inout EffectPrimitiveBatchCollector,
         assets: EffectAssetStore?
@@ -464,8 +452,9 @@ extension EffectPrimitive {
         }
     }
 
-    // MARK: - Guard Sphere Cage (`pp_guard`)
+    // MARK: - PP_GUARD (61)
 
+    /// Motion update for `PP_GUARD` (61) multi-layer defensive sphere cage at 60Hz.
     func primGuard(context: EffectTickContext) {
         followMaster()
         let parentAngle = parentFacingAngle(world: context.world)
@@ -502,6 +491,7 @@ extension EffectPrimitive {
         }
     }
 
+    /// Geometry submission for `PP_GUARD` (61) concentric sphere cage panels.
     func renderSphereCage(
         into collector: inout EffectPrimitiveBatchCollector,
         assets: EffectAssetStore?
@@ -592,8 +582,9 @@ extension EffectPrimitive {
         }
     }
 
-    // MARK: - Grand Cross Pillars (`pp_grandcross2`)
+    // MARK: - PP_GRANDCROSS2 (37)
 
+    /// Motion update for `PP_GRANDCROSS2` (37) cross pillars at 60Hz.
     func primGrandCross2() {
         for index in 0..<4 where state.slots[index].life == 1 {
             state.slots[index].process += 1
@@ -617,6 +608,7 @@ extension EffectPrimitive {
         }
     }
 
+    /// Geometry submission for `PP_GRANDCROSS2` (37) pillar walls and end caps.
     func renderGrandCross2(
         into collector: inout EffectPrimitiveBatchCollector,
         assets: EffectAssetStore?
@@ -655,8 +647,9 @@ extension EffectPrimitive {
         }
     }
 
-    // MARK: - Hermode Rotating Cube (`pp_hermode`)
+    // MARK: - PP_HERMODE (114)
 
+    /// Motion update for `PP_HERMODE` (114) rotating ground cube at 60Hz.
     func primHermode() {
         followMaster()
 
@@ -675,6 +668,7 @@ extension EffectPrimitive {
         }
     }
 
+    /// Geometry submission for `PP_HERMODE` (114) extruded cube faces.
     func renderHermode(
         into collector: inout EffectPrimitiveBatchCollector,
         assets: EffectAssetStore?
@@ -719,6 +713,12 @@ extension EffectPrimitive {
 
     // MARK: - Helpers
 
+    private static func makeXYRotation(xDegrees: Int, yDegrees: Int) -> simd_float4x4 {
+        let rotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: xDegrees))
+        let rotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: yDegrees))
+        return rotY * rotX
+    }
+
     private static func guardPoint(
         rx: Int,
         ry: Int,
@@ -762,5 +762,21 @@ extension EffectPrimitive {
             currentMotion %= total
         }
         return true
+    }
+}
+
+extension EffectPrimitiveRenderState {
+    init(renderFlag: UInt32) {
+        let isAdditive = (renderFlag & EffectPrimitiveState.RenderFlag.additive) != 0
+        let depthTest = (renderFlag & EffectPrimitiveState.RenderFlag.noDepth) == 0
+
+        self.init(
+            srcBlend: .sourceAlpha,
+            dstBlend: isAdditive ? .one : .oneMinusSourceAlpha,
+            depthTest: depthTest,
+            depthWrite: false,
+            cullMode: .none,
+            bucket: .translucent
+        )
     }
 }

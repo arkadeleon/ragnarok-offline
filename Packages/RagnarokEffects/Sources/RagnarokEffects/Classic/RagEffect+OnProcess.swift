@@ -9,12 +9,29 @@ import Foundation
 import simd
 
 extension RagEffect {
+    // MARK: - Dispatch
+
     public nonisolated static let supportedEffectIDs: [EffectID] = [
         .ef_entry,
-        .ef_grandcross2,
-        .ef_guard,
+        .ef_bottom_dissonance,
+        .ef_bottom_rokisweil,
+        .ef_bottom_whistle,
+        .ef_bottom_assassincross,
         .ef_heal,
+        .ef_bottom_mag,
+        .ef_bottom_sanc,
         .ef_heal3,
+        .ef_hitline,
+        .ef_guard,
+        .ef_magnum2,
+        .ef_bottom_basilica,
+        .ef_linelink2,
+        .ef_bottom_fogwall,
+        .ef_hitline3,
+        .ef_hitline6,
+        .ef_hitline7,
+        .ef_grandcross2,
+        .ef_kaizel,
         .ef_waterball3,
     ]
 
@@ -30,23 +47,64 @@ extension RagEffect {
         }
 
         return RagEffect(id: id, request: request) { effect, context in
-            effect.processClassicEffect(context: context)
+            effect.processEffect(context: context)
         }
     }
 
-    func processClassicEffect(context: EffectTickContext) -> Bool {
+    func processEffect(context: EffectTickContext) -> Bool {
         switch effectID {
         case .ef_entry:
             entry(context: context)
+        case .ef_bottom_dissonance:
+            texturedMagicRing(texturePath: "effect\\ring_blue.tga", kind: 0, context: context)
+        case .ef_bottom_rokisweil:
+            bottomOut(texturePath: "effect\\safeline.bmp", kind: 0, context: context)
+        case .ef_bottom_whistle:
+            bottomMusic(texturePath: "effect\\melody_b.bmp", kind: 0, context: context)
+        case .ef_bottom_assassincross:
+            texturedMagicRing(texturePath: "effect\\ring_red.tga", kind: 1, context: context)
+        case .ef_heal:
+            healBurst(texturePath: "effect\\alpha_down.tga", flag: 0, context: context)
+        case .ef_bottom_mag:
+            texturedPulseKind(texturePath: "effect\\ring_red.tga", kind: 0, context: context)
+        case .ef_bottom_sanc:
+            texturedPulseKind(texturePath: "effect\\alpha_down.tga", kind: 1, context: context)
+        case .ef_heal3:
+            healBurst(texturePath: "effect\\alpha_down.tga", flag: 1, context: context)
+        case .ef_hitline:
+            whiteSparks(kind: 0, context: context)
+        case .ef_guard:
+            kyrieGuard(texturePath: "effect\\guardK.tga", kind: 0, context: context)
+        case .ef_magnum2:
+            magnum2(texturePath: "effect\\ring_yellow.tga", context: context)
+        case .ef_bottom_basilica:
+            texturedFourRing(texturePath: "effect\\alpha_down.tga", kind: 0, context: context)
+            texturedFourRing(texturePath: "effect\\alpha_down.tga", kind: 1, context: context)
+        case .ef_linelink2:
+            if stateCnt == 0 {
+                context.world.playSound(
+                    named: "effect\\소울 체인지.wav",
+                    atWorldPosition: EffectSpace.toWorldPosition(position),
+                    delay: 0
+                )
+            }
+            trackTarget(context: context)
+        case .ef_bottom_fogwall:
+            texturedPulseKind(texturePath: "effect\\ring_white.tga", kind: 2, context: context)
+        case .ef_hitline3:
+            whiteSparkStreak(kind: 0, context: context)
+        case .ef_hitline6:
+            whiteSparkStreak(kind: 3, context: context)
+        case .ef_hitline7:
+            whiteSparkStreak(kind: 1, context: context)
         case .ef_grandcross2:
             grandCrossRings(angle: 0, kind: 1, context: context)
             grandCross2(flag: 1, context: context)
-        case .ef_guard:
-            kyrieGuard(texturePath: "effect\\guardK.tga", kind: 0, context: context)
-        case .ef_heal:
-            healBurst(texturePath: "effect\\alpha_down.tga", flag: 0, context: context)
-        case .ef_heal3:
-            healBurst(texturePath: "effect\\alpha_down.tga", flag: 1, context: context)
+        case .ef_kaizel:
+            if stateCnt == 15 {
+                jobLvUp50Pair(angle: 0, context: context)
+                jobLvUp50Pair(angle: 45, context: context)
+            }
         case .ef_waterball3:
             waterBallBurst(context: context)
         default:
@@ -55,114 +113,9 @@ extension RagEffect {
         return true
     }
 
-    private func kyrieGuard(texturePath: String, kind: Int8, context: EffectTickContext) {
-        guard stateCnt == 0 else {
-            return
-        }
+    // MARK: - EF_ENTRY (6)
 
-        context.world.playSound(
-            named: "effect\\kyrie_guard.wav",
-            atWorldPosition: EffectSpace.toWorldPosition(position),
-            delay: 0
-        )
-
-        let secondaryTexture = "effect\\guardK2.tga"
-        _ = context.assets?.texture(atPath: texturePath)
-        _ = context.assets?.texture(atPath: secondaryTexture)
-
-        let primitive = launchPrimitive(.pp_guard)
-        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
-        primitive.state.duration = duration
-        primitive.state.totalTexture = 2
-        primitive.state.texturePaths = [texturePath, secondaryTexture]
-        primitive.state.size = 11.0
-        primitive.state.slots[0].life = 1
-        primitive.state.slots[0].process = 0
-        primitive.state.slots[0].maxHeight = 7.8
-        primitive.state.slots[0].alphaB = 0
-        primitive.state.slots[0].distance = 1.0
-        primitive.state.slots[0].height[0] = 0
-        primitive.state.slots[1].life = 0
-        primitive.state.slots[2].life = 0
-        primitive.state.slots[3].life = 0
-
-        if kind == 2 || kind == 3 || kind == 4 || kind == 5 {
-            primitive.state.slots[0].flag1[0] = kind
-        } else {
-            primitive.state.slots[0].flag1[0] = 0
-        }
-    }
-
-    private func grandCrossRings(angle: Int16, kind: Int8, context: EffectTickContext) {
-        guard stateCnt == 0 else {
-            return
-        }
-
-        context.world.playSound(
-            named: "effect\\cru_grand cross.wav",
-            atWorldPosition: EffectSpace.toWorldPosition(position),
-            delay: 0
-        )
-
-        let texturePath = kind == 0 ? "effect\\ring_white.tga" : "effect\\ring_black.tga"
-        _ = context.assets?.texture(atPath: texturePath)
-
-        let primitive = launchPrimitive(.pp_gi_3)
-        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
-        primitive.state.duration = duration
-        primitive.state.texturePaths = [texturePath]
-        primitive.state.size = kind == 0 ? 1.0 : 12.0
-
-        let configs: [(rotStart: Int16, offsetX: Int8, offsetZ: Int8)] = [
-            (180, 23, 23),
-            (90, 23, -23),
-            (0, -23, -23),
-            (270, -23, 23),
-        ]
-
-        for (index, config) in configs.enumerated() {
-            primitive.state.slots[index].life = 1
-            primitive.state.slots[index].process = 0
-            primitive.state.slots[index].fullDisplayAngle = 90
-            primitive.state.slots[index].maxHeight = 120.0
-            primitive.state.slots[index].alphaB = angle
-            primitive.state.slots[index].distance = 19.9
-            primitive.state.slots[index].riseAngle = 90
-            primitive.state.slots[index].flag1[4] = kind
-            primitive.state.slots[index].rotStart = config.rotStart
-            primitive.state.slots[index].flag1[0] = config.offsetX
-            primitive.state.slots[index].flag1[1] = config.offsetZ
-        }
-    }
-
-    private func grandCross2(flag: Int8, context: EffectTickContext) {
-        guard stateCnt == 0 else {
-            return
-        }
-
-        let texturePath = flag == 0 ? "effect\\ring_yellow.tga" : "effect\\ring_black.tga"
-        _ = context.assets?.texture(atPath: texturePath)
-
-        let primitive = launchPrimitive(.pp_grandcross2)
-        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
-        primitive.state.duration = duration
-        primitive.state.texturePaths = [texturePath]
-        primitive.state.size = 1.0
-
-        for index in 0..<2 {
-            primitive.state.slots[index].life = 1
-            primitive.state.slots[index].process = 0
-            primitive.state.slots[index].maxHeight = 60.0
-            primitive.state.slots[index].rotStart = Int16(index * 90)
-            primitive.state.slots[index].alphaB = 0
-            primitive.state.slots[index].height[0] = 24.0
-            primitive.state.slots[index].height[1] = 3.2
-            primitive.state.slots[index].height[2] = 0
-        }
-        primitive.state.slots[2].life = 0
-        primitive.state.slots[3].life = 0
-    }
-
+    /// Spawns counter-rotating `PP_3DCYLINDER` (13) rings for `EF_ENTRY` (6).
     private func entry(context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
@@ -203,59 +156,171 @@ extension RagEffect {
         inner.state.texturePaths = [texturePath]
     }
 
-    private func waterBallBurst(context: EffectTickContext) {
+    // MARK: - EF_BOTTOM_DISSONANCE (277) / EF_BOTTOM_ASSASSINCROSS (287)
+
+    /// Spawns `PP_BOTTOM2` (48) textured ground planes for `EF_BOTTOM_DISSONANCE` (277) and `EF_BOTTOM_ASSASSINCROSS` (287).
+    private func texturedMagicRing(texturePath: String, kind: Int8, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
 
-        context.world.playSound(
-            named: "effect\\wizard_waterball_chulung.wav",
-            atWorldPosition: EffectSpace.toWorldPosition(position),
-            delay: 0
-        )
+        _ = context.assets?.texture(atPath: texturePath)
 
-        let ringTexture = "effect\\ring_blue.tga"
-        let iceTexture = "effect\\ice.tga"
-        _ = context.assets?.texture(atPath: ringTexture)
-        _ = context.assets?.texture(atPath: iceTexture)
+        let primitive = launchPrimitive(.pp_bottom2)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 0
 
-        let firstRing = launchPrimitive(.pp_3dcircle)
-        firstRing.state.duration = 30
-        firstRing.state.renderFlag |= EffectPrimitiveState.RenderFlag.noDepth
-        firstRing.state.latitude = 90.0
-        firstRing.state.radiusSpeed = 1.75
-        firstRing.state.radiusAccel = -(firstRing.state.radiusSpeed / Float(firstRing.state.duration)) * 0.5
-        firstRing.state.innerSize = 12.0
-        firstRing.state.alpha = 0
-        firstRing.state.alphaSpeed = firstRing.state.maxAlpha / 15.0
-        firstRing.state.fadeOutCnt = 10
-        firstRing.initSegment()
-        firstRing.state.texturePaths = [ringTexture]
+        for i in 0..<4 {
+            primitive.state.slots[i].process = 0
+            primitive.state.slots[i].fullDisplayAngle = Int16(Int.random(in: 0..<360))
+            primitive.state.slots[i].height[0] = Float(kind)
 
-        let sphere = launchPrimitive(.pp_3dsphere)
-        sphere.state.duration = 30
-        sphere.state.radiusSpeed = 1.15
-        sphere.state.radiusAccel = -(sphere.state.radiusSpeed / Float(sphere.state.duration)) * 0.5
-        sphere.state.longSpeed = 3.0
-        sphere.state.alpha = 0
-        sphere.state.alphaSpeed = sphere.state.maxAlpha / 15.0
-        sphere.state.fadeOutCnt = 10
-        sphere.state.texturePaths = [iceTexture]
-
-        let secondRing = launchPrimitive(.pp_3dcircle)
-        secondRing.state.duration = 20
-        secondRing.state.renderFlag |= EffectPrimitiveState.RenderFlag.noDepth
-        secondRing.state.latitude = 90.0
-        secondRing.state.radiusSpeed = 1.75
-        secondRing.state.radiusAccel = -(secondRing.state.radiusSpeed / Float(secondRing.state.duration)) * 0.5
-        secondRing.state.innerSize = 12.0
-        secondRing.state.alpha = 0
-        secondRing.state.alphaSpeed = secondRing.state.maxAlpha / 15.0
-        secondRing.state.fadeOutCnt = 10
-        secondRing.initSegment()
-        secondRing.state.texturePaths = [ringTexture]
+            if kind == 0 {
+                primitive.state.slots[i].life = 1
+                primitive.state.slots[i].vecBPre.x = Float(Int.random(in: 0..<40) - 20)
+                primitive.state.slots[i].vecBPre.z = Float(Int.random(in: 0..<40) - 20)
+                primitive.state.slots[i].vecBNow.x = 0
+                primitive.state.slots[i].vecBNow.z = 0
+                primitive.state.slots[i].alphaB = 15
+            } else if kind == 1 || kind == 2 {
+                primitive.state.slots[i].life = 1
+                if i < 2 {
+                    let offset = Float(Int.random(in: 0..<7)) - 3.0
+                    primitive.state.slots[i].vecBPre.x = offset
+                    primitive.state.slots[i].vecBPre.z = -3.0
+                    primitive.state.slots[i].vecBNow.x = -offset
+                    primitive.state.slots[i].vecBNow.z = 3.0
+                } else {
+                    let offset = Float(Int.random(in: 0..<7)) - 3.0
+                    primitive.state.slots[i].vecBPre.x = -3.0
+                    primitive.state.slots[i].vecBPre.z = offset
+                    primitive.state.slots[i].vecBNow.x = 3.0
+                    primitive.state.slots[i].vecBNow.z = -offset
+                }
+                primitive.state.slots[i].alphaB = 50
+            } else if kind == 3 || kind == 4 {
+                primitive.state.slots[i].life = i < 2 ? 1 : 0
+                if i < 1 {
+                    primitive.state.slots[i].vecBPre.x = 6.0
+                    primitive.state.slots[i].vecBPre.z = 0
+                    primitive.state.slots[i].vecBNow.x = -6.0
+                    primitive.state.slots[i].vecBNow.z = 0
+                } else {
+                    primitive.state.slots[i].vecBPre.x = 0
+                    primitive.state.slots[i].vecBPre.z = -6.0
+                    primitive.state.slots[i].vecBNow.x = 0
+                    primitive.state.slots[i].vecBNow.z = 6.0
+                }
+                primitive.state.slots[i].alphaB = 100
+            }
+        }
     }
 
+    // MARK: - EF_BOTTOM_ROKISWEIL (283)
+
+    /// Spawns `PP_BOTTOMOUT` (49) orbiting ground particles for `EF_BOTTOM_ROKISWEIL` (283).
+    private func bottomOut(texturePath: String, kind: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_bottomout)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+
+        for i in 0..<4 {
+            primitive.state.slots[i].life = 0
+        }
+
+        let count = kind == 1 ? 1 : 2
+        for i in 0..<count {
+            primitive.state.slots[i].life = 1
+            primitive.state.slots[i].process = Int.random(in: 0..<11)
+            if kind == 0 {
+                primitive.state.slots[i].distance = Float(Int.random(in: 0..<6)) + 5.0
+                primitive.state.slots[i].vecBPre.y = position.y
+            } else {
+                primitive.state.slots[i].distance = Float(Int.random(in: 0..<20)) * 0.1 + 3.0
+                primitive.state.slots[i].vecBPre.y = position.y - 5.0
+            }
+            primitive.state.slots[i].height[8] = 0
+            primitive.state.slots[i].alphaB = 0
+            primitive.state.slots[i].vecBNow = SIMD3<Float>(position.x, primitive.state.slots[i].vecBPre.y, position.z)
+            primitive.state.slots[i].fullDisplayAngle = 45
+            primitive.state.slots[i].flag1[0] = 0
+            primitive.state.slots[i].flag1[1] = kind
+            primitive.state.slots[i].flag1[2] = 2
+            primitive.state.slots[i].height[7] = 0
+        }
+    }
+
+    // MARK: - EF_BOTTOM_WHISTLE (286)
+
+    /// Spawns `PP_BOTTOM` (47) ground particles for `EF_BOTTOM_WHISTLE` (286).
+    private func bottomMusic(texturePath: String, kind: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_bottom)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 0
+
+        for i in 0..<4 {
+            primitive.state.slots[i].life = 0
+        }
+
+        primitive.state.slots[0].life = 1
+        primitive.state.slots[0].process = 0
+        primitive.state.slots[0].distance = switch kind {
+        case 1: 5.0
+        case 4: 15.0
+        case 6: 8.0
+        case 9: 1.5
+        default: 3.0
+        }
+        primitive.state.slots[0].height[8] = 0
+        primitive.state.slots[0].alphaB = 200
+        primitive.state.slots[0].vecBNow.x = position.x
+        primitive.state.slots[0].vecBNow.z = position.z
+        primitive.state.slots[0].vecBPre.y = position.y - 6.0
+        primitive.state.slots[0].rotStart = Int16(Int.random(in: 0..<360))
+        primitive.state.slots[0].fullDisplayAngle = 45
+        primitive.state.slots[0].flag1[0] = 0
+        primitive.state.slots[0].flag1[2] = 2
+        primitive.state.slots[0].height[7] = 0
+
+        if kind == 4 {
+            primitive.state.slots[0].height[9] = 10.0
+        } else if kind == 2 {
+            for i in 1..<4 {
+                primitive.state.slots[i].life = 1
+                primitive.state.slots[i].alphaB = 0
+            }
+        } else if kind == 3 {
+            primitive.state.slots[0].flag1[2] = 3
+        } else if kind == 5 || kind == 6 {
+            primitive.state.slots[0].flag1[2] = 4
+        } else if kind == 7 {
+            primitive.state.slots[0].flag1[2] = 7
+        } else if kind == 9 {
+            primitive.state.slots[0].flag1[2] = 9
+            primitive.state.slots[0].flag1[3] = 6
+        }
+    }
+
+    // MARK: - EF_HEAL (312) / EF_HEAL3 (320)
+
+    /// Spawns pulsing casting columns (`60`) and rising particles (`PP_PARTICLE_UP` (59)) for `EF_HEAL` (312) and `EF_HEAL3` (320).
     private func healBurst(texturePath: String, flag: Int8, context: EffectTickContext) {
         let limit = flag != 0 ? 25 : 50
 
@@ -392,5 +457,543 @@ extension RagEffect {
                 primitive.state.slots[i].height[7] = 0
             }
         }
+    }
+
+    // MARK: - EF_BOTTOM_MAG (318) / EF_BOTTOM_SANC (319) / EF_BOTTOM_FOGWALL (405)
+
+    /// Spawns `PP_RECT_UP` (64) rising pulse columns for `EF_BOTTOM_MAG` (318), `EF_BOTTOM_SANC` (319), and `EF_BOTTOM_FOGWALL` (405).
+    private func texturedPulseKind(texturePath: String, kind: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_rect_up)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 1.0
+        primitive.state.slots[0].life = 1
+        primitive.state.slots[0].process = 0
+        primitive.state.slots[0].fullDisplayAngle = Int16(Int.random(in: 0..<360))
+        primitive.state.slots[0].rotStart = 0
+
+        if kind == 0 {
+            primitive.state.slots[0].maxHeight = context.usesMinimalEffects ? 10.0 : 50.0
+            primitive.state.slots[0].alphaB = 30
+            primitive.state.slots[0].alphaT = 864
+            primitive.state.slots[0].height[0] = 5.0
+            primitive.state.slots[0].height[1] = 5.0
+        } else {
+            if kind == 1 || kind == 4 {
+                primitive.state.slots[0].maxHeight = 16.0
+                primitive.state.slots[0].alphaB = 120
+                primitive.state.slots[0].alphaT = 1880
+            } else if kind == 2 {
+                primitive.state.slots[0].maxHeight = 32.0
+                primitive.state.slots[0].alphaB = 30
+                primitive.state.slots[0].alphaT = 29999
+            } else if kind == 3 {
+                primitive.state.slots[0].maxHeight = 16.0
+            }
+            primitive.state.slots[0].height[0] = 2.5
+            primitive.state.slots[0].height[1] = 2.5
+        }
+
+        primitive.state.slots[0].height[2] = 0
+        primitive.state.slots[0].height[3] = Float(kind)
+        if kind == 4 {
+            primitive.state.slots[0].height[4] = Float(Int.random(in: 0..<50))
+        }
+        primitive.state.slots[0].height[5] = 0
+        primitive.state.slots[0].height[6] = 0
+        primitive.state.slots[1].life = 0
+        primitive.state.slots[2].life = 0
+        primitive.state.slots[3].life = 0
+    }
+
+    // MARK: - EF_HITLINE (330)
+
+    /// Emits `PP_HITLINE` (70) bouncing white spark trails for `EF_HITLINE` (330).
+    private func whiteSparks(kind: Int16, context: EffectTickContext) {
+        guard stateCnt >= 0, stateCnt <= 3 else {
+            return
+        }
+
+        let texturePath = "effect\\white02.bmp"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_hitline)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.totalTexture = 1
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 0
+
+        for index in 0..<4 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = -Int.random(in: 0..<26)
+            primitive.state.slots[index].maxHeight = 0.1
+            primitive.state.slots[index].alphaB = Int16(Int.random(in: 0..<51) + 125)
+            primitive.state.slots[index].riseAngle = Int16(Int.random(in: 0..<360))
+            primitive.state.slots[index].distance = Float(Int.random(in: 0..<8)) + 6.0
+            primitive.state.slots[index].flag1[0] = 0
+            primitive.state.slots[index].height[0] = 0
+            primitive.state.slots[index].vecBNow = position
+            primitive.state.slots[index].alphaT = kind
+        }
+    }
+
+    // MARK: - EF_GUARD (336)
+
+    /// Spawns `PP_GUARD` (61) sphere cage and plays the guard sound for `EF_GUARD` (336).
+    private func kyrieGuard(texturePath: String, kind: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        context.world.playSound(
+            named: "effect\\kyrie_guard.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+
+        let secondaryTexture = "effect\\guardK2.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+        _ = context.assets?.texture(atPath: secondaryTexture)
+
+        let primitive = launchPrimitive(.pp_guard)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.totalTexture = 2
+        primitive.state.texturePaths = [texturePath, secondaryTexture]
+        primitive.state.size = 11.0
+        primitive.state.slots[0].life = 1
+        primitive.state.slots[0].process = 0
+        primitive.state.slots[0].maxHeight = 7.8
+        primitive.state.slots[0].alphaB = 0
+        primitive.state.slots[0].distance = 1.0
+        primitive.state.slots[0].height[0] = 0
+        primitive.state.slots[1].life = 0
+        primitive.state.slots[2].life = 0
+        primitive.state.slots[3].life = 0
+
+        if kind == 2 || kind == 3 || kind == 4 || kind == 5 {
+            primitive.state.slots[0].flag1[0] = kind
+        } else {
+            primitive.state.slots[0].flag1[0] = 0
+        }
+    }
+
+    // MARK: - EF_MAGNUM2 (339)
+
+    /// Emits `PP_MAGNUM2` (73) shockwave waves and sound cues for `EF_MAGNUM2` (339).
+    private func magnum2(texturePath: String, context: EffectTickContext) {
+        if stateCnt == 0 {
+            flag = 0
+        }
+
+        if stateCnt == 20 {
+            context.world.playSound(
+                named: "permeter_attack.wav",
+                atWorldPosition: EffectSpace.toWorldPosition(position),
+                delay: 0
+            )
+        } else if stateCnt == 30 {
+            context.world.playSound(
+                named: "effect\\EF_MagnumBreak.wav",
+                atWorldPosition: EffectSpace.toWorldPosition(position),
+                delay: 0
+            )
+        }
+
+        guard stateCnt >= 25, stateCnt <= 55, stateCnt % 3 == 0 else {
+            return
+        }
+
+        flag += 1
+        guard flag < 11 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let time = stateCnt - 25
+        let primitive = launchPrimitive(.pp_magnum2)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.totalTexture = 1
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 5.0
+
+        for i in 0..<4 {
+            primitive.state.slots[i].life = 0
+        }
+
+        for i in 0..<2 {
+            primitive.state.slots[i].life = 1
+            primitive.state.slots[i].process = 0
+            primitive.state.slots[i].fullDisplayAngle = 360
+            primitive.state.slots[i].maxHeight = 20.0 - Float(time) * 0.7
+            primitive.state.slots[i].rotStart = Int16(i * 9 + time * 6)
+            primitive.state.slots[i].alphaB = 0
+            primitive.state.slots[i].distance = Float(time) * 0.2 + 5.0
+            primitive.state.slots[i].riseAngle = Int16(70 - i * 8 - time * 2)
+            primitive.state.slots[i].alphaT = Int16(i)
+        }
+    }
+
+    // MARK: - EF_BOTTOM_BASILICA (374)
+
+    /// Spawns `PP_RECT_UP2` (90) four-ring perimeter boxes for `EF_BOTTOM_BASILICA` (374).
+    private func texturedFourRing(texturePath: String, kind: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_rect_up2)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 0
+
+        let scale = Float(kind)
+        let dynamicFade = Int16(duration > 30000 ? 30000 : max(0, duration - 90))
+
+        for index in 0..<2 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = 0
+            primitive.state.slots[index].maxHeight = (kind == 0 || kind == 10 || kind == 20)
+                ? Float(index) + 30.0
+                : Float(index) + 20.0
+
+            if kind == 0 || kind == 10 {
+                primitive.state.slots[index].alphaB = 65
+                primitive.state.slots[index].alphaT = 2415
+            } else if kind == 20 {
+                primitive.state.slots[index].alphaB = 65
+                primitive.state.slots[index].alphaT = 2170
+            } else {
+                primitive.state.slots[index].alphaB = 32
+                primitive.state.slots[index].alphaT = kind == 21 ? 2140 : 2385
+            }
+
+            if kind >= 10 && kind < 20 {
+                primitive.state.slots[index].alphaT = dynamicFade
+            }
+
+            if kind == 10 || kind == 20 {
+                primitive.state.slots[index].height[0] = Float(index) * 0.4 + 7.0
+            } else if kind == 11 || kind == 21 {
+                primitive.state.slots[index].height[0] = Float(index) * 0.4 + 8.5
+            } else if kind == 0 {
+                primitive.state.slots[index].height[0] = Float(index) * 0.4 + 12.5
+            } else {
+                primitive.state.slots[index].height[0] = Float(index) * 0.4 + 14.0
+            }
+
+            primitive.state.slots[index].height[1] = primitive.state.slots[index].height[0]
+            primitive.state.slots[index].height[4] = scale
+        }
+
+        for index in 2..<4 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = 0
+            primitive.state.slots[index].maxHeight = (kind == 0 || kind == 10 || kind == 20)
+                ? Float(index) + 30.0
+                : Float(index) + 20.0
+
+            if kind == 10 || kind == 20 {
+                primitive.state.slots[index].distance = Float(index - 2) * 30.2
+            } else if kind == 11 || kind == 21 {
+                primitive.state.slots[index].distance = Float(index - 2) * 30.2 + 15.1
+            } else if kind == 0 {
+                primitive.state.slots[index].distance = Float(index - 2) * 53.2
+            } else {
+                primitive.state.slots[index].distance = Float(index - 2) * 53.2 + 26.6
+            }
+
+            if kind == 10 || kind == 20 {
+                primitive.state.slots[index].height[0] = 7.8
+            } else if kind == 11 || kind == 21 {
+                primitive.state.slots[index].height[0] = 9.3
+            } else if kind == 0 {
+                primitive.state.slots[index].height[0] = 13.3
+            } else {
+                primitive.state.slots[index].height[0] = 14.8
+            }
+
+            primitive.state.slots[index].height[1] = primitive.state.slots[index].height[0]
+            primitive.state.slots[index].height[3] = kind >= 10 ? 18.6 : 26.6
+            primitive.state.slots[index].alphaB = 15
+            primitive.state.slots[index].alphaT = kind >= 20 ? 2170 : 2415
+
+            if kind >= 10 && kind < 20 {
+                primitive.state.slots[index].alphaT = dynamicFade
+            }
+
+            primitive.state.slots[index].height[4] = scale
+        }
+    }
+
+    // MARK: - EF_LINELINK2 (384)
+
+    /// Spawns a `PP_LINELINK` (38) target-tracking link for `EF_LINELINK2` (384).
+    private func trackTarget(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let texturePath = "effect\\alpha_center.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_linelink)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.slots[0].life = 1
+        primitive.state.slots[0].process = 0
+        primitive.state.slots[0].alphaB = 0
+        primitive.state.slots[0].distance = 0
+        primitive.state.slots[0].maxHeight = 0.2
+        primitive.state.slots[0].height[4] = 2.0
+        primitive.state.slots[0].vecTNow = position
+
+        let resolvedTargetID: UInt32
+        if sourceObjectID != nil || sourcePosition != nil {
+            resolvedTargetID = sourceObjectID ?? 0
+        } else {
+            resolvedTargetID = targetObjectID ?? 0
+        }
+        primitive.state.slots[0].height[0] = Float(resolvedTargetID)
+
+        let targetWorldPos = (resolvedTargetID > 0 ? context.world.targetState(for: resolvedTargetID)?.effectPosition : nil) ?? sourcePosition
+        if let targetWorldPos {
+            primitive.state.slots[0].vecTPre = targetWorldPos
+        } else {
+            primitive.state.slots[0].life = 0
+        }
+
+        for i in 1..<4 {
+            primitive.state.slots[i].life = 0
+        }
+    }
+
+    // MARK: - EF_HITLINE3 (428) / EF_HITLINE6 (431) / EF_HITLINE7 (434)
+
+    /// Emits `PP_HITLINE3` (100) short spark streaks for `EF_HITLINE3` (428), `EF_HITLINE6` (431), and `EF_HITLINE7` (434).
+    private func whiteSparkStreak(kind: Int16, context: EffectTickContext) {
+        let limit = if kind == 1 { 2 } else if kind == 3 { 5 } else { 0 }
+        guard stateCnt >= 0, stateCnt < limit else {
+            return
+        }
+
+        let texturePath = "effect\\white02.bmp"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_hitline3)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.totalTexture = 1
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 0
+
+        for index in 0..<4 {
+            primitive.state.slots[index].life = 1
+
+            if kind == 1 {
+                primitive.state.slots[index].process = -Int.random(in: 0..<11)
+                primitive.state.slots[index].maxHeight = 0.1
+                primitive.state.slots[index].alphaB = Int16(Int.random(in: 0..<51) + 125)
+                primitive.state.slots[index].distance = Float(Int.random(in: 0..<5)) + 5.0
+                primitive.state.slots[index].vecTNow.y = 3.0
+            } else if kind == 3 {
+                primitive.state.slots[index].process = -30 - Int.random(in: 0..<41)
+                primitive.state.slots[index].maxHeight = 0.07
+                primitive.state.slots[index].alphaB = Int16(Int.random(in: 0..<121) + 125)
+                primitive.state.slots[index].distance = Float(Int.random(in: 0..<6)) + 6.0
+                primitive.state.slots[index].vecTNow.y = 4.0
+            } else {
+                primitive.state.slots[index].process = -Int.random(in: 0..<26)
+                primitive.state.slots[index].maxHeight = 0.1
+                primitive.state.slots[index].alphaB = Int16(Int.random(in: 0..<(kind >= 3 ? 121 : 51)) + 125)
+                primitive.state.slots[index].distance = Float(Int.random(in: 0..<6)) + 6.0
+                primitive.state.slots[index].vecTNow.y = 5.0
+            }
+
+            primitive.state.slots[index].riseAngle = Int16(Int.random(in: 0..<360))
+            primitive.state.slots[index].height[0] = 0
+            primitive.state.slots[index].vecTNow.x = Float(Int.random(in: 0..<7)) * 0.1 + 0.6
+            primitive.state.slots[index].vecBNow = position
+            primitive.state.slots[index].alphaT = kind
+
+            if kind == 1 {
+                let tailCount = Int(primitive.state.slots[index].vecTNow.y)
+                for _ in 0..<10 {
+                    primitive.state.slots[index].height[0] = min(180.0, primitive.state.slots[index].height[0] + 6.0)
+                    for layer in stride(from: tailCount, through: 1, by: -1) {
+                        primitive.state.slots[index].height[layer] = primitive.state.slots[index].height[layer - 1]
+                    }
+                }
+            }
+        }
+    }
+
+    // MARK: - EF_GRANDCROSS2 (450)
+
+    /// Spawns corner casting rings (`PP_GI_3` (34)) for `EF_GRANDCROSS2` (450).
+    private func grandCrossRings(angle: Int16, kind: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        context.world.playSound(
+            named: "effect\\cru_grand cross.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+
+        let texturePath = kind == 0 ? "effect\\ring_white.tga" : "effect\\ring_black.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_gi_3)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = kind == 0 ? 1.0 : 12.0
+
+        let configs: [(rotStart: Int16, offsetX: Int8, offsetZ: Int8)] = [
+            (180, 23, 23),
+            (90, 23, -23),
+            (0, -23, -23),
+            (270, -23, 23),
+        ]
+
+        for (index, config) in configs.enumerated() {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = 0
+            primitive.state.slots[index].fullDisplayAngle = 90
+            primitive.state.slots[index].maxHeight = 120.0
+            primitive.state.slots[index].alphaB = angle
+            primitive.state.slots[index].distance = 19.9
+            primitive.state.slots[index].riseAngle = 90
+            primitive.state.slots[index].flag1[4] = kind
+            primitive.state.slots[index].rotStart = config.rotStart
+            primitive.state.slots[index].flag1[0] = config.offsetX
+            primitive.state.slots[index].flag1[1] = config.offsetZ
+        }
+    }
+
+    /// Spawns ground cross pillars (`PP_GRANDCROSS2` (37)) for `EF_GRANDCROSS2` (450).
+    private func grandCross2(flag: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let texturePath = flag == 0 ? "effect\\ring_yellow.tga" : "effect\\ring_black.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_grandcross2)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 1.0
+
+        for index in 0..<2 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = 0
+            primitive.state.slots[index].maxHeight = 60.0
+            primitive.state.slots[index].rotStart = Int16(index * 90)
+            primitive.state.slots[index].alphaB = 0
+            primitive.state.slots[index].height[0] = 24.0
+            primitive.state.slots[index].height[1] = 3.2
+            primitive.state.slots[index].height[2] = 0
+        }
+        primitive.state.slots[2].life = 0
+        primitive.state.slots[3].life = 0
+    }
+
+    // MARK: - EF_KAIZEL (590)
+
+    /// Spawns `PP_SLASH1` (75) four-way fan quads for `EF_KAIZEL` (590).
+    private func jobLvUp50Pair(angle: Int16, context: EffectTickContext) {
+        let texturePath = "effect\\magic_blue.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_slash1)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 4.0
+
+        for i in 0..<4 {
+            primitive.state.slots[i].life = 1
+            primitive.state.slots[i].process = 0
+            primitive.state.slots[i].maxHeight = 1.5
+            primitive.state.slots[i].rotStart = Int16(i * 90) + angle
+            primitive.state.slots[i].alphaB = 0
+            primitive.state.slots[i].distance = 2.0
+            primitive.state.slots[i].height[0] = 1.0
+            primitive.state.slots[i].flag1[0] = 0
+        }
+    }
+
+    // MARK: - EF_WATERBALL3 (942)
+
+    /// Spawns `PP_3DCIRCLE` (12) rings and a `PP_3DSPHERE` (14) burst for `EF_WATERBALL3` (942).
+    private func waterBallBurst(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        context.world.playSound(
+            named: "effect\\wizard_waterball_chulung.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+
+        let ringTexture = "effect\\ring_blue.tga"
+        let iceTexture = "effect\\ice.tga"
+        _ = context.assets?.texture(atPath: ringTexture)
+        _ = context.assets?.texture(atPath: iceTexture)
+
+        let firstRing = launchPrimitive(.pp_3dcircle)
+        firstRing.state.duration = 30
+        firstRing.state.renderFlag |= EffectPrimitiveState.RenderFlag.noDepth
+        firstRing.state.latitude = 90.0
+        firstRing.state.radiusSpeed = 1.75
+        firstRing.state.radiusAccel = -(firstRing.state.radiusSpeed / Float(firstRing.state.duration)) * 0.5
+        firstRing.state.innerSize = 12.0
+        firstRing.state.alpha = 0
+        firstRing.state.alphaSpeed = firstRing.state.maxAlpha / 15.0
+        firstRing.state.fadeOutCnt = 10
+        firstRing.initSegment()
+        firstRing.state.texturePaths = [ringTexture]
+
+        let sphere = launchPrimitive(.pp_3dsphere)
+        sphere.state.duration = 30
+        sphere.state.radiusSpeed = 1.15
+        sphere.state.radiusAccel = -(sphere.state.radiusSpeed / Float(sphere.state.duration)) * 0.5
+        sphere.state.longSpeed = 3.0
+        sphere.state.alpha = 0
+        sphere.state.alphaSpeed = sphere.state.maxAlpha / 15.0
+        sphere.state.fadeOutCnt = 10
+        sphere.state.texturePaths = [iceTexture]
+
+        let secondRing = launchPrimitive(.pp_3dcircle)
+        secondRing.state.duration = 20
+        secondRing.state.renderFlag |= EffectPrimitiveState.RenderFlag.noDepth
+        secondRing.state.latitude = 90.0
+        secondRing.state.radiusSpeed = 1.75
+        secondRing.state.radiusAccel = -(secondRing.state.radiusSpeed / Float(secondRing.state.duration)) * 0.5
+        secondRing.state.innerSize = 12.0
+        secondRing.state.alpha = 0
+        secondRing.state.alphaSpeed = secondRing.state.maxAlpha / 15.0
+        secondRing.state.fadeOutCnt = 10
+        secondRing.initSegment()
+        secondRing.state.texturePaths = [ringTexture]
     }
 }

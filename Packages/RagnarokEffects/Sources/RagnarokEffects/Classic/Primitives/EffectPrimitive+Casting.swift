@@ -9,6 +9,10 @@ import Foundation
 import simd
 
 extension EffectPrimitive {
+
+    // MARK: - Primitive 60 / PP_HEAL_LOW (110)
+
+    /// Motion update for primitive `60` and `PP_HEAL_LOW` (110) pulsing casting columns at 60Hz.
     func primPulsingColumns(context: EffectTickContext) {
         if state.slots[0].flag1[0] == 33 {
             let yaw = Int(context.world.cameraYawDegrees)
@@ -90,6 +94,9 @@ extension EffectPrimitive {
         }
     }
 
+    // MARK: - 3D Casting Renderer (PP_3DCASTING (23) .. PP_3DCASTING_5 (107), 60)
+
+    /// Geometry submission for `PP_3DCASTING` (23) .. `PP_3DCASTING_5` (107) and primitive `60` 20-segment casting rings.
     func render3DCasting(
         into collector: inout EffectPrimitiveBatchCollector,
         assets: EffectAssetStore?
@@ -174,6 +181,9 @@ extension EffectPrimitive {
         }
     }
 
+    // MARK: - PP_HEAL_LOW (110)
+
+    /// Geometry submission for `PP_HEAL_LOW` (110) 10-segment low-polygon casting rings.
     func render3DCastingLowPolygon(
         into collector: inout EffectPrimitiveBatchCollector,
         assets: EffectAssetStore?
@@ -264,8 +274,9 @@ extension EffectPrimitive {
         }
     }
 
-    // MARK: - 3D Casting Motion Variants (`pp_3dcasting` .. `pp_3dcasting_5`, `pp_gi_3`)
+    // MARK: - PP_3DCASTING (23)
 
+    /// Motion update for `PP_3DCASTING` (23) rising casting rings at 60Hz.
     func prim3DCasting() {
         followMaster()
 
@@ -324,6 +335,9 @@ extension EffectPrimitive {
         }
     }
 
+    // MARK: - PP_3DCASTING_2 (24)
+
+    /// Motion update for `PP_3DCASTING_2` (24) oscillating wave casting rings at 60Hz.
     func prim3DCasting2() {
         followMaster()
 
@@ -358,6 +372,9 @@ extension EffectPrimitive {
         }
     }
 
+    // MARK: - PP_3DCASTING_3 (25)
+
+    /// Motion update for `PP_3DCASTING_3` (25) pulsing wave casting rings at 60Hz.
     func prim3DCasting3() {
         followMaster()
 
@@ -443,6 +460,9 @@ extension EffectPrimitive {
         }
     }
 
+    // MARK: - PP_3DCASTING_4 (65)
+
+    /// Motion update for `PP_3DCASTING_4` (65) inward-shrinking casting rings at 60Hz.
     func prim3DCasting4() {
         followMaster()
 
@@ -471,6 +491,9 @@ extension EffectPrimitive {
         }
     }
 
+    // MARK: - PP_3DCASTING_5 (107)
+
+    /// Motion update for `PP_3DCASTING_5` (107) outward-expanding wave rings at 60Hz.
     func prim3DCasting5() {
         followMaster()
 
@@ -507,6 +530,9 @@ extension EffectPrimitive {
         }
     }
 
+    // MARK: - PP_GI_3 (34)
+
+    /// Motion update for `PP_GI_3` (34) tilted quadrant casting rings at 60Hz.
     func primGI3() {
         for index in 0..<4 where state.slots[index].life == 1 {
             state.slots[index].process += 1
@@ -534,6 +560,7 @@ extension EffectPrimitive {
         }
     }
 
+    /// Geometry submission for `PP_GI_3` (34) tilted quadrant casting rings.
     func render3DCasting2(
         into collector: inout EffectPrimitiveBatchCollector,
         assets: EffectAssetStore?

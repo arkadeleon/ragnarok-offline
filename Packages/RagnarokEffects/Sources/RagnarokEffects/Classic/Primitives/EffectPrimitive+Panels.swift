@@ -9,6 +9,10 @@ import Foundation
 import simd
 
 extension EffectPrimitive {
+
+    // MARK: - PP_PARTICLE_UP (59)
+
+    /// Motion update for `PP_PARTICLE_UP` (59) floating field particles at 60Hz.
     func primParticleUp(context: EffectTickContext) {
         faceCamera(world: context.world)
         followMaster()
@@ -57,6 +61,9 @@ extension EffectPrimitive {
         }
     }
 
+    // MARK: - Field Panel Renderer (PP_PARTICLE_UP (59) / PP_BOTTOM (47) / PP_BOTTOMOUT (49))
+
+    /// Geometry submission for billboarded field panels (`PP_PARTICLE_UP` (59), `PP_BOTTOM` (47), `PP_BOTTOMOUT` (49)), mirroring `CEffectPrim::RenderFieldPanel`.
     func renderFieldPanel(
         into collector: inout EffectPrimitiveBatchCollector,
         assets: EffectAssetStore?

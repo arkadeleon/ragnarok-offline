@@ -9,7 +9,7 @@ import Foundation
 import RagnarokRendering
 import simd
 
-/// Classic procedural effect host running a 60Hz `stateCnt` state machine and
+/// Procedural effect host running a 60Hz `stateCnt` state machine and
 /// coordinating owned `EffectPrimitive` child instances.
 @MainActor
 public final class RagEffect: EffectPrimitiveRenderable {

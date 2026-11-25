@@ -783,4 +783,272 @@ struct EffectPrimitiveTests {
         // First quad starts at effect-space (2.0, 0, 0) shifted by vecBNow (4, 0) rotated 270 deg -> effect (2.0, 0, -4.0) -> world (0.4, 0, 0.8).
         #expect(approxEqual(collector.batches[0].vertices[0].position, SIMD3<Float>(0.4, 0.0, 0.8), tolerance: 1e-3))
     }
+
+    @Test("PP_BOTTOM and PP_BOTTOMOUT drive whistle and rokisweil ground particles")
+    func bottomAndBottomOutEffects() {
+        let world = MockWorldContext()
+        world.cameraYawDegrees = 90
+        world.cameraPitchDegrees = 30
+        let manager = EffectManager()
+
+        // EF_BOTTOM_WHISTLE (PP_BOTTOM)
+        #expect(EffectManager.hasBuiltInDefinition(for: .ef_bottom_whistle))
+        let whistleID = manager.spawn(EffectSpawnRequest(effectID: .ef_bottom_whistle, worldPosition: SIMD3<Float>(1, 0, 2)))
+        #expect(whistleID != nil)
+        manager.stepOneTick(world: world)
+
+        let whistleHost = manager.activeEffects.first as? RagEffect
+        let bottomPrim = whistleHost?.primitives.first
+        #expect(bottomPrim?.id == .pp_bottom)
+        #expect(bottomPrim?.state.texturePaths == ["effect\\melody_b.bmp"])
+        #expect(bottomPrim?.state.slots[0].process == 1)
+        #expect(approxEqual(bottomPrim?.state.slots[0].height[8] ?? 0, 5.0))
+        #expect(bottomPrim?.state.slots[0].alphaB == 200)
+
+        let bottomPayloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(bottomPayloads.count == 1)
+        #expect(bottomPayloads[0].vertices.count == 6)
+
+        // Advance 5 more ticks so slot 0 reaches process == 6 (trailing copy block) and remains alive.
+        for _ in 0..<5 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(bottomPrim?.state.slots[0].process == 6)
+        #expect(approxEqual(bottomPrim?.state.slots[0].height[8] ?? 0, 30.0))
+
+        // EF_BOTTOM_ROKISWEIL (PP_BOTTOMOUT)
+        #expect(EffectManager.hasBuiltInDefinition(for: .ef_bottom_rokisweil))
+        let rokisID = manager.spawn(EffectSpawnRequest(effectID: .ef_bottom_rokisweil, worldPosition: .zero))
+        #expect(rokisID != nil)
+        manager.stepOneTick(world: world)
+        let rokisHost = manager.activeEffects.last as? RagEffect
+        let bottomOutPrim = rokisHost?.primitives.first
+        #expect(bottomOutPrim?.id == .pp_bottomout)
+        #expect(bottomOutPrim?.state.texturePaths == ["effect\\safeline.bmp"])
+        #expect(bottomOutPrim?.state.slots[0].life == 1)
+        #expect(bottomOutPrim?.state.slots[1].life == 1)
+    }
+
+    @Test("PP_BOTTOM2 renders color planes across dissonance and assassincross")
+    func bottom2ColorPlanes() {
+        let world = MockWorldContext()
+        let manager = EffectManager()
+
+        let dissID = manager.spawn(EffectSpawnRequest(effectID: .ef_bottom_dissonance, worldPosition: .zero))
+        #expect(dissID != nil)
+        manager.stepOneTick(world: world)
+        let dissHost = manager.activeEffects.first as? RagEffect
+        let dissPrim = dissHost?.primitives.first
+        #expect(dissPrim?.id == .pp_bottom2)
+        #expect(dissPrim?.state.texturePaths == ["effect\\ring_blue.tga"])
+        #expect(dissPrim?.state.slots[0].height[0] == 0)
+
+        let dissPayloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(dissPayloads.count == 1)
+        #expect(dissPayloads[0].vertices.count == 4 * 6)
+        #expect(dissPayloads[0].renderState.dstBlend == .one)
+
+        // EF_BOTTOM_ASSASSINCROSS uses kind == 1 -> custom alpha blend (pw == 1 -> d3dBlend 6 -> oneMinusSourceAlpha) & 4 deg/tick
+        let crossID = manager.spawn(EffectSpawnRequest(effectID: .ef_bottom_assassincross, worldPosition: .zero))
+        #expect(crossID != nil)
+        let crossHost = manager.activeEffects.last as? RagEffect
+        manager.stepOneTick(world: world)
+        let crossPrim = crossHost?.primitives.first
+        #expect(crossPrim?.state.slots[0].height[0] == 1.0)
+        let initialAngle = crossPrim?.state.slots[0].fullDisplayAngle ?? 0
+        manager.stepOneTick(world: world)
+        let nextAngle = crossPrim?.state.slots[0].fullDisplayAngle ?? 0
+        #expect((Int(nextAngle) - Int(initialAngle) + 360) % 360 == 4)
+    }
+
+    @Test("PP_RECT_UP and PP_RECT_UP2 emit rising pulse columns and fading perimeter boxes")
+    func rectUpAndRectUp2() {
+        let world = MockWorldContext()
+        let manager = EffectManager()
+
+        // EF_BOTTOM_FOGWALL -> PP_RECT_UP kind 2 (4 walls + 2 cross planes = 6 quads)
+        let fogWallID = manager.spawn(EffectSpawnRequest(effectID: .ef_bottom_fogwall, worldPosition: .zero))
+        #expect(fogWallID != nil)
+        manager.stepOneTick(world: world)
+        let fogHost = manager.activeEffects.first as? RagEffect
+        let fogPrim = fogHost?.primitives.first
+        #expect(fogPrim?.id == .pp_rect_up)
+        #expect(fogPrim?.state.texturePaths == ["effect\\ring_white.tga"])
+        #expect(fogPrim?.state.slots[0].height[2] ?? 0 > 0)
+
+        let fogPayloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(fogPayloads.count == 1)
+        #expect(fogPayloads[0].vertices.count == 6 * 6)
+
+        // Minimal effect scales EF_BOTTOM_MAG maxHeight from 50 to 10
+        let minManager = EffectManager(usesMinimalEffects: true)
+        let magMinID = minManager.spawn(EffectSpawnRequest(effectID: .ef_bottom_mag, worldPosition: .zero))
+        #expect(magMinID != nil)
+        minManager.stepOneTick(world: world)
+        let magHost = minManager.activeEffects.first as? RagEffect
+        #expect(approxEqual(magHost?.primitives.first?.state.slots[0].maxHeight ?? 0, 10.0))
+
+        // EF_BOTTOM_BASILICA -> two PP_RECT_UP2 primitives (slots 0..1: 8 walls; slots 2..3: 2 sliding ribbon quads)
+        let basManager = EffectManager()
+        let basID = basManager.spawn(EffectSpawnRequest(effectID: .ef_bottom_basilica, worldPosition: .zero))
+        #expect(basID != nil)
+        basManager.stepOneTick(world: world)
+        let basHost = basManager.activeEffects.first as? RagEffect
+        #expect(basHost?.primitives.count == 2)
+        #expect(basHost?.primitives[0].id == .pp_rect_up2)
+        #expect(basHost?.primitives[1].id == .pp_rect_up2)
+        #expect(approxEqual(basHost?.primitives[0].state.slots[2].distance ?? 0, 0.5))
+
+        let basPayloads = basManager.collectPrimitivePayloads(fog: Fog(), world: world)
+        let basVertices = basPayloads.reduce(0) { $0 + $1.vertices.count }
+        // 2 primitives * (8 walls + 4 ribbon quads: slot 2 wraps corner 1 => 2 quads, slot 3 wraps corner 3 => 2 quads) = 24 quads
+        #expect(basVertices == 24 * 6)
+
+        // Verify moving master triggers early FadeColumnHeight when height[4] >= 20
+        let request = EffectSpawnRequest(effectID: .ef_bottom_basilica, worldPosition: .zero)
+        let movingHost = RagEffect(id: UUID(), request: request, duration: 300)
+        let colPrim = movingHost.launchPrimitive(.pp_rect_up2)
+        colPrim.state.slots[0].life = 1
+        colPrim.state.slots[0].process = 200
+        colPrim.state.slots[0].alphaT = 2400
+        colPrim.state.slots[0].maxHeight = 20
+        colPrim.state.slots[0].height[4] = 20
+        movingHost.position = SIMD3<Float>(10, 0, 0)
+        let ctx = EffectTickContext(world: world, assets: nil, currentTick: 0, usesMinimalEffects: false, onSpawnChild: { _ in })
+        colPrim.tick(context: ctx)
+        #expect(colPrim.state.slots[0].alphaT == 201)
+    }
+
+    @Test("PP_MAGNUM2 emits radial shockwave waves with timed audio and retirement")
+    func magnum2Effect() {
+        let world = MockWorldContext()
+        let manager = EffectManager()
+
+        let spawnID = manager.spawn(EffectSpawnRequest(effectID: .ef_magnum2, worldPosition: .zero))
+        #expect(spawnID != nil)
+        let host = manager.activeEffects.first as? RagEffect
+
+        // Advance through stateCnt 0..27 (28 ticks); stateCnt 20 plays permeter_attack, stateCnt 27 (27 % 3 == 0) spawns first PP_MAGNUM2.
+        for _ in 0..<28 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(world.playedSounds == ["permeter_attack.wav"])
+        #expect(host?.primitives.count == 1)
+        let prim = host?.primitives.first
+        #expect(prim?.id == .pp_magnum2)
+        #expect(prim?.state.slots[0].alphaB == 10)
+        #expect(prim?.state.slots[1].alphaB == 5)
+
+        // Each active slot (2) emits 20 texPart quads => 40 quads.
+        let payloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(payloads.reduce(0) { $0 + $1.vertices.count } == 40 * 6)
+
+        // Advance 10 more ticks: stateCnt 30 plays EF_MagnumBreak.wav, spawns waves at 30/33/36, and first prim fades all slots out.
+        for _ in 0..<10 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(world.playedSounds == ["permeter_attack.wav", "effect\\EF_MagnumBreak.wav"])
+        #expect(prim?.state.slots[0].life == 0)
+        #expect(prim?.state.slots[1].life == 0)
+    }
+
+    @Test("PP_HITLINE and PP_HITLINE3 trace bouncing and short spark triangular prisms")
+    func hitLineAndHitLine3() {
+        let world = MockWorldContext()
+
+        // EF_HITLINE (PP_HITLINE) spawns 1 primitive on ticks 0..3
+        let manager = EffectManager()
+        let hitID = manager.spawn(EffectSpawnRequest(effectID: .ef_hitline, worldPosition: .zero))
+        #expect(hitID != nil)
+        manager.stepOneTick(world: world)
+        let hitHost = manager.activeEffects.first as? RagEffect
+        #expect(hitHost?.primitives.count == 1)
+        let hitPrim = hitHost?.primitives.first
+        #expect(hitPrim?.id == .pp_hitline)
+
+        // Drive past negative staggered process for deterministic prism geometry check
+        for slot in 0..<4 {
+            hitPrim?.state.slots[slot].process = 0
+        }
+        let ctx = EffectTickContext(world: world, assets: nil, currentTick: 0, usesMinimalEffects: false, onSpawnChild: { _ in })
+        hitPrim?.tick(context: ctx)
+        #expect(approxEqual(hitPrim?.state.slots[0].height[0] ?? 0, 8.0))
+        #expect(approxEqual(hitPrim?.state.slots[0].height[1] ?? 0, 8.0))
+
+        var collector = EffectPrimitiveBatchCollector(fog: Fog())
+        hitPrim?.collectBatches(into: &collector, world: world, assets: nil)
+        // 4 slots * 20 segments * 3 prism faces = 240 quads max (depends on segment alpha > 0)
+        #expect(collector.batches.reduce(0) { $0 + $1.vertices.count } > 0)
+
+        // EF_HITLINE6 (PP_HITLINE3 kind 3 -> double concentric prism)
+        let manager3 = EffectManager()
+        let hl6ID = manager3.spawn(EffectSpawnRequest(effectID: .ef_hitline6, worldPosition: .zero))
+        #expect(hl6ID != nil)
+        manager3.stepOneTick(world: world)
+        let hl6Host = manager3.activeEffects.first as? RagEffect
+        let hl6Prim = hl6Host?.primitives.first
+        #expect(hl6Prim?.id == .pp_hitline3)
+        #expect(hl6Prim?.state.slots[0].vecTNow.y == 4.0)
+        for slot in 0..<4 {
+            hl6Prim?.state.slots[slot].process = 1
+        }
+        hl6Prim?.tick(context: ctx)
+        var hl6Collector = EffectPrimitiveBatchCollector(fog: Fog())
+        hl6Prim?.collectBatches(into: &hl6Collector, world: world, assets: nil)
+        // 4 slots * 4 segments * 2 prisms (inner + outer blue) * 3 faces = 96 quads = 576 vertices
+        #expect(hl6Collector.batches.reduce(0) { $0 + $1.vertices.count } == 96 * 6)
+    }
+
+    @Test("PP_SLASH1 and PP_LINELINK render slash fans and target-tracking tubes")
+    func slash1AndLineLink() {
+        let world = MockWorldContext()
+
+        // EF_KAIZEL spawns two PP_SLASH1 primitives at stateCnt == 15
+        let slashManager = EffectManager()
+        let kaizelID = slashManager.spawn(EffectSpawnRequest(effectID: .ef_kaizel, worldPosition: .zero))
+        #expect(kaizelID != nil)
+        for _ in 0..<16 {
+            slashManager.stepOneTick(world: world)
+        }
+        let kaizelHost = slashManager.activeEffects.first as? RagEffect
+        #expect(kaizelHost?.primitives.count == 2)
+        #expect(kaizelHost?.primitives[0].id == .pp_slash1)
+        #expect(kaizelHost?.primitives[1].id == .pp_slash1)
+
+        // Each primitive has 4 slots * 3 fan quads = 12 quads => 24 quads total
+        let slashPayloads = slashManager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(slashPayloads.reduce(0) { $0 + $1.vertices.count } == 24 * 6)
+
+        // EF_LINELINK2 tracks sourceObjectID -> owner/target world position and retires if target disappears
+        world.targets[1] = EffectTargetState(objectID: 1, worldPosition: .zero, facingAngle: 0)
+        world.targets[2] = EffectTargetState(objectID: 2, worldPosition: SIMD3<Float>(10, 0, 5), facingAngle: 0)
+        let linkManager = EffectManager()
+        let linkID = linkManager.spawn(
+            EffectSpawnRequest(
+                effectID: .ef_linelink2,
+                worldPosition: .zero,
+                targetObjectID: 1,
+                sourceObjectID: 2
+            )
+        )
+        #expect(linkID != nil)
+        linkManager.stepOneTick(world: world)
+        #expect(world.playedSounds == ["effect\\소울 체인지.wav"])
+
+        let linkHost = linkManager.activeEffects.first as? RagEffect
+        let linkPrim = linkHost?.primitives.first
+        #expect(linkPrim?.id == .pp_linelink)
+        #expect(linkPrim?.state.slots[0].life == 1)
+        #expect(linkPrim?.state.slots[0].alphaB == 6)
+
+        // 2 passes * 10 tube steps = 20 quads = 120 vertices
+        let linkPayloads = linkManager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(linkPayloads.reduce(0) { $0 + $1.vertices.count } == 20 * 6)
+
+        // Removing target actor retires the link cleanly on the next tick
+        world.targets.removeValue(forKey: 2)
+        linkManager.stepOneTick(world: world)
+        #expect(linkPrim?.state.slots[0].life == 0)
+        #expect(linkPrim?.state.slots[0].alphaB == 0)
+    }
 }

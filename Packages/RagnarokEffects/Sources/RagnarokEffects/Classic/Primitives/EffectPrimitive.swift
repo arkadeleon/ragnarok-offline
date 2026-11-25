@@ -111,6 +111,26 @@ public final class EffectPrimitive {
                 primPulsingColumns(context: context)
             case .pp_particle_up:
                 primParticleUp(context: context)
+            case .pp_linelink:
+                primLineLink(context: context)
+            case .pp_bottom:
+                primBottom(context: context)
+            case .pp_bottom2:
+                primBottom2()
+            case .pp_bottomout:
+                primBottomOut(context: context)
+            case .pp_rect_up:
+                primPulseRing()
+            case .pp_hitline:
+                primHitLine()
+            case .pp_magnum2:
+                primMagnum2()
+            case .pp_slash1:
+                primSlash1()
+            case .pp_rect_up2:
+                primFadingColumns()
+            case .pp_hitline3:
+                primHitLine3()
             default:
                 break
             }
@@ -157,8 +177,24 @@ public final class EffectPrimitive {
             render3DCasting2(into: &collector, assets: assets)
         case .pp_grandcross2:
             renderGrandCross2(into: &collector, assets: assets)
-        case .pp_particle_up:
+        case .pp_particle_up, .pp_bottom, .pp_bottomout:
             renderFieldPanel(into: &collector, assets: assets)
+        case .pp_linelink:
+            renderTube(into: &collector, assets: assets)
+        case .pp_bottom2:
+            renderColorPlane(into: &collector, assets: assets)
+        case .pp_rect_up:
+            renderRectUp(into: &collector, assets: assets)
+        case .pp_hitline:
+            renderHitLine(into: &collector, assets: assets)
+        case .pp_magnum2:
+            renderMagnum2(into: &collector, assets: assets)
+        case .pp_slash1:
+            renderSlash1(into: &collector, assets: assets)
+        case .pp_rect_up2:
+            renderRectUp2(into: &collector, assets: assets)
+        case .pp_hitline3:
+            renderHitLine3(into: &collector, assets: assets)
         default:
             break
         }
