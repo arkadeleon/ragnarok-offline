@@ -472,7 +472,7 @@ extension RagEffect {
             if let targetID = targetObjectID ?? ownerObjectID {
                 if stateCnt >= 30 && stateCnt <= 54 {
                     let spinYaw = Float((stateCnt - 29) * 30).truncatingRemainder(dividingBy: 360.0)
-                    context.world.applyTargetModifier(.rotation(SIMD3<Float>(0, spinYaw, 0), durationTicks: 2), to: targetID)
+                    context.world.applyTargetModifier(.facingYaw(degrees: spinYaw, durationTicks: 2), to: targetID)
                 }
                 if stateCnt >= 30 && stateCnt <= 50 && stateCnt % 10 < 5 {
                     context.world.applyTargetModifier(.tint(color: SIMD4<Float>(1.0, 1.0, 1.0, 1.0), durationTicks: 2), to: targetID)

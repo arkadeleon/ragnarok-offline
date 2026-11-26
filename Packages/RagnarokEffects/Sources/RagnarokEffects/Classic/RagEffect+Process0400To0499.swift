@@ -226,8 +226,8 @@ extension RagEffect {
             }
         case .ef_spinedbody:
             if stateCnt < 18, let targetID = targetObjectID ?? ownerObjectID {
-                let spinYaw = Float(stateCnt * 20).truncatingRemainder(dividingBy: 360.0)
-                context.world.applyTargetModifier(.rotation(SIMD3<Float>(0, spinYaw, 0), durationTicks: 2), to: targetID)
+                let spinRoll = Float(stateCnt * 20).truncatingRemainder(dividingBy: 360.0)
+                context.world.applyTargetModifier(.spriteRoll(degrees: spinRoll, durationTicks: 2), to: targetID)
             }
         case .ef_kickedbody:
             if stateCnt == 17 {
@@ -245,8 +245,8 @@ extension RagEffect {
                 )
             }
             if stateCnt >= 30, let targetID = targetObjectID ?? ownerObjectID {
-                let spinYaw = Float((stateCnt - 30) * 15).truncatingRemainder(dividingBy: 360.0)
-                context.world.applyTargetModifier(.rotation(SIMD3<Float>(0, spinYaw, 0), durationTicks: 2), to: targetID)
+                let spinRoll = Float((stateCnt - 30) * 15).truncatingRemainder(dividingBy: 360.0)
+                context.world.applyTargetModifier(.spriteRoll(degrees: spinRoll, durationTicks: 2), to: targetID)
             }
         case .ef_airtexture:
             airTexture(texturePath: "effect\\emp shock.tga", context: context)
@@ -349,7 +349,7 @@ extension RagEffect {
             cloud11Burst(kind: 3, context: context)
             if stateCnt <= 47, let targetID = targetObjectID ?? ownerObjectID {
                 let spinYaw = Float((stateCnt + 1) * 30).truncatingRemainder(dividingBy: 360.0)
-                context.world.applyTargetModifier(.rotation(SIMD3<Float>(0, spinYaw, 0), durationTicks: 2), to: targetID)
+                context.world.applyTargetModifier(.facingYaw(degrees: spinYaw, durationTicks: 2), to: targetID)
             }
         case .ef_halfsphere:
             texturedPulse(texturePath: "effect\\white02.bmp", context: context)
@@ -406,8 +406,8 @@ extension RagEffect {
             if let targetID = targetObjectID ?? ownerObjectID {
                 context.world.applyTargetModifier(.scale(SIMD3<Float>(1.15, 0.85, 1.15), durationTicks: 2), to: targetID)
                 if stateCnt < 25 {
-                    let spinYaw = Float((stateCnt + 11) * 10).truncatingRemainder(dividingBy: 360.0)
-                    context.world.applyTargetModifier(.rotation(SIMD3<Float>(0, spinYaw, 0), durationTicks: 2), to: targetID)
+                    let spinRoll = Float((stateCnt + 11) * 10).truncatingRemainder(dividingBy: 360.0)
+                    context.world.applyTargetModifier(.spriteRoll(degrees: spinRoll, durationTicks: 2), to: targetID)
                 }
             }
         case .ef_foot3:
@@ -451,7 +451,7 @@ extension RagEffect {
             cloud11Burst(kind: 3, context: context)
             if stateCnt <= 50, let targetID = targetObjectID ?? ownerObjectID {
                 let spinYaw = Float((stateCnt + 1) * 14).truncatingRemainder(dividingBy: 360.0)
-                context.world.applyTargetModifier(.rotation(SIMD3<Float>(0, spinYaw, 0), durationTicks: 2), to: targetID)
+                context.world.applyTargetModifier(.facingYaw(degrees: spinYaw, durationTicks: 2), to: targetID)
             }
         case .ef_stormkick2:
             if stateCnt == 5 {
@@ -503,8 +503,8 @@ extension RagEffect {
                 )
             }
             if stateCnt >= 14 && stateCnt <= 49, let targetID = targetObjectID ?? ownerObjectID {
-                let spinYaw = Float((stateCnt - 14) * 10).truncatingRemainder(dividingBy: 360.0)
-                context.world.applyTargetModifier(.rotation(SIMD3<Float>(0, spinYaw, 0), durationTicks: 2), to: targetID)
+                let spinRoll = Float((stateCnt - 14) * 10).truncatingRemainder(dividingBy: 360.0)
+                context.world.applyTargetModifier(.spriteRoll(degrees: spinRoll, durationTicks: 2), to: targetID)
             }
         case .ef_beginasura1:
             texturedSkillIcon(texturePath: "effect\\hanmoon1.tga", level: 0, mode: 0, context: context)

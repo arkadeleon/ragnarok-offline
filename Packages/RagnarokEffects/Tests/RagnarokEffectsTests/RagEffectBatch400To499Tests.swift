@@ -227,6 +227,16 @@ struct RagEffectBatch400To499Tests {
         #expect((manager.activeEffects.first as? RagEffect)?.primitives.first?.id == .pp_tanji2)
         manager.removeAll()
 
+        // EF_SPINEDBODY (414): 2D sprite plane roll
+        world.appliedModifiers.removeAll()
+        manager.spawn(EffectSpawnRequest(effectID: .ef_spinedbody, worldPosition: [6, 0, -4], targetObjectID: targetID, duration: 1.0))
+        manager.stepOneTick(world: world)
+        manager.stepOneTick(world: world)
+        #expect(world.appliedModifiers.contains {
+            $0.targetID == targetID && $0.modifier == .spriteRoll(degrees: 20, durationTicks: 2)
+        })
+        manager.removeAll()
+
         // EF_BABYBODY2 (421) & EF_GIANTBODY2 (423): scale modifiers
         world.appliedModifiers.removeAll()
         manager.spawn(EffectSpawnRequest(effectID: .ef_babybody2, worldPosition: [6, 0, -4], targetObjectID: targetID, duration: 1.0))
@@ -266,7 +276,7 @@ struct RagEffectBatch400To499Tests {
         #expect(stormKick?.primitives.map(\.id) == [EffectPrimitiveID(rawValue: 103), .pp_wind, .pp_wind])
         #expect(world.playedSounds.map(\.name) == [K2L("effect\\T_회오리차기.wav")])
         #expect(world.appliedModifiers.contains {
-            $0.targetID == targetID && $0.modifier == .rotation(SIMD3<Float>(0, 30, 0), durationTicks: 2)
+            $0.targetID == targetID && $0.modifier == .facingYaw(degrees: 30, durationTicks: 2)
         })
         manager.removeAll()
 

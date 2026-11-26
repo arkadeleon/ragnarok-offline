@@ -67,7 +67,10 @@ public enum EffectTargetModifier: Sendable, Equatable {
     case tint(color: SIMD4<Float>, durationTicks: Int)
     case alpha(Float, durationTicks: Int)
     case scale(SIMD3<Float>, durationTicks: Int)
-    case rotation(SIMD3<Float>, durationTicks: Int)
+    /// Offsets the target's 8-way facing direction in degrees (quantized to 45° steps).
+    case facingYaw(degrees: Float, durationTicks: Int)
+    /// Rotates the target's 2D sprite plane in degrees.
+    case spriteRoll(degrees: Float, durationTicks: Int)
     case flash(color: SIMD4<Float>, durationTicks: Int)
     case afterimage(style: EffectAfterimageStyle, tint: SIMD4<Float>? = nil, durationTicks: Int)
     case cloaking(alpha: Float)

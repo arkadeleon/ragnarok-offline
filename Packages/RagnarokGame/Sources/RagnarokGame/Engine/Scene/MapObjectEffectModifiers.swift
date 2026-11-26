@@ -27,7 +27,8 @@ struct MapObjectEffectModifiers: Sendable {
     var alpha: Timed<Float>?
     var cloakingAlpha: Timed<Float>?
     var scale: Timed<SIMD3<Float>>?
-    var rotation: Timed<SIMD3<Float>>?
+    var facingYawDegrees: Timed<Float>?
+    var spriteRollDegrees: Timed<Float>?
     var shake: Timed<Float>?
 
     private var shakeElapsedTime: TimeInterval = 0
@@ -39,7 +40,8 @@ struct MapObjectEffectModifiers: Sendable {
             && alpha == nil
             && cloakingAlpha == nil
             && scale == nil
-            && rotation == nil
+            && facingYawDegrees == nil
+            && spriteRollDegrees == nil
             && shake == nil
             && pendingAfterimages.isEmpty
     }
@@ -77,8 +79,12 @@ struct MapObjectEffectModifiers: Sendable {
         }
     }
 
-    var effectiveRotationZ: Float {
-        rotation?.value.z ?? 0
+    var effectiveFacingYawDegrees: Float {
+        facingYawDegrees?.value ?? 0
+    }
+
+    var effectiveSpriteRollRadians: Float {
+        (spriteRollDegrees?.value ?? 0) * .pi / 180
     }
 
     var effectiveWorldOffset: SIMD3<Float> {
@@ -111,9 +117,12 @@ struct MapObjectEffectModifiers: Sendable {
             let duration = Self.duration(fromTicks: durationTicks)
             let clamped = simd_max(value, SIMD3<Float>(repeating: 0.01))
             scale = Timed(value: clamped, remainingTime: duration, totalTime: duration)
-        case .rotation(let value, let durationTicks):
+        case .facingYaw(let degrees, let durationTicks):
             let duration = Self.duration(fromTicks: durationTicks)
-            rotation = Timed(value: value, remainingTime: duration, totalTime: duration)
+            facingYawDegrees = Timed(value: degrees, remainingTime: duration, totalTime: duration)
+        case .spriteRoll(let degrees, let durationTicks):
+            let duration = Self.duration(fromTicks: durationTicks)
+            spriteRollDegrees = Timed(value: degrees, remainingTime: duration, totalTime: duration)
         case .shake(let amplitude, let durationTicks):
             let duration = Self.duration(fromTicks: durationTicks)
             shake = Timed(value: amplitude, remainingTime: duration, totalTime: duration)
@@ -133,7 +142,8 @@ struct MapObjectEffectModifiers: Sendable {
         Self.decay(&alpha, by: deltaTime)
         Self.decay(&cloakingAlpha, by: deltaTime)
         Self.decay(&scale, by: deltaTime)
-        Self.decay(&rotation, by: deltaTime)
+        Self.decay(&facingYawDegrees, by: deltaTime)
+        Self.decay(&spriteRollDegrees, by: deltaTime)
         Self.decay(&shake, by: deltaTime)
 
         if shake != nil {

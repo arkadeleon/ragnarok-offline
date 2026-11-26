@@ -30,12 +30,20 @@ struct SpriteFrameResolver {
             return nil
         }
 
+        let modifiers = object.effectModifiers
+        let directionStepOffset = Int((modifiers.effectiveFacingYawDegrees / 45).rounded())
+        let effectiveDirection: SpriteDirection
+        if directionStepOffset == 0 {
+            effectiveDirection = resolvedAction.direction
+        } else {
+            let shiftedRawValue = ((resolvedAction.direction.rawValue + directionStepOffset) % 8 + 8) % 8
+            effectiveDirection = SpriteDirection(rawValue: shiftedRawValue) ?? resolvedAction.direction
+        }
+
         let actionIndex = resolvedAction.actionType.calculateActionIndex(
             forJobID: composedSprite.configuration.job.rawValue,
-            direction: resolvedAction.direction
+            direction: effectiveDirection
         )
-
-        let modifiers = object.effectModifiers
 
         var resolvedLayers: [ResolvedLayer] = []
         resolvedLayers.reserveCapacity(24)
@@ -76,7 +84,7 @@ struct SpriteFrameResolver {
 
             let zIndex = composedSprite.zIndex(
                 for: part,
-                direction: resolvedAction.direction,
+                direction: effectiveDirection,
                 actionIndex: actionIndex,
                 frameIndex: absoluteFrameIndex
             )
@@ -111,7 +119,7 @@ struct SpriteFrameResolver {
                     opacity: object.opacity,
                     tintColor: modifiers.effectiveTintColor,
                     scale: modifiers.effectiveScale,
-                    rotationZ: modifiers.effectiveRotationZ
+                    rotationZ: modifiers.effectiveSpriteRollRadians
                 )
                 resolvedLayers.append(
                     ResolvedLayer(

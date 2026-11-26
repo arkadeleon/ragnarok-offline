@@ -361,7 +361,7 @@ struct RagEffectBatch251To399Tests {
         }
         #expect(world.shakeCount == 1)
         #expect(world.appliedModifiers.contains {
-            $0.targetID == targetID && $0.modifier == .rotation(SIMD3<Float>(0, 30, 0), durationTicks: 2)
+            $0.targetID == targetID && $0.modifier == .facingYaw(degrees: 30, durationTicks: 2)
         })
         manager.removeAll()
 
