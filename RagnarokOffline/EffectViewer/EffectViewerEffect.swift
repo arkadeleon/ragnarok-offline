@@ -15,9 +15,6 @@ struct EffectViewerEffect: Identifiable, Hashable {
     static func all(ez2strEffectCatalog: EZ2STREffectCatalog?) -> [EffectViewerEffect] {
         var effectsByID: [EffectID : EffectViewerEffect] = [:]
 
-        for effectID in EffectTable.effectIDs {
-            effectsByID[effectID] = EffectViewerEffect(effectID: effectID)
-        }
         for effectID in EffectManager.builtInEffectIDs {
             effectsByID[effectID] = EffectViewerEffect(effectID: effectID)
         }
