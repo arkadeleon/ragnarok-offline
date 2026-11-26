@@ -344,6 +344,33 @@ public final class RagEffect: EffectPrimitiveRenderable, STREffectRenderable {
         return [payload]
     }
 
+    static func effectHeading(fromX x: Float, fromZ z: Float, toX targetX: Float, toZ targetZ: Float) -> Float {
+        let deltaX = targetX - x
+        let deltaZ = targetZ - z
+        var angle = (atan2f(deltaX, -deltaZ) / EffectSpace.clientPi) * 180.0
+        if angle >= 360.0 {
+            angle -= 360.0
+        }
+        if angle < 0.0 {
+            angle += 360.0
+        }
+        return angle
+    }
+
+    static func effectDistanceXZ(from: SIMD3<Float>, to: SIMD3<Float>) -> Float {
+        let dx = to.x - from.x
+        let dz = to.z - from.z
+        return sqrtf(dz * dz + dx * dx)
+    }
+
+    func directionalLaunchEndpoints() -> (origin: SIMD3<Float>, destination: SIMD3<Float>) {
+        let origin = sourcePosition ?? position
+        let destination = sourcePosition != nil
+            ? position
+            : (deltaPos == .zero ? position + SIMD3<Float>(25, 0, 0) : deltaPos)
+        return (origin, destination)
+    }
+
     private func retireMaster() {
         isMasterAlive = false
         currentSTRFrame = nil

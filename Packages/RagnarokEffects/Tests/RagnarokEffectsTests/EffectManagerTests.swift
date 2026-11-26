@@ -201,7 +201,9 @@ struct EffectManagerTests {
             }
 
             func tick(context: EffectTickContext) {}
-            func stop() { isAlive = false }
+            func stop() {
+                isAlive = false
+            }
 
             func collectPrimitiveBatches(
                 into collector: inout EffectPrimitiveBatchCollector,

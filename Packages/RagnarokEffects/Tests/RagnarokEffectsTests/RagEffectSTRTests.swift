@@ -108,8 +108,12 @@ struct RagEffectSTRTests {
                 appendInt32(key.type)
                 appendFloat(key.position.x)
                 appendFloat(key.position.y)
-                for i in 0..<8 { appendFloat(key.uv[i]) }
-                for i in 0..<8 { appendFloat(key.xy[i]) }
+                for i in 0..<8 {
+                    appendFloat(key.uv[i])
+                }
+                for i in 0..<8 {
+                    appendFloat(key.xy[i])
+                }
                 appendFloat(key.textureIndex)
                 appendInt32(key.animationType)
                 appendFloat(key.delay)

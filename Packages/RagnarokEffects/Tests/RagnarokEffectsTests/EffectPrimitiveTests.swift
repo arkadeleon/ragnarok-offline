@@ -550,7 +550,7 @@ struct EffectPrimitiveTests {
         let totalVertices = payloads.reduce(0) { $0 + $1.vertices.count }
         #expect(totalVertices == 70 * 6)
         let noDepthVertices = payloads.filter { !$0.renderState.depthTest }.reduce(0) { $0 + $1.vertices.count }
-        let depthVertices = payloads.filter { $0.renderState.depthTest }.reduce(0) { $0 + $1.vertices.count }
+        let depthVertices = payloads.filter(\.renderState.depthTest).reduce(0) { $0 + $1.vertices.count }
         #expect(noDepthVertices == 20 * 6)
         #expect(depthVertices == 50 * 6)
 

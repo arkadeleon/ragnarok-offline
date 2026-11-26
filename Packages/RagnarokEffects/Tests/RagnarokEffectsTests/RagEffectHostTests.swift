@@ -84,13 +84,19 @@ struct RagEffectHostTests {
             appendInt32(0)
             appendFloat(320)
             appendFloat(240)
-            for value: Float in [0, 0, 1, 0, 1, 1, 0, 1] { appendFloat(value) }
-            for value: Float in [-10, 10, 10, -10, -10, -10, 10, 10] { appendFloat(value) }
+            for value: Float in [0, 0, 1, 0, 1, 1, 0, 1] {
+                appendFloat(value)
+            }
+            for value: Float in [-10, 10, 10, -10, -10, -10, 10, 10] {
+                appendFloat(value)
+            }
             appendFloat(0)
             appendInt32(0)
             appendFloat(0)
             appendFloat(0)
-            for _ in 0..<4 { appendFloat(255) }
+            for _ in 0..<4 {
+                appendFloat(255)
+            }
             appendInt32(5)
             appendInt32(6)
             appendInt32(0)
@@ -319,7 +325,9 @@ struct RagEffectHostTests {
         effect.spawnHallucinationOnce(tintRGB: SIMD3<Float>(255, 100, 100), context: context)
         #expect(effect.stateCnt == 0)
         #expect(world.appliedModifiers.contains {
-            if case .afterimage(.hallucination, _, _) = $0.modifier { return true }
+            if case .afterimage(.hallucination, _, _) = $0.modifier {
+                return true
+            }
             return false
         })
 
@@ -333,7 +341,9 @@ struct RagEffectHostTests {
         effect.stateCnt = 20
         effect.spawnPaleBlur(context: context)
         #expect(world.appliedModifiers.contains {
-            if case .afterimage(.paleBlur, _, 20) = $0.modifier { return true }
+            if case .afterimage(.paleBlur, _, 20) = $0.modifier {
+                return true
+            }
             return false
         })
 
@@ -341,7 +351,9 @@ struct RagEffectHostTests {
         effect.stateCnt = 10
         effect.spawnLightBlur(context: context)
         #expect(world.appliedModifiers.contains {
-            if case .afterimage(.lightBlur, _, 20) = $0.modifier { return true }
+            if case .afterimage(.lightBlur, _, 20) = $0.modifier {
+                return true
+            }
             return false
         })
 
