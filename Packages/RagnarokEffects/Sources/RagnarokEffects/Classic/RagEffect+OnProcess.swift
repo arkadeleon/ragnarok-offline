@@ -25,6 +25,7 @@ extension RagEffect {
         .ef_bottom_whistle,
         .ef_bottom_assassincross,
         .ef_forestlight,
+        .ef_firstaid,
         .ef_heal,
         .ef_bottom_mag,
         .ef_bottom_sanc,
@@ -33,8 +34,10 @@ extension RagEffect {
         .ef_poison,
         .ef_guard,
         .ef_magnum2,
+        .ef_saintwing,
         .ef_bottom_basilica,
         .ef_linelink2,
+        .ef_rainbow,
         .ef_bottom_fogwall,
         .ef_hitline3,
         .ef_hitline6,
@@ -95,6 +98,8 @@ extension RagEffect {
             texturedMagicRing(texturePath: "effect\\ring_red.tga", kind: 1, context: context)
         case .ef_forestlight:
             forestLight(texturePath: "effect\\cloud11.tga", flag: 0, context: context)
+        case .ef_firstaid:
+            firstAid(context: context)
         case .ef_heal:
             healBurst(texturePath: "effect\\alpha_down.tga", flag: 0, context: context)
         case .ef_bottom_mag:
@@ -111,6 +116,8 @@ extension RagEffect {
             kyrieGuard(texturePath: "effect\\guardK.tga", kind: 0, context: context)
         case .ef_magnum2:
             magnum2(texturePath: "effect\\ring_yellow.tga", context: context)
+        case .ef_saintwing:
+            saintWing(texturePath: "effect\\wing003.bmp", context: context)
         case .ef_bottom_basilica:
             texturedFourRing(texturePath: "effect\\alpha_down.tga", kind: 0, context: context)
             texturedFourRing(texturePath: "effect\\alpha_down.tga", kind: 1, context: context)
@@ -123,6 +130,8 @@ extension RagEffect {
                 )
             }
             trackTarget(context: context)
+        case .ef_rainbow:
+            rainbow(texturePath: "effect\\alpha_center.tga", context: context)
         case .ef_bottom_fogwall:
             texturedPulseKind(texturePath: "effect\\ring_white.tga", kind: 2, context: context)
         case .ef_hitline3:
@@ -1904,5 +1913,105 @@ extension RagEffect {
         primitive.state.slots[0].rotStart = Int16(Int.random(in: 0..<360))
         primitive.state.slots[0].flag1[0] = 0
         primitive.state.slots[0].flag1[4] = kind
+    }
+
+    // MARK: - EF_FIRSTAID (309)
+
+    /// Spawns `PP_FIRSTAID` (58) pulsing glow panel for `EF_FIRSTAID` (309).
+    private func firstAid(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        context.world.playSound(
+            named: "_heal_effect.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+
+        let texturePath = "effect\\pikapika2.bmp"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_firstaid)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.totalTexture = 1
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 0
+        primitive.state.slots[0].life = 1
+        primitive.state.slots[0].process = 0
+        primitive.state.slots[0].distance = 10.0
+        primitive.state.slots[0].alphaB = 0
+        primitive.state.slots[0].vecBNow = SIMD3<Float>(position.x, position.y - 12.0, position.z)
+        primitive.state.slots[0].height[6] = 0.02
+        primitive.state.slots[0].fullDisplayAngle = Int16(Int.random(in: 0..<360))
+        primitive.state.slots[0].flag1[0] = 0
+        primitive.state.slots[0].flag1[2] = 1
+        primitive.state.slots[0].height[8] = Float(Int.random(in: 0..<360))
+        for i in 1..<4 {
+            primitive.state.slots[i].life = 0
+            primitive.state.slots[i].alphaB = 0
+        }
+    }
+
+    // MARK: - EF_SAINTWING (362)
+
+    /// Spawns `PP_SAINTWING` (76) paired flapping angel wings for `EF_SAINTWING` (362).
+    private func saintWing(texturePath: String, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_saintwing)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.totalTexture = 1
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 4.0
+        primitive.state.slots[2].life = 0
+        primitive.state.slots[3].life = 0
+        for i in 0..<2 {
+            primitive.state.slots[i].life = 1
+            primitive.state.slots[i].process = 0
+            primitive.state.slots[i].maxHeight = 10.0
+            primitive.state.slots[i].distance = 2.0
+            primitive.state.slots[i].height[0] = -8.0
+            primitive.state.slots[i].rotStart = 0
+            primitive.state.slots[i].fullDisplayAngle = 0
+            primitive.state.slots[i].alphaB = 200
+            primitive.state.slots[i].riseAngle = 0
+        }
+    }
+
+    // MARK: - EF_RAINBOW (396)
+
+    /// Spawns `PP_RAINBOW` (93) 7-band spectral arch for `EF_RAINBOW` (396).
+    private func rainbow(texturePath: String, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_rainbow)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.totalTexture = 1
+        primitive.state.texturePaths = [texturePath]
+        let yaw = Int(context.world.cameraYawDegrees)
+        let facingYaw = Int16(((360 - yaw) % 360 + 360) % 360)
+        for i in 0..<4 {
+            primitive.state.slots[i].life = 0
+        }
+        primitive.state.slots[0].life = 1
+        primitive.state.slots[0].process = 0
+        primitive.state.slots[0].alphaB = 0
+        primitive.state.slots[0].alphaT = facingYaw
+        primitive.state.slots[0].distance = 50.0
+        primitive.state.slots[0].fullDisplayAngle = 180
+        primitive.state.slots[0].rotStart = 0
+        primitive.state.slots[0].riseAngle = facingYaw
     }
 }

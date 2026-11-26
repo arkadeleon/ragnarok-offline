@@ -2307,4 +2307,308 @@ struct EffectPrimitiveTests {
         p172.collectBatches(into: &c172, world: world, assets: nil)
         #expect(c172.batches.reduce(0) { $0 + $1.vertices.count } == 6)
     }
+
+    @Test func specialDemoEffectsFirstAidSaintWingRainbow() {
+        let world = MockWorldContext()
+        world.targets[1] = EffectTargetState(objectID: 1, worldPosition: .zero, facingAngle: 45)
+        let manager = EffectManager()
+
+        // EF_FIRSTAID (309) -> PP_FIRSTAID (58) + sound
+        let firstAidID = manager.spawn(
+            EffectSpawnRequest(effectID: .ef_firstaid, worldPosition: .zero, ownerObjectID: 1, targetObjectID: 1)
+        )
+        #expect(firstAidID != nil)
+        manager.stepOneTick(world: world)
+        manager.stepOneTick(world: world)
+        #expect(world.playedSounds.contains("_heal_effect.wav"))
+        let firstAidPayloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(firstAidPayloads.reduce(0) { $0 + $1.vertices.count } > 0)
+
+        // EF_SAINTWING (362) -> PP_SAINTWING (76) -> 2 wings * 10 feathers * 6 verts = 120 verts
+        manager.removeAll()
+        let wingID = manager.spawn(
+            EffectSpawnRequest(effectID: .ef_saintwing, worldPosition: .zero, ownerObjectID: 1, targetObjectID: 1)
+        )
+        #expect(wingID != nil)
+        manager.stepOneTick(world: world)
+        let wingPayloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(wingPayloads.reduce(0) { $0 + $1.vertices.count } == 120)
+
+        // EF_RAINBOW (396) -> PP_RAINBOW (93) -> 7 spectral bands * 21 segments * 6 verts = 882 verts
+        manager.removeAll()
+        let rainbowID = manager.spawn(
+            EffectSpawnRequest(effectID: .ef_rainbow, worldPosition: .zero, ownerObjectID: 1, targetObjectID: 1)
+        )
+        #expect(rainbowID != nil)
+        manager.stepOneTick(world: world)
+        let rainbowPayloads = manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(rainbowPayloads.reduce(0) { $0 + $1.vertices.count } == 882)
+    }
+
+    @Test func specialPrimitivesChildSpawnAndExtraParams() {
+        let world = MockWorldContext()
+        world.targets[110_000_042] = EffectTargetState(objectID: 110_000_042, worldPosition: [1, 0, 1])
+
+        var spawned: [EffectSpawnRequest] = []
+        let ctx = EffectTickContext(
+            world: world,
+            assets: nil,
+            currentTick: 1,
+            usesMinimalEffects: false,
+            onSpawnChild: { spawned.append($0) }
+        )
+
+        let host = RagEffect(
+            id: UUID(),
+            request: EffectSpawnRequest(
+                effectID: .ef_firstaid,
+                worldPosition: .zero,
+                ownerObjectID: 110_000_042,
+                targetObjectID: 110_000_042,
+                parameters: [12, 34, 56, 78],
+                extraParams: SIMD3<Float>(8, 1, 0)
+            )
+        )
+        #expect(host.deltaPos2 == SIMD3<Float>(8, 1, 0))
+        #expect(host.param == [12, 34, 56, 78])
+
+        // PP_SMA (120) spawns EF_SMA2 with structured extraParams on tick 8 and emits zero geometry
+        let sma = host.launchPrimitive(.pp_sma)
+        sma.state.deltaPos = SIMD3<Float>(20, 0, 0)
+        sma.state.slots[0].life = 1
+        sma.state.slots[0].flag1[0] = 0
+        sma.state.slots[0].height[1] = 1.0
+        sma.state.slots[0].targetObjectID = 110_000_042
+        for _ in 0..<8 {
+            sma.tick(context: ctx)
+        }
+        #expect(spawned.count == 1)
+        #expect(spawned.first?.effectID == .ef_sma2)
+        #expect(spawned.first?.targetObjectID == 110_000_042)
+        #expect(spawned.first?.extraParams == SIMD3<Float>(8, 1, 0))
+        var smaCollector = EffectPrimitiveBatchCollector(fog: Fog())
+        sma.collectBatches(into: &smaCollector, world: world, assets: nil)
+        #expect(smaCollector.batches.isEmpty)
+
+        // PP_TANJI2 (97) spawns EF_AIRTEXTURE every 4 ticks
+        spawned.removeAll()
+        let tanji = host.launchPrimitive(.pp_tanji2)
+        tanji.state.deltaPos = SIMD3<Float>(20, 0, 0)
+        tanji.state.slots[0].life = 1
+        tanji.state.slots[0].distance = 3.0
+        tanji.state.slots[0].height[1] = 1.5
+        tanji.state.slots[0].alphaB = 200
+        tanji.state.slots[0].flag1[2] = 0
+        for _ in 0..<4 {
+            tanji.tick(context: ctx)
+        }
+        #expect(spawned.count == 1)
+        #expect(spawned.first?.effectID == .ef_airtexture)
+
+        // PP_SOULLINK (109) spawns EF_SOULLIGHT during tick (not collectBatches) using strong targetObjectID
+        spawned.removeAll()
+        let soulLink = host.launchPrimitive(.pp_soullink)
+        soulLink.state.slots[0].life = 1
+        soulLink.state.slots[0].distance = 3.0
+        soulLink.state.slots[0].targetObjectID = 110_000_042
+        soulLink.tick(context: ctx)
+        #expect(spawned.count == 1)
+        #expect(spawned.first?.effectID == .ef_soullight)
+        #expect(spawned.first?.targetObjectID == 110_000_042)
+        let spawnedBeforeRender = spawned.count
+        var soulCollector = EffectPrimitiveBatchCollector(fog: Fog())
+        soulLink.collectBatches(into: &soulCollector, world: world, assets: nil)
+        #expect(spawned.count == spawnedBeforeRender)
+        #expect(soulCollector.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+    }
+
+    @Test func remainingSpecialsPrimitivesMotionAndRender() {
+        let world = MockWorldContext()
+        world.targets[1] = EffectTargetState(objectID: 1, worldPosition: .zero, headHeight: 2.0, facingAngle: 30)
+        let ctx = EffectTickContext(
+            world: world,
+            assets: nil,
+            currentTick: 1,
+            usesMinimalEffects: false,
+            onSpawnChild: { _ in }
+        )
+        let host = RagEffect(
+            id: UUID(),
+            request: EffectSpawnRequest(effectID: .ef_firstaid, worldPosition: .zero, ownerObjectID: 1, targetObjectID: 1)
+        )
+
+        // 35 & PP_DOUBLEGUMGANG (99): orbiting head bubbles
+        for primID: EffectPrimitiveID in [35, .pp_doublegumgang] {
+            let p = host.launchPrimitive(primID)
+            p.state.slots[0].life = 1
+            p.state.slots[0].distance = 2.0
+            p.tick(context: ctx)
+            #expect(p.state.slots[0].height[20] > 0)
+            var c = EffectPrimitiveBatchCollector(fog: Fog())
+            p.collectBatches(into: &c, world: world, assets: nil)
+            let expectedVerts = primID == 35 ? 24 : 72
+            #expect(c.batches.reduce(0) { $0 + $1.vertices.count } == expectedVerts)
+        }
+
+        // PP_SHIELDBOOMERANG (42), PP_TEIHIT2 (45), PP_SHIELDBOOMERANG3 (116), PP_TWILIGHT (123)
+        for primID: EffectPrimitiveID in [.pp_shieldboomerang, .pp_teihit2, .pp_shieldboomerang3, .pp_twilight] {
+            let p = host.launchPrimitive(primID)
+            p.state.deltaPos = SIMD3<Float>(25, 0, 0)
+            p.state.slots[0].life = 1
+            p.state.slots[0].distance = 4.0
+            p.state.slots[0].alphaB = 120
+            p.state.slots[0].maxHeight = 30.0
+            p.state.slots[0].height[1] = 1.5
+            p.state.slots[0].rotStart = 100
+            p.tick(context: ctx)
+            var c = EffectPrimitiveBatchCollector(fog: Fog())
+            p.collectBatches(into: &c, world: world, assets: nil)
+            #expect(c.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+        }
+
+        // PP_INTIMIDATE (43)
+        let p43 = host.launchPrimitive(.pp_intimidate)
+        p43.state.slots[0].life = 1
+        p43.state.slots[0].distance = 5.0
+        p43.state.slots[0].height[0] = 0.5
+        p43.state.slots[0].height[1] = 3.0
+        p43.tick(context: ctx)
+        var c43 = EffectPrimitiveBatchCollector(fog: Fog())
+        p43.collectBatches(into: &c43, world: world, assets: nil)
+        #expect(c43.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // PP_CHEMICALPROTECTION (54) -> 2 dual-width wedge passes = 12 verts
+        let p54 = host.launchPrimitive(.pp_chemicalprotection)
+        p54.state.slots[0].life = 1
+        p54.state.slots[0].distance = 8.0
+        p54.tick(context: ctx)
+        var c54 = EffectPrimitiveBatchCollector(fog: Fog())
+        p54.collectBatches(into: &c54, world: world, assets: nil)
+        #expect(c54.batches.reduce(0) { $0 + $1.vertices.count } == 12)
+
+        // PP_SPHEREWIND (77) & PP_SPHEREWIND2 (91) -> 20 ribbon quads = 120 verts
+        for primID: EffectPrimitiveID in [.pp_spherewind, .pp_spherewind2] {
+            let p = host.launchPrimitive(primID)
+            p.state.slots[0].life = 1
+            p.state.slots[0].distance = 10.0
+            p.state.slots[0].maxHeight = 2.0
+            p.state.slots[0].fullDisplayAngle = 360
+            p.state.slots[0].alphaB = 100
+            p.state.slots[0].height[1] = 4.0
+            p.tick(context: ctx)
+            var c = EffectPrimitiveBatchCollector(fog: Fog())
+            p.collectBatches(into: &c, world: world, assets: nil)
+            #expect(c.batches.reduce(0) { $0 + $1.vertices.count } == 120)
+        }
+
+        // PP_PEONG (94) & PP_PEONGUP (96)
+        for primID: EffectPrimitiveID in [.pp_peong, .pp_peongup] {
+            let p = host.launchPrimitive(primID)
+            p.state.slots[0].life = 1
+            p.state.slots[0].distance = 3.0
+            p.state.slots[0].maxHeight = 0.5
+            p.state.slots[0].vecBPre = SIMD3<Float>(0, -10, 0)
+            p.state.slots[0].vecBNow = SIMD3<Float>(0, -10, 0)
+            p.tick(context: ctx)
+            var c = EffectPrimitiveBatchCollector(fog: Fog())
+            p.collectBatches(into: &c, world: world, assets: nil)
+            #expect(c.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+        }
+
+        // PP_ATTACKENERGY2 (106) -> 20 segments * 2 passes * 6 verts = 240 verts
+        let p106 = host.launchPrimitive(.pp_attackenergy2)
+        p106.state.slots[0].life = 1
+        p106.state.slots[0].distance = 8.0
+        p106.state.slots[0].maxHeight = 5.0
+        p106.state.slots[0].fullDisplayAngle = 360
+        p106.tick(context: ctx)
+        var c106 = EffectPrimitiveBatchCollector(fog: Fog())
+        p106.collectBatches(into: &c106, world: world, assets: nil)
+        #expect(c106.batches.reduce(0) { $0 + $1.vertices.count } == 240)
+
+        // PP_SOULPARTICLE (111) & 115 -> 3 motes * 6 verts = 18 verts
+        for primID: EffectPrimitiveID in [.pp_soulparticle, 115] {
+            let p = host.launchPrimitive(primID)
+            p.state.slots[0].life = 1
+            p.state.slots[0].distance = 2.0
+            p.state.slots[0].maxHeight = 0.5
+            p.state.slots[0].vecBPre = SIMD3<Float>(0, -10, 0)
+            p.state.slots[0].vecBNow = SIMD3<Float>(0, -10, 0)
+            p.state.slots[0].vecTPre = SIMD3<Float>(0, -10, 0)
+            p.state.slots[0].height[12] = 100
+            p.state.slots[0].height[13] = 100
+            p.state.slots[0].height[14] = 100
+            p.tick(context: ctx)
+            var c = EffectPrimitiveBatchCollector(fog: Fog())
+            p.collectBatches(into: &c, world: world, assets: nil)
+            #expect(c.batches.reduce(0) { $0 + $1.vertices.count } == 18)
+        }
+
+        // PP_SMA2 (121) -> 20 cylinder segments * 6 verts = 120 verts
+        let p121 = host.launchPrimitive(.pp_sma2)
+        p121.state.duration = 100
+        p121.state.slots[0].life = 1
+        p121.state.slots[0].distance = 4.0
+        p121.state.slots[0].maxHeight = 20.0
+        p121.state.slots[0].fullDisplayAngle = 360
+        p121.state.slots[0].riseAngle = 90
+        p121.tick(context: ctx)
+        var c121 = EffectPrimitiveBatchCollector(fog: Fog())
+        p121.collectBatches(into: &c121, world: world, assets: nil)
+        #expect(c121.batches.reduce(0) { $0 + $1.vertices.count } == 120)
+    }
+
+    @Test func all172ValidPrimitiveIDsInstantiateTickAndCollect() {
+        let world = MockWorldContext()
+        world.targets[1] = EffectTargetState(objectID: 1, worldPosition: .zero, headHeight: 2.0, facingAngle: 0)
+        let ctx = EffectTickContext(
+            world: world,
+            assets: nil,
+            currentTick: 1,
+            usesMinimalEffects: false,
+            onSpawnChild: { _ in }
+        )
+
+        let skippedIDs: Set<Int> = [17, 83]
+        var testedCount = 0
+
+        for rawID in 0...173 where !skippedIDs.contains(rawID) {
+            let host = RagEffect(
+                id: UUID(),
+                request: EffectSpawnRequest(effectID: .ef_firstaid, worldPosition: .zero, ownerObjectID: 1, targetObjectID: 1)
+            )
+            let prim = host.launchPrimitive(EffectPrimitiveID(rawValue: rawID))
+            prim.state.duration = 120
+            prim.state.totalTexture = 1
+            prim.state.alpha = 200
+            prim.state.size = 4.0
+            prim.state.widthSize = 4.0
+            prim.state.heightSize = 4.0
+            prim.state.radius = 5.0
+            prim.state.innerSize = 2.0
+            prim.state.outerSize = 5.0
+            prim.state.arcAngle = 45.0
+            prim.state.slots[0].life = 1
+            prim.state.slots[0].distance = 5.0
+            prim.state.slots[0].maxHeight = 10.0
+            prim.state.slots[0].alphaB = 120
+            prim.state.slots[0].fullDisplayAngle = 360
+            prim.state.slots[0].riseAngle = 90
+            prim.state.slots[0].height[0] = 2.0
+            prim.state.slots[0].height[1] = 2.0
+            prim.state.slots[0].height[2] = 2.0
+            prim.state.slots[0].vecBPre = SIMD3<Float>(0, -10, 0)
+            prim.state.slots[0].vecBNow = SIMD3<Float>(0, -10, 0)
+            prim.state.slots[0].vecTPre = SIMD3<Float>(0, -10, 0)
+            prim.state.slots[0].vecTNow = SIMD3<Float>(1, 5, 1)
+            prim.initSegment()
+
+            prim.tick(context: ctx)
+            var collector = EffectPrimitiveBatchCollector(fog: Fog())
+            prim.collectBatches(into: &collector, world: world, assets: nil)
+            testedCount += 1
+        }
+
+        #expect(testedCount == 172)
+    }
 }

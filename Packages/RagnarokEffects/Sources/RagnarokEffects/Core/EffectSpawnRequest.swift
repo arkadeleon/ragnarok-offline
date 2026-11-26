@@ -22,6 +22,7 @@ public struct EffectSpawnRequest: Sendable {
     public var delay: TimeInterval
     public var duration: TimeInterval?
     public var parameters: [Float]
+    public var extraParams: SIMD3<Float>?
 
     public var effectPosition: SIMD3<Float> {
         EffectSpace.toEffectPosition(worldPosition)
@@ -43,7 +44,8 @@ public struct EffectSpawnRequest: Sendable {
         level: Int = 0,
         delay: TimeInterval = 0,
         duration: TimeInterval? = nil,
-        parameters: [Float] = []
+        parameters: [Float] = [],
+        extraParams: SIMD3<Float>? = nil
     ) {
         self.effectID = effectID
         self.worldPosition = worldPosition
@@ -57,5 +59,6 @@ public struct EffectSpawnRequest: Sendable {
         self.delay = delay
         self.duration = duration
         self.parameters = parameters
+        self.extraParams = extraParams
     }
 }

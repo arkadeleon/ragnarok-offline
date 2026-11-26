@@ -61,6 +61,12 @@ public final class RagEffect: EffectPrimitiveRenderable {
         self.attachmentKey = request.attachmentKey
         self.position = request.effectPosition
         self.sourcePosition = request.sourceEffectPosition
+        if let extraParams = request.extraParams {
+            self.deltaPos2 = extraParams
+        }
+        for index in 0..<min(self.param.count, request.parameters.count) {
+            self.param[index] = request.parameters[index]
+        }
         self.level = request.level
         if let duration {
             self.duration = duration
