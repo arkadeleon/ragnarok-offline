@@ -12,22 +12,367 @@ import simd
 extension RagEffect {
 
     // MARK: - EF_WARP (8)
-    // CRagEffect::Warp()
+
+    /// Spawns rising warp ring (`PP_3DCIRCLE` (12)) and orbiting sparkles (`PP_3DPARTICLEORBIT` (7)) for `EF_WARP` (8).
+    func warp(context: EffectTickContext) {
+        if stateCnt % 20 == 0 {
+            let texturePath = "EFFECT\\RING_YELLOW.TGA"
+            _ = context.assets?.texture(atPath: texturePath)
+
+            let ring = launchPrimitive(.pp_3dcircle)
+            ring.state.duration = duration
+            ring.state.renderFlag |= EffectPrimitiveState.RenderFlag.noDepth
+            ring.state.radius = 2.0
+            ring.state.arcAngle = 22.5
+            ring.state.innerSize = 10.0
+            ring.state.latitude = 90.0
+            ring.state.transform = EffectSpace.rotationX(radians: ring.state.latitude / 180.0 * .pi)
+            ring.state.radiusSpeed = 1.25
+            ring.state.radiusAccel = -(ring.state.radiusSpeed / Float(ring.state.duration)) * 0.5
+            ring.state.alpha = 200.0
+            ring.state.fadeOutCnt = ring.state.duration - ring.state.duration / 2
+            ring.initSegment()
+            ring.state.texturePaths = [texturePath]
+        }
+
+        if (stateCnt & 1) == 0 {
+            let spritePath = K2L("이팩트\\particle1.spr")
+            let actionPath = K2L("이팩트\\particle1.act")
+            _ = context.assets?.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+
+            let particle = launchPrimitive(.pp_3dparticleorbit)
+            let band = Int.random(in: 0..<200) / 100
+            particle.state.radius = Float(band) * 0.7 + 1.0
+            particle.state.duration = 40
+            let lon = Int.random(in: 0..<360)
+            let spin = Float(band) * 3.0 + 3.0
+            particle.state.longitude = Float(lon)
+            particle.state.longSpeed = spin
+            particle.state.gravSpeed = Float(60 - Int.random(in: 0..<240)) / 100.0
+            particle.state.gravAccel = -(particle.state.gravSpeed / Float(particle.state.duration)) * 0.5
+            let rotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(particle.state.longitude)))
+            particle.state.transform = rotY
+            particle.state.deltaPos2 = EffectSpace.transformVector(SIMD3<Float>(0, 0, particle.state.radius), by: rotY)
+            particle.state.size = 0.2
+            particle.state.fadeOutCnt = particle.state.duration - particle.state.duration / 3
+            particle.state.spritePath = spritePath
+            particle.state.actionPath = actionPath
+            particle.initSegment()
+        }
+    }
 
     // MARK: - EF_PORTAL (36)
-    // CRagEffect::Portal()
+
+    /// Spawns dual blue cylinders (`PP_3DCYLINDER` (13)) and pulsing ground rings (`PP_3DCIRCLE` (12)) for `EF_PORTAL` (36).
+    func portal(context: EffectTickContext) {
+        let texturePath = "effect\\ring_blue.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        if stateCnt == 0 {
+            let specs: [(outer: Float, inner: Float, longSpeed: Float, height: Float)] = [
+                (3.5, 3.5, 4.0, 40.0),
+                (4.0, 4.0, 5.0, 50.0),
+            ]
+            for spec in specs {
+                let cylinder = launchPrimitive(.pp_3dcylinder)
+                cylinder.state.duration = duration
+                cylinder.state.arcAngle = 36.0
+                cylinder.state.outerSize = spec.outer
+                cylinder.state.innerSize = spec.inner
+                cylinder.state.longSpeed = spec.longSpeed
+                cylinder.state.heightSize = spec.height
+                cylinder.state.alpha = 0
+                cylinder.state.maxAlpha = 128.0
+                cylinder.state.alphaSpeed = cylinder.state.maxAlpha / 6.0
+                cylinder.state.fadeOutCnt = cylinder.state.duration - 6
+                cylinder.state.texturePaths = [texturePath]
+            }
+        }
+
+        if stateCnt % 14 == 0 {
+            let ring = launchPrimitive(.pp_3dcircle)
+            ring.state.duration = 30
+            ring.state.deltaPos2.y = -1.0
+            ring.state.innerSize = 8.0
+            ring.state.latitude = 90.0
+            ring.state.transform = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(ring.state.latitude)))
+            ring.state.radiusSpeed = 1.0
+            ring.state.radiusAccel = -(ring.state.radiusSpeed / Float(ring.state.duration)) * 0.5
+            ring.state.fadeOutCnt = ring.state.duration - ring.state.duration / 2
+            ring.initSegment()
+            ring.state.texturePaths = [texturePath]
+        }
+    }
 
     // MARK: - EF_BEGINSPELL2 (54)
-    // CRagEffect::QuadRingStackSized(const char* name, char kind)
+
+    /// Spawns rising spiral quad casting stack (`PP_3DCASTING` (23) or `PP_3DCASTING_3` (25)) for `EF_BEGINSPELL2` (54).
+    func quadRingStackSized(texturePath: String, kind: Int, context: EffectTickContext) {
+        if duration < 70 {
+            duration = 70
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        var resolvedKind = kind
+        let primitive: EffectPrimitive
+        if resolvedKind == 33 {
+            resolvedKind = 0
+            primitive = launchPrimitive(.pp_3dcasting_3)
+        } else {
+            primitive = launchPrimitive(.pp_3dcasting)
+        }
+
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = Float(resolvedKind)
+
+        struct SlotSpec {
+            let distance: Float
+            let riseAngle: Int16
+            let fullDisplayAngle: Int16
+            let maxHeight: Float
+            let rotStart: Int16
+            let alphaB: Int16
+        }
+
+        let specs: [SlotSpec] = [
+            SlotSpec(distance: 4.5, riseAngle: 70, fullDisplayAngle: 315, maxHeight: 25.0, rotStart: 0, alphaB: 180),
+            SlotSpec(distance: 5.0, riseAngle: 57, fullDisplayAngle: 315, maxHeight: 22.0, rotStart: 90, alphaB: 180),
+            SlotSpec(distance: 5.5, riseAngle: 45, fullDisplayAngle: 315, maxHeight: 19.0, rotStart: 180, alphaB: 180),
+            SlotSpec(distance: 4.0, riseAngle: 89, fullDisplayAngle: 360, maxHeight: 250.0, rotStart: 0, alphaB: 70),
+        ]
+
+        for (index, spec) in specs.enumerated() {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = 0
+            primitive.state.slots[index].distance = spec.distance
+            primitive.state.slots[index].riseAngle = spec.riseAngle
+            primitive.state.slots[index].fullDisplayAngle = spec.fullDisplayAngle
+            primitive.state.slots[index].maxHeight = spec.maxHeight
+            primitive.state.slots[index].rotStart = spec.rotStart
+            primitive.state.slots[index].alphaB = spec.alphaB
+            primitive.state.slots[index].vecBNow.y = 0
+            primitive.state.slots[index].height = Array(repeating: 0, count: 21)
+            primitive.state.slots[index].flag1 = Array(repeating: 0, count: 21)
+        }
+    }
 
     // MARK: - EF_WARPZONE (61)
-    // CRagEffect::WarpZone()
+
+    /// Loops warp portal ground aura (`PP_3DCIRCLE` (12)) and rising particles (`PP_3DPARTICLEORBIT` (7)) for `EF_WARPZONE` (61).
+    func warpZone(context: EffectTickContext) {
+        if stateCnt == 145 {
+            stateCnt = 0
+        }
+
+        if stateCnt == 0 {
+            let auraTex = "effect\\alpha_down.tga"
+            _ = context.assets?.texture(atPath: auraTex)
+
+            let aura = launchPrimitive(.pp_3dcircle)
+            aura.state.duration = 158
+            aura.state.pattern |= 1
+            aura.state.radius = 15.0
+            aura.state.deltaPos2.y -= 1.0
+            aura.state.latitude = 90.0
+            aura.state.alpha = 0
+            aura.state.maxAlpha = 128.0
+            aura.state.alphaSpeed = aura.state.maxAlpha / 10.0
+            aura.state.fadeOutCnt = aura.state.duration - 10
+            aura.initSegment()
+            aura.state.texturePaths = [auraTex]
+        }
+
+        if stateCnt % 28 == 0 && stateCnt < 117 {
+            let ringTex = "effect\\ring_blue.tga"
+            _ = context.assets?.texture(atPath: ringTex)
+
+            let ring = launchPrimitive(.pp_3dcircle)
+            ring.state.duration = 80
+            ring.state.innerSize = 4.0
+            ring.state.latitude = 90.0
+            ring.state.deltaPos2.y -= 1.0
+            ring.state.transform = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(ring.state.latitude)))
+            ring.state.radius = 14.0
+            ring.state.radiusSpeed = -0.15
+            ring.state.alpha = 5.0
+            ring.state.maxAlpha = 200.0
+            ring.state.alphaSpeed = 10.0
+            ring.state.chPoint.append(20.0)
+            ring.state.chVal1.append(0.0)
+            ring.state.fadeOutCnt = ring.state.duration - ring.state.duration / 5
+            ring.initSegment()
+            ring.state.texturePaths = [ringTex]
+        }
+
+        if stateCnt % 10 == 0 {
+            let spritePath = K2L("이팩트\\particle1.spr")
+            let actionPath = K2L("이팩트\\particle1.act")
+            _ = context.assets?.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+
+            let particle = launchPrimitive(.pp_3dparticleorbit)
+            particle.state.radius = Float(Int.random(in: 0..<200) / 100) * 0.75 + 5.0
+            particle.state.radiusSpeed = 0.0005
+            particle.state.duration = 130
+            particle.state.longitude = Float(Int.random(in: 0..<360))
+            particle.state.longSpeed = 2.0
+            particle.state.gravSpeed = -0.2
+            particle.state.gravAccel = -(particle.state.gravSpeed / Float(particle.state.duration)) / 1.5
+            let rotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(particle.state.longitude)))
+            particle.state.transform = rotY
+            particle.state.deltaPos2 = EffectSpace.transformVector(SIMD3<Float>(0, 0, particle.state.radius), by: rotY)
+            particle.state.size = Float(Int.random(in: 0..<10) / 10) + 0.7
+            particle.state.fadeOutCnt = particle.state.duration - particle.state.duration / 3
+            particle.state.spritePath = spritePath
+            particle.state.actionPath = actionPath
+            particle.initSegment()
+        }
+    }
 
     // MARK: - EF_PIERCE (81)
-    // CRagEffect::RingBurstSparks()
+
+    /// Spawns directional spear ring bursts (`PP_3DCYLINDER` (13)) and spark particles (`PP_3DPARTICLE` (5), `PP_3DPARTICLEGRAVITY` (6)) for `EF_PIERCE` (81).
+    func ringBurstSparks(context: EffectTickContext) {
+        guard stateCnt % 20 == 0, stateCnt < level * 20 else {
+            return
+        }
+
+        var facing = Int(180.0 - longitude)
+        if facing < 0 {
+            facing += 360
+        }
+
+        let texturePath = "effect\\ring_yellow.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let cylinder = launchPrimitive(.pp_3dcylinder)
+        cylinder.state.duration = 15
+        cylinder.state.longitude = Float(facing)
+        cylinder.state.latitude = -90.0
+        let cRotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(cylinder.state.latitude)))
+        let cRotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(cylinder.state.longitude)))
+        cylinder.state.transform = cRotY * cRotX
+        cylinder.state.deltaPos2 = SIMD3<Float>(0, -10.0, 0)
+        cylinder.state.speed = 0.7
+        cylinder.state.accel = -(cylinder.state.speed / Float(cylinder.state.duration)) * 0.5
+        cylinder.state.outerSize = Float(stateCnt) * 0.1 + 11.0
+        cylinder.state.innerSize = Float(stateCnt) * 0.1 + 6.0
+        cylinder.state.heightSize = 2.5
+        cylinder.state.fadeOutCnt = cylinder.state.duration - cylinder.state.duration / 2
+        cylinder.state.texturePaths = [texturePath]
+
+        guard stateCnt > 0 else {
+            return
+        }
+
+        let spritePath = K2L("이팩트\\particle1.spr")
+        let actionPath = K2L("이팩트\\particle1.act")
+        _ = context.assets?.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+
+        for _ in 0..<4 {
+            let spark = launchPrimitive(.pp_3dparticle)
+            spark.state.longitude = Float(Int.random(in: 0..<80) + facing - 40)
+            spark.state.latitude = Float(Int.random(in: 0..<100) - 50)
+            let pRotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(spark.state.longitude)))
+            let pRotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(spark.state.latitude)))
+            spark.state.transform = pRotX * pRotY
+            let forward = EffectSpace.transformVector(SIMD3<Float>(0, 0, Float(Int.random(in: 0..<4) + 4)), by: spark.state.transform)
+            spark.state.deltaPos3 = forward
+            spark.state.deltaPos2 = SIMD3<Float>(forward.x, forward.y - 10.0, forward.z)
+            spark.state.speed = Float(Int.random(in: 0..<90) + 60) / 100.0
+            spark.state.duration = Int.random(in: 0..<24) + 6
+            spark.state.accel = -(spark.state.speed / Float(spark.state.duration)) * 0.5
+            spark.state.size = Float(Int.random(in: 0..<100) + 60) / 100.0
+            spark.state.sizeSpeed = -(spark.state.size / Float(spark.state.duration))
+            spark.state.fadeOutCnt = 0
+            spark.state.spritePath = spritePath
+            spark.state.actionPath = actionPath
+            spark.state.numSegment = 3
+            spark.initSegment()
+        }
+
+        for _ in 0..<4 {
+            let spark = launchPrimitive(.pp_3dparticlegravity)
+            spark.state.longitude = Float(Int.random(in: 0..<80) + facing + 140)
+            spark.state.latitude = Float(Int.random(in: 0..<100) - 50)
+            let pRotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(spark.state.longitude)))
+            let pRotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(spark.state.latitude)))
+            let spreadTransform = pRotX * pRotY
+            let forward = EffectSpace.transformVector(SIMD3<Float>(0, 0, Float(Int.random(in: 0..<4) + 4)), by: spreadTransform)
+            spark.state.deltaPos3 = forward
+            spark.state.deltaPos2 = SIMD3<Float>(forward.x, forward.y - 10.0, forward.z)
+            spark.state.transform = pRotY
+            spark.state.duration = Int.random(in: 0..<24) + 6
+            spark.state.speed = Float(Int.random(in: 0..<90) + 60) / 100.0
+            spark.state.accel = -(spark.state.speed / Float(spark.state.duration)) * 0.5
+            spark.state.gravSpeed = -Float(Int.random(in: 0..<90) + 30) / 100.0
+            let fall = spark.state.gravSpeed / Float(spark.state.duration)
+            spark.state.gravAccel = -(fall + fall)
+            spark.state.size = Float(Int.random(in: 0..<100) + 60) / 100.0
+            spark.state.sizeSpeed = -(spark.state.size / Float(spark.state.duration))
+            spark.state.fadeOutCnt = 0
+            spark.state.spritePath = spritePath
+            spark.state.actionPath = actionPath
+            spark.state.numSegment = 3
+            spark.initSegment()
+        }
+    }
 
     // MARK: - EF_BOTTOM (114)
-    // CRagEffect::Bottom()
+
+    /// Spawns a four-wall ground barrier (`PP_3DTEXTURE` (15)) with `magic_violet.tga` for `EF_BOTTOM` (114).
+    func bottom(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        var angle = Int(180.0 - longitude)
+        if angle < 0 {
+            angle += 360
+        }
+
+        let rotation = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: angle))
+        duration = 9999
+
+        let texturePath = "effect\\magic_violet.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        for side in stride(from: 1, through: -1, by: -2) {
+            let sideZ = launchPrimitive(.pp_3dtexture)
+            sideZ.state.duration = 9999
+            sideZ.state.commonPattern = 1
+            sideZ.state.pattern = 40
+            sideZ.state.type = 50
+            sideZ.state.deltaPos2 = EffectSpace.transformVector(SIMD3<Float>(0, 0, Float(side) * 5.0), by: rotation)
+            sideZ.state.longitude = Float(angle + 90)
+            sideZ.state.widthSize = 5.0
+            sideZ.state.heightSize = 15.0
+            sideZ.state.heightSpeed = 0.25
+            sideZ.state.alpha = 0
+            sideZ.state.maxAlpha = 180.0
+            sideZ.state.alphaSpeed = sideZ.state.maxAlpha / 6.0
+            sideZ.state.fadeOutCnt = sideZ.state.duration - 35
+            sideZ.state.texturePaths = [texturePath]
+
+            let sideX = launchPrimitive(.pp_3dtexture)
+            sideX.state.duration = 9999
+            sideX.state.commonPattern = 1
+            sideX.state.pattern = 40
+            sideX.state.type = 50
+            sideX.state.deltaPos2 = EffectSpace.transformVector(SIMD3<Float>(Float(side) * 5.0, 0, 0), by: rotation)
+            sideX.state.longitude = Float(angle)
+            sideX.state.widthSize = 5.0
+            sideX.state.heightSize = 15.0
+            sideX.state.heightSpeed = 0.25
+            sideX.state.alpha = 0
+            sideX.state.maxAlpha = 180.0
+            sideX.state.alphaSpeed = sideX.state.maxAlpha / 6.0
+            sideX.state.fadeOutCnt = sideX.state.duration - 35
+            sideX.state.texturePaths = [texturePath]
+        }
+    }
 
     // MARK: - EF_OVERTHRUST (128)
     // CRagEffect::StoneCurseRing()

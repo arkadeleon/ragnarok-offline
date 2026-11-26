@@ -12,16 +12,192 @@ import simd
 extension RagEffect {
 
     // MARK: - EF_ENHANCE (9)
-    // CRagEffect::Enhance()
+
+    /// Spawns expanding enhance ground ring (`PP_3DCIRCLE` (12)), aura cylinder (`PP_3DCYLINDER` (13)), and cross sparkles (`PP_3DCROSSTEXTURE` (16)) for `EF_ENHANCE` (9).
+    func enhance(context: EffectTickContext) {
+        let ringTex = "effect\\ring_yellow.tga"
+        let auraTex = "effect\\alpha_down.tga"
+
+        if stateCnt == 0 {
+            _ = context.assets?.texture(atPath: ringTex)
+            _ = context.assets?.texture(atPath: auraTex)
+
+            let ring = launchPrimitive(.pp_3dcircle)
+            ring.state.duration = duration
+            ring.state.arcAngle = 22.5
+            ring.state.size = 7.0
+            ring.state.latitude = 90.0
+            ring.state.transform = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(ring.state.latitude)))
+            ring.state.alpha = 128.0
+            ring.state.fadeOutCnt = ring.state.duration - ring.state.duration / 3
+            ring.initSegment()
+            ring.state.texturePaths = [ringTex]
+
+            let cylinder = launchPrimitive(.pp_3dcylinder)
+            cylinder.state.duration = duration
+            cylinder.state.outerSize = 6.0
+            cylinder.state.innerSize = 6.0
+            cylinder.state.heightSpeed = 2.0
+            cylinder.state.heightAccel = -(cylinder.state.heightSpeed / Float(cylinder.state.duration)) / 1.5
+            cylinder.state.maxHeightSize = 50.0
+            cylinder.state.alpha = 128.0
+            cylinder.state.fadeOutCnt = cylinder.state.duration - cylinder.state.duration / 3
+            cylinder.state.texturePaths = [auraTex]
+        }
+
+        let interval = context.usesMinimalEffects ? 15 : 5
+        guard stateCnt % interval == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: auraTex)
+        let streak = launchPrimitive(.pp_3dcrosstexture)
+        streak.state.duration = 50
+        let yaw = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int.random(in: 0..<360)))
+        streak.state.deltaPos2 = EffectSpace.transformVector(SIMD3<Float>(0, 0, Float(Int.random(in: 0..<5) + 2)), by: yaw)
+        streak.state.transform = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: 90))
+        streak.state.speed = 2.0
+        streak.state.widthSize = 7.0
+        streak.state.heightSize = 0.25
+        streak.state.texturePaths = [auraTex]
+        streak.state.slots[0].life = 0
+    }
 
     // MARK: - EF_GLASSWALL (13)
-    // CRagEffect::GlassWall()
+
+    /// Spawns four vertical barrier walls (`PP_3DTEXTURE` (15)) and advances `SafetyWall.str` for `EF_GLASSWALL` (13).
+    func glassWall(context: EffectTickContext) -> Bool {
+        if stateCnt == 0 {
+            configureSTR(path: "SafetyWall.str")
+            context.world.playSound(
+                named: "effect\\EF_GlassWall.wav",
+                atWorldPosition: EffectSpace.toWorldPosition(position),
+                delay: 0
+            )
+
+            var angle = Int(180.0 - longitude)
+            if angle < 0 {
+                angle += 360
+            }
+            let rotation = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: angle))
+
+            let texturePath = "effect\\ring_blue.tga"
+            _ = context.assets?.texture(atPath: texturePath)
+
+            for side in stride(from: 1, through: -1, by: -2) {
+                let sideZ = launchPrimitive(.pp_3dtexture)
+                sideZ.state.duration = duration
+                sideZ.state.pattern = 40
+                sideZ.state.type = 50
+                sideZ.state.deltaPos2 = EffectSpace.transformVector(SIMD3<Float>(0, 0, 2.6 * Float(side)), by: rotation)
+                sideZ.state.longitude = Float(angle + 90)
+                sideZ.state.widthSize = 3.0
+                sideZ.state.heightSize = 40.0
+                sideZ.state.heightSpeed = 0.25
+                sideZ.state.alpha = 0
+                sideZ.state.maxAlpha = 180.0
+                sideZ.state.alphaSpeed = sideZ.state.maxAlpha / 6.0
+                sideZ.state.fadeOutCnt = sideZ.state.duration - 6
+                sideZ.state.texturePaths = [texturePath]
+
+                let sideX = launchPrimitive(.pp_3dtexture)
+                sideX.state.duration = duration
+                sideX.state.pattern = 40
+                sideX.state.type = 50
+                sideX.state.deltaPos2 = EffectSpace.transformVector(SIMD3<Float>(3.0 * Float(side), 0, 0), by: rotation)
+                sideX.state.longitude = Float(angle)
+                sideX.state.widthSize = 2.6
+                sideX.state.heightSize = 40.0
+                sideX.state.heightSpeed = 0.25
+                sideX.state.alpha = 0
+                sideX.state.maxAlpha = 180.0
+                sideX.state.alphaSpeed = sideX.state.maxAlpha / 6.0
+                sideX.state.fadeOutCnt = sideX.state.duration - 6
+                sideX.state.texturePaths = [texturePath]
+            }
+        }
+
+        _ = processEZ2STRRaised(context: context)
+        return stateCnt != duration
+    }
 
     // MARK: - EF_NAPALMBEAT (32)
-    // CRagEffect::NapalmFragments()
+
+    /// Spawns 2D animated explosion fragments (`PP_2DTEXTURE` (0)) for `EF_NAPALMBEAT` (32).
+    func napalmFragments(context: EffectTickContext) {
+        guard stateCnt < 15, stateCnt >= stateCnt % 5 else {
+            return
+        }
+
+        if stateCnt == 0 {
+            context.world.playSound(
+                named: "effect\\EF_NapalmBeat.wav",
+                atWorldPosition: EffectSpace.toWorldPosition(position),
+                delay: 0
+            )
+        }
+
+        let texturePaths = (1...8).map { K2L("effect\\폭발\($0).TGA") }
+        for path in texturePaths {
+            _ = context.assets?.texture(atPath: path)
+        }
+
+        let primitive = launchPrimitive(.pp_2dtexture)
+        primitive.state.duration = 30
+        let distance = Int.random(in: 0..<50) + 10
+        let radius = Float(distance)
+        let angle = Int.random(in: 0..<360)
+        primitive.state.deltaPos2.x = EffectSpace.sine(degrees: angle) * radius
+        primitive.state.deltaPos2.y = EffectSpace.cosine(degrees: angle) * -Float(distance) - 20.0
+        let size = Float(Int.random(in: 0..<40) + 20)
+        primitive.state.heightSize = size
+        primitive.state.widthSize = size
+        primitive.state.alpha = 0
+        primitive.state.alphaSpeed = primitive.state.maxAlpha / 10.0
+        primitive.state.fadeOutCnt = primitive.state.duration - primitive.state.duration / 3
+        primitive.state.repeatAnim = false
+        primitive.state.animSpeed = 2
+        primitive.state.totalTexture = 8
+        primitive.state.texturePaths = texturePaths
+        primitive.state.slots[0].life = 0
+    }
 
     // MARK: - EF_LOCKON (60)
-    // CRagEffect::LockOnMarker()
+
+    /// Spawns dual counter-rotating ground lock-on reticles (`PP_3DTEXTURE` (15)) for `EF_LOCKON` (60).
+    func lockOnMarker(context: EffectTickContext) {
+        if stateCnt == 0 {
+            let texturePath = "effect\\LockOn128.tga"
+            _ = context.assets?.texture(atPath: texturePath)
+
+            for initialLongitude: Float in [0.0, 45.0] {
+                let reticle = launchPrimitive(.pp_3dtexture)
+                reticle.state.duration = duration
+                reticle.state.pattern |= 0x800
+                reticle.state.longitude = initialLongitude
+                reticle.state.longSpeed = 4.5
+                reticle.state.roll = 90.0
+                reticle.state.changeWidthAccel = 0
+                reticle.state.changeHeightAccel = 0
+                reticle.state.widthSize = 30.0
+                reticle.state.heightSize = 30.0
+                reticle.state.widthSpeed = -1.0
+                reticle.state.heightSpeed = -1.0
+                reticle.state.changePoint = 20
+                reticle.state.changeWidthSpeed = 0
+                reticle.state.changeHeightSpeed = 0
+                reticle.state.rgbCycleDelay = 20
+                reticle.state.red = 250
+                reticle.state.blue = 150
+                reticle.state.blueSpeed = -15
+                reticle.state.green = 150
+                reticle.state.greenSpeed = -15
+                reticle.state.texturePaths = [texturePath]
+            }
+        }
+
+        position.y = context.world.terrainHeight(atEffectX: position.x, effectZ: position.z) - 2.0
+    }
 
     // MARK: - EF_STATUS_STATE (164)
     // CRagEffect::StatusIconColumn()

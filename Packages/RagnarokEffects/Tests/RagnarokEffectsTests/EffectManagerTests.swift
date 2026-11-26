@@ -105,7 +105,7 @@ struct EffectManagerTests {
 
         #expect(manager.supports(.ef_stormgust))
         #expect(manager.supports(.ef_fireball))
-        #expect(!manager.supports(.ef_hit1))
+        #expect(!manager.supports(EffectID(rawValue: 999_999)))
         #expect(manager.supportedEffectIDs.contains(.ef_fireball))
         #expect(manager.supportedEffectIDs.contains(.ef_stormgust))
 

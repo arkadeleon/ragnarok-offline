@@ -12,10 +12,129 @@ import simd
 extension RagEffect {
 
     // MARK: - EF_BEGINSPELL (12)
-    // CRagEffect::TexturedQuadRingSized(std::int16_t baseAlpha, const char* name, char kind)
+
+    /// Spawns four orbiting casting arc slots (`30`) for `EF_BEGINSPELL` (12).
+    func texturedQuadRingSized(baseAlpha: Int16, texturePath: String, kind: Int, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        if duration < 56 {
+            duration = 56
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(30)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+
+        let sizeByKind: [Int: Float] = [
+            1: 8.0, 2: 5.0, 3: 10.0, 4: 11.0, 5: 4.0, 6: 12.0, 15: 7.0,
+            20: 24.0, 21: 25.0, 22: 26.0, 23: 27.0, 31: 31.0,
+            42: 42.0, 43: 43.0, 44: 44.0, 45: 45.0, 46: 46.0, 47: 47.0, 48: 48.0, 49: 49.0, 50: 50.0,
+        ]
+        primitive.state.size = sizeByKind[kind] ?? 5.0
+
+        let baseMaxHeight: Float = switch kind {
+        case 2: 25.0
+        case 22: 15.0
+        default: 20.0
+        }
+        let rotStarts: [Int16] = [180, 270, 0, 90]
+        let alphaOffsets: [Int16] = [135, 90, 45, 0]
+
+        for index in 0..<4 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = duration <= 60 ? index * -5 : 0
+            primitive.state.slots[index].fullDisplayAngle = 360
+            primitive.state.slots[index].maxHeight = baseMaxHeight - Float(index)
+            primitive.state.slots[index].rotStart = rotStarts[index]
+            primitive.state.slots[index].alphaB = duration <= 60 ? 0 : baseAlpha + alphaOffsets[index]
+            primitive.state.slots[index].distance = 4.1
+            primitive.state.slots[index].riseAngle = 80
+            primitive.state.slots[index].alphaT = Int16(truncatingIfNeeded: kind)
+            primitive.state.slots[index].vecBNow.y = 0
+            primitive.state.slots[index].height = Array(repeating: 0, count: 21)
+            primitive.state.slots[index].flag1 = Array(repeating: 0, count: 21)
+        }
+    }
 
     // MARK: - EF_DETECTING (119)
-    // CRagEffect::TexturedSkillAura(char type)
+
+    /// Spawns rising expanding glow panel (`PP_3DTEXTURE` (15)) and aura sound for `EF_DETECTING` (119).
+    func texturedSkillAura(type: Int, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let soundByType: [Int: String] = [
+            0: "effect\\hunter_detecting.wav",
+            2: "effect\\priest_benedictio.wav",
+            4: "effect\\cru_grand cross.wav",
+            5: "effect\\ANALYZE.wav",
+        ]
+        if let soundName = soundByType[type] {
+            context.world.playSound(
+                named: soundName,
+                atWorldPosition: EffectSpace.toWorldPosition(position),
+                delay: 0
+            )
+        }
+
+        let texturePath = "effect\\fashasha.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_3dtexture)
+        primitive.state.duration = 57
+        primitive.state.widthSpeed = 1.5
+        primitive.state.heightSpeed = 1.5
+        primitive.state.widthAccel = primitive.state.widthSpeed / 14.0
+        primitive.state.heightAccel = primitive.state.heightSpeed / 14.0
+        primitive.state.speed3d.y = -0.5
+        primitive.state.roll = 90.0
+
+        if type == 3 || type == 6 {
+            primitive.state.changePoint = 10
+            primitive.state.fadeOutCnt = 30
+        } else {
+            primitive.state.changePoint = 17
+            primitive.state.fadeOutCnt = 40
+        }
+
+        switch type {
+        case 4:
+            primitive.state.red = 0xFF
+            primitive.state.green = 0x8C
+            primitive.state.blue = 0x8C
+        case 5:
+            primitive.state.red = 0xD2
+            primitive.state.green = 0xFA
+            primitive.state.blue = 0xD2
+        case 6:
+            primitive.state.red = 10
+            primitive.state.green = 10
+            primitive.state.blue = 10
+        case 7:
+            primitive.state.red = 0xFA
+            primitive.state.green = 0xD2
+            primitive.state.blue = 0x8C
+        case 8:
+            primitive.state.red = 0x8C
+            primitive.state.green = 0xFF
+            primitive.state.blue = 0x8C
+        default:
+            break
+        }
+
+        primitive.state.changeWidthSpeed = 0.1
+        primitive.state.changeHeightSpeed = 0.1
+        primitive.state.changeWidthAccel = primitive.state.changeWidthSpeed / 30.0
+        primitive.state.changeHeightAccel = primitive.state.changeHeightSpeed / 30.0
+        primitive.state.deltaPos2.y = -5.0
+        primitive.state.texturePaths = [texturePath]
+    }
 
     // MARK: - EF_LEVEL99_2 (201)
     // CRagEffect::TexturedDoubleRing(const char* name, char level)

@@ -295,7 +295,7 @@ struct RagEffectSTRTests {
         #expect(manager.supports(.ef_meteorstorm))
         #expect(manager.supports(.ef_lord))
         #expect(manager.supports(.ef_suicide))
-        #expect(!manager.supports(.ef_stormgust))
+        #expect(manager.supports(.ef_stormgust))
 
         // MeteorStorm: sound at tick 0, camera shake at tick 40
         manager.spawn(EffectSpawnRequest(effectID: .ef_meteorstorm, worldPosition: [10, 0, -20], duration: 45.0 / 60.0))
