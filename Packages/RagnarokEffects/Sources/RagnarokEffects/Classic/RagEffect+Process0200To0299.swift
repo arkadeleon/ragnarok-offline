@@ -47,10 +47,44 @@ extension RagEffect {
         .ef_providence,
         .ef_shieldboomerang,
         .ef_spearquicken,
+        .ef_reflectshield,
+        .ef_absorbspirits,
+        .ef_steelbody,
+        .ef_mappillar3,
+        .ef_mappillar4,
+        .ef_gumgang2,
+        .ef_teihit1,
+        .ef_gumgang3,
+        .ef_teihit2,
+        .ef_tanji,
+        .ef_teihit1x,
+        .ef_chimto,
+        .ef_rg_coin,
+        .ef_backstap,
+        .ef_teihit3,
         .ef_bottom_dissonance,
+        .ef_bottom_lullaby,
+        .ef_bottom_richmankim,
+        .ef_bottom_eternalchaos,
+        .ef_bottom_drumbattlefield,
+        .ef_bottom_ringnibelungen,
         .ef_bottom_rokisweil,
+        .ef_bottom_intoabyss,
+        .ef_bottom_siegfried,
         .ef_bottom_whistle,
         .ef_bottom_assassincross,
+        .ef_bottom_poembragi,
+        .ef_bottom_appleidun,
+        .ef_bottom_uglydance,
+        .ef_bottom_humming,
+        .ef_bottom_dontforgetme,
+        .ef_bottom_fortunekiss,
+        .ef_bottom_serviceforyou,
+        .ef_talk_frostjoke,
+        .ef_talk_scream,
+        .ef_pokjuk,
+        .ef_throwitem,
+        .ef_throwitem2,
     ]
 
     func process0200To0299(context: EffectTickContext) -> Bool {
@@ -158,14 +192,113 @@ extension RagEffect {
             texturedShieldThrow(texturePath: "effect\\shield_boomerang.bmp", context: context)
         case .ef_spearquicken:
             return twoHandQuicken(context: context)
+        case .ef_reflectshield:
+            quadRingStack(texturePath: "effect\\ring_yellow.tga", context: context)
+        case .ef_absorbspirits:
+            if stateCnt == 0 {
+                context.world.playSound(
+                    named: K2L("effect\\흡기.wav"),
+                    atWorldPosition: EffectSpace.toWorldPosition(position),
+                    delay: 0
+                )
+            }
+            healRingSparkle(texturePath: "effect\\ring_blue.tga", type: 2, context: context)
+        case .ef_steelbody:
+            superSlashFan(count: 4, value: 0, context: context)
+        case .ef_mappillar3:
+            texturedCrossStaged(texturePath: "effect\\magic_green.tga", level: 2, context: context)
+        case .ef_mappillar4:
+            texturedCrossStaged(texturePath: "effect\\ring_red.tga", level: 3, context: context)
+        case .ef_gumgang2:
+            texturedCrossLevel(texturePath: "effect\\ring_yellow.tga", level: 0, context: context)
+        case .ef_teihit1:
+            for _ in 0..<20 {
+                texturedScatter(texturePath: "effect\\alpha_center.tga", flag: 0, context: context)
+            }
+        case .ef_gumgang3:
+            texturedCrossKind(texturePath: "effect\\ring_yellow.tga", level: 1, context: context)
+        case .ef_teihit2:
+            for _ in 0..<5 {
+                teiHit2(context: context)
+            }
+        case .ef_tanji:
+            tanji(context: context)
+        case .ef_teihit1x:
+            for _ in 0..<24 {
+                texturedScatter(texturePath: "effect\\lens1.tga", flag: 1, context: context)
+            }
+        case .ef_chimto:
+            chimto(flag: 0, context: context)
+        case .ef_rg_coin:
+            if stateCnt == 0 {
+                context.world.playSound(
+                    named: "effect\\rog_steal coin.wav",
+                    atWorldPosition: EffectSpace.toWorldPosition(position),
+                    delay: 0
+                )
+            }
+            for _ in 0..<30 {
+                texturedSpray(texturePath: "effect\\coin_a.bmp", context: context)
+            }
+        case .ef_backstap:
+            if stateCnt == 20 {
+                context.world.playSound(
+                    named: "effect\\rog_back stap.wav",
+                    atWorldPosition: EffectSpace.toWorldPosition(position),
+                    delay: 0
+                )
+            }
+            for _ in 0..<20 {
+                teiHit2(context: context)
+            }
+        case .ef_teihit3:
+            for _ in 0..<20 {
+                texturedScatterLow(texturePath: "effect\\lens2.tga", flag: 2, context: context)
+            }
         case .ef_bottom_dissonance:
             texturedMagicRing(texturePath: "effect\\ring_blue.tga", kind: 0, context: context)
+        case .ef_bottom_lullaby:
+            bottomMusic(texturePath: "effect\\zz.bmp", kind: 1, context: context)
+        case .ef_bottom_richmankim:
+            bottomMusic(texturePath: "effect\\pocket.bmp", kind: 3, context: context)
+        case .ef_bottom_eternalchaos:
+            texturedGlow(texturePath: "effect\\twirl.bmp", size: 8, context: context)
+        case .ef_bottom_drumbattlefield:
+            bottomMusic(texturePath: "", kind: 2, context: context)
+        case .ef_bottom_ringnibelungen:
+            bottomMusic(texturePath: "effect\\twirl.bmp", kind: 7, context: context)
         case .ef_bottom_rokisweil:
             bottomOut(texturePath: "effect\\safeline.bmp", kind: 0, context: context)
+        case .ef_bottom_intoabyss:
+            bottomMusic(texturePath: "", kind: 5, context: context)
+        case .ef_bottom_siegfried:
+            texturedGlow(texturePath: "effect\\twirl.bmp", size: 4, context: context)
         case .ef_bottom_whistle:
             bottomMusic(texturePath: "effect\\melody_b.bmp", kind: 0, context: context)
         case .ef_bottom_assassincross:
             texturedMagicRing(texturePath: "effect\\ring_red.tga", kind: 1, context: context)
+        case .ef_bottom_poembragi:
+            bottomMusic(texturePath: "", kind: 8, context: context)
+        case .ef_bottom_appleidun:
+            bottomMusic(texturePath: "effect\\idun_apple.bmp", kind: 6, context: context)
+        case .ef_bottom_uglydance:
+            texturedMagicRing(texturePath: "effect\\ring_red.tga", kind: 0, context: context)
+        case .ef_bottom_humming:
+            bottomMusic(texturePath: "effect\\melody_a.bmp", kind: 0, context: context)
+        case .ef_bottom_dontforgetme:
+            texturedMagicRing(texturePath: "effect\\magic_green.tga", kind: 2, context: context)
+        case .ef_bottom_fortunekiss:
+            bottomMusic(texturePath: "effect\\kiss.bmp", kind: 4, context: context)
+        case .ef_bottom_serviceforyou:
+            texturedMagicRing(texturePath: "effect\\safeline.bmp", kind: 4, context: context)
+        case .ef_talk_frostjoke, .ef_talk_scream:
+            break
+        case .ef_pokjuk:
+            pokBurst(context: context)
+        case .ef_throwitem:
+            throwItem(texturePath: K2L("유저인터페이스\\item\\빈병.bmp"), kind: 0, context: context)
+        case .ef_throwitem2:
+            throwItem(texturePath: K2L("유저인터페이스\\item\\빈포션병.bmp"), kind: 1, context: context)
         default:
             return false
         }
@@ -1502,5 +1635,609 @@ extension RagEffect {
         }
 
         return processEZ2STRRaised(context: context)
+    }
+
+    // MARK: - EF_ABSORBSPIRITS (253)
+
+    /// Spawns pulsing heal/absorb aura columns (`60`) and rising sparkles (`PP_PARTICLE_UP` (59)) for `EF_ABSORBSPIRITS` (253), `EF_HEAL2` (313), and `EF_HEAL4` (325).
+    func healRingSparkle(texturePath: String, type: Int8, context: EffectTickContext) {
+        if stateCnt == 0 {
+            _ = context.assets?.texture(atPath: texturePath)
+
+            let primitive = launchPrimitive(60)
+            primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+            primitive.state.duration = duration
+            primitive.state.texturePaths = [texturePath]
+            primitive.state.size = type == 2 ? 4.0 : 9.0
+
+            let alphaT: Int16 = type == 0 ? 60 : 40
+            let outerHeight: Float = type == 0 ? 12.0 : 18.0
+            let configs: [(maxHeight: Float, rotStart: Int16, distance: Float, riseAngle: Int16)] = [
+                (60.0, 0, 4.6, 90),
+                (60.0, 180, 5.0, 90),
+                (outerHeight, Int16(Int.random(in: 0..<360)), 5.0, 50),
+                (outerHeight, Int16(Int.random(in: 0..<360)), 5.2, 48),
+            ]
+
+            for (index, config) in configs.enumerated() {
+                primitive.state.slots[index].life = 1
+                primitive.state.slots[index].process = 0
+                primitive.state.slots[index].fullDisplayAngle = 360
+                primitive.state.slots[index].maxHeight = config.maxHeight
+                primitive.state.slots[index].rotStart = config.rotStart
+                primitive.state.slots[index].alphaB = 0
+                primitive.state.slots[index].distance = config.distance
+                primitive.state.slots[index].riseAngle = config.riseAngle
+                primitive.state.slots[index].vecBNow.y = 0
+                primitive.state.slots[index].alphaT = alphaT
+                primitive.state.slots[index].height = Array(repeating: 0, count: 21)
+                primitive.state.slots[index].flag1 = Array(repeating: 0, count: 21)
+            }
+
+            if type < 2 {
+                context.world.playSound(
+                    named: "_heal_effect.wav",
+                    atWorldPosition: EffectSpace.toWorldPosition(position),
+                    delay: 0
+                )
+            }
+        } else if stateCnt <= 50 && stateCnt % 6 == 0 && type < 2 {
+            let pok1 = "effect\\pok1.tga"
+            let pok3 = "effect\\pok3.tga"
+            _ = context.assets?.texture(atPath: pok1)
+            _ = context.assets?.texture(atPath: pok3)
+
+            let sparkle = launchPrimitive(.pp_particle_up)
+            sparkle.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+            sparkle.state.duration = duration
+            sparkle.state.totalTexture = 2
+            sparkle.state.texturePaths = [pok1, pok3]
+            sparkle.state.size = 0
+            sparkle.position = position
+
+            for index in 0..<4 {
+                sparkle.state.slots[index].life = 1
+                sparkle.state.slots[index].process = 0
+                sparkle.state.slots[index].distance = Float(Int.random(in: 0..<10)) * 0.1 + 2.0
+                sparkle.state.slots[index].height[8] = 0
+                sparkle.state.slots[index].alphaB = 0
+                sparkle.state.slots[index].vecBNow = SIMD3<Float>(
+                    Float(Int.random(in: 0..<13)) + position.x - 6.0,
+                    position.y,
+                    Float(Int.random(in: 0..<13)) + position.z - 6.0
+                )
+                sparkle.state.slots[index].rotStart = 0
+                sparkle.state.slots[index].height[1] = 0
+                sparkle.state.slots[index].height[2] = Float(Int.random(in: 0..<40)) * 0.01 + (type == 0 ? 0.4 : 0.6)
+                sparkle.state.slots[index].fullDisplayAngle = 0
+                sparkle.state.slots[index].flag1[0] = 0
+                sparkle.state.slots[index].flag1[1] = 1
+                sparkle.state.slots[index].flag1[2] = 11
+                sparkle.state.slots[index].height[7] = 0
+            }
+        }
+
+        guard type == 1 else {
+            return
+        }
+
+        if stateCnt == 1 {
+            let alphaDown = "effect\\alpha_down.tga"
+            _ = context.assets?.texture(atPath: alphaDown)
+
+            let primitive = launchPrimitive(60)
+            primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+            primitive.state.duration = duration
+            primitive.state.texturePaths = [alphaDown]
+            primitive.state.size = 9.0
+
+            let configs: [(maxHeight: Float, rotStart: Int16, distance: Float, riseAngle: Int16, alphaT: Int16)] = [
+                (90.0, 0, 4.2, 90, 40),
+                (90.0, 90, 4.3, 90, 40),
+                (10.0, Int16(Int.random(in: 0..<360)), 5.3, 46, 30),
+                (10.0, Int16(Int.random(in: 0..<360)), 5.4, 44, 30),
+            ]
+            for (index, config) in configs.enumerated() {
+                primitive.state.slots[index].life = 1
+                primitive.state.slots[index].process = 0
+                primitive.state.slots[index].fullDisplayAngle = 360
+                primitive.state.slots[index].maxHeight = config.maxHeight
+                primitive.state.slots[index].rotStart = config.rotStart
+                primitive.state.slots[index].alphaB = 0
+                primitive.state.slots[index].distance = config.distance
+                primitive.state.slots[index].riseAngle = config.riseAngle
+                primitive.state.slots[index].alphaT = config.alphaT
+                primitive.state.slots[index].vecBNow.y = 0
+                primitive.state.slots[index].height = Array(repeating: 0, count: 21)
+                primitive.state.slots[index].flag1 = Array(repeating: 0, count: 21)
+            }
+        }
+
+        if stateCnt <= 50 && stateCnt % 9 == 2 {
+            let pok1 = "effect\\pok1.tga"
+            let pok3 = "effect\\pok3.tga"
+            _ = context.assets?.texture(atPath: pok1)
+            _ = context.assets?.texture(atPath: pok3)
+
+            let sparkle = launchPrimitive(.pp_particle_up)
+            sparkle.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+            sparkle.state.duration = duration
+            sparkle.state.totalTexture = 2
+            sparkle.state.texturePaths = [pok1, pok3]
+            sparkle.state.size = 0
+            sparkle.position = position
+
+            for index in 0..<4 {
+                sparkle.state.slots[index].life = 1
+                sparkle.state.slots[index].process = 0
+                sparkle.state.slots[index].distance = Float(Int.random(in: 0..<10)) * 0.1 + 2.4
+                sparkle.state.slots[index].height[8] = 0
+                sparkle.state.slots[index].alphaB = 0
+                sparkle.state.slots[index].vecBNow = SIMD3<Float>(
+                    Float(Int.random(in: 0..<13)) + position.x - 6.0,
+                    position.y,
+                    Float(Int.random(in: 0..<13)) + position.z - 6.0
+                )
+                sparkle.state.slots[index].rotStart = 0
+                sparkle.state.slots[index].height[1] = 0
+                sparkle.state.slots[index].height[2] = Float(Int.random(in: 0..<40)) * 0.01 + 0.4
+                sparkle.state.slots[index].fullDisplayAngle = 0
+                sparkle.state.slots[index].flag1[0] = 0
+                sparkle.state.slots[index].flag1[1] = 1
+                sparkle.state.slots[index].flag1[2] = 11
+                sparkle.state.slots[index].height[7] = 0
+            }
+        }
+    }
+
+    // MARK: - EF_GUMGANG2 (261)
+
+    /// Spawns 4-quadrant rotating cross rings (`31`) with `accel = 99` for `EF_GUMGANG2` (261).
+    func texturedCrossLevel(texturePath: String, level: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(31)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 0
+        primitive.state.accel = 99.0
+
+        for index in 0..<4 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = 0
+            primitive.state.slots[index].fullDisplayAngle = 360
+            primitive.state.slots[index].maxHeight = 25.0
+            primitive.state.slots[index].rotStart = Int16(index * 90)
+            primitive.state.slots[index].alphaB = 0
+            primitive.state.slots[index].distance = Float(index) + 1.0
+            primitive.state.slots[index].riseAngle = 80
+            primitive.state.slots[index].alphaT = Int16(level)
+            primitive.state.slots[index].vecBNow.y = 0
+            primitive.state.slots[index].height = Array(repeating: 0, count: 21)
+            primitive.state.slots[index].flag1 = Array(repeating: 0, count: 21)
+        }
+    }
+
+    // MARK: - EF_TEIHIT1 (262)
+
+    /// Spawns 4-slot radial scatter plates (`44`) for `EF_TEIHIT1` (262) and `EF_TEIHIT1X` (266).
+    func texturedScatter(texturePath: String, flag: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(44)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        position.y -= 9.0
+
+        for index in 0..<4 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = -10 - Int.random(in: 0..<25)
+            primitive.state.slots[index].distance = -10.0
+            primitive.state.slots[index].height[0] = 3.0
+            primitive.state.slots[index].riseAngle = Int16(Int.random(in: 0..<360))
+            primitive.state.slots[index].fullDisplayAngle = Int16(Int.random(in: 0..<360))
+            primitive.state.slots[index].height[1] = 0.7
+            primitive.state.slots[index].alphaB = 0
+            primitive.state.slots[index].flag1[0] = flag
+            primitive.state.slots[index].flag1[1] = 24
+        }
+    }
+
+    // MARK: - EF_TEIHIT2 (264)
+
+    /// Spawns 4-slot impact spark streaks (`PP_TEIHIT2` (45)) for `EF_TEIHIT2` (264) and `EF_BACKSTAP` (275).
+    func teiHit2(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let texturePath = "effect\\thunder_center.bmp"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_teihit2)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 0
+        primitive.state.deltaPos = deltaPos
+        primitive.position = position
+
+        for index in 0..<4 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = Int.random(in: 0..<10) - 40
+            primitive.state.slots[index].distance = Float(Int.random(in: 0..<16)) * 0.05 + 0.1
+            primitive.state.slots[index].height[8] = 0
+            primitive.state.slots[index].alphaB = 0
+            primitive.state.slots[index].vecBNow = SIMD3<Float>(deltaPos.x, deltaPos.y - 8.0, deltaPos.z)
+            primitive.state.slots[index].rotStart = 0
+            primitive.state.slots[index].height[1] = Float(Int.random(in: 0..<50)) * 0.01 + 0.75
+            primitive.state.slots[index].height[2] = Float(Int.random(in: 0..<200)) * 0.01 - 1.0
+            primitive.state.slots[index].fullDisplayAngle = 0
+            primitive.state.slots[index].flag1[0] = 0
+            primitive.state.slots[index].flag1[1] = 0
+            primitive.state.slots[index].flag1[2] = 2
+            primitive.state.slots[index].height[7] = 0
+        }
+    }
+
+    // MARK: - EF_TANJI (265)
+
+    /// Spawns a Throw Spirit Sphere projectile (`PP_SHIELDBOOMERANG` (42)) for `EF_TANJI` (265).
+    func tanji(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        context.world.playSound(
+            named: K2L("effect\\mon_탄지신통.wav"),
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+
+        let texturePath = "effect\\blue_ivy.bmp"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let (origin, destination) = directionalLaunchEndpoints()
+        let dx = destination.x - origin.x
+        let dz = destination.z - origin.z
+        let travelDistance = max(0.001, sqrtf(dx * dx + dz * dz))
+
+        let primitive = launchPrimitive(.pp_shieldboomerang)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 0
+        primitive.state.deltaPos = destination
+        primitive.state.slots[0].life = 1
+        primitive.state.slots[0].process = -15
+        primitive.state.slots[0].maxHeight = travelDistance
+        primitive.state.slots[0].distance = Float(count) * 0.4 + 2.0
+        primitive.state.slots[0].height[8] = 0
+        primitive.state.slots[0].alphaB = 5
+        primitive.state.slots[0].vecBNow = SIMD3<Float>(origin.x, origin.y - 8.0, origin.z)
+        primitive.state.slots[0].rotStart = 0
+        primitive.state.slots[0].height[1] = 2.0
+        primitive.state.slots[0].height[2] = (primitive.state.slots[0].height[1] / travelDistance) * (destination.y - origin.y)
+        primitive.state.slots[0].fullDisplayAngle = 0
+        primitive.state.slots[0].flag1[0] = 0
+        primitive.state.slots[0].flag1[1] = 0
+        primitive.state.slots[0].flag1[2] = 1
+        primitive.state.slots[0].height[7] = 0
+
+        for i in 1..<4 {
+            primitive.state.slots[i].life = 1
+            primitive.state.slots[i].alphaB = 0
+        }
+    }
+
+    // MARK: - EF_CHIMTO (267)
+
+    /// Spawns directional sprite impact (`46`) for `EF_CHIMTO` (267) and variants.
+    func chimto(flag: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        if flag == 0 {
+            context.world.playSound(
+                named: K2L("effect\\mon_침투경.wav"),
+                atWorldPosition: EffectSpace.toWorldPosition(position),
+                delay: 0
+            )
+        }
+
+        let primitive = launchPrimitive(46)
+        primitive.state.duration = duration
+        primitive.state.slots[0].life = 1
+        primitive.state.slots[0].maxHeight = 0
+        primitive.state.slots[0].vecBPre = deltaPos
+
+        let spritePath: String
+        let actionPath: String
+        switch flag {
+        case 0:
+            primitive.state.alpha = 200.0
+            spritePath = K2L("이팩트\\침투경_.spr")
+            actionPath = K2L("이팩트\\침투경_.act")
+            primitive.state.animSpeed = 2
+            primitive.state.size = 2.5
+        case 1:
+            spritePath = K2L("이팩트\\wink.spr")
+            actionPath = K2L("이팩트\\wink.act")
+            primitive.state.animSpeed = 6
+            primitive.state.size = 1.0
+            primitive.state.repeatAnim = false
+            primitive.state.pattern |= 0x200
+        case 2:
+            spritePath = K2L("이팩트\\fvoice.spr")
+            actionPath = K2L("이팩트\\fvoice.act")
+            primitive.state.animSpeed = 6
+            primitive.state.size = 1.0
+            primitive.state.repeatAnim = false
+            primitive.state.pattern |= 0x200
+        case 12:
+            spritePath = K2L("이팩트\\헌드레드스피어.spr")
+            actionPath = K2L("이팩트\\헌드레드스피어.act")
+            primitive.state.animSpeed = 6
+            primitive.state.size = 1.0
+            primitive.state.repeatAnim = false
+            primitive.state.pattern |= 0x200
+        case 13:
+            spritePath = K2L("이팩트\\윈드커터.spr")
+            actionPath = K2L("이팩트\\윈드커터.act")
+            primitive.state.animSpeed = 6
+            primitive.state.size = 1.0
+            primitive.state.repeatAnim = false
+            primitive.state.pattern |= 0x200
+        default:
+            spritePath = ""
+            actionPath = ""
+        }
+
+        if !spritePath.isEmpty {
+            _ = context.assets?.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+            primitive.state.spritePath = spritePath
+            primitive.state.actionPath = actionPath
+        }
+
+        let rawAngle = EffectPrimitive.angle(dx: position.x - deltaPos.x, dy: position.z - deltaPos.z)
+        var angle = (Int(context.world.cameraYawDegrees) + Int(rawAngle)) % 360
+        if angle < 0 {
+            angle += 360
+        }
+        primitive.state.renderFlag |= 0x200
+        if angle >= 180 && angle < 270 {
+            primitive.currentMotion = 0
+        } else if angle >= 90 && angle < 180 {
+            primitive.currentMotion = 1
+        } else if angle >= 0 && angle < 90 {
+            primitive.currentMotion = 2
+        } else {
+            primitive.currentMotion = 3
+        }
+        primitive.initSegment()
+        for i in 1..<4 {
+            primitive.state.slots[i].life = 0
+        }
+    }
+
+    // MARK: - EF_RG_COIN (274)
+
+    /// Spawns 4-slot orbiting coin spray (`PP_INTIMIDATE` (43)) for `EF_RG_COIN` (274).
+    func texturedSpray(texturePath: String, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_intimidate)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        position.y -= 12.0
+
+        for index in 0..<4 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].vecBNow = deltaPos
+            primitive.state.slots[index].process = -18 - Int.random(in: 0..<30)
+            primitive.state.slots[index].distance = 12.0
+            primitive.state.slots[index].height[0] = 1.5
+            primitive.state.slots[index].riseAngle = Int16(Int.random(in: 0..<360))
+            primitive.state.slots[index].fullDisplayAngle = Int16(Int.random(in: 0..<360))
+            primitive.state.slots[index].rotStart = Int16(Int.random(in: 0..<360))
+            primitive.state.slots[index].height[2] = Float(Int.random(in: 0..<360))
+            primitive.state.slots[index].height[1] = 3.5
+            primitive.state.slots[index].alphaB = 0
+            primitive.state.slots[index].flag1[0] = 1
+        }
+    }
+
+    // MARK: - EF_TEIHIT3 (276)
+
+    /// Spawns low-profile 4-slot scatter plates (`44`) for `EF_TEIHIT3` (276).
+    func texturedScatterLow(texturePath: String, flag: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(44)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        position.y -= 9.0
+
+        for index in 0..<4 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = -20 - Int.random(in: 0..<10)
+            primitive.state.slots[index].distance = -10.0
+            primitive.state.slots[index].height[0] = 2.0
+            primitive.state.slots[index].riseAngle = Int16(Int.random(in: 0..<360))
+            primitive.state.slots[index].fullDisplayAngle = Int16(Int.random(in: 0..<360))
+            primitive.state.slots[index].height[1] = 1.0
+            primitive.state.slots[index].alphaB = 0
+            primitive.state.slots[index].flag1[0] = flag
+            primitive.state.slots[index].flag1[1] = 16
+        }
+    }
+
+    // MARK: - EF_BOTTOM_ETERNALCHAOS (280)
+
+    /// Spawns rising glow arc (`50`) for `EF_BOTTOM_ETERNALCHAOS` (280) and `EF_BOTTOM_SIEGFRIED` (285).
+    func texturedGlow(texturePath: String, size: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(50)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = Float(size)
+        for i in 1..<4 {
+            primitive.state.slots[i].life = 0
+        }
+        primitive.state.slots[0].life = 1
+        primitive.state.slots[0].process = 0
+        primitive.state.slots[0].fullDisplayAngle = 315
+        primitive.state.slots[0].maxHeight = Float(Int.random(in: 0..<10)) + 25.0
+        primitive.state.slots[0].rotStart = Int16(Int.random(in: 0..<360))
+        primitive.state.slots[0].alphaB = Int16(50 - Int.random(in: 0..<10))
+        primitive.state.slots[0].riseAngle = 90
+        primitive.state.slots[0].alphaT = Int16(Int.random(in: 0..<360))
+        primitive.state.slots[0].vecBNow.y = 0
+        primitive.state.slots[0].height = Array(repeating: 0, count: 21)
+        primitive.state.slots[0].flag1 = Array(repeating: 0, count: 21)
+    }
+
+    // MARK: - EF_POKJUK (297)
+
+    /// Spawns 4-slot firework burst trails (`PP_POKJUK` (52)) for `EF_POKJUK` (297).
+    func pokBurst(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let textures = ["effect\\pok1.tga", "effect\\pok3.tga", "effect\\pok2.tga"]
+        for path in textures {
+            _ = context.assets?.texture(atPath: path)
+        }
+
+        let primitive = launchPrimitive(.pp_pokjuk)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.totalTexture = 3
+        primitive.state.texturePaths = textures
+        position.x -= 15.0
+
+        for index in 0..<4 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = -300 - Int.random(in: 0..<50)
+            primitive.state.slots[index].rotStart = Int16(Int.random(in: 0..<360))
+            primitive.state.slots[index].vecBNow = position
+            primitive.state.slots[index].vecTPre = position
+            primitive.state.slots[index].vecTNow = position
+            primitive.state.slots[index].vecBPre = position
+            primitive.state.slots[index].alphaB = 0
+            primitive.state.slots[index].maxHeight = 2.0
+            primitive.state.slots[index].flag1[0] = Int8(Int.random(in: 0..<5))
+            primitive.state.slots[index].flag1[1] = 0
+            primitive.state.slots[index].flag1[3] = 0
+            primitive.state.slots[index].flag1[2] = Int8(Int.random(in: 0..<4) * 20)
+            primitive.state.slots[index].distance = Float(Int.random(in: 0..<100)) * 0.004 + 0.4
+            primitive.state.slots[index].fullDisplayAngle = Int16(Int.random(in: 0..<360))
+            primitive.state.slots[index].riseAngle = Int16(Int.random(in: 0..<360))
+        }
+    }
+
+    // MARK: - EF_THROWITEM (298)
+
+    /// Spawns arcing thrown item (`PP_THROWITEM` (53)) for `EF_THROWITEM` (298), `EF_THROWITEM2` (299), and `EF_THROWITEM3` (308).
+    func throwItem(texturePath: String, kind: Int8, context: EffectTickContext) {
+        let targetFrame: Int = switch kind {
+        case 10: 5
+        case 11: 10
+        default: 0
+        }
+        guard stateCnt == targetFrame else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let (origin, destination) = directionalLaunchEndpoints()
+        let dx = destination.x - origin.x
+        let dz = destination.z - origin.z
+        let travelDistance = max(0.001, sqrtf(dx * dx + dz * dz))
+
+        let primitive = launchPrimitive(.pp_throwitem)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 0
+        primitive.state.deltaPos = destination
+        primitive.state.slots[0].life = 1
+        primitive.state.slots[0].process = 0
+        primitive.state.slots[0].maxHeight = travelDistance
+        primitive.state.slots[0].distance = switch kind {
+        case 2: 2.0
+        case 3: 4.0
+        default: 3.0
+        }
+        primitive.state.slots[0].height[8] = 0
+        primitive.state.slots[0].alphaB = 255
+        primitive.state.slots[0].vecBNow = SIMD3<Float>(origin.x, 0, origin.z)
+        primitive.state.slots[0].vecBPre.y = origin.y - 8.0
+        primitive.state.slots[0].rotStart = 0
+        let stepSpeed: Float = switch kind {
+        case 2: 2.0
+        case 3: 3.0
+        default: max(0.001, travelDistance / 25.0)
+        }
+        primitive.state.slots[0].height[1] = stepSpeed
+        primitive.state.slots[0].height[2] = (stepSpeed / travelDistance) * (destination.y - origin.y)
+        primitive.state.slots[0].fullDisplayAngle = kind == 3 ? 330 : 0
+        primitive.state.slots[0].flag1[0] = 0
+        primitive.state.slots[0].height[7] = 0
+
+        if kind == 0 {
+            primitive.state.slots[0].flag1[2] = 8
+        } else if kind == 1 {
+            primitive.state.slots[0].flag1[2] = 9
+            primitive.state.slots[0].flag1[3] = Int8(clamping: count)
+        } else if kind >= 10 {
+            primitive.state.slots[0].flag1[2] = 9
+            primitive.state.slots[0].flag1[3] = 4
+        } else if kind == 2 {
+            primitive.state.slots[0].flag1[2] = 0
+        } else if kind == 3 {
+            primitive.state.slots[0].flag1[2] = 15
+        }
+
+        for stepIndex in 0..<100 {
+            if travelDistance < Float(stepIndex) * stepSpeed {
+                primitive.state.slots[0].flag1[1] = Int8(stepIndex)
+                break
+            }
+        }
+
+        for i in 1..<4 {
+            primitive.state.slots[i].life = 1
+            primitive.state.slots[i].alphaB = 0
+        }
     }
 }
