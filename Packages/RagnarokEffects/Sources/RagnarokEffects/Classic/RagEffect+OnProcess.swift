@@ -11,216 +11,10 @@ import simd
 
 extension RagEffect {
 
-    // MARK: - Dispatch
-
-    public nonisolated static let supportedEffectIDs: [EffectID] = [
-        .ef_entry,
-        .ef_soulstrike,
-        .ef_bash,
-        .ef_steal,
-        .ef_frostdiver2,
-        .ef_wind,
-        .ef_bottom_dissonance,
-        .ef_bottom_rokisweil,
-        .ef_bottom_whistle,
-        .ef_bottom_assassincross,
-        .ef_forestlight,
-        .ef_firstaid,
-        .ef_heal,
-        .ef_bottom_mag,
-        .ef_bottom_sanc,
-        .ef_heal3,
-        .ef_hitline,
-        .ef_poison,
-        .ef_guard,
-        .ef_magnum2,
-        .ef_saintwing,
-        .ef_bottom_basilica,
-        .ef_linelink2,
-        .ef_rainbow,
-        .ef_bottom_fogwall,
-        .ef_hitline3,
-        .ef_hitline6,
-        .ef_electric,
-        .ef_electric2,
-        .ef_hitline7,
-        .ef_grandcross2,
-        .ef_flowercast,
-        .ef_groundsample,
-        .ef_kaizel,
-        .ef_dust,
-        .ef_infraredscan,
-        .ef_beginspell_n1,
-        .ef_water_fade,
-        .ef_primecharge,
-        .ef_dq9_charge4,
-        .ef_selfscroll,
-        .ef_waterball3,
-    ]
-
-    private nonisolated static let supportedEffectIDSet: Set<EffectID> = Set(supportedEffectIDs)
-
-    public nonisolated static func supports(_ effectID: EffectID) -> Bool {
-        supportedEffectIDSet.contains(effectID)
-    }
-
-    static func make(id: UUID, request: EffectSpawnRequest) -> RagEffect? {
-        guard supports(request.effectID) else {
-            return nil
-        }
-
-        return RagEffect(id: id, request: request) { effect, context in
-            effect.processEffect(context: context)
-        }
-    }
-
-    func processEffect(context: EffectTickContext) -> Bool {
-        switch effectID {
-        case .ef_entry:
-            entry(context: context)
-        case .ef_soulstrike:
-            soulStrike(flag: 0, context: context)
-        case .ef_bash:
-            bash(context: context)
-        case .ef_steal:
-            steal(context: context)
-        case .ef_frostdiver2:
-            frostDiver2(context: context)
-        case .ef_wind:
-            healCloudRings(context: context)
-        case .ef_bottom_dissonance:
-            texturedMagicRing(texturePath: "effect\\ring_blue.tga", kind: 0, context: context)
-        case .ef_bottom_rokisweil:
-            bottomOut(texturePath: "effect\\safeline.bmp", kind: 0, context: context)
-        case .ef_bottom_whistle:
-            bottomMusic(texturePath: "effect\\melody_b.bmp", kind: 0, context: context)
-        case .ef_bottom_assassincross:
-            texturedMagicRing(texturePath: "effect\\ring_red.tga", kind: 1, context: context)
-        case .ef_forestlight:
-            forestLight(texturePath: "effect\\cloud11.tga", flag: 0, context: context)
-        case .ef_firstaid:
-            firstAid(context: context)
-        case .ef_heal:
-            healBurst(texturePath: "effect\\alpha_down.tga", flag: 0, context: context)
-        case .ef_bottom_mag:
-            texturedPulseKind(texturePath: "effect\\ring_red.tga", kind: 0, context: context)
-        case .ef_bottom_sanc:
-            texturedPulseKind(texturePath: "effect\\alpha_down.tga", kind: 1, context: context)
-        case .ef_heal3:
-            healBurst(texturePath: "effect\\alpha_down.tga", flag: 1, context: context)
-        case .ef_hitline:
-            whiteSparks(kind: 0, context: context)
-        case .ef_poison:
-            poison(flag: 0, context: context)
-        case .ef_guard:
-            kyrieGuard(texturePath: "effect\\guardK.tga", kind: 0, context: context)
-        case .ef_magnum2:
-            magnum2(texturePath: "effect\\ring_yellow.tga", context: context)
-        case .ef_saintwing:
-            saintWing(texturePath: "effect\\wing003.bmp", context: context)
-        case .ef_bottom_basilica:
-            texturedFourRing(texturePath: "effect\\alpha_down.tga", kind: 0, context: context)
-            texturedFourRing(texturePath: "effect\\alpha_down.tga", kind: 1, context: context)
-        case .ef_linelink2:
-            if stateCnt == 0 {
-                context.world.playSound(
-                    named: "effect\\소울 체인지.wav",
-                    atWorldPosition: EffectSpace.toWorldPosition(position),
-                    delay: 0
-                )
-            }
-            trackTarget(context: context)
-        case .ef_rainbow:
-            rainbow(texturePath: "effect\\alpha_center.tga", context: context)
-        case .ef_bottom_fogwall:
-            texturedPulseKind(texturePath: "effect\\ring_white.tga", kind: 2, context: context)
-        case .ef_hitline3:
-            whiteSparkStreak(kind: 0, context: context)
-        case .ef_hitline6:
-            whiteSparkStreak(kind: 3, context: context)
-        case .ef_electric:
-            if stateCnt == 25 {
-                context.world.playSound(
-                    named: "effect\\T_전기.wav",
-                    atWorldPosition: EffectSpace.toWorldPosition(position),
-                    delay: 0
-                )
-            }
-            electricRingLate(kind: 0, angle: 0, context: context)
-            electricRingLate(kind: 0, angle: 180, context: context)
-        case .ef_electric2:
-            electricArc(kind: 0, angle: 0, context: context)
-            electricArc(kind: 0, angle: 0, context: context)
-        case .ef_hitline7:
-            whiteSparkStreak(kind: 1, context: context)
-        case .ef_grandcross2:
-            grandCrossRings(angle: 0, kind: 1, context: context)
-            grandCross2(flag: 1, context: context)
-        case .ef_flowercast:
-            texturedSlashAir(texturePath: "effect\\ring_blue.tga", size: 4, phase: 0, context: context)
-            texturedSlashAir(texturePath: "effect\\ring_blue.tga", size: 4, phase: 1, context: context)
-        case .ef_groundsample:
-            groundSample(context: context)
-        case .ef_kaizel:
-            if stateCnt == 15 {
-                jobLvUp50Pair(angle: 0, context: context)
-                jobLvUp50Pair(angle: 45, context: context)
-            }
-        case .ef_dust:
-            torchDust(kind: 0, context: context)
-        case .ef_infraredscan:
-            if stateCnt == 0 {
-                context.world.playSound(
-                    named: "effect\\INFRAREDSCAN.wav",
-                    atWorldPosition: EffectSpace.toWorldPosition(position),
-                    delay: 0
-                )
-            }
-            electricFan(fade: 0, context: context)
-            electricFan(fade: 1, context: context)
-        case .ef_beginspell_n1:
-            if stateCnt == 1 {
-                context.world.playSound(
-                    named: "effect\\EF_BeginSpell.wav",
-                    atWorldPosition: EffectSpace.toWorldPosition(position),
-                    delay: 0
-                )
-            }
-            bubbleSpiralKind(angle: 45, kind: 1, context: context)
-            bubbleSpiralKind(angle: 25, kind: 0, context: context)
-        case .ef_water_fade:
-            texturedDualSpin(
-                firstTexturePath: "effect\\W_Comp_00.tga",
-                secondTexturePath: "effect\\W_Comp_24.tga",
-                context: context
-            )
-        case .ef_primecharge:
-            if stateCnt == 10 {
-                context.world.playSound(
-                    named: "effect\\LG_EXEEDBREAK.wav",
-                    atWorldPosition: EffectSpace.toWorldPosition(position),
-                    delay: 0
-                )
-            }
-            for _ in 0..<40 {
-                texturedScatterSphere(texturePath: "effect\\alpha_center.tga", flag: 0, context: context)
-            }
-        case .ef_dq9_charge4:
-            texturedSpiralFade(texturePath: "effect\\shockwave_c.bmp", context: context)
-        case .ef_selfscroll:
-            texturedDoubleSpiral(texturePath: "effect\\shockwave_c.bmp", context: context)
-        case .ef_waterball3:
-            waterBallBurst(context: context)
-        default:
-            return false
-        }
-        return true
-    }
-
     // MARK: - EF_ENTRY (6)
 
     /// Spawns counter-rotating `PP_3DCYLINDER` (13) rings for `EF_ENTRY` (6).
-    private func entry(context: EffectTickContext) {
+    func entry(context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -263,7 +57,7 @@ extension RagEffect {
     // MARK: - EF_BASH (16)
 
     /// Spawns a `PP_2DCIRCLE` (4) flash ring and 20 `PP_2DFLASH` (3) radial sparks for `EF_BASH` (16).
-    private func bash(context: EffectTickContext) {
+    func bash(context: EffectTickContext) {
         guard !context.usesMinimalEffects else {
             return
         }
@@ -316,7 +110,7 @@ extension RagEffect {
     // MARK: - EF_SOULSTRIKE (15)
 
     /// Spawns arcing `PP_3DPARTICLESPLINE` (8) sprite missiles with 12-segment trails for `EF_SOULSTRIKE` (15).
-    private func soulStrike(flag: Int8, context: EffectTickContext) {
+    func soulStrike(flag: Int8, context: EffectTickContext) {
         let missileCount = count > 0 ? Int(count) : max(1, min(7, level > 0 ? level : 5))
         let (total, base, step): (Int, Int, Int) = switch missileCount {
         case 1: (1, 0, 1)
@@ -382,7 +176,7 @@ extension RagEffect {
     // MARK: - EF_STEAL (18)
 
     /// Spawns 10 bouncing `PP_3DPARTICLEGRAVITY` (6) sprite particles for `EF_STEAL` (18).
-    private func steal(context: EffectTickContext) {
+    func steal(context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -425,7 +219,7 @@ extension RagEffect {
     // MARK: - EF_FROSTDIVER2 (28)
 
     /// Spawns 8 ice pyramid horns (`PP_3DQUADHORN` (9)) for `EF_FROSTDIVER2` (28).
-    private func frostDiver2(context: EffectTickContext) {
+    func frostDiver2(context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -471,7 +265,7 @@ extension RagEffect {
     // MARK: - EF_WIND (224)
 
     /// Spawns 4 orbiting cloud wind ribbons (`PP_WIND` (62)) for `EF_WIND` (224).
-    private func healCloudRings(context: EffectTickContext) {
+    func healCloudRings(context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -518,7 +312,7 @@ extension RagEffect {
     // MARK: - EF_FORESTLIGHT (307)
 
     /// Spawns slanted pentagonal light shafts (`PP_FOREST` (66)) for `EF_FORESTLIGHT` (307).
-    private func forestLight(texturePath: String, flag: Int8, context: EffectTickContext) {
+    func forestLight(texturePath: String, flag: Int8, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -578,7 +372,7 @@ extension RagEffect {
     // MARK: - EF_FLOWERCAST (488)
 
     /// Spawns dual-phase petal casting rings (`PP_FLOWERCAST` (108)) for `EF_FLOWERCAST` (488).
-    private func texturedSlashAir(texturePath: String, size: Int8, phase: Int8, context: EffectTickContext) {
+    func texturedSlashAir(texturePath: String, size: Int8, phase: Int8, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -629,7 +423,7 @@ extension RagEffect {
     // MARK: - EF_BOTTOM_DISSONANCE (277) / EF_BOTTOM_ASSASSINCROSS (287)
 
     /// Spawns `PP_BOTTOM2` (48) textured ground planes for `EF_BOTTOM_DISSONANCE` (277) and `EF_BOTTOM_ASSASSINCROSS` (287).
-    private func texturedMagicRing(texturePath: String, kind: Int8, context: EffectTickContext) {
+    func texturedMagicRing(texturePath: String, kind: Int8, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -691,7 +485,7 @@ extension RagEffect {
     // MARK: - EF_BOTTOM_ROKISWEIL (283)
 
     /// Spawns `PP_BOTTOMOUT` (49) orbiting ground particles for `EF_BOTTOM_ROKISWEIL` (283).
-    private func bottomOut(texturePath: String, kind: Int8, context: EffectTickContext) {
+    func bottomOut(texturePath: String, kind: Int8, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -732,7 +526,7 @@ extension RagEffect {
     // MARK: - EF_BOTTOM_WHISTLE (286)
 
     /// Spawns `PP_BOTTOM` (47) ground particles for `EF_BOTTOM_WHISTLE` (286).
-    private func bottomMusic(texturePath: String, kind: Int8, context: EffectTickContext) {
+    func bottomMusic(texturePath: String, kind: Int8, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -791,7 +585,7 @@ extension RagEffect {
     // MARK: - EF_HEAL (312) / EF_HEAL3 (320)
 
     /// Spawns pulsing casting columns (`60`) and rising particles (`PP_PARTICLE_UP` (59)) for `EF_HEAL` (312) and `EF_HEAL3` (320).
-    private func healBurst(texturePath: String, flag: Int8, context: EffectTickContext) {
+    func healBurst(texturePath: String, flag: Int8, context: EffectTickContext) {
         let limit = flag != 0 ? 25 : 50
 
         if stateCnt == 0 {
@@ -932,7 +726,7 @@ extension RagEffect {
     // MARK: - EF_BOTTOM_MAG (318) / EF_BOTTOM_SANC (319) / EF_BOTTOM_FOGWALL (405)
 
     /// Spawns `PP_RECT_UP` (64) rising pulse columns for `EF_BOTTOM_MAG` (318), `EF_BOTTOM_SANC` (319), and `EF_BOTTOM_FOGWALL` (405).
-    private func texturedPulseKind(texturePath: String, kind: Int8, context: EffectTickContext) {
+    func texturedPulseKind(texturePath: String, kind: Int8, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -986,7 +780,7 @@ extension RagEffect {
     // MARK: - EF_HITLINE (330)
 
     /// Emits `PP_HITLINE` (70) bouncing white spark trails for `EF_HITLINE` (330).
-    private func whiteSparks(kind: Int16, context: EffectTickContext) {
+    func whiteSparks(kind: Int16, context: EffectTickContext) {
         guard stateCnt >= 0, stateCnt <= 3 else {
             return
         }
@@ -1018,7 +812,7 @@ extension RagEffect {
     // MARK: - EF_GUARD (336)
 
     /// Spawns `PP_GUARD` (61) sphere cage and plays the guard sound for `EF_GUARD` (336).
-    private func kyrieGuard(texturePath: String, kind: Int8, context: EffectTickContext) {
+    func kyrieGuard(texturePath: String, kind: Int8, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -1059,7 +853,7 @@ extension RagEffect {
     // MARK: - EF_MAGNUM2 (339)
 
     /// Emits `PP_MAGNUM2` (73) shockwave waves and sound cues for `EF_MAGNUM2` (339).
-    private func magnum2(texturePath: String, context: EffectTickContext) {
+    func magnum2(texturePath: String, context: EffectTickContext) {
         if stateCnt == 0 {
             flag = 0
         }
@@ -1117,7 +911,7 @@ extension RagEffect {
     // MARK: - EF_BOTTOM_BASILICA (374)
 
     /// Spawns `PP_RECT_UP2` (90) four-ring perimeter boxes for `EF_BOTTOM_BASILICA` (374).
-    private func texturedFourRing(texturePath: String, kind: Int8, context: EffectTickContext) {
+    func texturedFourRing(texturePath: String, kind: Int8, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -1212,7 +1006,7 @@ extension RagEffect {
     // MARK: - EF_LINELINK2 (384)
 
     /// Spawns a `PP_LINELINK` (38) target-tracking link for `EF_LINELINK2` (384).
-    private func trackTarget(context: EffectTickContext) {
+    func trackTarget(context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -1256,7 +1050,7 @@ extension RagEffect {
     // MARK: - EF_HITLINE3 (428) / EF_HITLINE6 (431) / EF_HITLINE7 (434)
 
     /// Emits `PP_HITLINE3` (100) short spark streaks for `EF_HITLINE3` (428), `EF_HITLINE6` (431), and `EF_HITLINE7` (434).
-    private func whiteSparkStreak(kind: Int16, context: EffectTickContext) {
+    func whiteSparkStreak(kind: Int16, context: EffectTickContext) {
         let limit = if kind == 1 { 2 } else if kind == 3 { 5 } else { 0 }
         guard stateCnt >= 0, stateCnt < limit else {
             return
@@ -1316,7 +1110,7 @@ extension RagEffect {
     // MARK: - EF_GRANDCROSS2 (450)
 
     /// Spawns corner casting rings (`PP_GI_3` (34)) for `EF_GRANDCROSS2` (450).
-    private func grandCrossRings(angle: Int16, kind: Int8, context: EffectTickContext) {
+    func grandCrossRings(angle: Int16, kind: Int8, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -1359,7 +1153,7 @@ extension RagEffect {
     }
 
     /// Spawns ground cross pillars (`PP_GRANDCROSS2` (37)) for `EF_GRANDCROSS2` (450).
-    private func grandCross2(flag: Int8, context: EffectTickContext) {
+    func grandCross2(flag: Int8, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -1390,7 +1184,7 @@ extension RagEffect {
     // MARK: - EF_KAIZEL (590)
 
     /// Spawns `PP_SLASH1` (75) four-way fan quads for `EF_KAIZEL` (590).
-    private func jobLvUp50Pair(angle: Int16, context: EffectTickContext) {
+    func jobLvUp50Pair(angle: Int16, context: EffectTickContext) {
         let texturePath = "effect\\magic_blue.tga"
         _ = context.assets?.texture(atPath: texturePath)
 
@@ -1415,7 +1209,7 @@ extension RagEffect {
     // MARK: - EF_WATERBALL3 (942)
 
     /// Spawns `PP_3DCIRCLE` (12) rings and a `PP_3DSPHERE` (14) burst for `EF_WATERBALL3` (942).
-    private func waterBallBurst(context: EffectTickContext) {
+    func waterBallBurst(context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -1471,7 +1265,7 @@ extension RagEffect {
     // MARK: - EF_BEGINSPELL_N1 (830)
 
     /// Spawns primitive `144` expanding bubble-spiral ground arcs for `EF_BEGINSPELL_N1` (830).
-    private func bubbleSpiralKind(angle: Int16, kind: Int8, context: EffectTickContext) {
+    func bubbleSpiralKind(angle: Int16, kind: Int8, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -1530,7 +1324,7 @@ extension RagEffect {
     // MARK: - EF_WATER_FADE (839)
 
     /// Spawns primitive `148` cross-fading dual-texture ground square for `EF_WATER_FADE` (839).
-    private func texturedDualSpin(
+    func texturedDualSpin(
         firstTexturePath: String,
         secondTexturePath: String,
         context: EffectTickContext
@@ -1563,7 +1357,7 @@ extension RagEffect {
     // MARK: - EF_SELFSCROLL (900)
 
     /// Spawns dual-layer primitive `166` folding ribbons for `EF_SELFSCROLL` (900).
-    private func texturedDoubleSpiral(texturePath: String, context: EffectTickContext) {
+    func texturedDoubleSpiral(texturePath: String, context: EffectTickContext) {
         guard stateCnt <= 1 else {
             return
         }
@@ -1601,7 +1395,7 @@ extension RagEffect {
     // MARK: - EF_INFRAREDSCAN (794)
 
     /// Spawns primitive `135` sweeping electric jitter arcs for `EF_INFRAREDSCAN` (794).
-    private func electricFan(fade: Int16, context: EffectTickContext) {
+    func electricFan(fade: Int16, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -1647,7 +1441,7 @@ extension RagEffect {
     // MARK: - EF_PRIMECHARGE (882)
 
     /// Spawns primitive `159` inward-collapsing spiral blades for `EF_PRIMECHARGE` (882).
-    private func texturedScatterSphere(texturePath: String, flag: Int8, context: EffectTickContext) {
+    func texturedScatterSphere(texturePath: String, flag: Int8, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -1686,7 +1480,7 @@ extension RagEffect {
     // MARK: - EF_DQ9_CHARGE4 (898)
 
     /// Spawns primitive `165` dual-layer curved fan trails for `EF_DQ9_CHARGE4` (898).
-    private func texturedSpiralFade(texturePath: String, context: EffectTickContext) {
+    func texturedSpiralFade(texturePath: String, context: EffectTickContext) {
         guard stateCnt <= 2 else {
             return
         }
@@ -1716,7 +1510,7 @@ extension RagEffect {
     // MARK: - EF_POISON (335)
 
     /// Spawns primitive `72` tiled poison mist overlay for `EF_POISON` (335).
-    private func poison(flag: Int8, context: EffectTickContext) {
+    func poison(flag: Int8, context: EffectTickContext) {
         if stateCnt == 99_999_998 {
             stateCnt = 0
             duration = 99_999_999
@@ -1747,7 +1541,7 @@ extension RagEffect {
     // MARK: - EF_ELECTRIC (432)
 
     /// Spawns `PP_ELECTRIC` (101) radial lightning arcs on ticks 20...23 for `EF_ELECTRIC` (432).
-    private func electricRingLate(kind: Int16, angle: Int16, context: EffectTickContext) {
+    func electricRingLate(kind: Int16, angle: Int16, context: EffectTickContext) {
         guard stateCnt >= 20, stateCnt <= 23 else {
             return
         }
@@ -1786,7 +1580,7 @@ extension RagEffect {
     // MARK: - EF_ELECTRIC2 (433)
 
     /// Spawns `PP_ELECTRIC2` (102) directional lightning tubes for `EF_ELECTRIC2` (433).
-    private func electricArc(kind: Int16, angle: Int16, context: EffectTickContext) {
+    func electricArc(kind: Int16, angle: Int16, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -1823,7 +1617,7 @@ extension RagEffect {
     // MARK: - EF_GROUNDSAMPLE (513)
 
     /// Spawns primitive `112` terrain-conformed magic target grid for `EF_GROUNDSAMPLE` (513).
-    private func groundSample(context: EffectTickContext) {
+    func groundSample(context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -1846,7 +1640,7 @@ extension RagEffect {
     // MARK: - EF_DUST (689)
 
     /// Spawns `PP_EFFECTTEXTURE_ANI` (128) animated billboard panel for `EF_DUST` (689).
-    private func torchDust(kind: Int8, context: EffectTickContext) {
+    func torchDust(kind: Int8, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -1918,7 +1712,7 @@ extension RagEffect {
     // MARK: - EF_FIRSTAID (309)
 
     /// Spawns `PP_FIRSTAID` (58) pulsing glow panel for `EF_FIRSTAID` (309).
-    private func firstAid(context: EffectTickContext) {
+    func firstAid(context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -1957,7 +1751,7 @@ extension RagEffect {
     // MARK: - EF_SAINTWING (362)
 
     /// Spawns `PP_SAINTWING` (76) paired flapping angel wings for `EF_SAINTWING` (362).
-    private func saintWing(texturePath: String, context: EffectTickContext) {
+    func saintWing(texturePath: String, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
@@ -1988,7 +1782,7 @@ extension RagEffect {
     // MARK: - EF_RAINBOW (396)
 
     /// Spawns `PP_RAINBOW` (93) 7-band spectral arch for `EF_RAINBOW` (396).
-    private func rainbow(texturePath: String, context: EffectTickContext) {
+    func rainbow(texturePath: String, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }

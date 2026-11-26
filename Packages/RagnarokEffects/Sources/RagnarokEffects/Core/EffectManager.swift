@@ -25,15 +25,13 @@ public final class EffectManager {
 
     public nonisolated static var builtInEffectIDs: [EffectID] {
         let screenEffectIDs = EZ2STRScreenEffectDefinition.definitions.map(\.effectID)
-        let ragSTREffectIDs = RagSTREffectDefinition.definitions.map(\.effectID)
         let ragEffectIDs = RagEffect.supportedEffectIDs
-        return Array(Set(screenEffectIDs).union(ragSTREffectIDs).union(ragEffectIDs)).sorted()
+        return Array(Set(screenEffectIDs).union(ragEffectIDs)).sorted()
     }
 
     public nonisolated static func hasBuiltInDefinition(for effectID: EffectID) -> Bool {
         EZ2STRScreenEffectDefinition.definition(for: effectID) != nil
             || RagEffect.supports(effectID)
-            || RagSTREffectDefinition.definition(for: effectID) != nil
     }
 
     public let assetStore: EffectAssetStore?
@@ -251,10 +249,8 @@ public final class EffectManager {
             effect = EZ2STRScreenEffect(id: id, request: request, definition: definition)
         } else if let builder = ragEffectBuilders[request.effectID] {
             effect = builder(id, request)
-        } else if let ragEffect = RagEffect.make(id: id, request: request) {
+        } else if let ragEffect = RagEffect.make(id: id, request: request, usesMinimalEffects: usesMinimalEffects) {
             effect = ragEffect
-        } else if let definition = RagSTREffectDefinition.definition(for: request.effectID) {
-            effect = RagSTREffect(id: id, request: request, definition: definition, usesMinimalEffects: usesMinimalEffects)
         } else {
             return nil
         }

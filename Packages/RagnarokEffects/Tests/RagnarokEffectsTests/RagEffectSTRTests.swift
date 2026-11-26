@@ -254,36 +254,36 @@ struct RagEffectSTRTests {
         #expect(playbackState.makeFrame(for: str).sprites.isEmpty)
     }
 
-    @Test("RagSTREffectDefinition covers all 199 pure-STR entries with expected overrides")
+    @Test("RagEffect.STRDefinition covers all 199 pure-STR entries with expected overrides")
     func definitionCoverageAndResolution() {
-        #expect(RagSTREffectDefinition.definitions.count == 199)
-        #expect(RagSTREffectDefinition.definitionsByEffectID.count == 199)
+        #expect(RagEffect.STRDefinition.definitions.count == 199)
+        #expect(RagEffect.STRDefinition.definitionsByEffectID.count == 199)
 
-        let cure = RagSTREffectDefinition.definition(for: .ef_cure)
+        let cure = RagEffect.STRDefinition.definition(for: .ef_cure)
         #expect(cure?.resolveSTRPath(usesMinimalEffects: false) == "Cure.str")
         #expect(cure?.resolveSTRPath(usesMinimalEffects: true) == "cure_min.str")
 
-        let windHit = RagSTREffectDefinition.definition(for: .ef_windhit)
+        let windHit = RagEffect.STRDefinition.definition(for: .ef_windhit)
         #expect(windHit?.resolveSTRPath(randomValue: { _ in 2 }) == "WindHit2.str")
 
-        #expect(RagSTREffectDefinition.definition(for: .ef_shieldcharge)?.yOffset == 0)
-        #expect(RagSTREffectDefinition.definition(for: .ef_devotion)?.yOffset == -20)
-        #expect(RagSTREffectDefinition.definition(for: .ef_gc_darkcrow)?.yOffset == 40)
-        #expect(RagSTREffectDefinition.definition(for: .ef_gc_darkcrow)?.loopLimit == 9999)
-        #expect(RagSTREffectDefinition.definition(for: .ef_duststorm)?.loopLimit == 10)
-        #expect(RagSTREffectDefinition.definition(for: .ef_shockwave)?.restartsOnEnd == true)
-        #expect(RagSTREffectDefinition.definition(for: .ef_shockwave)?.endsWhenSTRCompletes == false)
-        #expect(RagSTREffectDefinition.definition(for: .ef_suicide)?.usesTargetPosition == true)
-        #expect(RagSTREffectDefinition.definition(for: .ef_potion1)?.strPath == K2L("빨간포션.str"))
+        #expect(RagEffect.STRDefinition.definition(for: .ef_shieldcharge)?.yOffset == 0)
+        #expect(RagEffect.STRDefinition.definition(for: .ef_devotion)?.yOffset == -20)
+        #expect(RagEffect.STRDefinition.definition(for: .ef_gc_darkcrow)?.yOffset == 40)
+        #expect(RagEffect.STRDefinition.definition(for: .ef_gc_darkcrow)?.loopLimit == 9999)
+        #expect(RagEffect.STRDefinition.definition(for: .ef_duststorm)?.loopLimit == 10)
+        #expect(RagEffect.STRDefinition.definition(for: .ef_shockwave)?.restartsOnEnd == true)
+        #expect(RagEffect.STRDefinition.definition(for: .ef_shockwave)?.endsWhenSTRCompletes == false)
+        #expect(RagEffect.STRDefinition.definition(for: .ef_suicide)?.usesTargetPosition == true)
+        #expect(RagEffect.STRDefinition.definition(for: .ef_potion1)?.strPath == K2L("빨간포션.str"))
 
-        let lord = RagSTREffectDefinition.definition(for: .ef_lord)
+        let lord = RagEffect.STRDefinition.definition(for: .ef_lord)
         #expect(lord?.endsWhenSTRCompletes == true)
         #expect(lord?.cameraShakeTicks == [50, 100, 150, 200, 250])
         #expect(lord?.sounds.filter { $0.tick == 0 }.count == 2)
 
         // Hybrid STR+Prim effects remain excluded from pure-STR definitions
-        #expect(RagSTREffectDefinition.definition(for: .ef_stormgust) == nil)
-        #expect(RagSTREffectDefinition.definition(for: .ef_aspersio) == nil)
+        #expect(RagEffect.STRDefinition.definition(for: .ef_stormgust) == nil)
+        #expect(RagEffect.STRDefinition.definition(for: .ef_aspersio) == nil)
     }
 
     @Test("EffectManager registers all pure-STR effects and drives timed sounds, shakes, tints, and target tracking")
@@ -324,7 +324,7 @@ struct RagEffectSTRTests {
         // Suicide: tracks targetObjectID position when usesTargetPosition == true
         manager.spawn(EffectSpawnRequest(effectID: .ef_suicide, worldPosition: .zero, ownerObjectID: ownerID, targetObjectID: targetID, duration: 2.0 / 60.0))
         manager.stepOneTick(world: world)
-        let suicide = manager.activeEffects.compactMap { $0 as? RagSTREffect }.first { $0.effectID == .ef_suicide }
+        let suicide = manager.activeEffects.compactMap { $0 as? RagEffect }.first { $0.effectID == .ef_suicide }
         #expect(suicide?.worldPosition == SIMD3<Float>(8, 0, -4))
     }
 

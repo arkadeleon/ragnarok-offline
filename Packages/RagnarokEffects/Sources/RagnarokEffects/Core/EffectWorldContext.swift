@@ -69,7 +69,7 @@ public enum EffectTargetModifier: Sendable, Equatable {
     case scale(SIMD3<Float>, durationTicks: Int)
     case rotation(SIMD3<Float>, durationTicks: Int)
     case flash(color: SIMD4<Float>, durationTicks: Int)
-    case afterimage(style: EffectAfterimageStyle, durationTicks: Int)
+    case afterimage(style: EffectAfterimageStyle, tint: SIMD4<Float>? = nil, durationTicks: Int)
     case cloaking(alpha: Float)
     case shake(amplitude: Float, durationTicks: Int)
 }

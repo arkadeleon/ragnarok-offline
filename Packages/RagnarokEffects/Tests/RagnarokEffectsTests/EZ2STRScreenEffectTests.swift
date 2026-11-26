@@ -497,7 +497,7 @@ struct EZ2STRScreenEffectTests {
         #expect(effect.elapsedTicks == 5)
     }
 
-    @Test("EffectManager prioritizes particle EZ2STRScreenEffect over RagSTREffect")
+    @Test("EffectManager prioritizes particle EZ2STRScreenEffect over RagEffect")
     func managerParticlePriority() {
         let manager = EffectManager()
         let world = MockWorldContext()

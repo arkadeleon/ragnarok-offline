@@ -10,7 +10,7 @@ import RagnarokFileFormats
 import simd
 
 /// Shared 60Hz discrete keyframe playback state for STR animations,
-/// used by both `RagSTREffect` and `EZ2STR*` effects.
+/// used by both `RagEffect` and `EZ2STR*` effects.
 public struct STREffectPlaybackState: Sendable {
     public struct LayerTransform: Sendable, Equatable {
         public var position: SIMD2<Float> = .zero
