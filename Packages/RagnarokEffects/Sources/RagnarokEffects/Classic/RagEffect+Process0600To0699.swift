@@ -11,11 +11,55 @@ import simd
 
 extension RagEffect {
     nonisolated static let proceduralEffectIDs0600To0699: [EffectID] = [
+        .ef_quakebody4,
+        .ef_undeadbody,
+        .ef_undeadbody_del,
         .ef_dust,
     ]
 
     func process0600To0699(context: EffectTickContext) -> Bool {
         switch effectID {
+        case .ef_quakebody4:
+            if stateCnt == 20 {
+                context.world.playSound(
+                    named: "effect\\ef_hit6.wav",
+                    atWorldPosition: EffectSpace.toWorldPosition(position),
+                    delay: 0
+                )
+            }
+            if stateCnt > 20, let targetID = targetObjectID ?? ownerObjectID {
+                context.world.applyTargetModifier(.shake(amplitude: 2.0, durationTicks: 2), to: targetID)
+                let color = stateCnt % 2 == 0
+                    ? SIMD4<Float>(250.0 / 255.0, 50.0 / 255.0, 50.0 / 255.0, 1.0)
+                    : SIMD4<Float>(1.0, 1.0, 1.0, 1.0)
+                context.world.applyTargetModifier(.tint(color: color, durationTicks: 2), to: targetID)
+            }
+        case .ef_undeadbody:
+            if let targetID = targetObjectID ?? ownerObjectID {
+                let alpha = Float(min(stateCnt, 200)) / 255.0
+                context.world.applyTargetModifier(
+                    .outline(
+                        color: SIMD4<Float>(5.0 / 255.0, 155.0 / 255.0, 5.0 / 255.0, alpha),
+                        spread: 2.0,
+                        layers: 2,
+                        durationTicks: 2
+                    ),
+                    to: targetID
+                )
+            }
+        case .ef_undeadbody_del:
+            if stateCnt < 40, let targetID = targetObjectID ?? ownerObjectID {
+                let alpha = Float(max(0, 200 - stateCnt * 5)) / 255.0
+                context.world.applyTargetModifier(
+                    .outline(
+                        color: SIMD4<Float>(5.0 / 255.0, 155.0 / 255.0, 5.0 / 255.0, alpha),
+                        spread: 2.0,
+                        layers: 2,
+                        durationTicks: 2
+                    ),
+                    to: targetID
+                )
+            }
         case .ef_dust:
             torchDust(kind: 0, context: context)
         default:

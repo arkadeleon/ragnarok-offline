@@ -64,16 +64,29 @@ public enum EffectAfterimageStyle: Sendable, Equatable {
 
 /// Visual modification requested by an active effect on a target object.
 public enum EffectTargetModifier: Sendable, Equatable {
+    /// Multiplies the target's sprite color by normalized RGBA channels (`0...1`).
     case tint(color: SIMD4<Float>, durationTicks: Int)
+    /// Multiplies the target's sprite opacity (`0...1`).
     case alpha(Float, durationTicks: Int)
+    /// Scales the target's sprite (`x` horizontal, `y` vertical; `z` reserved for 3D space).
     case scale(SIMD3<Float>, durationTicks: Int)
     /// Offsets the target's 8-way facing direction in degrees (quantized to 45° steps).
     case facingYaw(degrees: Float, durationTicks: Int)
     /// Rotates the target's 2D sprite plane in degrees.
     case spriteRoll(degrees: Float, durationTicks: Int)
+    /// Translates the target's 2D sprite in sprite-pixel units (positive Y is upward).
+    case spriteOffset(SIMD2<Float>, durationTicks: Int)
+    /// Renders expanded tinted silhouette copies around the target sprite (e.g., aura or outline glow).
+    case outline(color: SIMD4<Float>, spread: Float, layers: Int, durationTicks: Int)
+    /// Renders four translucent copies of the target sprite offset along ±X and ±Y.
+    case fourWaySplit(spread: Float, alpha: Float, durationTicks: Int)
+    /// Blends a decaying normalized RGBA flash color over the target's sprite.
     case flash(color: SIMD4<Float>, durationTicks: Int)
+    /// Spawns a fading afterimage snapshot of the target sprite with an optional normalized RGBA tint.
     case afterimage(style: EffectAfterimageStyle, tint: SIMD4<Float>? = nil, durationTicks: Int)
+    /// Keeps a cloaked target partially visible at the given opacity (`0...1`).
     case cloaking(alpha: Float)
+    /// Applies decaying horizontal jitter around the target's world position.
     case shake(amplitude: Float, durationTicks: Int)
 }
 

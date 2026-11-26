@@ -227,4 +227,118 @@ extension RagEffect {
         primitive.state.argb = UInt32(red) | (UInt32(green) << 8) | (UInt32(blue) << 16)
         primitive.state.slots[0].flag1[10] = flag
     }
+
+    // MARK: - Body Modifier Helpers
+
+    static func shrinkPulseScale(phase: Int) -> Float {
+        let index = max(phase * 4 + 90, 90)
+        guard index < 270 else {
+            return 0.5
+        }
+        return (EffectSpace.sine(degrees: index) + 1.0) * 0.25 + 0.5
+    }
+
+    static func growPulseScale(phase: Int) -> Float {
+        let index = max(phase * 4 + 90, 90)
+        guard index < 270 else {
+            return 1.5
+        }
+        return 1.5 - (EffectSpace.sine(degrees: index) + 1.0) * 0.25
+    }
+
+    static func swingRollAndOffset(phase: Int, radius: Float = 10.0) -> (degrees: Float, offset: SIMD2<Float>) {
+        guard phase <= 36 else {
+            return (0, .zero)
+        }
+        var angle = 180.0 - EffectSpace.sine(degrees: 90 + phase * 5) * 180.0
+        if angle >= 360.0 {
+            angle -= 360.0
+        }
+        let angleIndex = Int(angle)
+        let offsetX = EffectSpace.sine(degrees: angleIndex) * radius
+        let offsetY = radius * (1.0 - EffectSpace.cosine(degrees: angleIndex))
+        return (angle, SIMD2<Float>(offsetX, offsetY))
+    }
+
+    static func tintedOverlayAlpha(phase: Int) -> Float? {
+        if phase <= 10 {
+            return Float(phase * 15) / 255.0
+        } else if phase <= 20 {
+            return 160.0 / 255.0
+        } else if phase <= 50 {
+            return Float((51 - phase) * 5) / 255.0
+        } else {
+            return nil
+        }
+    }
+
+    /// Spawns `PP_3DTEXTURE` (15) skill aura (`effect\fashasha.tga`) used by body and skill aura effects.
+    func texturedSkillAura(type: Int8, context: EffectTickContext) {
+        if stateCnt == 0 {
+            let soundName: String? = switch type {
+            case 0: "effect\\hunter_detecting.wav"
+            case 2: "effect\\priest_benedictio.wav"
+            case 4: "effect\\cru_grand cross.wav"
+            case 5: "effect\\ANALYZE.wav"
+            default: nil
+            }
+            if let soundName {
+                context.world.playSound(
+                    named: soundName,
+                    atWorldPosition: EffectSpace.toWorldPosition(position),
+                    delay: 0
+                )
+            }
+        }
+
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let texturePath = "effect\\fashasha.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_3dtexture)
+        primitive.state.duration = 57
+        primitive.state.widthSpeed = 1.5
+        primitive.state.heightSpeed = 1.5
+        primitive.state.widthAccel = primitive.state.widthSpeed / 14.0
+        primitive.state.heightAccel = primitive.state.heightSpeed / 14.0
+        primitive.state.deltaPos2.y = -5.0
+        primitive.state.speed3d.y = -0.5
+        primitive.state.roll = 90.0
+        primitive.state.changePoint = (type == 3 || type == 6) ? 10 : 17
+        primitive.state.fadeOutCnt = (type == 3 || type == 6) ? 30 : 40
+
+        switch type {
+        case 4:
+            primitive.state.red = 0xFF
+            primitive.state.green = 0x8C
+            primitive.state.blue = 0x8C
+        case 5:
+            primitive.state.red = 0xD2
+            primitive.state.green = 0xFA
+            primitive.state.blue = 0xD2
+        case 6:
+            primitive.state.red = 10
+            primitive.state.green = 10
+            primitive.state.blue = 10
+        case 7:
+            primitive.state.red = 0xFA
+            primitive.state.green = 0xD2
+            primitive.state.blue = 0x8C
+        case 8:
+            primitive.state.red = 0x8C
+            primitive.state.green = 0xFF
+            primitive.state.blue = 0x8C
+        default:
+            break
+        }
+
+        primitive.state.changeWidthSpeed = 0.1
+        primitive.state.changeHeightSpeed = 0.1
+        primitive.state.changeWidthAccel = primitive.state.changeWidthSpeed / 30.0
+        primitive.state.changeHeightAccel = primitive.state.changeHeightSpeed / 30.0
+        primitive.state.texturePaths = [texturePath]
+    }
 }

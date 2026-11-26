@@ -119,7 +119,8 @@ struct SpriteFrameResolver {
                     opacity: object.opacity,
                     tintColor: modifiers.effectiveTintColor,
                     scale: modifiers.effectiveScale,
-                    rotationZ: modifiers.effectiveSpriteRollRadians
+                    rotationZ: modifiers.effectiveSpriteRollRadians,
+                    spriteOffset: modifiers.effectiveSpriteOffset
                 )
                 resolvedLayers.append(
                     ResolvedLayer(
@@ -144,14 +145,61 @@ struct SpriteFrameResolver {
             return nil
         }
 
+        let baseLayers = resolvedLayers.map {
+            SpriteDrawable.Layer(vertices: $0.vertices, texture: $0.texture)
+        }
+        var finalLayers: [SpriteDrawable.Layer] = []
+
+        if let outline = modifiers.effectiveOutline, outline.color.w > 0, outline.spread > 0 {
+            let layerCount = max(outline.layers, 1)
+            for step in stride(from: layerCount, through: 1, by: -1) {
+                let stepSpread = outline.spread * Float(step) / Float(layerCount)
+                let outlineColor = SIMD4<Float>(
+                    outline.color.x,
+                    outline.color.y,
+                    outline.color.z,
+                    outline.color.w * object.opacity
+                )
+                for baseLayer in baseLayers {
+                    finalLayers.append(
+                        makeExpandedLayer(
+                            from: baseLayer,
+                            spread: stepSpread,
+                            color: outlineColor
+                        )
+                    )
+                }
+            }
+        }
+
+        finalLayers.append(contentsOf: baseLayers)
+
+        if let fourWay = modifiers.effectiveFourWaySplit, fourWay.alpha > 0, fourWay.spread > 0 {
+            let offsets: [SIMD2<Float>] = [
+                [fourWay.spread, 0],
+                [-fourWay.spread, 0],
+                [0, fourWay.spread],
+                [0, -fourWay.spread],
+            ]
+            for offset in offsets {
+                for baseLayer in baseLayers {
+                    finalLayers.append(
+                        makeShiftedLayer(
+                            from: baseLayer,
+                            offset: offset,
+                            alphaMultiplier: fourWay.alpha
+                        )
+                    )
+                }
+            }
+        }
+
         return SpriteDrawable(
             objectID: object.objectID,
             worldPosition: worldPosition + modifiers.effectiveWorldOffset + [0, 0.2, 0], // Lifted slightly so uneven ground doesn't clip the sprite.
             shadow: shadow,
             isVisible: object.effectState != .cloak || modifiers.cloakingAlpha != nil,
-            layers: resolvedLayers.map {
-                SpriteDrawable.Layer(vertices: $0.vertices, texture: $0.texture)
-            }
+            layers: finalLayers
         )
     }
 
@@ -209,6 +257,51 @@ struct SpriteFrameResolver {
         )
     }
 
+    private func makeExpandedLayer(
+        from layer: SpriteDrawable.Layer,
+        spread: Float,
+        color: SIMD4<Float>
+    ) -> SpriteDrawable.Layer {
+        guard !layer.vertices.isEmpty else {
+            return layer
+        }
+        var minPos = layer.vertices[0].position
+        var maxPos = layer.vertices[0].position
+        for vertex in layer.vertices {
+            minPos = simd_min(minPos, vertex.position)
+            maxPos = simd_max(maxPos, vertex.position)
+        }
+        let center = (minPos + maxPos) * 0.5
+        let expandedVertices = layer.vertices.map { vertex -> SpriteVertex in
+            let delta = vertex.position - center
+            let offset = SIMD2<Float>(
+                delta.x >= 0 ? spread : -spread,
+                delta.y >= 0 ? spread : -spread
+            )
+            return SpriteVertex(
+                position: vertex.position + offset,
+                textureCoordinate: vertex.textureCoordinate,
+                color: SIMD4<Float>(color.x, color.y, color.z, vertex.color.w * color.w)
+            )
+        }
+        return SpriteDrawable.Layer(vertices: expandedVertices, texture: layer.texture)
+    }
+
+    private func makeShiftedLayer(
+        from layer: SpriteDrawable.Layer,
+        offset: SIMD2<Float>,
+        alphaMultiplier: Float
+    ) -> SpriteDrawable.Layer {
+        let shiftedVertices = layer.vertices.map { vertex in
+            SpriteVertex(
+                position: vertex.position + offset,
+                textureCoordinate: vertex.textureCoordinate,
+                color: SIMD4<Float>(vertex.color.x, vertex.color.y, vertex.color.z, vertex.color.w * alphaMultiplier)
+            )
+        }
+        return SpriteDrawable.Layer(vertices: shiftedVertices, texture: layer.texture)
+    }
+
     private func makeVertices(
         layer: ACT.Layer,
         parentOffset: SIMD2<Int32>,
@@ -218,7 +311,8 @@ struct SpriteFrameResolver {
         opacity: Float,
         tintColor: SIMD3<Float> = .one,
         scale: SIMD2<Float> = .one,
-        rotationZ: Float = 0
+        rotationZ: Float = 0,
+        spriteOffset: SIMD2<Float> = .zero
     ) -> [SpriteVertex] {
         let cx = Float(layer.offset.x + parentOffset.x) * partScale * scale.x
         let cy = Float(layer.offset.y + parentOffset.y) * partScale * scale.y
@@ -236,13 +330,16 @@ struct SpriteFrameResolver {
                 x * cosAngle - y * sinAngle + cx,
                 -(x * sinAngle + y * cosAngle + cy)
             )
+            let rotated: SIMD2<Float>
             if rotationZ == 0 {
-                return local
+                rotated = local
+            } else {
+                rotated = SIMD2<Float>(
+                    local.x * cosExtra - local.y * sinExtra,
+                    local.x * sinExtra + local.y * cosExtra
+                )
             }
-            return SIMD2<Float>(
-                local.x * cosExtra - local.y * sinExtra,
-                local.x * sinExtra + local.y * cosExtra
-            )
+            return rotated + spriteOffset
         }
 
         let color = SIMD4<Float>(

@@ -22,6 +22,17 @@ struct MapObjectEffectModifiers: Sendable {
         let duration: TimeInterval
     }
 
+    struct Outline: Sendable, Equatable {
+        let color: SIMD4<Float>
+        let spread: Float
+        let layers: Int
+    }
+
+    struct FourWaySplit: Sendable, Equatable {
+        let spread: Float
+        let alpha: Float
+    }
+
     var tint: Timed<SIMD4<Float>>?
     var flash: Timed<SIMD4<Float>>?
     var alpha: Timed<Float>?
@@ -29,6 +40,9 @@ struct MapObjectEffectModifiers: Sendable {
     var scale: Timed<SIMD3<Float>>?
     var facingYawDegrees: Timed<Float>?
     var spriteRollDegrees: Timed<Float>?
+    var spriteOffset: Timed<SIMD2<Float>>?
+    var outline: Timed<Outline>?
+    var fourWaySplit: Timed<FourWaySplit>?
     var shake: Timed<Float>?
 
     private var shakeElapsedTime: TimeInterval = 0
@@ -42,6 +56,9 @@ struct MapObjectEffectModifiers: Sendable {
             && scale == nil
             && facingYawDegrees == nil
             && spriteRollDegrees == nil
+            && spriteOffset == nil
+            && outline == nil
+            && fourWaySplit == nil
             && shake == nil
             && pendingAfterimages.isEmpty
     }
@@ -87,6 +104,18 @@ struct MapObjectEffectModifiers: Sendable {
         (spriteRollDegrees?.value ?? 0) * .pi / 180
     }
 
+    var effectiveSpriteOffset: SIMD2<Float> {
+        spriteOffset?.value ?? .zero
+    }
+
+    var effectiveOutline: Outline? {
+        outline?.value
+    }
+
+    var effectiveFourWaySplit: FourWaySplit? {
+        fourWaySplit?.value
+    }
+
     var effectiveWorldOffset: SIMD3<Float> {
         guard let shake else {
             return .zero
@@ -123,6 +152,17 @@ struct MapObjectEffectModifiers: Sendable {
         case .spriteRoll(let degrees, let durationTicks):
             let duration = Self.duration(fromTicks: durationTicks)
             spriteRollDegrees = Timed(value: degrees, remainingTime: duration, totalTime: duration)
+        case .spriteOffset(let offset, let durationTicks):
+            let duration = Self.duration(fromTicks: durationTicks)
+            spriteOffset = Timed(value: offset, remainingTime: duration, totalTime: duration)
+        case .outline(let color, let spread, let layers, let durationTicks):
+            let duration = Self.duration(fromTicks: durationTicks)
+            let value = Outline(color: color, spread: max(spread, 0), layers: max(layers, 1))
+            outline = Timed(value: value, remainingTime: duration, totalTime: duration)
+        case .fourWaySplit(let spread, let alpha, let durationTicks):
+            let duration = Self.duration(fromTicks: durationTicks)
+            let value = FourWaySplit(spread: max(spread, 0), alpha: min(max(alpha, 0), 1))
+            fourWaySplit = Timed(value: value, remainingTime: duration, totalTime: duration)
         case .shake(let amplitude, let durationTicks):
             let duration = Self.duration(fromTicks: durationTicks)
             shake = Timed(value: amplitude, remainingTime: duration, totalTime: duration)
@@ -144,6 +184,9 @@ struct MapObjectEffectModifiers: Sendable {
         Self.decay(&scale, by: deltaTime)
         Self.decay(&facingYawDegrees, by: deltaTime)
         Self.decay(&spriteRollDegrees, by: deltaTime)
+        Self.decay(&spriteOffset, by: deltaTime)
+        Self.decay(&outline, by: deltaTime)
+        Self.decay(&fourWaySplit, by: deltaTime)
         Self.decay(&shake, by: deltaTime)
 
         if shake != nil {

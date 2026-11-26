@@ -19,6 +19,8 @@ extension RagEffect {
             + proceduralEffectIDs0700To0799
             + proceduralEffectIDs0800To0899
             + proceduralEffectIDs0900To0999
+            + proceduralEffectIDs1000To1099
+            + proceduralEffectIDs1200To1299
 
     private nonisolated static let proceduralEffectIDSet: Set<EffectID> = Set(proceduralEffectIDs)
 
@@ -77,6 +79,10 @@ extension RagEffect {
             process0800To0899(context: context)
         case 900...999:
             process0900To0999(context: context)
+        case 1000...1099:
+            process1000To1099(context: context)
+        case 1200...1299:
+            process1200To1299(context: context)
         default:
             false
         }

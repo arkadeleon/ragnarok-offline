@@ -13,6 +13,7 @@ extension RagEffect {
     nonisolated static let proceduralEffectIDs0900To0999: [EffectID] = [
         .ef_selfscroll,
         .ef_waterball3,
+        .ef_graybody,
     ]
 
     func process0900To0999(context: EffectTickContext) -> Bool {
@@ -21,6 +22,14 @@ extension RagEffect {
             texturedDoubleSpiral(texturePath: "effect\\shockwave_c.bmp", context: context)
         case .ef_waterball3:
             waterBallBurst(context: context)
+        case .ef_graybody:
+            if let targetID = targetObjectID ?? ownerObjectID {
+                let gray: Float = 105.0 / 255.0
+                context.world.applyTargetModifier(
+                    .tint(color: SIMD4<Float>(gray, gray, gray, 1.0), durationTicks: 2),
+                    to: targetID
+                )
+            }
         default:
             return false
         }

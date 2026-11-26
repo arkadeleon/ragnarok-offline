@@ -11,14 +11,84 @@ import simd
 
 extension RagEffect {
     nonisolated static let proceduralEffectIDs0500To0599: [EffectID] = [
+        .ef_chemicalbody,
+        .ef_piercebody,
         .ef_groundsample,
+        .ef_doublecastbody,
+        .ef_greenbody,
+        .ef_babybody_back,
+        .ef_bluebody,
+        .ef_redlightbody,
+        .ef_quakebody3,
         .ef_kaizel,
     ]
 
     func process0500To0599(context: EffectTickContext) -> Bool {
         switch effectID {
+        case .ef_chemicalbody:
+            if stateCnt < 31, let targetID = targetObjectID ?? ownerObjectID {
+                let color = stateCnt % 2 == 0
+                    ? SIMD4<Float>(0.0, 0.0, 1.0, 1.0)
+                    : SIMD4<Float>(1.0, 1.0, 1.0, 1.0)
+                context.world.applyTargetModifier(.tint(color: color, durationTicks: 2), to: targetID)
+            }
+        case .ef_piercebody:
+            if stateCnt == 0 {
+                context.world.playSound(
+                    named: "effect\\EF_BeginSpell.wav",
+                    atWorldPosition: EffectSpace.toWorldPosition(position),
+                    delay: 0
+                )
+            }
+            if stateCnt <= 140, let targetID = targetObjectID ?? ownerObjectID {
+                let color = stateCnt % 2 == 0
+                    ? SIMD4<Float>(250.0 / 255.0, 250.0 / 255.0, 100.0 / 255.0, 1.0)
+                    : SIMD4<Float>(1.0, 1.0, 1.0, 1.0)
+                context.world.applyTargetModifier(.tint(color: color, durationTicks: 2), to: targetID)
+            }
         case .ef_groundsample:
             groundSample(context: context)
+        case .ef_doublecastbody:
+            if stateCnt >= 10 && stateCnt <= 50, let targetID = targetObjectID ?? ownerObjectID {
+                let color = stateCnt % 2 == 0
+                    ? SIMD4<Float>(1.0, 0.0, 0.0, 1.0)
+                    : SIMD4<Float>(1.0, 1.0, 1.0, 1.0)
+                context.world.applyTargetModifier(.tint(color: color, durationTicks: 2), to: targetID)
+            }
+        case .ef_greenbody:
+            if stateCnt < 31, let targetID = targetObjectID ?? ownerObjectID {
+                let color = stateCnt % 2 == 0
+                    ? SIMD4<Float>(0.0, 1.0, 0.0, 1.0)
+                    : SIMD4<Float>(1.0, 1.0, 1.0, 1.0)
+                context.world.applyTargetModifier(.tint(color: color, durationTicks: 2), to: targetID)
+            }
+        case .ef_babybody_back:
+            if stateCnt <= 15, let targetID = targetObjectID ?? ownerObjectID {
+                let scale = Self.shrinkPulseScale(phase: 45 - stateCnt * 3)
+                context.world.applyTargetModifier(.scale(SIMD3<Float>(scale, scale, scale), durationTicks: 2), to: targetID)
+            }
+        case .ef_bluebody:
+            if stateCnt <= 150, let targetID = targetObjectID ?? ownerObjectID,
+               let alpha = Self.tintedOverlayAlpha(phase: stateCnt / 3) {
+                context.world.applyTargetModifier(
+                    .flash(color: SIMD4<Float>(5.0 / 255.0, 5.0 / 255.0, 1.0, alpha), durationTicks: 2),
+                    to: targetID
+                )
+            }
+        case .ef_redlightbody:
+            if let targetID = targetObjectID ?? ownerObjectID {
+                let phase = stateCnt <= 200 ? Int(Float(stateCnt) * 0.125) : 25
+                if let alpha = Self.tintedOverlayAlpha(phase: phase) {
+                    context.world.applyTargetModifier(
+                        .flash(color: SIMD4<Float>(1.0, 5.0 / 255.0, 5.0 / 255.0, alpha), durationTicks: 2),
+                        to: targetID
+                    )
+                }
+            }
+        case .ef_quakebody3:
+            if stateCnt >= 31 && stateCnt <= 50, let targetID = targetObjectID ?? ownerObjectID {
+                context.world.applyTargetModifier(.shake(amplitude: 2.0, durationTicks: 2), to: targetID)
+            }
         case .ef_kaizel:
             if stateCnt == 15 {
                 jobLvUp50Pair(angle: 0, context: context)

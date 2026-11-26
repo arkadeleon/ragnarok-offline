@@ -11,6 +11,7 @@ import simd
 
 extension RagEffect {
     nonisolated static let proceduralEffectIDs0800To0899: [EffectID] = [
+        .ef_blackbody,
         .ef_beginspell_n1,
         .ef_water_fade,
         .ef_primecharge,
@@ -19,6 +20,22 @@ extension RagEffect {
 
     func process0800To0899(context: EffectTickContext) -> Bool {
         switch effectID {
+        case .ef_blackbody:
+            if let targetID = targetObjectID ?? ownerObjectID {
+                if stateCnt >= 6 && stateCnt <= 60 {
+                    let value: Float = (stateCnt & 1) != 0 ? 1.0 : 0.0
+                    context.world.applyTargetModifier(
+                        .tint(color: SIMD4<Float>(value, value, value, 1.0), durationTicks: 2),
+                        to: targetID
+                    )
+                } else if stateCnt >= 61 {
+                    context.world.applyTargetModifier(
+                        .tint(color: SIMD4<Float>(1.0, 128.0 / 255.0, 1.0, 1.0), durationTicks: 2),
+                        to: targetID
+                    )
+                }
+            }
+            texturedSkillAura(type: 6, context: context)
         case .ef_beginspell_n1:
             if stateCnt == 1 {
                 context.world.playSound(

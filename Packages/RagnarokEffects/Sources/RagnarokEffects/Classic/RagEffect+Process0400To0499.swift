@@ -222,12 +222,19 @@ extension RagEffect {
                 )
             }
             if stateCnt >= 17 && stateCnt <= 50, let targetID = targetObjectID ?? ownerObjectID {
-                context.world.applyTargetModifier(.scale(SIMD3<Float>(1.3, 0.5, 1.3), durationTicks: 2), to: targetID)
+                let phase = stateCnt - 17
+                let scaleY: Float = if phase <= 3 {
+                    (100.0 - Float(phase) * 20.0) * 0.01
+                } else {
+                    0.4 - Float(Int.random(in: 0..<6)) * 0.01
+                }
+                context.world.applyTargetModifier(.scale(SIMD3<Float>(1.0, scaleY, 1.0), durationTicks: 2), to: targetID)
             }
         case .ef_spinedbody:
             if stateCnt < 18, let targetID = targetObjectID ?? ownerObjectID {
-                let spinRoll = Float(stateCnt * 20).truncatingRemainder(dividingBy: 360.0)
-                context.world.applyTargetModifier(.spriteRoll(degrees: spinRoll, durationTicks: 2), to: targetID)
+                let (degrees, offset) = Self.swingRollAndOffset(phase: stateCnt * 2)
+                context.world.applyTargetModifier(.spriteRoll(degrees: degrees, durationTicks: 2), to: targetID)
+                context.world.applyTargetModifier(.spriteOffset(offset, durationTicks: 2), to: targetID)
             }
         case .ef_kickedbody:
             if stateCnt == 17 {
@@ -245,28 +252,55 @@ extension RagEffect {
                 )
             }
             if stateCnt >= 30, let targetID = targetObjectID ?? ownerObjectID {
-                let spinRoll = Float((stateCnt - 30) * 15).truncatingRemainder(dividingBy: 360.0)
-                context.world.applyTargetModifier(.spriteRoll(degrees: spinRoll, durationTicks: 2), to: targetID)
+                let phase = stateCnt - 30
+                let factor: Float = if phase <= 18 {
+                    EffectSpace.sine(degrees: phase * 5) * 0.3
+                } else if phase <= 20 {
+                    0.3
+                } else if phase <= 23 {
+                    Float(23 - phase) * 0.1
+                } else {
+                    0
+                }
+                if factor > 0 {
+                    context.world.applyTargetModifier(.spriteOffset(SIMD2<Float>(0, factor * 60.0), durationTicks: 2), to: targetID)
+                }
             }
         case .ef_airtexture:
             airTexture(texturePath: "effect\\emp shock.tga", context: context)
         case .ef_hitbody:
             if stateCnt < 15, let targetID = targetObjectID ?? ownerObjectID {
-                context.world.applyTargetModifier(.shake(amplitude: 1.5, durationTicks: 2), to: targetID)
+                let alpha: Float? = if stateCnt <= 5 {
+                    Float(stateCnt * 50) / 255.0
+                } else if stateCnt <= 8 {
+                    1.0
+                } else if stateCnt <= 11 {
+                    Float(895 - stateCnt * 80) / 255.0
+                } else {
+                    nil
+                }
+                if let alpha {
+                    context.world.applyTargetModifier(
+                        .flash(color: SIMD4<Float>(1.0, 1.0, 1.0, alpha), durationTicks: 2),
+                        to: targetID
+                    )
+                }
             }
         case .ef_doublegumgang:
             superSlashSpread(count: 2, value: 2, context: context)
         case .ef_reflectbody:
             if let targetID = targetObjectID ?? ownerObjectID {
+                let phase = (Float(stateCnt % 200) * 0.1).truncatingRemainder(dividingBy: 20.0)
+                let alpha = max(0, (100.0 - phase * 5.0)) / 255.0
+                let spread = phase.truncatingRemainder(dividingBy: 5.0) + 15.0
                 context.world.applyTargetModifier(
-                    .flash(color: SIMD4<Float>(1.0, 1.0, 1.0, 1.0), durationTicks: 2),
+                    .outline(color: SIMD4<Float>(1.0, 1.0, 1.0, alpha), spread: spread, layers: 4, durationTicks: 2),
                     to: targetID
                 )
             }
         case .ef_babybody:
             if let targetID = targetObjectID ?? ownerObjectID {
-                let phase = min(stateCnt, 45)
-                let scale = max(0.5, 1.0 - Float(phase) / 90.0)
+                let scale = Self.shrinkPulseScale(phase: min(stateCnt, 45))
                 context.world.applyTargetModifier(.scale(SIMD3<Float>(scale, scale, scale), durationTicks: 2), to: targetID)
             }
         case .ef_babybody2:
@@ -274,32 +308,37 @@ extension RagEffect {
                 stateCnt = 0
             }
             if let targetID = targetObjectID ?? ownerObjectID {
-                context.world.applyTargetModifier(.scale(SIMD3<Float>(0.5, 0.5, 0.5), durationTicks: 2), to: targetID)
+                let scale = Self.shrinkPulseScale(phase: 45)
+                context.world.applyTargetModifier(.scale(SIMD3<Float>(scale, scale, scale), durationTicks: 2), to: targetID)
             }
         case .ef_giantbody:
             if let targetID = targetObjectID ?? ownerObjectID {
-                let phase = min(stateCnt, 45)
-                let scale = 1.0 + Float(phase) / 90.0
+                let scale = Self.growPulseScale(phase: min(stateCnt, 45))
                 context.world.applyTargetModifier(.scale(SIMD3<Float>(scale, scale, scale), durationTicks: 2), to: targetID)
             }
         case .ef_giantbody2:
             if let targetID = targetObjectID ?? ownerObjectID {
-                context.world.applyTargetModifier(.scale(SIMD3<Float>(1.5, 1.5, 1.5), durationTicks: 2), to: targetID)
+                let scale = Self.growPulseScale(phase: 45)
+                context.world.applyTargetModifier(.scale(SIMD3<Float>(scale, scale, scale), durationTicks: 2), to: targetID)
             }
         case .ef_asurabody:
             if let targetID = targetObjectID ?? ownerObjectID {
                 let alpha = Float(min(stateCnt, 200)) / 255.0
                 context.world.applyTargetModifier(
-                    .flash(color: SIMD4<Float>(1.0, 1.0, 1.0, alpha), durationTicks: 2),
+                    .outline(color: SIMD4<Float>(1.0, 1.0, 1.0, alpha), spread: 6.0, layers: 2, durationTicks: 2),
                     to: targetID
                 )
             }
         case .ef_4waybody:
             if stateCnt >= 30, let targetID = targetObjectID ?? ownerObjectID {
-                context.world.applyTargetModifier(
-                    .afterimage(style: .hallucination, tint: nil, durationTicks: 2),
-                    to: targetID
-                )
+                let phase = stateCnt - 30
+                let alpha = Float(max(0, (30 - phase) * 5)) / 255.0
+                if alpha > 0 {
+                    context.world.applyTargetModifier(
+                        .fourWaySplit(spread: Float(phase) * 4.0, alpha: alpha, durationTicks: 2),
+                        to: targetID
+                    )
+                }
             }
         case .ef_quakebody, .ef_quakebody2:
             if let targetID = targetObjectID ?? ownerObjectID {
@@ -307,9 +346,11 @@ extension RagEffect {
             }
         case .ef_asurabody_monster:
             if stateCnt < 150, let targetID = targetObjectID ?? ownerObjectID {
-                let alpha = Float(min(stateCnt + 50, 200)) / 255.0
+                let phase = stateCnt + 50
+                let rawAlpha = phase > 130 ? (235 - phase) : (phase - 55)
+                let alpha = Float(min(max(rawAlpha, 0), 200)) / 255.0
                 context.world.applyTargetModifier(
-                    .flash(color: SIMD4<Float>(1.0, 1.0, 1.0, alpha), durationTicks: 2),
+                    .outline(color: SIMD4<Float>(1.0, 1.0, 1.0, alpha), spread: 30.0, layers: 5, durationTicks: 2),
                     to: targetID
                 )
             }
@@ -400,14 +441,26 @@ extension RagEffect {
                 )
             }
             if stateCnt > 35, let targetID = targetObjectID ?? ownerObjectID {
-                context.world.applyTargetModifier(.scale(SIMD3<Float>(0.9, 1.15, 0.9), durationTicks: 2), to: targetID)
+                let level = stateCnt - 35
+                let rise = Float(level * 20)
+                let alpha = Float(max(0, 255 - level * 20)) / 255.0
+                context.world.applyTargetModifier(.spriteOffset(SIMD2<Float>(0, rise), durationTicks: 2), to: targetID)
+                context.world.applyTargetModifier(.alpha(alpha, durationTicks: 2), to: targetID)
             }
         case .ef_landbody:
             if let targetID = targetObjectID ?? ownerObjectID {
-                context.world.applyTargetModifier(.scale(SIMD3<Float>(1.15, 0.85, 1.15), durationTicks: 2), to: targetID)
+                let rise = max(Float((25 - stateCnt) * 20), 0)
+                let alpha = Float(min(max((stateCnt - 10) * 17, 0), 255)) / 255.0
+                context.world.applyTargetModifier(.alpha(alpha, durationTicks: 2), to: targetID)
                 if stateCnt < 25 {
-                    let spinRoll = Float((stateCnt + 11) * 10).truncatingRemainder(dividingBy: 360.0)
-                    context.world.applyTargetModifier(.spriteRoll(degrees: spinRoll, durationTicks: 2), to: targetID)
+                    let (degrees, swingOffset) = Self.swingRollAndOffset(phase: stateCnt + 11)
+                    context.world.applyTargetModifier(.spriteRoll(degrees: degrees, durationTicks: 2), to: targetID)
+                    context.world.applyTargetModifier(
+                        .spriteOffset(SIMD2<Float>(swingOffset.x, swingOffset.y + rise), durationTicks: 2),
+                        to: targetID
+                    )
+                } else if rise > 0 {
+                    context.world.applyTargetModifier(.spriteOffset(SIMD2<Float>(0, rise), durationTicks: 2), to: targetID)
                 }
             }
         case .ef_foot3:
@@ -503,8 +556,9 @@ extension RagEffect {
                 )
             }
             if stateCnt >= 14 && stateCnt <= 49, let targetID = targetObjectID ?? ownerObjectID {
-                let spinRoll = Float((stateCnt - 14) * 10).truncatingRemainder(dividingBy: 360.0)
-                context.world.applyTargetModifier(.spriteRoll(degrees: spinRoll, durationTicks: 2), to: targetID)
+                let (degrees, offset) = Self.swingRollAndOffset(phase: stateCnt - 14)
+                context.world.applyTargetModifier(.spriteRoll(degrees: degrees, durationTicks: 2), to: targetID)
+                context.world.applyTargetModifier(.spriteOffset(offset, durationTicks: 2), to: targetID)
             }
         case .ef_beginasura1:
             texturedSkillIcon(texturePath: "effect\\hanmoon1.tga", level: 0, mode: 0, context: context)

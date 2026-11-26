@@ -227,13 +227,22 @@ struct RagEffectBatch400To499Tests {
         #expect((manager.activeEffects.first as? RagEffect)?.primitives.first?.id == .pp_tanji2)
         manager.removeAll()
 
-        // EF_SPINEDBODY (414): 2D sprite plane roll
+        // EF_SPINEDBODY (414): cosine-eased 2D sprite plane roll + swing offset
         world.appliedModifiers.removeAll()
         manager.spawn(EffectSpawnRequest(effectID: .ef_spinedbody, worldPosition: [6, 0, -4], targetObjectID: targetID, duration: 1.0))
         manager.stepOneTick(world: world)
         manager.stepOneTick(world: world)
         #expect(world.appliedModifiers.contains {
-            $0.targetID == targetID && $0.modifier == .spriteRoll(degrees: 20, durationTicks: 2)
+            guard $0.targetID == targetID, case .spriteRoll(let degrees, durationTicks: 2) = $0.modifier else {
+                return false
+            }
+            return degrees > 0
+        })
+        #expect(world.appliedModifiers.contains {
+            guard $0.targetID == targetID, case .spriteOffset(let offset, durationTicks: 2) = $0.modifier else {
+                return false
+            }
+            return offset.x != 0 || offset.y != 0
         })
         manager.removeAll()
 
@@ -254,14 +263,14 @@ struct RagEffectBatch400To499Tests {
         })
         manager.removeAll()
 
-        // EF_4WAYBODY (425): hallucination afterimage at tick 30
+        // EF_4WAYBODY (425): four-way split copies starting at tick 30
         world.appliedModifiers.removeAll()
         manager.spawn(EffectSpawnRequest(effectID: .ef_4waybody, worldPosition: [6, 0, -4], targetObjectID: targetID, duration: 1.0))
         for _ in 0..<32 {
             manager.stepOneTick(world: world)
         }
         #expect(world.appliedModifiers.contains {
-            $0.targetID == targetID && $0.modifier == .afterimage(style: .hallucination, tint: nil, durationTicks: 2)
+            $0.targetID == targetID && $0.modifier == .fourWaySplit(spread: 4.0, alpha: 145.0 / 255.0, durationTicks: 2)
         })
         manager.removeAll()
 

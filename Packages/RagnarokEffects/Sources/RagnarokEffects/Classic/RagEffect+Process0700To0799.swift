@@ -11,11 +11,19 @@ import simd
 
 extension RagEffect {
     nonisolated static let proceduralEffectIDs0700To0799: [EffectID] = [
+        .ef_purplebody,
         .ef_infraredscan,
     ]
 
     func process0700To0799(context: EffectTickContext) -> Bool {
         switch effectID {
+        case .ef_purplebody:
+            if stateCnt < 31, let targetID = targetObjectID ?? ownerObjectID {
+                let color = stateCnt % 2 == 0
+                    ? SIMD4<Float>(1.0, 0.0, 1.0, 1.0)
+                    : SIMD4<Float>(1.0, 1.0, 1.0, 1.0)
+                context.world.applyTargetModifier(.tint(color: color, durationTicks: 2), to: targetID)
+            }
         case .ef_infraredscan:
             if stateCnt == 0 {
                 context.world.playSound(
