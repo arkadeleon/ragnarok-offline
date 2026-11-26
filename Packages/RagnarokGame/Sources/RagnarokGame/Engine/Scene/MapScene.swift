@@ -180,7 +180,7 @@ extension MapScene {
         }
 
         world.removeExpiredCombatTexts(atTime: currentTime)
-        world.updateObjects(atTime: currentTime)
+        world.updateObjects(atTime: currentTime, deltaTime: worldTime.deltaTime)
 
         camera.update(playerPosition: world.player.worldPosition, atTime: currentTime)
 
@@ -867,6 +867,7 @@ extension MapScene: EffectWorldContext {
     }
 
     public func applyTargetModifier(_ modifier: EffectTargetModifier, to targetID: EffectTargetID) {
+        world.objects[targetID]?.effectModifiers.apply(modifier)
     }
 
     public func spawnChildEffect(_ request: EffectSpawnRequest) {

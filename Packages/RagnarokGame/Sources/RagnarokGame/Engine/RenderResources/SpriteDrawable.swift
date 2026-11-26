@@ -20,5 +20,6 @@ struct SpriteDrawable {
     var worldPosition: SIMD3<Float>
     var shadow: Float
     var isVisible: Bool
+    var isAfterimage: Bool = false
     var layers: [SpriteDrawable.Layer]
 }

@@ -50,8 +50,12 @@ final class MapSceneRenderResources {
         spriteDrawables.removeAll()
     }
 
-    func synchronizeSprites(objects: [GameObjectID : MapSceneMapObject], items: [GameObjectID : MapSceneDroppedItem]) {
-        spriteDrawables = spriteAssetStore?.sync(objects: objects, items: items) ?? []
+    func synchronizeSprites(
+        objects: [GameObjectID : MapSceneMapObject],
+        items: [GameObjectID : MapSceneDroppedItem],
+        deltaTime: TimeInterval = 0
+    ) {
+        spriteDrawables = spriteAssetStore?.sync(objects: objects, items: items, deltaTime: deltaTime) ?? []
     }
 
     func prepareCombatTexts(resourceManager: ResourceManager) async {

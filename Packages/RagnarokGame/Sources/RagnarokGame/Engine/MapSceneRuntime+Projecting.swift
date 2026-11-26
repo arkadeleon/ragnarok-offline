@@ -59,7 +59,7 @@ extension MapSceneRuntime {
         }
 
         var distances: [GameObjectID : Float] = [:]
-        for drawable in renderResources.spriteDrawables where drawable.isVisible {
+        for drawable in renderResources.spriteDrawables where drawable.isVisible && !drawable.isAfterimage {
             guard let bounds = spriteBounds(for: drawable) else {
                 continue
             }

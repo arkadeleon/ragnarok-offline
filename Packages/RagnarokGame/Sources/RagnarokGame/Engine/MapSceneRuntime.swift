@@ -75,7 +75,7 @@ final class MapSceneRuntime {
             scene.removeEffect(instanceID: instanceID)
         }
 
-        renderResources.synchronizeSprites(objects: scene.world.objects, items: scene.world.items)
+        renderResources.synchronizeSprites(objects: scene.world.objects, items: scene.world.items, deltaTime: deltaTime)
     }
 
     /// Builds the render camera from the scene camera's settings and smoothed focus.
@@ -161,7 +161,7 @@ final class MapSceneRuntime {
         guard let targetSelector = scene.targetSelector,
               let object = scene.world.objects[targetSelector.objectID],
               object.effectState != .cloak,
-              let drawable = renderResources.spriteDrawables.first(where: { $0.objectID == targetSelector.objectID }) else {
+              let drawable = renderResources.spriteDrawables.first(where: { $0.objectID == targetSelector.objectID && !$0.isAfterimage }) else {
             return nil
         }
         let spriteTop = drawable.layers

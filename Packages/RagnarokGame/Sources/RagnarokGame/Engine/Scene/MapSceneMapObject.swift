@@ -85,6 +85,7 @@ final class MapSceneMapObject {
     var movement: MapObjectMovement?
     var death: MapObjectDeath?
     var cast: MapObjectCast?
+    var effectModifiers = MapObjectEffectModifiers()
 
     /// How long one attack takes.
     var attackDelay: TimeInterval = 0.3
@@ -97,7 +98,7 @@ final class MapSceneMapObject {
     }
 
     var opacity: Float {
-        death?.opacity ?? 1
+        (death?.opacity ?? 1) * effectModifiers.effectiveAlphaMultiplier
     }
 
     init(
@@ -296,7 +297,9 @@ final class MapSceneMapObject {
         gridPosition = position
     }
 
-    func update(atTime currentTime: TimeInterval, mapGrid: MapGrid) {
+    func update(atTime currentTime: TimeInterval, deltaTime: TimeInterval = 0, mapGrid: MapGrid) {
+        effectModifiers.update(deltaTime: deltaTime)
+
         let onceDuration: TimeInterval?
         if case .once = action.completion {
             onceDuration = composedSprite?.duration(

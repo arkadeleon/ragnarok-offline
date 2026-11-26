@@ -35,6 +35,8 @@ struct SpriteFrameResolver {
             direction: resolvedAction.direction
         )
 
+        let modifiers = object.effectModifiers
+
         var resolvedLayers: [ResolvedLayer] = []
         resolvedLayers.reserveCapacity(24)
 
@@ -106,7 +108,10 @@ struct SpriteFrameResolver {
                     partScale: partScale,
                     width: image.width,
                     height: image.height,
-                    opacity: object.opacity
+                    opacity: object.opacity,
+                    tintColor: modifiers.effectiveTintColor,
+                    scale: modifiers.effectiveScale,
+                    rotationZ: modifiers.effectiveRotationZ
                 )
                 resolvedLayers.append(
                     ResolvedLayer(
@@ -133,9 +138,9 @@ struct SpriteFrameResolver {
 
         return SpriteDrawable(
             objectID: object.objectID,
-            worldPosition: worldPosition + [0, 0.2, 0], // Lifted slightly so uneven ground doesn't clip the sprite.
+            worldPosition: worldPosition + modifiers.effectiveWorldOffset + [0, 0.2, 0], // Lifted slightly so uneven ground doesn't clip the sprite.
             shadow: shadow,
-            isVisible: object.effectState != .cloak,
+            isVisible: object.effectState != .cloak || modifiers.cloakingAlpha != nil,
             layers: resolvedLayers.map {
                 SpriteDrawable.Layer(vertices: $0.vertices, texture: $0.texture)
             }
@@ -202,28 +207,40 @@ struct SpriteFrameResolver {
         partScale: Float,
         width: Int,
         height: Int,
-        opacity: Float
+        opacity: Float,
+        tintColor: SIMD3<Float> = .one,
+        scale: SIMD2<Float> = .one,
+        rotationZ: Float = 0
     ) -> [SpriteVertex] {
-        let cx = Float(layer.offset.x + parentOffset.x) * partScale
-        let cy = Float(layer.offset.y + parentOffset.y) * partScale
-        let halfWidth = Float(width) * layer.scale.x * partScale / 2
-        let halfHeight = Float(height) * layer.scale.y * partScale / 2
+        let cx = Float(layer.offset.x + parentOffset.x) * partScale * scale.x
+        let cy = Float(layer.offset.y + parentOffset.y) * partScale * scale.y
+        let halfWidth = Float(width) * layer.scale.x * partScale * scale.x / 2
+        let halfHeight = Float(height) * layer.scale.y * partScale * scale.y / 2
         let mirrorX: Float = (layer.isMirrored == 0 ? 1 : -1)
         let angle = Float(layer.rotationAngle) * .pi / 180
         let cosAngle = cos(angle)
         let sinAngle = sin(angle)
+        let cosExtra = cos(rotationZ)
+        let sinExtra = sin(rotationZ)
 
         func point(_ x: Float, _ y: Float) -> SIMD2<Float> {
-            [
+            let local = SIMD2<Float>(
                 x * cosAngle - y * sinAngle + cx,
-                -(x * sinAngle + y * cosAngle + cy),
-            ]
+                -(x * sinAngle + y * cosAngle + cy)
+            )
+            if rotationZ == 0 {
+                return local
+            }
+            return SIMD2<Float>(
+                local.x * cosExtra - local.y * sinExtra,
+                local.x * sinExtra + local.y * cosExtra
+            )
         }
 
         let color = SIMD4<Float>(
-            Float(layer.color.red) / 255,
-            Float(layer.color.green) / 255,
-            Float(layer.color.blue) / 255,
+            Float(layer.color.red) / 255 * tintColor.x,
+            Float(layer.color.green) / 255 * tintColor.y,
+            Float(layer.color.blue) / 255 * tintColor.z,
             Float(layer.color.alpha) / 255 * opacity
         )
 

@@ -48,9 +48,9 @@ final class MapWorld {
         )
     }
 
-    func updateObjects(atTime currentTime: TimeInterval) {
+    func updateObjects(atTime currentTime: TimeInterval, deltaTime: TimeInterval = 0) {
         for object in objects.values {
-            object.update(atTime: currentTime, mapGrid: mapGrid)
+            object.update(atTime: currentTime, deltaTime: deltaTime, mapGrid: mapGrid)
         }
     }
 
