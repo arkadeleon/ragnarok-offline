@@ -94,7 +94,71 @@ extension RagEffect {
         .ef_sonicblowhit,
         .ef_grimtooth,
         .ef_enchantpoison,
+        .ef_overthrust,
+        .ef_twohandquicken,
+        .ef_grimtoothatk,
+        .ef_bottom2,
+        .ef_firepillaron,
+        .ef_revive,
+        .ef_heavensdrive,
+        .ef_toprank,
+        .ef_party,
+        .ef_rain,
+        .ef_snow,
+        .ef_sakura,
+        .ef_status_state,
+        .ef_banjjakii,
+        .ef_makeblur,
+        .ef_cartrevolution,
+        .ef_venomdust2,
+        .ef_changedark,
+        .ef_changefire,
+        .ef_changecold,
+        .ef_changewind,
+        .ef_changeflame,
+        .ef_changeearth,
+        .ef_chaingeholy,
+        .ef_changepoison,
+        .ef_hitdark,
+        .ef_sui_explosion,
+        .ef_darkattack,
+        .ef_telekhit,
+        .ef_level99,
+        .ef_level99_2,
+        .ef_level99_3,
+        .ef_gumgang,
+        .ef_darkbreath,
+        .ef_summonslave,
+        .ef_blooddrain,
+        .ef_energydrain,
+        .ef_potion_con,
+        .ef_potion_,
+        .ef_potion_berserk,
+        .ef_potionpillar,
+        .ef_defender,
+        .ef_ganbantein,
         .ef_wind,
+        .ef_volcano,
+        .ef_grandcross,
+        .ef_intimidate,
+        .ef_chookgi,
+        .ef_cloud,
+        .ef_cloud2,
+        .ef_mappillar,
+        .ef_linelink,
+        .ef_cloud3,
+        .ef_deluge,
+        .ef_violentgale,
+        .ef_landprotector,
+        .ef_bottom_vo,
+        .ef_bottom_de,
+        .ef_bottom_vi,
+        .ef_bottom_la,
+        .ef_magicrod,
+        .ef_mappillar2,
+        .ef_providence,
+        .ef_shieldboomerang,
+        .ef_spearquicken,
         .ef_bottom_dissonance,
         .ef_bottom_rokisweil,
         .ef_bottom_whistle,
@@ -336,8 +400,184 @@ extension RagEffect {
             grimTooth(context: context)
         case .ef_enchantpoison:
             poisonAttack(flag: 0, context: context)
+        case .ef_overthrust:
+            stoneCurseRing(context: context)
+        case .ef_twohandquicken:
+            return twoHandQuicken(context: context)
+        case .ef_grimtoothatk:
+            grimToothAtk(context: context)
+        case .ef_bottom2:
+            bottom2(context: context)
+        case .ef_firepillaron:
+            ringStack(white: 0, context: context)
+        case .ef_revive:
+            processRevive(context: context)
+        case .ef_heavensdrive:
+            stoneSpike(context: context)
+        case .ef_toprank:
+            processTopRank(context: context)
+        case .ef_party:
+            processPartyMarker(context: context)
+        case .ef_rain:
+            break
+        case .ef_snow:
+            snow(context: context)
+        case .ef_sakura:
+            sakura(context: context)
+        case .ef_status_state:
+            statusIconColumn(context: context)
+        case .ef_banjjakii:
+            processBanjjakii(context: context)
+        case .ef_makeblur:
+            let tintRGB = deltaPos2 == .zero ? SIMD3<Float>(250, 250, 250) : deltaPos2
+            spawnBlurAfterimage(tintRGB: tintRGB, context: context)
+        case .ef_cartrevolution:
+            return cartRevolution(context: context)
+        case .ef_venomdust2:
+            processVenomDust2(context: context)
+        case .ef_changedark:
+            if stateCnt == 0 {
+                quadRingStackSized(texturePath: "effect\\ring_black.tga", kind: 3, context: context)
+            }
+        case .ef_changefire:
+            if stateCnt == 0 {
+                quadRingStackSized(texturePath: "effect\\ring_red.tga", kind: 3, context: context)
+            }
+        case .ef_changecold:
+            if stateCnt == 0 {
+                quadRingStackSized(texturePath: "effect\\ring_blue.tga", kind: 3, context: context)
+            }
+        case .ef_changewind:
+            if stateCnt == 0 {
+                quadRingStackSized(texturePath: "effect\\ring_yellow.tga", kind: 3, context: context)
+            }
+        case .ef_changeflame:
+            if stateCnt == 0 {
+                quadRingStackSized(texturePath: "effect\\ring_jadu.tga", kind: 3, context: context)
+            }
+        case .ef_changeearth:
+            if stateCnt == 0 {
+                quadRingStackSized(texturePath: "effect\\ring_brown.tga", kind: 3, context: context)
+            }
+        case .ef_chaingeholy:
+            if stateCnt == 0 {
+                quadRingStackSized(texturePath: "effect\\ring_white.tga", kind: 3, context: context)
+            }
+        case .ef_changepoison:
+            if stateCnt == 0 {
+                quadRingStackSized(texturePath: "effect\\ring_purple.tga", kind: 3, context: context)
+            }
+        case .ef_hitdark:
+            hitDark(context: context)
+        case .ef_sui_explosion:
+            return processSuiExplosion(context: context)
+        case .ef_darkattack:
+            hitDark(context: context)
+        case .ef_telekhit:
+            break
+        case .ef_level99:
+            tripleRingStack(texturePath: "effect\\ring_blue.tga", large: 0, context: context)
+        case .ef_level99_2:
+            texturedDoubleRing(texturePath: "effect\\pikapika2.bmp", level: 0, context: context)
+        case .ef_level99_3:
+            freezingCircle(kind: 0, context: context)
+        case .ef_gumgang:
+            superSlashFan(count: 1, value: 0, context: context)
+        case .ef_darkbreath:
+            processDarkBreath(context: context)
+        case .ef_summonslave:
+            alphaCenterRise(context: context)
+        case .ef_blooddrain:
+            redParticleSpray(count: 3, context: context)
+        case .ef_energydrain:
+            bloodDrain(context: context)
+        case .ef_potion_con:
+            return processPotionCon(context: context)
+        case .ef_potion_:
+            return processPotionAwakening(context: context)
+        case .ef_potion_berserk:
+            return potionBerserk(context: context)
+        case .ef_potionpillar:
+            potionPillar(heightSpeed: 1.0, pillarDuration: 50, context: context)
+        case .ef_defender:
+            quadRingStack(texturePath: "effect\\ring_black.tga", context: context)
+        case .ef_ganbantein:
+            texturedCrossKind(texturePath: "effect\\ring_white.tga", level: 2, context: context)
         case .ef_wind:
             healCloudRings(context: context)
+        case .ef_volcano:
+            texturedCrossKind(texturePath: "effect\\ring_red.tga", level: 0, context: context)
+        case .ef_grandcross:
+            grandCrossRings(angle: 0, kind: 0, context: context)
+            grandCross2(flag: 0, context: context)
+        case .ef_intimidate:
+            if stateCnt == 0 {
+                context.world.playSound(
+                    named: "effect\\EF_Bash.wav",
+                    atWorldPosition: EffectSpace.toWorldPosition(position),
+                    delay: 0
+                )
+            }
+            if stateCnt == 35 {
+                context.world.playSound(
+                    named: "effect\\rog_intimidate.wav",
+                    atWorldPosition: EffectSpace.toWorldPosition(position),
+                    delay: 0
+                )
+            }
+            for _ in 0..<20 {
+                whiteSpray(kind: 0, context: context)
+            }
+        case .ef_chookgi:
+            elementalOrbit(kind: 0, context: context)
+        case .ef_cloud:
+            for _ in 0..<40 {
+                skyCloud(kind: 0, context: context)
+            }
+        case .ef_cloud2:
+            for _ in 0..<60 {
+                skyCloud(kind: 1, context: context)
+            }
+        case .ef_mappillar:
+            texturedCrossStaged(texturePath: "effect\\ring_blue.tga", level: 0, context: context)
+        case .ef_linelink:
+            trackCloud(kind: 0, context: context)
+        case .ef_cloud3:
+            for _ in 0..<40 {
+                skyCloud(kind: 2, context: context)
+            }
+        case .ef_deluge:
+            texturedCrossKind(texturePath: "effect\\ring_blue.tga", level: 0, context: context)
+        case .ef_violentgale:
+            texturedCrossKind(texturePath: "effect\\magic_green.tga", level: 0, context: context)
+        case .ef_landprotector:
+            texturedCrossKind(texturePath: "effect\\ring_white.tga", level: 0, context: context)
+        case .ef_bottom_vo:
+            texturedFlare(texturePath: "effect\\ring_red.tga", size: 0, offsetX: 0, offsetZ: 0, context: context)
+        case .ef_bottom_de:
+            texturedFlare(texturePath: "effect\\ring_blue.tga", size: 0, offsetX: 0, offsetZ: 0, context: context)
+        case .ef_bottom_vi:
+            texturedFlare(texturePath: "effect\\magic_green.tga", size: 0, offsetX: 0, offsetZ: 0, context: context)
+        case .ef_bottom_la:
+            texturedHalo(texturePath: "effect\\aaa copy.bmp", kind: 1, context: context)
+        case .ef_magicrod:
+            if stateCnt == 0 {
+                configureSTR(path: K2L("매직로드.str"))
+            }
+            _ = processEZ2STRRaised(context: context)
+            sageMagicRod(context: context)
+        case .ef_mappillar2:
+            texturedCrossStaged(texturePath: "effect\\ring_blue.tga", level: 1, context: context)
+        case .ef_providence:
+            if stateCnt == 0 {
+                configureSTR(path: "providence.str")
+            }
+            texturedCross(texturePath: "effect\\ring_yellow.tga", kind: 0, context: context)
+            return processEZ2STRRaised(context: context)
+        case .ef_shieldboomerang:
+            texturedShieldThrow(texturePath: "effect\\shield_boomerang.bmp", context: context)
+        case .ef_spearquicken:
+            return twoHandQuicken(context: context)
         case .ef_bottom_dissonance:
             texturedMagicRing(texturePath: "effect\\ring_blue.tga", kind: 0, context: context)
         case .ef_bottom_rokisweil:
@@ -805,5 +1045,218 @@ extension RagEffect {
         ring.state.radiusSpeed = 7.0
         ring.state.radiusAccel = -(ring.state.radiusSpeed / Float(ring.state.duration + 40)) * 2.0
         ring.state.texturePaths = [texturePath]
+    }
+
+    // MARK: - Inline OnProcess Cases (126...250)
+
+    private func processRevive(context: EffectTickContext) {
+        guard stateCnt % 25 == 0 else {
+            return
+        }
+
+        let texturePath = "effect\\ring_yellow.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let cylinder = launchPrimitive(.pp_3dcylinder)
+        cylinder.state.duration = 60
+        cylinder.state.longSpeed = 1.5
+        cylinder.state.longAccel = 0.03
+        cylinder.state.outerSize = 10.5
+        cylinder.state.innerSpeed = -0.12
+        cylinder.state.innerAccel = 0.003
+        cylinder.state.outerSpeed = -0.12
+        cylinder.state.outerAccel = 0.003
+        cylinder.state.innerSize = 7.5
+        cylinder.state.heightSize = 7.5
+        cylinder.state.alpha = 240.0
+        cylinder.state.fadeOutCnt = cylinder.state.duration - cylinder.state.duration / 2
+
+        if stateCnt == 0 {
+            cylinder.state.duration = duration
+            cylinder.state.innerSpeed = 0
+            cylinder.state.innerAccel = 0
+            cylinder.state.longSpeed = 1.5
+            cylinder.state.outerSize = 11.0
+            cylinder.state.innerSize = 7.5
+            cylinder.state.outerSpeed = 0
+            cylinder.state.outerAccel = 0
+            cylinder.state.fadeOutCnt = cylinder.state.duration - cylinder.state.duration / 10
+        }
+
+        cylinder.state.texturePaths = [texturePath]
+    }
+
+    private func processTopRank(context: EffectTickContext) {
+        if stateCnt == 9998 {
+            stateCnt = 0
+        }
+
+        if stateCnt == 0 {
+            let texturePath = "effect\\LockOn128.tga"
+            _ = context.assets?.texture(atPath: texturePath)
+
+            let badge = launchPrimitive(.pp_3dtexture)
+            badge.state.duration = 9999
+            badge.state.longitude = 0
+            badge.state.longSpeed = 4.5
+            badge.state.roll = 90.0
+            badge.state.widthSize = 4.0
+            badge.state.heightSize = 4.0
+            if count != 11 {
+                let tintChannel = max(0, (10 - Int(count)) * 25)
+                badge.state.red = 250
+                badge.state.blue = tintChannel
+                badge.state.green = tintChannel
+            } else {
+                badge.state.red = 0
+                badge.state.blue = 0
+                badge.state.green = 250
+            }
+            badge.state.texturePaths = [texturePath]
+        }
+
+        position.y = context.world.terrainHeight(atEffectX: position.x, effectZ: position.z) - 2.0
+    }
+
+    private func processPartyMarker(context: EffectTickContext) {
+        if stateCnt == 9998 {
+            stateCnt = 0
+        }
+
+        if stateCnt == 0 {
+            let texturePath = "effect\\party.tga"
+            _ = context.assets?.texture(atPath: texturePath)
+
+            let marker = launchPrimitive(.pp_3dtexture)
+            marker.state.duration = 9999
+            marker.state.longitude = 0
+            marker.state.roll = 90.0
+            marker.state.widthSize = 4.0
+            marker.state.heightSize = 4.0
+            marker.state.red = 50
+            marker.state.blue = 253
+            marker.state.green = 50
+            marker.state.texturePaths = [texturePath]
+        }
+
+        position.y = context.world.terrainHeight(atEffectX: position.x, effectZ: position.z) - 2.0
+    }
+
+    private func processBanjjakii(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let spritePath = K2L("이팩트\\크리스마스.spr")
+        let actionPath = K2L("이팩트\\크리스마스.act")
+        _ = context.assets?.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+
+        if param[0] <= 0 {
+            param[0] = 1.0
+        }
+        if param[1] < 1.0 {
+            param[1] = 1.0
+        }
+
+        let ornament = launchPrimitive(.pp_3dparticle)
+        ornament.state.pattern |= 0x200
+        ornament.state.duration = 125
+        ornament.state.deltaPos2.y = -10.0
+        ornament.state.animSpeed = Int(param[1])
+        ornament.state.spritePath = spritePath
+        ornament.state.actionPath = actionPath
+        let kind = Int.random(in: 0..<10)
+        ornament.state.size = kind % 3 == 1 ? 0.01 : 1.0
+        ornament.currentMotion = kind / 2
+        ornament.initSegment()
+    }
+
+    private func processVenomDust2(context: EffectTickContext) {
+        guard stateCnt % 5 == 0 else {
+            return
+        }
+
+        let spritePath = K2L("이팩트\\particle3.spr")
+        let actionPath = K2L("이팩트\\particle3.act")
+        _ = context.assets?.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+
+        let cloud = launchPrimitive(.pp_3dparticle)
+        cloud.state.duration = 10
+        cloud.state.transform = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: 90))
+        cloud.state.speed = Float(Int.random(in: 0..<20) + 20) / 80.0
+        cloud.state.accel = -(cloud.state.speed / Float(cloud.state.duration)) * 0.5
+        cloud.state.size = 0.8
+        cloud.state.rollSpeed = 3.0
+        cloud.state.alpha = 70.0
+        cloud.state.alphaSpeed = cloud.state.maxAlpha / 10.0
+        cloud.state.fadeOutCnt = cloud.state.duration - cloud.state.duration / 5
+        cloud.state.spritePath = spritePath
+        cloud.state.actionPath = actionPath
+        cloud.initSegment()
+    }
+
+    private func processSuiExplosion(context: EffectTickContext) -> Bool {
+        if stateCnt == 0 {
+            configureSTR(path: "sui_explosion.str")
+            hit2(option: 1, context: context)
+        } else if stateCnt == 3 || stateCnt == 7 || stateCnt == 9 {
+            context.world.shakeCamera(amplitude: 1.0, duration: 0.35, frequency: 20.0)
+        }
+
+        return processEZ2STRRaised(context: context)
+    }
+
+    private func processDarkBreath(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let spritePath = K2L("이팩트\\DarkBreath.spr")
+        let actionPath = K2L("이팩트\\DarkBreath.act")
+        _ = context.assets?.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+
+        let breath = launchPrimitive(.pp_3dparticle)
+        breath.state.duration = 65
+        breath.state.renderFlag |= EffectPrimitiveState.RenderFlag.noDepth
+        breath.state.deltaPos2.y -= 20.0
+        breath.state.size = 0.8
+        breath.state.animSpeed = 1
+        breath.state.green = 0
+        breath.state.blue = 0
+        breath.state.fadeOutCnt = 60
+        breath.state.spritePath = spritePath
+        breath.state.actionPath = actionPath
+        breath.initSegment()
+    }
+
+    private func processPotionCon(context: EffectTickContext) -> Bool {
+        if stateCnt == 0 {
+            configureSTR(path: K2L("집중.str"))
+            context.world.playSound(
+                named: "effect\\ac_concentration.wav",
+                atWorldPosition: EffectSpace.toWorldPosition(position),
+                delay: 0
+            )
+            potionPillar(heightSpeed: 2.0, pillarDuration: 50, context: context)
+        }
+
+        return processEZ2STRRaised(context: context)
+    }
+
+    private func processPotionAwakening(context: EffectTickContext) -> Bool {
+        if stateCnt == 0 {
+            configureSTR(path: K2L("각성.str"))
+        }
+
+        if stateCnt == 30 {
+            context.world.playSound(
+                named: "effect\\ac_concentration.wav",
+                atWorldPosition: EffectSpace.toWorldPosition(position),
+                delay: 0
+            )
+            potionPillar(heightSpeed: 1.9, pillarDuration: 30, context: context)
+        }
+
+        return processEZ2STRRaised(context: context)
     }
 }

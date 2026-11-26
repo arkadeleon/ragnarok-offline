@@ -137,22 +137,236 @@ extension RagEffect {
     }
 
     // MARK: - EF_LEVEL99_2 (201)
-    // CRagEffect::TexturedDoubleRing(const char* name, char level)
+
+    /// Spawns dual rotating Level 99 rings (`28`) for `EF_LEVEL99_2` (201).
+    func texturedDoubleRing(texturePath: String, level: Int8, context: EffectTickContext) {
+        if stateCnt == 99_999_998 {
+            stateCnt = 0
+            duration = 99_999_999
+        } else if stateCnt != 0 {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(28)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha
+            | EffectPrimitiveState.RenderFlag.customBlend
+            | EffectPrimitiveState.RenderFlag.topmost
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = switch level {
+        case 1: 15.0
+        case 2: 17.0
+        case 3: 18.0
+        default: 4.0
+        }
+
+        let distance: Float = level == 3 ? 24.0 : 15.0
+        primitive.state.slots[0].life = 1
+        primitive.state.slots[1].life = 1
+        primitive.state.slots[2].life = 0
+        primitive.state.slots[3].life = 0
+        primitive.state.slots[0].distance = distance
+        primitive.state.slots[1].distance = distance
+        primitive.state.slots[0].riseAngle = 0
+        primitive.state.slots[1].riseAngle = 180
+        primitive.state.slots[0].alphaB = 200
+        primitive.state.slots[1].alphaB = 200
+        primitive.state.slots[0].height[0] = -1.0
+        primitive.state.slots[1].height[0] = -1.0
+    }
 
     // MARK: - EF_GANBANTEIN (223)
-    // CRagEffect::TexturedCrossKind(const char* name, char level)
+
+    /// Spawns 4-quadrant rotating cross rings (`31`) for `EF_GANBANTEIN` (223), `EF_VOLCANO` (225), `EF_DELUGE` (236), `EF_VIOLENTGALE` (237), and `EF_LANDPROTECTOR` (238).
+    func texturedCrossKind(texturePath: String, level: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(31)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = level == 3 ? 17.0 : 0
+
+        for index in 0..<4 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = 0
+            primitive.state.slots[index].fullDisplayAngle = 360
+            primitive.state.slots[index].maxHeight = level == 2 ? 15.0 : 25.0
+            primitive.state.slots[index].riseAngle = level == 2 ? 70 : 80
+            primitive.state.slots[index].rotStart = Int16(index * 90)
+            primitive.state.slots[index].alphaB = 0
+            primitive.state.slots[index].distance = Float(index) + 1.0
+            primitive.state.slots[index].alphaT = Int16(level)
+            primitive.state.slots[index].vecBNow.y = 0
+            primitive.state.slots[index].height = Array(repeating: 0, count: 21)
+            primitive.state.slots[index].flag1 = Array(repeating: 0, count: 21)
+        }
+    }
 
     // MARK: - EF_MAPPILLAR (231)
-    // CRagEffect::TexturedCrossStaged(const char* name, char level)
+
+    /// Spawns staged expanding pillar rings (`41`) for `EF_MAPPILLAR` (231) and `EF_MAPPILLAR2` (247).
+    func texturedCrossStaged(texturePath: String, level: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(41)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = switch level {
+        case ...1: 4.0
+        case 2: 7.0
+        case 3: 6.0
+        default: 1.0
+        }
+
+        for index in 0..<4 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = index * 30
+            primitive.state.slots[index].fullDisplayAngle = 360
+            primitive.state.slots[index].maxHeight = 120.0
+            primitive.state.slots[index].rotStart = Int16(index * 90)
+            primitive.state.slots[index].vecBNow.y = 0
+            if level == 0 || level > 1 {
+                primitive.state.slots[index].alphaB = 50
+                primitive.state.slots[index].distance = Float(index) * 0.5 + 2.0
+            } else {
+                primitive.state.slots[index].alphaB = 70
+                primitive.state.slots[index].distance = Float(index) * 0.5 + 11.0
+            }
+            primitive.state.slots[index].alphaT = 0
+            primitive.state.slots[index].riseAngle = 89
+            primitive.state.slots[index].height = Array(repeating: 0, count: 21)
+            primitive.state.slots[index].flag1 = Array(repeating: 0, count: 21)
+        }
+    }
 
     // MARK: - EF_BOTTOM_VO (239)
-    // CRagEffect::TexturedFlare(const char* name, char size, float, float)
+
+    /// Spawns textured ground flare (`36`) for `EF_BOTTOM_VO` (239), `EF_BOTTOM_DE` (240), and `EF_BOTTOM_VI` (241).
+    func texturedFlare(texturePath: String, size: Int8, offsetX: Float, offsetZ: Float, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(36)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = Float(size)
+        for i in 1..<4 {
+            primitive.state.slots[i].life = 0
+        }
+        primitive.state.slots[0].life = 1
+        primitive.state.slots[0].process = 0
+        primitive.state.slots[0].fullDisplayAngle = 360
+        primitive.state.slots[0].maxHeight = 15.0
+        primitive.state.slots[0].rotStart = Int16(Int.random(in: 0..<360))
+        primitive.state.slots[0].alphaB = Int16(Int.random(in: 0..<100))
+        primitive.state.slots[0].distance = 2.6
+        primitive.state.slots[0].riseAngle = 80
+        primitive.state.slots[0].height = Array(repeating: 0, count: 21)
+        primitive.state.slots[0].flag1 = Array(repeating: 0, count: 21)
+    }
 
     // MARK: - EF_BOTTOM_LA (242)
-    // CRagEffect::TexturedHalo(const char* name, char kind)
+
+    /// Spawns rotating ground halo (`39`) for `EF_BOTTOM_LA` (242).
+    func texturedHalo(texturePath: String, kind: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(39)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.slots[0].life = 1
+        for i in 1..<4 {
+            primitive.state.slots[i].life = 0
+        }
+
+        primitive.state.slots[0].distance = switch kind {
+        case 2, 4: 12.0
+        case 3: 10.0
+        case 10: 30.0
+        case 11: 28.0
+        case 12: 20.0
+        default: 7.0
+        }
+
+        if kind == 3 {
+            primitive.state.slots[0].rotStart = 225
+            primitive.state.slots[0].alphaB = 250
+            primitive.state.size = 111.0
+        } else if kind == 4 {
+            primitive.state.slots[0].rotStart = 0
+            primitive.state.slots[0].alphaB = 200
+            primitive.state.size = 4.0
+        } else if kind == 10 || kind == 11 || kind == 12 {
+            primitive.state.slots[0].rotStart = 0
+            primitive.state.slots[0].alphaB = 200
+            primitive.state.size = 10.0
+        } else {
+            primitive.state.slots[0].rotStart = 0
+            primitive.state.slots[0].alphaB = 100
+            primitive.state.size = 5.0
+        }
+
+        primitive.state.slots[0].riseAngle = (kind == 10 || kind == 11 || kind == 12) ? 360 : Int16(Int.random(in: 0..<360))
+        primitive.state.slots[0].height[0] = -2.0
+        primitive.state.slots[0].height[4] = Float(kind)
+    }
 
     // MARK: - EF_PROVIDENCE (248)
-    // CRagEffect::TexturedCross(const char* name, char kind)
+
+    /// Spawns rising cross pillar (`41`) for `EF_PROVIDENCE` (248).
+    func texturedCross(texturePath: String, kind: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(41)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 5.0
+
+        guard kind == 0 else {
+            return
+        }
+
+        for index in 0..<4 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = 200
+            primitive.state.slots[index].fullDisplayAngle = 360
+            primitive.state.slots[index].maxHeight = 120.0
+            primitive.state.slots[index].rotStart = Int16(index * 90)
+            primitive.state.slots[index].alphaB = 40
+            primitive.state.slots[index].distance = Float(index) * 0.5 + 6.0
+            primitive.state.slots[index].riseAngle = Int16(83 - index)
+            primitive.state.slots[index].alphaT = 1
+            primitive.state.slots[index].vecBNow.y = 0
+            primitive.state.slots[index].height = Array(repeating: 0, count: 21)
+            primitive.state.slots[index].flag1 = Array(repeating: 0, count: 21)
+        }
+    }
 
     // MARK: - EF_GUMGANG2 (261)
     // CRagEffect::TexturedCrossLevel(const char* name, char level)

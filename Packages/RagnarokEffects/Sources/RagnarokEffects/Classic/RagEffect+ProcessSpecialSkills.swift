@@ -200,7 +200,21 @@ extension RagEffect {
     }
 
     // MARK: - EF_STATUS_STATE (164)
-    // CRagEffect::StatusIconColumn()
+
+    /// Manages reset semantics for HUD status icon column (`EF_STATUS_STATE` (164)).
+    func statusIconColumn(context: EffectTickContext) {
+        if stateCnt == 99_999_998 {
+            stateCnt = 0
+        }
+
+        if count != 0 {
+            count = 0
+            stateCnt = 0
+            for primitive in primitives {
+                primitive.stop()
+            }
+        }
+    }
 
     // MARK: - EF_TANJI (265)
     // CRagEffect::TANJI()

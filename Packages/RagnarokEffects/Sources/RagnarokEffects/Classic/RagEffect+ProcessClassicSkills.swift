@@ -1785,16 +1785,112 @@ extension RagEffect {
     // CRagEffect::PoisonReact2()
 
     // MARK: - EF_TWOHANDQUICKEN (130)
-    // CRagEffect::TwoHandQuicken()
+
+    /// Plays Two-Hand Quicken audio on frame 0 and advances `TwoHand.str` for `EF_TWOHANDQUICKEN` (130) and `EF_SPEARQUICKEN` (250).
+    func twoHandQuicken(context: EffectTickContext) -> Bool {
+        if stateCnt == 0 {
+            configureSTR(path: "TwoHand.str")
+            duration = 9999
+            context.world.playSound(
+                named: "effect\\knight_twohandquicken.wav",
+                atWorldPosition: EffectSpace.toWorldPosition(position),
+                delay: 0
+            )
+        }
+
+        return processEZ2STRRaised(context: context)
+    }
 
     // MARK: - EF_AUTOCOUNTER (131)
     // CRagEffect::AutoCounter()
 
     // MARK: - EF_GRIMTOOTHATK (132)
-    // CRagEffect::GrimToothAtk()
+
+    /// Spawns 3 upright stone ambush spikes (`PP_3DQUADHORN` (9)) around the target for `EF_GRIMTOOTHATK` (132).
+    func grimToothAtk(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let texturePath = "effect\\stone.bmp"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        duration = 1000
+        let offsets: [SIMD3<Float>] = [
+            SIMD3<Float>(0, 40.0, -12.0),
+            SIMD3<Float>(12.0, 40.0, 6.0),
+            SIMD3<Float>(-12.0, 40.0, 6.0),
+        ]
+
+        for (index, offset) in offsets.enumerated() {
+            let spike = launchPrimitive(.pp_3dquadhorn)
+            spike.state.pattern |= 1
+            spike.state.renderFlag |= EffectPrimitiveState.RenderFlag.noDepth
+            spike.state.duration = 1000
+            spike.state.deltaPos2 = offset
+            spike.state.size = 0.9
+            spike.state.heightSize = 25.0
+            spike.state.longitude = Float((6 - index) * 120)
+            spike.state.latitude = 75.0
+            let rotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(spike.state.latitude)))
+            let rotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(spike.state.longitude)))
+            spike.state.transform = rotY * rotX
+            spike.state.rotTransform = spike.state.transform
+            spike.state.speed = 3.5
+            spike.state.accel = 0.001
+            spike.state.chCnt = 10
+            spike.state.fadeOutCnt = spike.state.duration - 10
+            spike.state.texturePaths = [texturePath]
+            deltaPos3 -= spike.state.deltaPos2
+        }
+    }
 
     // MARK: - EF_HEAVENSDRIVE (142)
-    // CRagEffect::StoneSpike()
+
+    /// Spawns a 5x5 grid of erupting stone spikes (`PP_3DQUADHORN` (9)) and camera quake for `EF_HEAVENSDRIVE` (142).
+    func stoneSpike(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        context.world.playSound(
+            named: "effect\\wizard_earthspike.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+        context.world.shakeCamera(amplitude: 1.0, duration: 0.35, frequency: 20.0)
+        duration += 50
+
+        let texturePath = "effect\\stone.bmp"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        for z in stride(from: -10, to: 15, by: 5) {
+            for x in stride(from: -10, to: 15, by: 5) {
+                let spike = launchPrimitive(.pp_3dquadhorn)
+                spike.state.duration = Int.random(in: 0..<30) + duration - 10
+                spike.state.pattern = 1 | 2
+                let heightRand = Int.random(in: 0..<60)
+                spike.state.deltaPos2 = SIMD3<Float>(Float(x), 10.0, Float(z))
+                spike.state.size = Float(Int.random(in: 0..<50) + 300) / 100.0
+                spike.state.heightSize = Float(heightRand + 1) / 10.0 + 9.0
+                spike.state.longitude = Float(Int.random(in: 0..<360))
+                spike.state.latitude = Float(Int.random(in: 0..<20) + 80)
+                let rotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(spike.state.latitude)))
+                let rotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(spike.state.longitude)))
+                spike.state.transform = rotY * rotX
+                spike.state.rotTransform = spike.state.transform
+                spike.state.changeSpeed3d.y = -1.0
+                spike.state.changeAccel3d.y = -0.01
+                spike.state.speed = 1.0
+                spike.state.accel = 0.01
+                spike.state.changePoint = 11
+                spike.state.changeSpeed = -1.2
+                spike.state.changeAccel = 0
+                spike.state.chCnt = 14
+                spike.state.texturePaths = [texturePath]
+            }
+        }
+    }
 
     // MARK: - EF_CONCENTRATION (153)
     // CRagEffect::Concentration()
@@ -1806,16 +1902,177 @@ extension RagEffect {
     // CRagEffect::RefineFailed()
 
     // MARK: - EF_CARTREVOLUTION (170)
-    // CRagEffect::CartRevolution()
+
+    /// Spawns shockwave rings and blast spheres on ticks 7 and 20 and advances `CartRevolution.str` for `EF_CARTREVOLUTION` (170).
+    func cartRevolution(context: EffectTickContext) -> Bool {
+        if stateCnt == 0 {
+            configureSTR(path: "CartRevolution.str")
+        }
+
+        if stateCnt == 7 || stateCnt == 20 {
+            context.world.playSound(
+                named: "effect\\EF_MagnumBreak.wav",
+                atWorldPosition: EffectSpace.toWorldPosition(position),
+                delay: 0
+            )
+
+            let ringTex = "effect\\ring_yellow.tga"
+            let blastTex = K2L("effect\\대폭발.tga")
+            _ = context.assets?.texture(atPath: ringTex)
+            _ = context.assets?.texture(atPath: blastTex)
+
+            let ring = launchPrimitive(.pp_3dcircle)
+            ring.state.duration = 20
+            ring.state.renderFlag |= EffectPrimitiveState.RenderFlag.noDepth
+            ring.state.maxAlpha = 180.0
+            ring.state.latitude = 90.0
+            ring.state.radiusSpeed = 1.75
+            ring.state.radiusAccel = -(ring.state.radiusSpeed / Float(ring.state.duration)) * 0.5
+            ring.state.innerSize = 5.0
+            ring.state.alpha = 0
+            ring.state.alphaSpeed = ring.state.maxAlpha / 15.0
+            ring.state.fadeOutCnt = ring.state.duration - 15
+            ring.initSegment()
+            ring.state.texturePaths = [ringTex]
+
+            let blast = launchPrimitive(.pp_3dsphere)
+            blast.state.duration = 20
+            blast.state.radiusSpeed = 1.35
+            blast.state.radiusAccel = -(blast.state.radiusSpeed / Float(blast.state.duration)) * 0.5
+            blast.state.longSpeed = 3.0
+            blast.state.alpha = 0
+            blast.state.maxAlpha = 240.0
+            blast.state.alphaSpeed = blast.state.maxAlpha / 7.0
+            blast.state.fadeOutCnt = blast.state.duration - 15
+            blast.state.texturePaths = [blastTex]
+        }
+
+        if stateCnt >= 300 {
+            return false
+        }
+
+        _ = processEZ2STRRaised(context: context)
+        return true
+    }
 
     // MARK: - EF_ENERGYDRAIN (217)
-    // CRagEffect::BloodDrain()
+
+    /// Spawns 3 blue parabolic drain splines (`PP_3DPARTICLESPLINE` (8)) for `EF_ENERGYDRAIN` (217).
+    func bloodDrain(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let spritePath = K2L("이팩트\\particle1.spr")
+        let actionPath = K2L("이팩트\\particle1.act")
+        _ = context.assets?.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+
+        let (origin, destination) = directionalLaunchEndpoints()
+        let faceAngle = Self.effectHeading(fromX: origin.x, fromZ: origin.z, toX: destination.x, toZ: destination.z)
+        let travelDistance = Self.effectDistanceXZ(from: origin, to: destination)
+
+        for angle in stride(from: -90, to: 180, by: 90) {
+            let spline = launchPrimitive(.pp_3dparticlespline)
+            spline.state.duration = 60
+            spline.state.deltaPos2 = SIMD3<Float>(0, -10.0, 0)
+            spline.state.radius = travelDistance
+            spline.state.longitude = -faceAngle
+            let speed = spline.state.radius / Float(spline.state.duration)
+            spline.state.speed = speed + speed
+            spline.state.gravSpeed = 2.0
+            let rise = -(spline.state.gravSpeed / Float(spline.state.duration))
+            spline.state.gravAccel = rise + rise
+            spline.state.latiSpeed = -2.0
+            let spread = -(spline.state.latiSpeed / Float(spline.state.duration))
+            spline.state.latiAccel = spread + spread
+            spline.state.roll = Float(angle)
+            spline.state.transform = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(spline.state.longitude)))
+            let forward = EffectSpace.transformVector(SIMD3<Float>(0, 0, 1.0), by: spline.state.transform)
+            spline.state.deltaPos3 = forward
+            spline.state.rotAxis = forward
+            spline.state.red = 100
+            spline.state.green = 100
+            spline.state.blue = 250
+            spline.state.size = 1.7
+            spline.state.spritePath = spritePath
+            spline.state.actionPath = actionPath
+            spline.state.numSegment = 7
+            spline.initSegment()
+        }
+    }
 
     // MARK: - EF_POTION_CON (218)
-    // CRagEffect::PotionPillar(float heightSpeed, int duration)
+
+    /// Spawns rising fade aura cylinder (`PP_3DCYLINDER` (13)) for potion buffs and `EF_POTIONPILLAR` (221).
+    func potionPillar(heightSpeed: Float, pillarDuration: Int, context: EffectTickContext) {
+        let texturePath = "effect\\alpha_down.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let cylinder = launchPrimitive(.pp_3dcylinder)
+        cylinder.state.duration = pillarDuration
+        cylinder.state.outerSize = 4.5
+        cylinder.state.innerSize = 4.5
+        cylinder.state.heightSize = 10.0
+        cylinder.state.heightSpeed = heightSpeed
+        cylinder.state.heightAccel = 0.01
+        cylinder.state.alpha = 0
+        cylinder.state.maxAlpha = 90.0
+        cylinder.state.alphaSpeed = cylinder.state.maxAlpha / 20.0
+        cylinder.state.fadeOutCnt = cylinder.state.duration - 10
+        cylinder.state.texturePaths = [texturePath]
+    }
 
     // MARK: - EF_POTION_BERSERK (220)
-    // CRagEffect::Potion_Berserk()
+
+    /// Applies red berserk target tint, spawns rising streaks + camera quake, and advances `버서크.str` for `EF_POTION_BERSERK` (220).
+    func potionBerserk(context: EffectTickContext) -> Bool {
+        if stateCnt == 0 {
+            configureSTR(path: K2L("버서크.str"))
+            potionPillar(heightSpeed: 1.0, pillarDuration: 50, context: context)
+        }
+
+        if let targetID = targetObjectID ?? ownerObjectID, stateCnt <= 150 {
+            context.world.applyTargetModifier(
+                .tint(color: SIMD4<Float>(250.0 / 255.0, 120.0 / 255.0, 120.0 / 255.0, 1.0), durationTicks: 2),
+                to: targetID
+            )
+        }
+
+        if stateCnt == 18 {
+            context.world.shakeCamera(amplitude: 1.0, duration: 0.35, frequency: 20.0)
+            context.world.playSound(
+                named: "effect\\ac_concentration.wav",
+                atWorldPosition: EffectSpace.toWorldPosition(position),
+                delay: 0
+            )
+        }
+
+        if stateCnt >= 13 && stateCnt <= 109 && stateCnt % 4 == 0 {
+            let streakTex = "effect\\ac_center2.tga"
+            _ = context.assets?.texture(atPath: streakTex)
+
+            let spot = launchPrimitive(.pp_3dcrosstexture)
+            spot.state.duration = 40
+            let yaw = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int.random(in: 0..<360)))
+            spot.state.deltaPos2 = EffectSpace.transformVector(SIMD3<Float>(0, 0, Float(Int.random(in: 0..<7) + 2)), by: yaw)
+            spot.state.transform = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: 90))
+            spot.state.speed = Float(Int.random(in: 0..<50) + 20) / 60.0
+            spot.state.widthSize = Float(Int.random(in: 0..<60) + 30) / 10.0
+            spot.state.heightSize = 0.2
+            spot.state.red = 240
+            spot.state.green = 0
+            spot.state.blue = 0
+            spot.state.alpha = 0
+            spot.state.maxAlpha = 180.0
+            spot.state.alphaSpeed = spot.state.maxAlpha / 20.0
+            spot.state.fadeOutCnt = spot.state.duration - 20
+            spot.state.texturePaths = [streakTex]
+            spot.state.slots[0].life = 0
+        }
+
+        _ = processEZ2STRRaised(context: context)
+        return stateCnt <= 150
+    }
 
     // MARK: - EF_GRANDCROSS (226)
 

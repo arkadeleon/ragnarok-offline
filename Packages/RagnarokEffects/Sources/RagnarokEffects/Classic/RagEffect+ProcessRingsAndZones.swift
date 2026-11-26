@@ -375,22 +375,297 @@ extension RagEffect {
     }
 
     // MARK: - EF_OVERTHRUST (128)
-    // CRagEffect::StoneCurseRing()
+
+    /// Plays Overthrust audio and spawns a 2D shockwave ring (`PP_2DCIRCLE` (4)) for `EF_OVERTHRUST` (128).
+    func stoneCurseRing(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        context.world.playSound(
+            named: "effect\\black_overthrust.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+        duration = 9999
+        context.world.playSound(
+            named: "effect\\EF_StoneCurse.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+
+        let texturePath = "effect\\alpha_center.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let ring = launchPrimitive(.pp_2dcircle)
+        ring.state.duration = 40
+        ring.state.deltaPos2.y = -20.0
+        ring.state.arcAngle = 10.0
+        ring.state.innerSize = 10.0
+        ring.state.radiusSpeed = 7.0
+        let slowdown = -(ring.state.radiusSpeed / Float(ring.state.duration + 40))
+        ring.state.radiusAccel = slowdown + slowdown
+        ring.state.fadeOutCnt = 0
+        ring.state.texturePaths = [texturePath]
+    }
 
     // MARK: - EF_BOTTOM2 (137)
-    // CRagEffect::Bottom2()
+
+    /// Spawns a four-wall ground barrier (`PP_3DTEXTURE` (15)) with `magic_green.tga` for `EF_BOTTOM2` (137).
+    func bottom2(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        var angle = Int(180.0 - longitude)
+        if angle < 0 {
+            angle += 360
+        }
+
+        let yaw = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: angle))
+        duration = 9999
+        let widthSize: Float = 2.5
+
+        let texturePath = "effect\\magic_green.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        for side in stride(from: 1, through: -1, by: -2) {
+            let sideZ = launchPrimitive(.pp_3dtexture)
+            sideZ.state.duration = 9999
+            sideZ.state.commonPattern = 1
+            sideZ.state.pattern = 40
+            sideZ.state.type = 50
+            sideZ.state.deltaPos2 = EffectSpace.transformVector(SIMD3<Float>(0, 0, widthSize * Float(side)), by: yaw)
+            sideZ.state.longitude = Float(angle + 90)
+            sideZ.state.widthSize = widthSize
+            sideZ.state.heightSize = 15.0
+            sideZ.state.heightSpeed = 0.25
+            sideZ.state.alpha = 180.0
+            sideZ.state.fadeOutCnt = 9999 - 35
+            sideZ.state.texturePaths = [texturePath]
+
+            let sideX = launchPrimitive(.pp_3dtexture)
+            sideX.state.duration = 9999
+            sideX.state.commonPattern = 1
+            sideX.state.pattern = 40
+            sideX.state.type = 50
+            sideX.state.deltaPos2 = EffectSpace.transformVector(SIMD3<Float>(widthSize * Float(side), 0, 0), by: yaw)
+            sideX.state.longitude = Float(angle)
+            sideX.state.widthSize = widthSize
+            sideX.state.heightSize = 15.0
+            sideX.state.heightSpeed = 0.25
+            sideX.state.alpha = 180.0
+            sideX.state.fadeOutCnt = 9999 - 35
+            sideX.state.texturePaths = [texturePath]
+        }
+    }
 
     // MARK: - EF_FIREPILLARON (138)
-    // CRagEffect::RingStack(char white)
+
+    /// Spawns 3 concentric tall casting cylinders (`PP_3DCYLINDER` (13)) for `EF_FIREPILLARON` (138).
+    func ringStack(white: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let texturePath = white == 0 ? "effect\\magic_red.tga" : "effect\\ring_white.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        for i in 0..<3 {
+            let cylinder = launchPrimitive(.pp_3dcylinder)
+            cylinder.state.duration = duration
+            cylinder.state.longSpeed = -3.0
+            cylinder.state.outerSize = Float(i + 4)
+            cylinder.state.innerSize = Float(i + 1) + 1.5
+            cylinder.state.heightSize = Float((6 - 2 * i) * (4 - i) + 1) + 2.5
+            cylinder.state.rollSpeed = -0.5
+            cylinder.state.alpha = Float(stateCnt * -7 + 240)
+            cylinder.state.texturePaths = [texturePath]
+        }
+    }
 
     // MARK: - EF_LEVEL99 (200)
-    // CRagEffect::TripleRingStack(const char* name, char large)
+
+    /// Spawns 3-layer Level 99 aura ribbons (`PP_3DCASTING` (23)) for `EF_LEVEL99` (200).
+    func tripleRingStack(texturePath: String, large: Int8, context: EffectTickContext) {
+        if stateCnt == 99_999_998 {
+            stateCnt = 0
+            duration = 99_999_999
+        } else if stateCnt != 0 {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_3dcasting)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = large == 1 ? 7.0 : 4.0
+
+        let configs: [(maxHeight: Float, rotStart: Int16, distance: Float, riseAngle: Int16)] = [
+            (15.0, 0, 3.9, 55),
+            (13.0, 90, 4.1, 50),
+            (11.0, 180, 4.3, 45),
+        ]
+
+        for (index, config) in configs.enumerated() {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = 0
+            primitive.state.slots[index].fullDisplayAngle = 315
+            primitive.state.slots[index].maxHeight = config.maxHeight
+            primitive.state.slots[index].rotStart = config.rotStart
+            primitive.state.slots[index].alphaB = 120
+            primitive.state.slots[index].distance = config.distance
+            primitive.state.slots[index].riseAngle = config.riseAngle
+            primitive.state.slots[index].vecBNow.y = 0
+            primitive.state.slots[index].height = Array(repeating: 0, count: 21)
+            primitive.state.slots[index].flag1 = Array(repeating: 0, count: 21)
+        }
+        primitive.state.slots[3].life = 0
+    }
 
     // MARK: - EF_LEVEL99_3 (202)
-    // CRagEffect::FreezingCircle(char kind)
+
+    /// Spawns multi-slot orbital Level 99 mist ribbons (`29`) for `EF_LEVEL99_3` (202).
+    func freezingCircle(kind: Int8, context: EffectTickContext) {
+        if stateCnt == 99_999_998 {
+            stateCnt = 0
+            duration = 99_999_999
+        } else if stateCnt != 0 {
+            return
+        }
+
+        let texturePath: String
+        let size: Float
+        if kind == 3 {
+            texturePath = "effect\\ghost.bmp"
+            size = 0
+        } else if kind >= 1 {
+            texturePath = "effect\\whitelight.tga"
+            size = kind == 2 ? 7.0 : 0
+        } else {
+            texturePath = "effect\\freezing_circle.bmp"
+            size = 0
+        }
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(29)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = size
+
+        for i in 0..<4 {
+            if kind == 3 && i >= 1 {
+                primitive.state.slots[i].life = 0
+            } else if (kind == 7 || kind == 8) && i >= 2 {
+                primitive.state.slots[i].life = 0
+            } else {
+                primitive.state.slots[i].life = 1
+            }
+
+            primitive.state.slots[i].maxHeight = 0.15
+            if kind == 1 || kind == 4 || kind == 5 || kind == 6 || kind >= 8 {
+                primitive.state.slots[i].distance = 2.4
+            } else if kind == 3 {
+                primitive.state.slots[i].distance = 3.2
+                primitive.state.slots[i].maxHeight = 0.6
+            } else {
+                primitive.state.slots[i].distance = 0.8
+            }
+
+            func randomAnchorXZ() -> (x: Float, z: Float) {
+                if kind == 3 {
+                    return (Float(Int.random(in: 0..<15) - 8), Float(Int.random(in: 0..<15) - 8))
+                } else if kind == 6 {
+                    return (Float(Int.random(in: 0..<35) - 17), 0)
+                }
+                return (0, 0)
+            }
+
+            let bPre = randomAnchorXZ()
+            primitive.state.slots[i].vecBPre = SIMD3<Float>(bPre.x, Float(Int.random(in: 0..<100)), bPre.z)
+            let bNow = randomAnchorXZ()
+            primitive.state.slots[i].vecBNow = SIMD3<Float>(bNow.x, Float(Int.random(in: 0..<100)), bNow.z)
+            let tPre = randomAnchorXZ()
+            primitive.state.slots[i].vecTPre = SIMD3<Float>(tPre.x, Float(Int.random(in: 0..<100)), tPre.z)
+            let tNow = randomAnchorXZ()
+            primitive.state.slots[i].vecTNow = SIMD3<Float>(tNow.x, Float(Int.random(in: 0..<100)), tNow.z)
+
+            for h in 0..<16 {
+                primitive.state.slots[i].height[h] = Float(Int.random(in: 0..<360))
+            }
+
+            if kind == 4 {
+                primitive.state.slots[i].vecBPre.y = -40.0
+                primitive.state.slots[i].vecBNow.y = -50.0
+                primitive.state.slots[i].vecTPre.y = -60.0
+                primitive.state.slots[i].vecTNow.y = -70.0
+            } else if kind == 5 || kind == 7 {
+                primitive.state.slots[i].vecBPre.y = 0
+                primitive.state.slots[i].vecBNow.y = 0
+                primitive.state.slots[i].vecTPre.y = 0
+                primitive.state.slots[i].vecTNow.y = 0
+            } else if kind == 6 {
+                primitive.state.slots[i].vecBPre.y = Float(-40 - Int.random(in: 0..<40))
+                primitive.state.slots[i].vecBNow.y = Float(-40 - Int.random(in: 0..<40))
+                primitive.state.slots[i].vecTPre.y = Float(-40 - Int.random(in: 0..<40))
+                primitive.state.slots[i].vecTNow.y = Float(-40 - Int.random(in: 0..<40))
+            }
+
+            if kind == 1 {
+                primitive.state.slots[i].flag1[0] = kind
+            } else if kind == 3 {
+                primitive.state.slots[i].flag1[0] = 11
+            } else if kind == 4 {
+                primitive.state.slots[i].flag1[0] = 14
+            } else if kind == 5 || kind == 7 || kind == 8 {
+                primitive.state.slots[i].flag1[0] = 15
+                primitive.state.slots[i].flag1[1] = 0
+                primitive.state.slots[i].flag1[2] = 0
+                primitive.state.slots[i].flag1[3] = 0
+                primitive.state.slots[i].flag1[4] = 0
+                primitive.state.slots[i].flag1[5] = kind
+            } else if kind == 6 {
+                primitive.state.slots[i].flag1[0] = 16
+            } else {
+                primitive.state.slots[i].flag1[0] = 0
+            }
+        }
+    }
 
     // MARK: - EF_DEFENDER (222)
-    // CRagEffect::QuadRingStack(const char* name)
+
+    /// Spawns 4-layer Defender casting shroud (`PP_3DCASTING_2` (24)) for `EF_DEFENDER` (222).
+    func quadRingStack(texturePath: String, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_3dcasting_2)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 0
+
+        let rotStarts: [Int16] = [180, 270, 0, 90]
+        for index in 0..<4 {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = 0
+            primitive.state.slots[index].fullDisplayAngle = 360
+            primitive.state.slots[index].maxHeight = 40.0 - Float(index)
+            primitive.state.slots[index].rotStart = rotStarts[index]
+            primitive.state.slots[index].alphaB = 0
+            primitive.state.slots[index].distance = 8.0 - Float(index) * 0.1
+            primitive.state.slots[index].riseAngle = 90
+            primitive.state.slots[index].vecBNow.y = 0
+            primitive.state.slots[index].height = Array(repeating: 0, count: 21)
+            primitive.state.slots[index].flag1 = Array(repeating: 0, count: 21)
+        }
+    }
 
     // MARK: - EF_WIND (224)
 
@@ -485,10 +760,104 @@ extension RagEffect {
     }
 
     // MARK: - EF_CHOOKGI (228)
-    // CRagEffect::ElementalOrbit(char kind)
+
+    /// Spawns orbiting Monk spirit spheres or elemental/coin orbs (`32`) for `EF_CHOOKGI` (228).
+    func elementalOrbit(kind: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let requestedCount = Int(deltaPos.x)
+        guard requestedCount > 0 else {
+            return
+        }
+        let sphereCount = min(requestedCount, 5)
+
+        let texturePath: String = switch kind {
+        case 10: "effect\\fire-1.bmp"
+        case 11: "effect\\lightning-1.bmp"
+        case 12: "effect\\water-1.bmp"
+        case 13: "effect\\stone-1.bmp"
+        case 4: "effect\\RL_richs_coin_B\\rcoin1.bmp"
+        default: "effect\\thunder_center.bmp"
+        }
+        _ = context.assets?.texture(atPath: texturePath)
+
+        for index in 0..<sphereCount {
+            let sphere = launchPrimitive(32)
+            sphere.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+            sphere.state.duration = duration
+            sphere.state.slots[0].life = 1
+            for h in 0..<6 {
+                sphere.state.slots[0].height[h] = Float(Int.random(in: 0..<360))
+            }
+
+            if kind == 1 {
+                sphere.state.slots[0].height[6] = Float(index * 72)
+                sphere.state.slots[0].height[7] = -14.0
+                sphere.state.slots[0].distance = 1.3
+                sphere.state.slots[0].height[10] = 1.0
+                sphere.state.slots[0].flag1[0] = 0
+            } else if kind == 3 || kind == 4 {
+                if deltaPos.x <= 5.0 {
+                    sphere.state.slots[0].height[6] = Float(index * 360) / deltaPos.x
+                } else {
+                    sphere.state.slots[0].height[6] = Float(index * 72)
+                }
+                sphere.state.slots[0].height[7] = -15.0
+                sphere.state.slots[0].distance = 1.0
+                if deltaPos.x > 5.0 && deltaPos.x - Float(index) >= 6.0 {
+                    sphere.state.slots[0].distance = 2.0
+                }
+                sphere.state.slots[0].height[10] = 0
+                sphere.state.slots[0].flag1[0] = 1
+            } else {
+                sphere.state.slots[0].height[6] = Float(index * 72)
+                sphere.state.slots[0].height[7] = -15.0
+                sphere.state.slots[0].distance = 2.0
+                sphere.state.slots[0].height[10] = 0
+                sphere.state.slots[0].flag1[0] = 0
+
+                let total = deltaPos.x
+                if total > 10.0 {
+                    sphere.state.slots[0].flag1[0] = (total - Float(index) >= 11.0) ? 21 : 20
+                } else if total > 5.0 && (total - Float(index) >= 6.0) {
+                    sphere.state.slots[0].flag1[0] = 20
+                }
+
+                if kind >= 10 {
+                    var startAngle = sphere.state.slots[0].height[6] + Float(Int.random(in: 0..<360))
+                    if startAngle >= 360.0 {
+                        startAngle -= 360.0
+                    }
+                    sphere.state.slots[0].height[6] = startAngle
+                    sphere.state.slots[0].flag1[0] = kind
+                    sphere.state.slots[0].distance = 6.0
+                    sphere.state.totalTexture = 1
+                }
+            }
+
+            sphere.state.slots[0].height[8] = Float(Int.random(in: 0..<360))
+            sphere.state.slots[0].alphaB = 0
+            sphere.state.slots[0].process = 0
+            sphere.state.texturePaths = [texturePath]
+        }
+    }
 
     // MARK: - EF_MAGICROD (244)
-    // CRagEffect::SageMagicRod()
+
+    /// Plays Magic Rod absorption audio on frame 0 for `EF_MAGICROD` (244).
+    func sageMagicRod(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        context.world.playSound(
+            named: "effect\\sage_magic rod.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+    }
 
     // MARK: - EF_ABSORBSPIRITS (253)
     // CRagEffect::HealRingSparkle(const char* name, char type)

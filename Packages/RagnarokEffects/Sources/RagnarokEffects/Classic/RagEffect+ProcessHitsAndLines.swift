@@ -571,10 +571,140 @@ extension RagEffect {
     }
 
     // MARK: - EF_HITDARK (180)
-    // CRagEffect::HitDark()
+
+    /// Spawns a dark impact cylinder (`PP_3DCYLINDER` (13)) and dark particle bursts (`PP_3DPARTICLE` (5), `PP_3DPARTICLEGRAVITY` (6)) for `EF_HITDARK` (180) and `EF_DARKATTACK` (184).
+    func hitDark(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        var facing = Int(180.0 - longitude)
+        if facing < 0 {
+            facing += 360
+        }
+
+        let ringTex = "effect\\ring_blue.tga"
+        _ = context.assets?.texture(atPath: ringTex)
+
+        let cylinder = launchPrimitive(.pp_3dcylinder)
+        cylinder.state.duration = 10
+        cylinder.state.longitude = Float(facing)
+        cylinder.state.latitude = -90.0
+        let cRotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(cylinder.state.latitude)))
+        let cRotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(cylinder.state.longitude)))
+        cylinder.state.transform = cRotY * cRotX
+        cylinder.state.deltaPos2 = SIMD3<Float>(0, -10.0, 0)
+        cylinder.state.speed = 0.7
+        cylinder.state.accel = -(cylinder.state.speed / Float(cylinder.state.duration)) * 0.5
+        cylinder.state.outerSize = 10.0
+        cylinder.state.innerSize = 5.0
+        cylinder.state.heightSize = 3.5
+        cylinder.state.fadeOutCnt = cylinder.state.duration - cylinder.state.duration / 2
+        cylinder.state.texturePaths = [ringTex]
+
+        let spritePath = K2L("이팩트\\particle1.spr")
+        let actionPath = K2L("이팩트\\particle1.act")
+        _ = context.assets?.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+
+        for _ in 0..<2 {
+            let spark = launchPrimitive(.pp_3dparticle)
+            spark.state.longitude = Float(Int.random(in: 0..<80) + (facing - 40))
+            spark.state.latitude = Float(Int.random(in: 0..<100) - 50)
+            let rotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(spark.state.longitude)))
+            let rotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(spark.state.latitude)))
+            spark.state.transform = rotX * rotY
+            let forward = EffectSpace.transformVector(SIMD3<Float>(0, 0, Float(Int.random(in: 0..<4) + 4)), by: spark.state.transform)
+            spark.state.deltaPos3 = forward
+            spark.state.deltaPos2 = SIMD3<Float>(forward.x, forward.y - 10.0, forward.z)
+            spark.state.speed = Float(Int.random(in: 0..<90) + 60) / 100.0
+            spark.state.duration = Int.random(in: 0..<24) + 6
+            spark.state.accel = -(spark.state.speed / Float(spark.state.duration)) * 0.5
+            spark.state.size = Float(Int.random(in: 0..<100) + 60) / 100.0
+            spark.state.red = 20
+            spark.state.green = 20
+            spark.state.blue = 20
+            spark.state.fadeOutCnt = 0
+            spark.state.spritePath = spritePath
+            spark.state.actionPath = actionPath
+            spark.state.numSegment = 3
+            spark.initSegment()
+        }
+
+        for _ in 0..<2 {
+            let spark = launchPrimitive(.pp_3dparticlegravity)
+            spark.state.longitude = Float(Int.random(in: 0..<80) + (facing + 140))
+            spark.state.latitude = Float(Int.random(in: 0..<100) - 50)
+            let rotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(spark.state.longitude)))
+            let rotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(spark.state.latitude)))
+            let forward = EffectSpace.transformVector(SIMD3<Float>(0, 0, Float(Int.random(in: 0..<4) + 4)), by: rotX * rotY)
+            spark.state.deltaPos3 = forward
+            spark.state.deltaPos2 = SIMD3<Float>(forward.x, forward.y - 10.0, forward.z)
+            spark.state.transform = rotY
+            spark.state.duration = Int.random(in: 0..<24) + 6
+            spark.state.speed = Float(Int.random(in: 0..<90) + 60) / 100.0
+            spark.state.accel = -(spark.state.speed / Float(spark.state.duration)) * 0.5
+            spark.state.gravSpeed = -Float(Int.random(in: 0..<90) + 30) / 100.0
+            spark.state.gravAccel = -(spark.state.gravSpeed / Float(spark.state.duration) * 2.0)
+            spark.state.size = Float(Int.random(in: 0..<100) + 60) / 100.0
+            spark.state.red = 20
+            spark.state.green = 20
+            spark.state.blue = 20
+            spark.state.fadeOutCnt = 0
+            spark.state.spritePath = spritePath
+            spark.state.actionPath = actionPath
+            spark.state.numSegment = 3
+            spark.initSegment()
+        }
+    }
 
     // MARK: - EF_GUMGANG (203)
-    // CRagEffect::SuperSlashFan(char count, char value)
+
+    /// Spawns sweeping aura fan streaks (`35`) for `EF_GUMGANG` (203).
+    func superSlashFan(count: Int8, value: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let texturePaths = (1...5).map { "effect\\super\($0).bmp" }
+        for path in texturePaths {
+            _ = context.assets?.texture(atPath: path)
+        }
+
+        let fan = launchPrimitive(35)
+        fan.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        fan.state.duration = duration
+        fan.state.totalTexture = 5
+        fan.state.texturePaths = texturePaths
+        for i in 0..<4 {
+            fan.state.slots[i].life = 0
+        }
+
+        for i in 0..<max(0, Int(count)) where i < 4 {
+            fan.state.slots[i].life = 1
+            fan.state.slots[i].distance = 3.5
+            fan.state.slots[i].vecBPre.y = -Float(Int.random(in: 0..<10))
+            fan.state.slots[i].height[0] = 10.0
+            fan.state.slots[i].height[1] = 70.0
+            fan.state.slots[i].height[2] = Float(Int.random(in: 0..<5))
+            fan.state.slots[i].height[3] = Float(Int.random(in: 0..<360))
+            fan.state.slots[i].vecBNow.y = -Float(Int.random(in: 0..<10))
+            fan.state.slots[i].height[4] = 10.0
+            fan.state.slots[i].height[5] = 130.0
+            fan.state.slots[i].height[6] = Float(Int.random(in: 0..<5))
+            fan.state.slots[i].height[7] = Float(Int.random(in: 0..<360))
+            fan.state.slots[i].vecTPre.y = -Float(Int.random(in: 0..<10))
+            fan.state.slots[i].height[8] = 10.0
+            fan.state.slots[i].height[9] = 190.0
+            fan.state.slots[i].height[10] = Float(Int.random(in: 0..<5))
+            fan.state.slots[i].height[11] = Float(Int.random(in: 0..<360))
+            fan.state.slots[i].vecTNow.y = -Float(Int.random(in: 0..<10))
+            fan.state.slots[i].height[12] = 10.0
+            fan.state.slots[i].height[13] = 250.0
+            fan.state.slots[i].height[14] = Float(Int.random(in: 0..<5))
+            fan.state.slots[i].height[15] = Float(Int.random(in: 0..<360))
+            fan.state.slots[i].flag1[4] = value
+        }
+    }
 
     // MARK: - EF_TEIHIT2 (264)
     // CRagEffect::TEIHIT2()

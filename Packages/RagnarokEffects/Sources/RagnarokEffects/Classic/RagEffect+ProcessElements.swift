@@ -660,25 +660,337 @@ extension RagEffect {
     }
 
     // MARK: - EF_SNOW (162)
-    // CRagEffect::Snow()
+
+    /// Spawns drifting snow sprite particles (`PP_3DPARTICLE_NOMASTER` (21)) while `duration - stateCnt > 160` for `EF_SNOW` (162).
+    func snow(context: EffectTickContext) {
+        guard duration - stateCnt > 160 else {
+            return
+        }
+
+        let spritePath = K2L("이팩트\\ef_snow.spr")
+        let actionPath = K2L("이팩트\\ef_snow.act")
+        _ = context.assets?.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+
+        let terrainY = context.world.terrainHeight(atEffectX: position.x, effectZ: position.z) - 100.0
+        for _ in 0..<2 {
+            let flake = launchPrimitive(.pp_3dparticle_nomaster)
+            flake.state.orgPos = position
+            flake.state.duration = 320
+            let yaw = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int.random(in: 0..<360)))
+            let z = Float(Int.random(in: 0..<300) - 300)
+            flake.state.deltaPos2 = EffectSpace.transformVector(SIMD3<Float>(0, terrainY, z), by: yaw)
+            flake.state.transform = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: 90))
+            flake.state.speed = -0.5
+            flake.state.accel = 0
+            flake.state.size = Float(Int.random(in: 0..<15) + 25) / 50.0
+            flake.state.rollSpeed = 0
+            flake.state.alpha = 0
+            flake.state.alphaSpeed = flake.state.maxAlpha / 10.0
+            flake.state.fadeOutCnt = flake.state.duration - flake.state.duration / 5
+            flake.state.spritePath = spritePath
+            flake.state.actionPath = actionPath
+            flake.initSegment()
+        }
+    }
 
     // MARK: - EF_SAKURA (163)
-    // CRagEffect::Sakura()
+
+    /// Spawns falling cherry blossom petals (`PP_SAKURA` (40)) every other tick for `EF_SAKURA` (163).
+    func sakura(context: EffectTickContext) {
+        if stateCnt == 99_999_998 {
+            stateCnt = 0
+            duration = 99_999_999
+        } else if (stateCnt & 1) != 0 || stateCnt >= 300 {
+            return
+        }
+
+        let spritePath = K2L("이팩트\\sakura01.spr")
+        let actionPath = K2L("이팩트\\sakura01.act")
+        _ = context.assets?.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+
+        let petal = launchPrimitive(.pp_sakura)
+        petal.state.duration = duration
+        petal.state.slots[0].life = 1
+        petal.state.slots[0].maxHeight = Float(Int.random(in: 0..<2) + 2) * 0.1
+        petal.state.size = Float(Int.random(in: 0..<6) + 22) / 100.0
+        for h in 0..<4 {
+            petal.state.slots[0].height[h] = Float(Int.random(in: 0..<360))
+        }
+        petal.state.slots[0].vecBPre = SIMD3<Float>(
+            Float(Int.random(in: 0..<300)) + position.x - 150.0,
+            position.y - 200.0,
+            Float(Int.random(in: 0..<300)) + position.z - 150.0
+        )
+        petal.state.slots[0].flag1[0] = 0
+        petal.state.alpha = 200.0
+        petal.state.spritePath = spritePath
+        petal.state.actionPath = actionPath
+        petal.currentMotion = Int.random(in: 0..<3)
+        petal.initSegment()
+        for i in 1..<4 {
+            petal.state.slots[i].life = 0
+        }
+    }
 
     // MARK: - EF_SUMMONSLAVE (215)
-    // CRagEffect::AlphaCenterRise()
+
+    /// Spawns 20 rising 2D light rays (`PP_2DFLASH` (3)) for `EF_SUMMONSLAVE` (215).
+    func alphaCenterRise(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let texturePath = "EFFECT\\alpha_center.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        for _ in 0..<20 {
+            let flash = launchPrimitive(.pp_2dflash)
+            flash.state.duration = 40
+            flash.state.deltaPos2.y = -40.0
+            flash.state.longitude = Float(Int.random(in: 0..<360))
+            flash.state.longSpeed = Float(Int.random(in: 0..<60) + 10) / 10.0
+            flash.state.longAccel = -(flash.state.longSpeed / Float(flash.state.duration)) / 1.5
+            flash.state.arcAngle = Float(Int.random(in: 0..<25) + 5) / 10.0
+            flash.state.heightSize = Float(Int.random(in: 0..<40) + 20)
+            flash.state.heightSpeed = Float(Int.random(in: 0..<30) + 20) / 10.0
+            flash.state.alpha = 0
+            flash.state.maxAlpha = 200.0
+            flash.state.alphaSpeed = flash.state.maxAlpha / 10.0
+            flash.state.fadeOutCnt = flash.state.duration - flash.state.duration / 3
+            flash.state.texturePaths = [texturePath]
+        }
+    }
 
     // MARK: - EF_BLOODDRAIN (216)
-    // CRagEffect::RedParticleSpray(int count)
+
+    /// Spawns red parabolic spline particles (`PP_3DPARTICLESPLINE` (8)) toward the caster/target for `EF_BLOODDRAIN` (216).
+    func redParticleSpray(count sprayCount: Int, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let spritePath = K2L("이팩트\\particle1.spr")
+        let actionPath = K2L("이팩트\\particle1.act")
+        _ = context.assets?.spriteAsset(spritePath: spritePath, actionPath: actionPath)
+
+        let (origin, destination) = directionalLaunchEndpoints()
+        let faceAngle = Self.effectHeading(fromX: origin.x, fromZ: origin.z, toX: destination.x, toZ: destination.z)
+        let travelDistance = Self.effectDistanceXZ(from: origin, to: destination)
+
+        for index in 0..<sprayCount {
+            let spline = launchPrimitive(.pp_3dparticlespline)
+            spline.state.duration = 60
+            spline.state.deltaPos2 = SIMD3<Float>(0, -10.0, 0)
+            spline.state.radius = travelDistance
+            spline.state.longitude = -faceAngle
+            let speed = spline.state.radius / Float(spline.state.duration)
+            spline.state.speed = speed + speed
+            spline.state.gravSpeed = 2.0
+            let rise = -(spline.state.gravSpeed / Float(spline.state.duration))
+            spline.state.gravAccel = rise + rise
+            spline.state.latiSpeed = -2.0
+            let spread = -(spline.state.latiSpeed / Float(spline.state.duration))
+            spline.state.latiAccel = spread + spread
+            spline.state.roll = Float(index * 90 - 90)
+            spline.state.transform = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(spline.state.longitude)))
+            let forward = EffectSpace.transformVector(SIMD3<Float>(0, 0, 1.0), by: spline.state.transform)
+            spline.state.deltaPos3 = forward
+            spline.state.rotAxis = forward
+            spline.state.red = 250
+            spline.state.green = 100
+            spline.state.blue = 100
+            spline.state.size = 1.7
+            spline.state.spritePath = spritePath
+            spline.state.actionPath = actionPath
+            spline.state.numSegment = 7
+            spline.initSegment()
+        }
+    }
 
     // MARK: - EF_INTIMIDATE (227)
-    // CRagEffect::WhiteSpray(char kind)
+
+    /// Spawns 4-slot white spray ribbons (`PP_INTIMIDATE` (43)) for `EF_INTIMIDATE` (227).
+    func whiteSpray(kind: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let texturePath = kind == 4 ? "effect\\white03.bmp" : "effect\\white01.bmp"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let spray = launchPrimitive(.pp_intimidate)
+        spray.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        spray.state.duration = duration
+        spray.state.texturePaths = [texturePath]
+
+        for index in 0..<4 {
+            spray.state.slots[index].life = 1
+            spray.state.slots[index].vecBNow = deltaPos
+
+            if kind == 2 {
+                spray.state.slots[index].process = Int.random(in: 0..<26) * -2
+                spray.state.slots[index].flag1[0] = 2
+                spray.state.slots[index].height[1] = 2.5
+            } else if kind == 3 {
+                spray.state.slots[index].process = -70 - Int.random(in: 0..<30)
+                spray.state.slots[index].flag1[0] = Int8(Int.random(in: 0..<3) + 3)
+                spray.state.slots[index].height[1] = 4.0
+            } else if kind == 4 {
+                spray.state.slots[index].process = -30 - Int.random(in: 0..<20)
+                spray.state.slots[index].flag1[0] = Int8(Int.random(in: 0..<3) + 3)
+                spray.state.slots[index].height[1] = 3.0
+            } else {
+                spray.state.slots[index].process = -70 - Int.random(in: 0..<30)
+                spray.state.slots[index].flag1[0] = 0
+                spray.state.slots[index].height[1] = 3.5
+            }
+
+            spray.state.slots[index].distance = 12.0
+            spray.state.slots[index].height[0] = 1.5
+            spray.state.slots[index].riseAngle = Int16(Int.random(in: 0..<360))
+            spray.state.slots[index].fullDisplayAngle = Int16(Int.random(in: 0..<360))
+            spray.state.slots[index].rotStart = Int16(Int.random(in: 0..<360))
+            spray.state.slots[index].height[2] = Float(Int.random(in: 0..<360))
+            spray.state.slots[index].alphaB = 0
+        }
+    }
 
     // MARK: - EF_CLOUD (229)
-    // CRagEffect::SkyCloud(char kind)
+
+    /// Spawns 4-slot ambient cloud or star billboards (`33`) for `EF_CLOUD` (229), `EF_CLOUD2` (230), and `EF_CLOUD3` (233).
+    func skyCloud(kind: Int8, context: EffectTickContext) {
+        if stateCnt == 99_999_998 {
+            stateCnt = 0
+            duration = 99_999_999
+        } else if stateCnt != 0 {
+            return
+        }
+
+        let cloud = launchPrimitive(33)
+        cloud.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        cloud.state.duration = duration
+
+        if kind == 3 {
+            let pick = ["effect\\fog1.tga", "effect\\fog2.tga", "effect\\fog3.tga"].randomElement()!
+            _ = context.assets?.texture(atPath: pick)
+            cloud.state.totalTexture = 3
+            cloud.state.texturePaths = [pick]
+        } else if kind == 9 || kind == 15 {
+            let stars = (1...6).map { "effect\\star0\($0).bmp" }
+            for path in stars {
+                _ = context.assets?.texture(atPath: path)
+            }
+            cloud.state.totalTexture = 6
+            cloud.state.texturePaths = stars
+        } else {
+            let pick = ["effect\\cloud4.tga", "effect\\cloud1.tga", "effect\\cloud2.tga"].randomElement()!
+            _ = context.assets?.texture(atPath: pick)
+            cloud.state.totalTexture = 3
+            cloud.state.texturePaths = [pick]
+        }
+
+        let layer = Float(kind)
+        for index in 0..<4 {
+            cloud.state.slots[index].life = 1
+            cloud.state.slots[index].process = 0
+            cloud.state.slots[index].height[7] = layer
+            cloud.state.slots[index].fullDisplayAngle = 45
+
+            if kind == 0 {
+                cloud.state.slots[index].height[6] = -152.0
+                if position.y > -152.0 {
+                    cloud.state.slots[index].process = 300
+                }
+            }
+
+            cloud.state.slots[index].alphaB = 0
+            cloud.state.slots[index].flag1[0] = 0
+            cloud.state.slots[index].rotStart = Int16(Int.random(in: 0..<200) + 300)
+
+            if kind == 0 {
+                cloud.state.slots[index].vecBNow.y = Float(Int.random(in: 0..<10)) - 125.0
+                cloud.state.slots[index].vecBNow.x = Float(Int.random(in: 0..<300) - 150)
+                cloud.state.slots[index].vecBNow.z = Float(Int.random(in: 0..<300) - 150)
+            } else if kind == 2 {
+                cloud.state.slots[index].vecBNow.y = Float(Int.random(in: 0..<10))
+                cloud.state.slots[index].vecBNow.x = Float(Int.random(in: 0..<300) - 150)
+                cloud.state.slots[index].vecBNow.z = Float(Int.random(in: 0..<300) - 150)
+            } else if kind == 3 {
+                let x = Float(Int.random(in: 0..<300) - 150)
+                let z = Float(Int.random(in: 0..<300) - 150)
+                let h = context.world.terrainHeight(atEffectX: x + position.x, effectZ: z + position.z)
+                cloud.state.slots[index].vecBNow = SIMD3<Float>(x, h - 20.0 - Float(Int.random(in: 0..<5)), z)
+            } else if kind == 5 {
+                cloud.state.slots[index].vecBNow.y = Float(Int.random(in: 0..<10)) + 20.0
+                cloud.state.slots[index].vecBNow.x = Float(Int.random(in: 0..<300) - 150)
+                cloud.state.slots[index].vecBNow.z = Float(Int.random(in: 0..<300) - 150)
+            } else if kind == 9 || kind == 15 {
+                cloud.state.slots[index].vecBNow.y = Float(Int.random(in: 0..<10)) + 80.0
+                cloud.state.slots[index].vecBNow.x = Float(Int.random(in: 0..<200) + 25) * (Bool.random() ? 1 : -1)
+                cloud.state.slots[index].vecBNow.z = Float(Int.random(in: 0..<200) + 25) * (Bool.random() ? 1 : -1)
+            } else {
+                cloud.state.slots[index].vecBNow.y = Float(Int.random(in: 0..<10)) + 40.0
+                cloud.state.slots[index].vecBNow.x = Float(Int.random(in: 0..<200) + 25) * (Bool.random() ? 1 : -1)
+                cloud.state.slots[index].vecBNow.z = Float(Int.random(in: 0..<200) + 25) * (Bool.random() ? 1 : -1)
+            }
+
+            cloud.state.slots[index].vecBNow.x += position.x
+            cloud.state.slots[index].vecBNow.z += position.z
+            for h in 0..<4 {
+                cloud.state.slots[index].height[h] = Float(Int.random(in: 0..<360))
+            }
+            cloud.state.slots[index].distance = kind == 3
+                ? Float(Int.random(in: 0..<10)) + 35.0
+                : Float(Int.random(in: 0..<20)) + 30.0
+            cloud.state.slots[index].height[8] = Float(Int.random(in: 0..<360))
+
+            let flag2ByKind: [Int8: Int8] = [
+                3: 12, 5: 14, 7: 16, 8: 17, 9: 23,
+                15: 25, 11: 14, 12: 16, 13: 17, 14: 24,
+            ]
+            cloud.state.slots[index].flag1[2] = flag2ByKind[kind] ?? 0
+        }
+    }
 
     // MARK: - EF_LINELINK (232)
-    // CRagEffect::TrackCloud(char kind)
+
+    /// Spawns a target-tracking cloud tether (`PP_LINELINK` (38)) for `EF_LINELINK` (232).
+    func trackCloud(kind: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let texturePath = "effect\\cloud11.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let link = launchPrimitive(.pp_linelink)
+        link.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        link.state.duration = duration
+        link.state.texturePaths = [texturePath]
+        link.state.slots[0].life = 1
+        link.state.slots[0].process = 0
+        link.state.slots[0].alphaB = 45
+        link.state.slots[0].distance = 0
+        link.state.slots[0].maxHeight = 0.4
+        link.state.slots[0].height[4] = kind == 2 ? 4.0 : 0
+        link.state.slots[0].vecTNow = position
+
+        let resolvedTargetID = sourceObjectID ?? ownerObjectID
+        if let resolvedTargetID, let targetState = context.world.targetState(for: resolvedTargetID) {
+            link.state.slots[0].targetObjectID = resolvedTargetID
+            link.state.slots[0].vecTPre = targetState.effectPosition
+        } else if let sourcePosition {
+            link.state.slots[0].vecTPre = sourcePosition
+        } else if deltaPos != .zero {
+            link.state.slots[0].vecTPre = deltaPos
+        } else {
+            link.state.slots[0].life = 0
+        }
+
+        for i in 1..<4 {
+            link.state.slots[i].life = 0
+        }
+    }
 
     // MARK: - EF_POKJUK_SOUND (301)
     // CRagEffect::Fireworks()

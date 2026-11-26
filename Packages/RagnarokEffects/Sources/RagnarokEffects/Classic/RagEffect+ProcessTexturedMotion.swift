@@ -12,7 +12,52 @@ import simd
 extension RagEffect {
 
     // MARK: - EF_SHIELDBOOMERANG (249)
-    // CRagEffect::TexturedShieldThrow(const char* name)
+
+    /// Spawns a boomerang shield projectile with 3 trail slots (`PP_SHIELDBOOMERANG` (42)) for `EF_SHIELDBOOMERANG` (249).
+    func texturedShieldThrow(texturePath: String, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        context.world.playSound(
+            named: "effect\\cru_shield boomerang.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let (origin, destination) = directionalLaunchEndpoints()
+        let deltaX = destination.x - origin.x
+        let deltaZ = destination.z - origin.z
+        let travelDistance = max(0.001, sqrtf(deltaZ * deltaZ + deltaX * deltaX))
+
+        let shield = launchPrimitive(.pp_shieldboomerang)
+        shield.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        shield.state.duration = duration
+        shield.state.texturePaths = [texturePath]
+        shield.state.size = 0
+        shield.state.deltaPos = destination
+        shield.state.slots[0].life = 1
+        shield.state.slots[0].process = 0
+        shield.state.slots[0].maxHeight = travelDistance
+        shield.state.slots[0].distance = 7.0
+        shield.state.slots[0].height[8] = 0
+        shield.state.slots[0].alphaB = 255
+        shield.state.slots[0].vecBNow = SIMD3<Float>(origin.x, origin.y - 8.0, origin.z)
+        shield.state.slots[0].rotStart = 0
+        shield.state.slots[0].height[1] = 2.0
+        shield.state.slots[0].height[2] = (shield.state.slots[0].height[1] / travelDistance) * (destination.y - origin.y)
+        shield.state.slots[0].fullDisplayAngle = 0
+        shield.state.slots[0].flag1[0] = 0
+        shield.state.slots[0].flag1[1] = 0
+        shield.state.slots[0].flag1[2] = 0
+
+        for i in 1..<4 {
+            shield.state.slots[i].life = 1
+            shield.state.slots[i].alphaB = 0
+        }
+    }
 
     // MARK: - EF_TEIHIT1 (262)
     // CRagEffect::TexturedScatter(const char* name, char flag)
