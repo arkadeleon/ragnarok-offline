@@ -8,9 +8,6 @@
 import Foundation
 
 extension RagEffect {
-
-    // MARK: - Dispatch
-
     private nonisolated static let proceduralEffectIDs: [EffectID] = [
         .ef_entry,
         .ef_soulstrike,
@@ -35,8 +32,8 @@ extension RagEffect {
         .ef_saintwing,
         .ef_bottom_basilica,
         .ef_linelink2,
-        .ef_rainbow,
         .ef_bottom_fogwall,
+        .ef_rainbow,
         .ef_hitline3,
         .ef_hitline6,
         .ef_electric,
@@ -147,10 +144,10 @@ extension RagEffect {
                 )
             }
             trackTarget(context: context)
-        case .ef_rainbow:
-            rainbow(texturePath: "effect\\alpha_center.tga", context: context)
         case .ef_bottom_fogwall:
             texturedPulseKind(texturePath: "effect\\ring_white.tga", kind: 2, context: context)
+        case .ef_rainbow:
+            rainbow(texturePath: "effect\\alpha_center.tga", context: context)
         case .ef_hitline3:
             whiteSparkStreak(kind: 0, context: context)
         case .ef_hitline6:
