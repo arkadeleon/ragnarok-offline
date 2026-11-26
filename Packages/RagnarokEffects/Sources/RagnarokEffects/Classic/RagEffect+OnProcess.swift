@@ -18,10 +18,13 @@ extension RagEffect {
         .ef_soulstrike,
         .ef_bash,
         .ef_steal,
+        .ef_frostdiver2,
+        .ef_wind,
         .ef_bottom_dissonance,
         .ef_bottom_rokisweil,
         .ef_bottom_whistle,
         .ef_bottom_assassincross,
+        .ef_forestlight,
         .ef_heal,
         .ef_bottom_mag,
         .ef_bottom_sanc,
@@ -36,6 +39,7 @@ extension RagEffect {
         .ef_hitline6,
         .ef_hitline7,
         .ef_grandcross2,
+        .ef_flowercast,
         .ef_kaizel,
         .ef_infraredscan,
         .ef_beginspell_n1,
@@ -72,6 +76,10 @@ extension RagEffect {
             bash(context: context)
         case .ef_steal:
             steal(context: context)
+        case .ef_frostdiver2:
+            frostDiver2(context: context)
+        case .ef_wind:
+            healCloudRings(context: context)
         case .ef_bottom_dissonance:
             texturedMagicRing(texturePath: "effect\\ring_blue.tga", kind: 0, context: context)
         case .ef_bottom_rokisweil:
@@ -80,6 +88,8 @@ extension RagEffect {
             bottomMusic(texturePath: "effect\\melody_b.bmp", kind: 0, context: context)
         case .ef_bottom_assassincross:
             texturedMagicRing(texturePath: "effect\\ring_red.tga", kind: 1, context: context)
+        case .ef_forestlight:
+            forestLight(texturePath: "effect\\cloud11.tga", flag: 0, context: context)
         case .ef_heal:
             healBurst(texturePath: "effect\\alpha_down.tga", flag: 0, context: context)
         case .ef_bottom_mag:
@@ -117,6 +127,9 @@ extension RagEffect {
         case .ef_grandcross2:
             grandCrossRings(angle: 0, kind: 1, context: context)
             grandCross2(flag: 1, context: context)
+        case .ef_flowercast:
+            texturedSlashAir(texturePath: "effect\\ring_blue.tga", size: 4, phase: 0, context: context)
+            texturedSlashAir(texturePath: "effect\\ring_blue.tga", size: 4, phase: 1, context: context)
         case .ef_kaizel:
             if stateCnt == 15 {
                 jobLvUp50Pair(angle: 0, context: context)
@@ -373,6 +386,210 @@ extension RagEffect {
             primitive.state.spritePath = spritePath
             primitive.state.actionPath = actionPath
             primitive.initSegment()
+        }
+    }
+
+    // MARK: - EF_FROSTDIVER2 (28)
+
+    /// Spawns 8 ice pyramid horns (`PP_3DQUADHORN` (9)) for `EF_FROSTDIVER2` (28).
+    private func frostDiver2(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        context.world.playSound(
+            named: "effect\\EF_FrostDiver2.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+
+        let texturePath = "effect\\ice.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        for _ in 0..<8 {
+            let primitive = launchPrimitive(.pp_3dquadhorn)
+            primitive.state.duration = 40
+            primitive.state.pattern |= 1
+            let angle = Int.random(in: 0..<360)
+            let length = Float(Int.random(in: 0..<4) + 1) / 10.0
+            primitive.state.deltaPos2 = SIMD3<Float>(
+                EffectSpace.sine(degrees: angle) * length,
+                30.0,
+                -length * EffectSpace.cosine(degrees: angle)
+            )
+            primitive.state.size = Float(Int.random(in: 0..<250) + 100) / 100.0
+            primitive.state.heightSize = Float(Int.random(in: 0..<100) + 200) / 100.0
+            primitive.state.longitude = Float(Int.random(in: 0..<360))
+            primitive.state.latitude = Float(Int.random(in: 0..<20) + 80)
+            let rotX = EffectSpace.rotationX(radians: EffectSpace.radian(degrees: Int(primitive.state.latitude)))
+            let rotY = EffectSpace.rotationY(radians: EffectSpace.radian(degrees: Int(primitive.state.longitude)))
+            primitive.state.transform = rotY * rotX
+            primitive.state.rotTransform = primitive.state.transform
+            primitive.state.speed = 3.0
+            let decay = -(primitive.state.speed / Float(primitive.state.duration))
+            primitive.state.accel = decay + decay
+            primitive.state.chCnt = 20
+            primitive.state.alpha = 200.0
+            primitive.state.fadeOutCnt = primitive.state.duration - 10
+            primitive.state.texturePaths = [texturePath]
+        }
+    }
+
+    // MARK: - EF_WIND (224)
+
+    /// Spawns 4 orbiting cloud wind ribbons (`PP_WIND` (62)) for `EF_WIND` (224).
+    private func healCloudRings(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let texturePath = "effect\\cloud11.tga"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_wind)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 4.0
+
+        let configs: [(arc: Int16, rotStart: Int16, distance: Float, height: Float)] = [
+            (90, 0, 3.0, 3.0),
+            (70, 10, 3.2, 2.5),
+            (50, 20, 3.4, 2.0),
+            (30, 30, 3.6, 1.5),
+        ]
+
+        for (index, config) in configs.enumerated() {
+            primitive.state.slots[index].life = 1
+            primitive.state.slots[index].process = 0
+            primitive.state.slots[index].fullDisplayAngle = config.arc
+            primitive.state.slots[index].maxHeight = 8.0
+            primitive.state.slots[index].rotStart = config.rotStart
+            primitive.state.slots[index].alphaB = 0
+            primitive.state.slots[index].distance = config.distance
+            primitive.state.slots[index].riseAngle = 90
+            primitive.state.slots[index].alphaT = 0
+            for j in 0..<21 {
+                primitive.state.slots[index].height[j] = config.height
+                primitive.state.slots[index].flag1[j] = 0
+            }
+        }
+
+        context.world.playSound(
+            named: "_heal_effect.wav",
+            atWorldPosition: EffectSpace.toWorldPosition(position),
+            delay: 0
+        )
+    }
+
+    // MARK: - EF_FORESTLIGHT (307)
+
+    /// Spawns slanted pentagonal light shafts (`PP_FOREST` (66)) for `EF_FORESTLIGHT` (307).
+    private func forestLight(texturePath: String, flag: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_forest)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+
+        let topOffset: SIMD3<Float> = flag == 10
+            ? SIMD3<Float>(-15.0, -60.0, -15.0)
+            : SIMD3<Float>(-70.0, -300.0, -70.0)
+        let topPos = position + topOffset
+        deltaPos = topPos
+
+        for i in 0..<4 {
+            primitive.state.slots[i].life = 1
+            primitive.state.slots[i].process = i == 3 ? 180 : 0
+            primitive.state.slots[i].alphaB = if flag == 2 || flag == 12 || flag == 13 {
+                30
+            } else if flag == 10 {
+                25
+            } else if flag == 11 {
+                0
+            } else {
+                40
+            }
+            primitive.state.slots[i].distance = 0
+
+            let radius: Float = if i == 3 {
+                if flag == 1 || flag == 11 {
+                    4.0
+                } else if flag == 2 || flag == 12 || flag == 13 {
+                    1.0
+                } else {
+                    2.0
+                }
+            } else if flag == 1 || flag == 11 {
+                Float(i * 2) + 4.0
+            } else if flag == 2 || flag == 12 || flag == 13 {
+                Float(i) * 0.5 + 1.0
+            } else {
+                Float(i) + 2.0
+            }
+
+            primitive.state.slots[i].maxHeight = radius
+            primitive.state.slots[i].height[0] = radius
+            primitive.state.slots[i].rotStart = Int16(i * 25)
+            primitive.state.slots[i].vecTNow = position
+            primitive.state.slots[i].vecTPre = topPos
+            primitive.state.slots[i].flag1[0] = flag
+        }
+    }
+
+    // MARK: - EF_FLOWERCAST (488)
+
+    /// Spawns dual-phase petal casting rings (`PP_FLOWERCAST` (108)) for `EF_FLOWERCAST` (488).
+    private func texturedSlashAir(texturePath: String, size: Int8, phase: Int8, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(.pp_flowercast)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = Float(size)
+
+        let configs: [(distance: Float, riseAngle: Int16, maxHeight: Float, rotStart: Int16)] = if phase == 0 {
+            [
+                (4.5, 85, 27.0, 0),
+                (5.0, 80, 28.0, 90),
+                (5.5, 70, 29.0, 180),
+                (5.0, 75, 30.0, 270),
+            ]
+        } else {
+            [
+                (5.5, 50, 30.0, 90),
+                (6.0, 55, 29.0, 180),
+                (6.5, 65, 28.0, 270),
+                (6.0, 60, 27.0, 0),
+            ]
+        }
+
+        for (i, config) in configs.enumerated() {
+            primitive.state.slots[i].life = 1
+            primitive.state.slots[i].process = 0
+            primitive.state.slots[i].fullDisplayAngle = 315
+            primitive.state.slots[i].alphaB = 0
+            primitive.state.slots[i].vecBNow.y = 0
+            primitive.state.slots[i].distance = config.distance
+            primitive.state.slots[i].riseAngle = config.riseAngle
+            primitive.state.slots[i].maxHeight = config.maxHeight
+            primitive.state.slots[i].rotStart = config.rotStart
+            primitive.state.slots[i].vecTNow.x = Float(config.riseAngle)
+            primitive.state.slots[i].vecTNow.y = config.maxHeight
+            for j in 0..<21 {
+                primitive.state.slots[i].height[j] = 0
+                primitive.state.slots[i].flag1[j] = 0
+            }
         }
     }
 

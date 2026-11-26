@@ -12,13 +12,154 @@ import simd
 extension EffectPrimitive {
 
     // MARK: - PP_3DQUADHORN (9)
-    // AdvanceEffectPrimitive / RenderPyramid
 
-    // MARK: - PP_3DSPLINE (10)
-    // ProcessAlpha, ShiftSegment / RenderRecordQuads
+    /// Motion update for `PP_3DQUADHORN` (9) advancing pyramid horn at 60Hz.
+    func advanceEffectPrimitive() {
+        let basePosition = master?.position ?? state.orgPos
+        state.orgPos = basePosition + state.deltaPos2
 
-    // MARK: - PP_3DSPIRAL (11)
-    // ProcessAlpha, ShiftSegment / RenderRecordQuads
+        if state.stateCnt == state.changePoint {
+            state.speed = state.changeSpeed
+            state.accel = state.changeAccel
+        }
+
+        state.speed += state.accel
+        state.speed3d = EffectSpace.transformVector(SIMD3<Float>(0, 0, state.speed), by: state.transform)
+        state.deltaPos += state.speed3d
+        position = state.deltaPos + state.orgPos
+
+        if (state.pattern & 1) != 0 && state.stateCnt == Int(state.chCnt) {
+            state.accel = 0
+            state.speed = 0
+        }
+
+        if (state.pattern & 2) != 0 {
+            if state.stateCnt == state.duration - 30 {
+                state.speed = state.changeSpeed3d.y
+                state.accel = state.changeAccel3d.y
+            }
+        } else {
+            processAlpha()
+        }
+    }
+
+    /// Geometry submission for `PP_3DQUADHORN` (9) and `PP_3DQUADHORN2` (117) four-sided pyramids.
+    func renderPyramid(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        let s = state.size
+        let h = state.heightSize
+        let faces: [(SIMD3<Float>, SIMD3<Float>, SIMD3<Float>)] = [
+            (SIMD3<Float>(-s, -s, 0), SIMD3<Float>(0, 0, h), SIMD3<Float>(s, -s, 0)),
+            (SIMD3<Float>(-s, -s, 0), SIMD3<Float>(0, 0, h), SIMD3<Float>(-s, s, 0)),
+            (SIMD3<Float>(-s, s, 0), SIMD3<Float>(0, 0, h), SIMD3<Float>(s, s, 0)),
+            (SIMD3<Float>(s, s, 0), SIMD3<Float>(0, 0, h), SIMD3<Float>(s, -s, 0)),
+        ]
+
+        let isSparkle = state.slots[0].flag1[0] == 3
+        if isSparkle {
+            let r = UInt32(Int.random(in: 0..<11))
+            let g = UInt32(Int.random(in: 0..<11))
+            state.argb = (((r << 8) &+ g) << 8) &- 0xD7D701
+        }
+
+        let color = EffectPrimitiveBatchCollector.unpackARGB(state.argb)
+        let texture = resolveTexture(at: 0, assets: assets)
+        let renderState: EffectPrimitiveRenderState = isSparkle
+            ? EffectPrimitiveRenderState(srcBlend: .sourceAlpha, dstBlend: .one, depthTest: true, depthWrite: false, cullMode: .none, bucket: .translucent)
+            : EffectPrimitiveRenderState(renderFlag: EffectPrimitiveState.RenderFlag.alpha)
+
+        var uVal: Float = 0
+        for face in faces {
+            let p0 = EffectSpace.transformVector(face.0, by: state.rotTransform) + position
+            let p1 = EffectSpace.transformVector(face.1, by: state.rotTransform) + position
+            let p2 = EffectSpace.transformVector(face.2, by: state.rotTransform) + position
+            let nextU = uVal + 0.2
+            let center = (p0 + p1 + p2) * (1.0 / 3.0)
+
+            collector.appendEffectTriangle(
+                p0: p0,
+                p1: p1,
+                p2: p2,
+                uv0: SIMD2<Float>(uVal, 1.0),
+                uv1: SIMD2<Float>(uVal, 0.0),
+                uv2: SIMD2<Float>(nextU, 1.0),
+                color0: color,
+                color1: color,
+                color2: color,
+                texture: texture,
+                renderState: renderState,
+                effectCenter: center
+            )
+            uVal = nextU
+        }
+    }
+
+    // MARK: - PP_3DSPLINE (10) / PP_3DSPIRAL (11)
+
+    /// Motion update for `PP_3DSPLINE` (10) and `PP_3DSPIRAL` (11) helical ribbon trails at 60Hz.
+    func prim3DSpiral() {
+        let basePosition = master?.position ?? state.orgPos
+        state.orgPos = basePosition + state.deltaPos2
+
+        let lon0 = Int(state.longitude)
+        let lon1 = Int(state.longitude + state.longSpeed)
+        let x0 = EffectSpace.sine(degrees: lon0) * state.radius + state.orgPos.x
+        let y0 = state.orgPos.y
+        let z0 = state.orgPos.z - EffectSpace.cosine(degrees: lon0) * state.radius
+        let x1 = EffectSpace.sine(degrees: lon1) * state.radius + state.orgPos.x
+        let y1 = state.orgPos.y
+        let z1 = state.orgPos.z - EffectSpace.cosine(degrees: lon1) * state.radius
+
+        state.segPos[0] = SIMD3<Float>(x0, y0, z0)
+        state.segPos[1] = SIMD3<Float>(x1, y1 + state.heightSpeed, z1)
+        state.segPos[2] = SIMD3<Float>(x0, y0 - state.size, z0)
+        state.segPos[3] = SIMD3<Float>(x1, y1 + state.heightSpeed - state.size, z1)
+
+        processAlpha()
+        shiftSegment()
+        state.longitude += state.longSpeed
+        state.deltaPos2.y += state.heightSpeed
+    }
+
+    /// Geometry submission for `PP_3DSPLINE` (10) and `PP_3DSPIRAL` (11) recorded trail quads.
+    func renderRecordQuads(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        let renderState = EffectPrimitiveRenderState(renderFlag: EffectPrimitiveState.RenderFlag.alpha)
+        let texture = resolveTexture(at: 0, assets: assets)
+        let segmentCount = min(max(0, state.numSegment), state.records.count)
+
+        for index in 0..<segmentCount {
+            let record = state.records[index]
+            let color = EffectPrimitiveBatchCollector.unpackARGB(record.color)
+            let c0 = record.corners[0]
+            let c1 = record.corners[1]
+            let c2 = record.corners[2]
+            let c3 = record.corners[3]
+            let center = (c0 + c1 + c2 + c3) * 0.25
+
+            collector.appendEffectQuad(
+                p0: c0,
+                p1: c1,
+                p2: c3,
+                p3: c2,
+                uv0: SIMD2<Float>(0, 1),
+                uv1: SIMD2<Float>(1, 1),
+                uv2: SIMD2<Float>(1, 0),
+                uv3: SIMD2<Float>(0, 0),
+                color0: color,
+                color1: color,
+                color2: color,
+                color3: color,
+                texture: texture,
+                renderState: renderState,
+                effectCenter: center
+            )
+        }
+    }
 
     // MARK: - PP_3DCIRCLE (12)
 
@@ -591,22 +732,489 @@ extension EffectPrimitive {
     }
 
     // MARK: - PP_FOREST (66)
-    // PrimForest / RenderPentagon
+
+    /// Motion update for `PP_FOREST` (66) forest light shafts at 60Hz.
+    func primForest() {
+        for index in 0..<4 where state.slots[index].life > 0 {
+            state.slots[index].process += 1
+            let process = state.slots[index].process
+
+            if state.slots[index].rotStart >= 360 {
+                state.slots[index].rotStart -= 360
+            }
+
+            let flag = state.slots[index].flag1[0]
+            if flag == 13 {
+                if process <= 40 {
+                    state.slots[index].alphaB += 1
+                }
+                state.slots[index].alphaB = max(0, state.slots[index].alphaB)
+            } else if flag >= 11 {
+                if process <= 40 {
+                    state.slots[index].alphaB += 1
+                } else if process > 140 {
+                    state.slots[index].alphaB -= 1
+                }
+                state.slots[index].alphaB = max(0, state.slots[index].alphaB)
+            }
+
+            if index == 1 || index == 3 {
+                let phase = (process % 720) / 2
+                state.slots[index].maxHeight = state.slots[index].height[0] + EffectSpace.sine(degrees: phase) * 0.5
+            }
+        }
+    }
+
+    /// Geometry submission for `PP_FOREST` (66) pentagonal slanted light shafts.
+    func renderPentagon(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        for slot in state.slots where slot.life == 1 && slot.alphaB > 0 {
+            let top = slot.vecTPre
+            let base = slot.vecTNow
+            let radius = slot.maxHeight
+            let (red, green, blue): (UInt8, UInt8, UInt8) = slot.flag1[0] == 13 ? (80, 80, 255) : (230, 255, 230)
+
+            var vec1 = SIMD3<Float>.zero
+            var vec4 = SIMD3<Float>.zero
+            for point in 0...5 {
+                var angle = Int(slot.rotStart) + point * 72
+                if angle >= 360 {
+                    angle -= 360
+                }
+                let dx = radius * EffectSpace.cosine(degrees: angle)
+                let dz = radius * EffectSpace.sine(degrees: angle)
+                let vec2 = SIMD3<Float>(base.x + dx, base.y, base.z + dz)
+                let vec3 = SIMD3<Float>(top.x + dx, top.y, top.z + dz)
+
+                if point != 0 {
+                    renderTeiRect(
+                        into: &collector,
+                        assets: assets,
+                        alpha: slot.alphaB,
+                        v1: vec1,
+                        v2: vec2,
+                        v3: vec3,
+                        v4: vec4,
+                        blendSelector: 0,
+                        textureIndex: 0,
+                        isWorldPosition: true,
+                        red: red,
+                        green: green,
+                        blue: blue
+                    )
+                }
+                vec1 = vec2
+                vec4 = vec3
+            }
+        }
+    }
 
     // MARK: - Primitive 69
-    // RenderPentaRing
+
+    /// Motion update for primitive `69` pentagonal ring beams at 60Hz.
+    func primPentaRing() {
+        for index in 0..<4 where state.slots[index].life > 0 {
+            state.slots[index].process += 1
+            let process = state.slots[index].process
+            guard process > 0 else {
+                continue
+            }
+
+            let style = state.slots[index].height[4]
+            if style == 5.0 {
+                if process > 20 {
+                    state.slots[index].alphaB = max(0, state.slots[index].alphaB - 2)
+                } else {
+                    state.slots[index].alphaB += 8
+                }
+            } else if process < 6 {
+                state.slots[index].alphaB += style == 2.0 ? 2 : 8
+            } else {
+                state.slots[index].alphaB = max(0, state.slots[index].alphaB - (style == 2.0 ? 1 : 4))
+            }
+
+            let rot = Int(state.slots[index].rotStart)
+            state.slots[index].vecTNow.x = state.slots[index].distance * EffectSpace.cosine(degrees: rot) + state.slots[index].vecBNow.x
+            state.slots[index].vecTNow.z = state.slots[index].distance * EffectSpace.sine(degrees: rot) + state.slots[index].vecBNow.z
+        }
+    }
+
+    /// Geometry submission for primitive `69` dual-pass pentagonal ring tubes.
+    func renderPentaRing(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        for slot in state.slots where slot.life == 1 && slot.alphaB > 0 {
+            let direction = ((Int(slot.rotStart) + 90) % 360 + 360) % 360
+            let dirCos = EffectSpace.cosine(degrees: direction)
+            let dirSin = EffectSpace.sine(degrees: direction)
+            let style = slot.height[4]
+
+            for pass in 0..<2 {
+                let radius: Float = if pass == 0 {
+                    slot.maxHeight
+                } else if style == 3.0 {
+                    slot.maxHeight * 2.0
+                } else {
+                    slot.maxHeight + 0.25
+                }
+
+                let blendSelector: Int16 = pass == 0 ? 1 : 0
+                let (red, green, blue, extra): (UInt8, UInt8, UInt8, Int8) = if style == 2.0 {
+                    (255, 255, 255, 0)
+                } else if style == 3.0 {
+                    (255, 89, 182, 0)
+                } else if style == 4.0 {
+                    (55, 55, 255, 1)
+                } else if style == 5.0 {
+                    (55, 55, 55, 1)
+                } else {
+                    (255, 255, pass == 0 ? 55 : 200, 0)
+                }
+
+                var prevB = SIMD3<Float>.zero
+                var prevT = SIMD3<Float>.zero
+                var i = 0
+                var angle = 0
+                while angle <= 360 {
+                    let across = radius * EffectSpace.cosine(degrees: angle)
+                    let offset = SIMD3<Float>(
+                        across * dirCos,
+                        radius * EffectSpace.sine(degrees: angle) - slot.height[0],
+                        across * dirSin
+                    )
+                    let curB = offset + slot.vecBNow
+                    let curT = offset + slot.vecTNow
+
+                    if i > 0 {
+                        renderTeiRect(
+                            into: &collector,
+                            assets: assets,
+                            alpha: slot.alphaB,
+                            v1: prevB,
+                            v2: curB,
+                            v3: curT,
+                            v4: prevT,
+                            blendSelector: blendSelector,
+                            textureIndex: 0,
+                            isWorldPosition: true,
+                            red: red,
+                            green: green,
+                            blue: blue,
+                            extra: extra
+                        )
+                    }
+
+                    prevB = curB
+                    prevT = curT
+                    i += 1
+                    angle += 72
+                }
+            }
+        }
+    }
 
     // MARK: - Primitive 74
-    // RenderHalfSphere2
+
+    /// Motion update for primitive `74` fade-in layered dome at 60Hz.
+    func primHalfSphere2() {
+        followMaster()
+
+        for index in 0..<4 where state.slots[index].life == 1 {
+            state.slots[index].process += 1
+            if state.slots[index].process < 11 && state.slots[index].alphaB < 100 {
+                state.slots[index].alphaB += 1
+            }
+        }
+    }
+
+    /// Geometry submission for primitive `74` multi-ring hemisphere mesh.
+    func renderHalfSphere2(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        for ec in 0..<4 where state.slots[ec].life == 1 {
+            let fullDisplayAngle = Int(state.slots[ec].fullDisplayAngle)
+            let step = fullDisplayAngle / 10
+            guard step > 0 else {
+                continue
+            }
+
+            let riseCos = EffectSpace.cosine(degrees: Int(state.slots[ec].riseAngle))
+            let riseSin = EffectSpace.sine(degrees: Int(state.slots[ec].riseAngle))
+            var level = 0
+
+            for _ in 0..<10 {
+                var count = 0
+                while count <= fullDisplayAngle {
+                    let angle = (Int(state.slots[ec].rotStart) + count) % 360
+                    let cs = EffectSpace.cosine(degrees: angle)
+                    let sn = EffectSpace.sine(degrees: angle)
+                    let dist = state.slots[ec].distance
+                    let curB = SIMD3<Float>(dist * cs, 0, dist * sn)
+                    state.slots[ec].vecBNow = curB
+
+                    let radius = state.slots[ec].height[level]
+                    let spread = radius * riseCos
+                    let curT = SIMD3<Float>(spread * cs + curB.x, -(radius * riseSin), spread * sn + curB.z)
+                    state.slots[ec].vecTNow = curT
+
+                    if level > 0 {
+                        renderTeiRect(
+                            into: &collector,
+                            assets: assets,
+                            texPart: level - 1,
+                            alphaB: state.slots[ec].alphaB,
+                            alphaT: state.slots[ec].alphaB,
+                            v1: state.slots[ec].vecBPre,
+                            v2: curB,
+                            v3: curT,
+                            v4: state.slots[ec].vecTPre,
+                            textureIndex: 0
+                        )
+                    }
+
+                    level = min(20, level + 1)
+                    state.slots[ec].vecBPre = curB
+                    state.slots[ec].vecTPre = curT
+                    count += step
+                }
+            }
+        }
+    }
 
     // MARK: - Primitive 81
-    // RenderBeam
+
+    /// Motion update for primitive `81` pulsing crossed light beams at 60Hz.
+    func primBeam() {
+        followMaster()
+
+        for index in 0..<4 where state.slots[index].life > 0 {
+            state.slots[index].process += 1
+            if state.slots[index].distance < 10.0 {
+                state.slots[index].distance *= 1.02
+            }
+            if state.slots[index].process > 500 && state.slots[index].alphaB > 0 {
+                state.slots[index].alphaB -= 1
+            }
+            var displayAngle = Int16(Int(Float(state.slots[index].fullDisplayAngle) + state.slots[index].maxHeight))
+            if displayAngle >= 360 {
+                displayAngle -= 360
+            }
+            state.slots[index].fullDisplayAngle = displayAngle
+        }
+    }
+
+    /// Geometry submission for primitive `81` crossed tapered light beams.
+    func renderBeam(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        for slot in state.slots where slot.life == 1 && slot.alphaB > 0 {
+            let length = slot.distance * EffectSpace.sine(degrees: Int(slot.fullDisplayAngle)) + slot.distance
+            let reach = length * EffectSpace.cosine(degrees: Int(slot.riseAngle))
+            let tip = SIMD3<Float>(
+                reach * EffectSpace.cosine(degrees: Int(slot.rotStart)),
+                length * EffectSpace.sine(degrees: Int(slot.riseAngle)) - slot.height[3],
+                reach * EffectSpace.sine(degrees: Int(slot.rotStart))
+            )
+
+            let red = UInt8(truncatingIfNeeded: Int(slot.height[0]))
+            let green = UInt8(truncatingIfNeeded: Int(slot.height[1]))
+            let blue = UInt8(truncatingIfNeeded: Int(slot.height[2]))
+            let baseY = -slot.height[3]
+
+            renderTeiRect(
+                into: &collector,
+                assets: assets,
+                alpha: slot.alphaB,
+                v1: SIMD3<Float>(0.5, baseY, 0),
+                v2: tip,
+                v3: tip,
+                v4: SIMD3<Float>(-0.5, baseY, 0),
+                blendSelector: 0,
+                textureIndex: 0,
+                isWorldPosition: false,
+                red: red,
+                green: green,
+                blue: blue
+            )
+            renderTeiRect(
+                into: &collector,
+                assets: assets,
+                alpha: slot.alphaB,
+                v1: SIMD3<Float>(0, baseY, 0.5),
+                v2: tip,
+                v3: tip,
+                v4: SIMD3<Float>(0, baseY, -0.5),
+                blendSelector: 0,
+                textureIndex: 0,
+                isWorldPosition: false,
+                red: red,
+                green: green,
+                blue: blue
+            )
+        }
+    }
 
     // MARK: - Primitive 98
-    // RenderRing
+
+    /// Motion update for primitive `98` expanding vertical ring quad at 60Hz.
+    func primRing98() {
+        guard state.slots[0].life == 1 else {
+            return
+        }
+
+        state.slots[0].process += 1
+        let process = state.slots[0].process
+        if process < 50 {
+            state.slots[0].distance += 0.1
+        }
+        if process <= 5 {
+            state.slots[0].alphaB += 50
+        } else {
+            state.slots[0].alphaB = max(0, state.slots[0].alphaB - 3)
+        }
+    }
+
+    /// Geometry submission for primitive `98` vertical oriented ring quad.
+    func renderRing(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        let angles = [90, 180, 270, 0]
+        for slot in state.slots where slot.life == 1 && slot.alphaB > 0 {
+            let dist = slot.distance
+            let center = slot.vecBNow
+            let riseCos = EffectSpace.cosine(degrees: Int(slot.riseAngle))
+            let riseSin = EffectSpace.sine(degrees: Int(slot.riseAngle))
+
+            let corners = angles.map { angle -> SIMD3<Float> in
+                let radial = dist * EffectSpace.cosine(degrees: angle)
+                return SIMD3<Float>(
+                    riseCos * radial + center.x,
+                    dist * EffectSpace.sine(degrees: angle) + center.y,
+                    riseSin * radial + center.z
+                )
+            }
+
+            renderTeiRect(
+                into: &collector,
+                assets: assets,
+                alpha: slot.alphaB,
+                v1: corners[0],
+                v2: corners[1],
+                v3: corners[2],
+                v4: corners[3],
+                blendSelector: 0,
+                textureIndex: 0,
+                isWorldPosition: true,
+                red: 60,
+                green: 60,
+                blue: 255
+            )
+        }
+    }
 
     // MARK: - Primitive 103
-    // PrimSpinFade / RenderStackedRings
+
+    /// Motion update for primitive `103` spinning stacked ring layers at 60Hz.
+    func primSpinFade() {
+        for index in 0..<4 where state.slots[index].life == 1 {
+            state.slots[index].process += 1
+            let process = state.slots[index].process
+            guard process > 0 else {
+                continue
+            }
+
+            let turn = Int.random(in: 0..<3)
+            var rot = state.slots[index].rotStart + Int16(turn + 3)
+            if rot >= 360 {
+                rot -= 360
+            }
+            state.slots[index].rotStart = rot
+
+            let mode = state.slots[index].flag1[5]
+            if mode == 1 {
+                if process > 120 {
+                    state.slots[index].alphaB -= 1
+                }
+            } else if mode != 10 && process > 60 {
+                state.slots[index].alphaB -= 1
+            }
+
+            if process <= 40 {
+                state.slots[index].alphaB += 1
+            }
+            if state.slots[index].alphaB < 0 {
+                state.slots[index].alphaB = 0
+            }
+        }
+    }
+
+    /// Geometry submission for primitive `103` stacked concentric horizontal quads.
+    func renderStackedRings(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        for slot in state.slots where slot.life == 1 && slot.alphaB > 0 {
+            var y = -slot.height[0]
+            var radius = slot.maxHeight
+            let count = Int(slot.flag1[0])
+            guard count > 0 else {
+                continue
+            }
+
+            for i in 0..<count {
+                if i > 0 {
+                    y += slot.height[1]
+                    radius -= (2.2 - Float(i) * 0.2) * slot.distance
+                }
+
+                var angle = (Int(slot.rotStart) + 45 * i) % 360
+                if angle < 0 {
+                    angle += 360
+                }
+                let vec1 = SIMD3<Float>(radius * EffectSpace.cosine(degrees: angle), y - 1.0, radius * EffectSpace.sine(degrees: angle))
+                angle = (angle + 90) % 360
+                let vec2 = SIMD3<Float>(radius * EffectSpace.cosine(degrees: angle), y - 1.0, radius * EffectSpace.sine(degrees: angle))
+                angle = (angle + 90) % 360
+                let vec3 = SIMD3<Float>(radius * EffectSpace.cosine(degrees: angle), y, radius * EffectSpace.sine(degrees: angle))
+                angle = (angle + 90) % 360
+                let vec4 = SIMD3<Float>(radius * EffectSpace.cosine(degrees: angle), y, radius * EffectSpace.sine(degrees: angle))
+
+                switch slot.flag1[4] {
+                case 0:
+                    renderTeiRect(into: &collector, assets: assets, alpha: slot.alphaB, v1: vec1, v2: vec2, v3: vec3, v4: vec4, blendSelector: 0, textureIndex: 0, isWorldPosition: false, red: 50, green: 50, blue: 255)
+                case 1:
+                    renderTeiRect(into: &collector, assets: assets, alpha: slot.alphaB, v1: vec1, v2: vec2, v3: vec3, v4: vec4, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 164, green: 136, blue: 55)
+                case 2:
+                    renderTeiRect(into: &collector, assets: assets, alpha: slot.alphaB, v1: vec1, v2: vec2, v3: vec3, v4: vec4, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 155, green: 255, blue: 155)
+                case 3:
+                    renderTeiRect(into: &collector, assets: assets, alpha: slot.alphaB, v1: vec1, v2: vec2, v3: vec3, v4: vec4, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 130, green: 130, blue: 255)
+                case 4:
+                    renderTeiRect(into: &collector, assets: assets, alpha: slot.alphaB, v1: vec1, v2: vec2, v3: vec3, v4: vec4, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 255, green: 50, blue: 50)
+                case 5:
+                    renderTeiRect(into: &collector, assets: assets, alpha: slot.alphaB, v1: vec1, v2: vec2, v3: vec3, v4: vec4, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 5, green: 5, blue: 5)
+                case 6:
+                    renderTeiRect(into: &collector, assets: assets, alpha: slot.alphaB, v1: vec1, v2: vec2, v3: vec3, v4: vec4, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 255, green: 255, blue: 255)
+                case 7:
+                    renderTeiRect(into: &collector, assets: assets, alpha: slot.alphaB, v1: vec1, v2: vec2, v3: vec3, v4: vec4, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 255, green: 125, blue: 255)
+                case 8:
+                    renderTeiRect(into: &collector, assets: assets, alpha: slot.alphaB / 10, v1: vec1, v2: vec2, v3: vec3, v4: vec4, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 225, green: 225, blue: 255)
+                case 10:
+                    renderTeiRect(into: &collector, assets: assets, alpha: slot.alphaB, v1: vec1, v2: vec2, v3: vec3, v4: vec4, blendSelector: 0, textureIndex: 0, isWorldPosition: false, red: 125, green: 125, blue: 255)
+                case 11:
+                    renderTeiRect(into: &collector, assets: assets, alpha: slot.alphaB / 3, v1: vec1, v2: vec2, v3: vec3, v4: vec4, blendSelector: 1, textureIndex: 0, isWorldPosition: false, red: 255, green: 255, blue: 255)
+                    renderTeiRect(into: &collector, assets: assets, alpha: slot.alphaB, v1: vec1, v2: vec2, v3: vec3, v4: vec4, blendSelector: 0, textureIndex: 0, isWorldPosition: false, red: 255, green: 55, blue: 55)
+                default:
+                    break
+                }
+            }
+        }
+    }
 
     // MARK: - PP_HALFSPHERE (104)
 
@@ -712,7 +1320,109 @@ extension EffectPrimitive {
     }
 
     // MARK: - Primitive 105
-    // RenderCone
+
+    /// Motion update for primitive `105` forward-facing spinning cone at 60Hz.
+    func primCone(context: EffectTickContext) {
+        followMaster()
+        let parentAngle = parentFacingAngle(world: context.world)
+
+        for index in 0..<4 where state.slots[index].life == 1 {
+            state.slots[index].process += 1
+            guard state.slots[index].process > 0 else {
+                continue
+            }
+
+            if index < 2 {
+                state.slots[index].riseAngle += 1
+            }
+            if state.slots[index].riseAngle >= 360 {
+                state.slots[index].riseAngle -= 360
+            }
+
+            var rotStart = Int16(parentAngle + 180.0)
+            if rotStart >= 360 {
+                rotStart -= 360
+            }
+            state.slots[index].rotStart = rotStart
+
+            let angle = Int(rotStart) + (rotStart < 270 ? 90 : -270)
+            state.slots[index].vecTNow.x = EffectSpace.cosine(degrees: angle) * 5.0
+            state.slots[index].vecTNow.z = EffectSpace.sine(degrees: angle) * 5.0
+
+            if state.slots[index].alphaB < 40 {
+                state.slots[index].alphaB += 5
+            }
+        }
+    }
+
+    /// Geometry submission for primitive `105` 20-segment flared cone.
+    func renderCone(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        for slot in state.slots where slot.life == 1 && slot.alphaB > 0 {
+            let fullDisplayAngle = Int(slot.fullDisplayAngle)
+            let step = fullDisplayAngle / 20
+            guard step > 0 else {
+                continue
+            }
+
+            let rotCos = EffectSpace.cosine(degrees: Int(slot.rotStart))
+            let rotSin = EffectSpace.sine(degrees: Int(slot.rotStart))
+            let scale = slot.height[0]
+            let outerRadius = scale * slot.distance * 0.1 + slot.distance
+
+            var texPart = 0
+            var vec1 = SIMD3<Float>.zero
+            var vec4 = SIMD3<Float>.zero
+            var count = 0
+            while count <= fullDisplayAngle {
+                var angle = Int(slot.riseAngle) + count
+                if angle >= 360 {
+                    angle -= 360
+                }
+                if fullDisplayAngle == 360 && count == 360 {
+                    angle = Int(slot.riseAngle)
+                }
+
+                let cs = EffectSpace.cosine(degrees: angle)
+                let sn = EffectSpace.sine(degrees: angle)
+                let inner = slot.distance * sn
+                let outer = outerRadius * sn
+
+                let vec2 = SIMD3<Float>(
+                    slot.vecTNow.x + inner * rotCos,
+                    slot.distance * cs - slot.maxHeight,
+                    slot.vecTNow.z + inner * rotSin
+                )
+                let vec3 = SIMD3<Float>(
+                    outer * rotCos - slot.vecTNow.x * scale,
+                    outerRadius * cs - slot.maxHeight,
+                    outer * rotSin - slot.vecTNow.z * scale
+                )
+
+                if count > 0 {
+                    renderTeiRect(
+                        into: &collector,
+                        assets: assets,
+                        texPart: texPart - 1,
+                        alphaB: slot.alphaB,
+                        alphaT: slot.alphaB,
+                        v1: vec1,
+                        v2: vec2,
+                        v3: vec3,
+                        v4: vec4,
+                        textureIndex: 0
+                    )
+                }
+
+                texPart = min(20, texPart + 1)
+                vec1 = vec2
+                vec4 = vec3
+                count += step
+            }
+        }
+    }
 
     // MARK: - PP_HERMODE (114)
 
@@ -779,10 +1489,123 @@ extension EffectPrimitive {
     }
 
     // MARK: - PP_3DQUADHORN2 (117)
-    // ProcessAlpha / RenderPyramid
+
+    /// Motion update for `PP_3DQUADHORN2` (117) pulsing pyramid horn at 60Hz.
+    func prim3DQuadHorn2() {
+        let basePosition = master?.position ?? state.orgPos
+        state.orgPos = basePosition + state.deltaPos2
+
+        let frame = state.stateCnt
+        if frame < 550 {
+            if frame % 6 == 2 {
+                state.speed = state.changeSpeed
+                state.accel = state.changeAccel
+            } else if frame % 6 == 5 {
+                state.speed = 1.18
+                state.accel = 0.01
+            }
+        } else if frame == 550 {
+            state.speed = state.changeSpeed
+            state.accel = state.changeAccel
+        }
+
+        state.speed += state.accel
+        state.speed3d = EffectSpace.transformVector(SIMD3<Float>(0, 0, state.speed), by: state.transform)
+        state.deltaPos += state.speed3d
+        position = state.orgPos + state.deltaPos
+        processAlpha()
+    }
 
     // MARK: - Primitive 126
-    // Get_Angle / RenderRotatedRing
+
+    /// Motion update for primitive `126` trailing rotated ring projectile at 60Hz.
+    func primRotatedRing() {
+        guard state.slots[0].life == 1 else {
+            return
+        }
+
+        state.slots[0].process += 1
+        let process = state.slots[0].process
+        guard process > 0 else {
+            return
+        }
+
+        state.slots[0].riseAngle += 30
+        if state.slots[0].riseAngle > 359 {
+            state.slots[0].riseAngle -= 360
+        }
+
+        if process == 1 {
+            state.slots[0].rotStart = Self.angle(
+                dx: state.deltaPos.x - position.x,
+                dy: state.deltaPos.z - position.z
+            )
+        } else if process < 11 {
+            state.slots[0].alphaB = min(60, state.slots[0].alphaB + 6)
+            state.slots[0].height[1] *= 1.02
+        } else {
+            state.slots[0].alphaB -= 3
+            state.slots[0].height[1] *= 1.04
+            if state.slots[0].alphaB < 0 {
+                state.slots[0].alphaB = 0
+                state.slots[0].life = 0
+            }
+        }
+
+        let rot = Int(state.slots[0].rotStart)
+        state.slots[0].vecBNow.x += state.slots[0].height[1] * EffectSpace.cosine(degrees: rot)
+        state.slots[0].vecBNow.z += state.slots[0].height[1] * EffectSpace.sine(degrees: rot)
+
+        if process % 3 == 0 {
+            for index in stride(from: 3, through: 1, by: -1) {
+                state.slots[index].vecBNow = state.slots[index - 1].vecBNow
+                state.slots[index].alphaB = Int16(Float(state.slots[index - 1].alphaB) * 0.8)
+                state.slots[index].riseAngle = state.slots[index - 1].riseAngle
+            }
+        }
+    }
+
+    /// Geometry submission for primitive `126` rotated ring trail quads.
+    func renderRotatedRing(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        for slot in state.slots where slot.life == 1 && slot.alphaB > 0 {
+            let cs = EffectSpace.cosine(degrees: Int(slot.rotStart))
+            let sn = EffectSpace.sine(degrees: Int(slot.rotStart))
+            let dist = slot.distance
+            let center = slot.vecBNow
+            var angle = Int(slot.riseAngle)
+
+            var corners = [SIMD3<Float>]()
+            corners.reserveCapacity(4)
+            for _ in 0..<4 {
+                angle += angle + 90 < 360 ? 90 : -270
+                let radial = dist * EffectSpace.cosine(degrees: angle)
+                corners.append(SIMD3<Float>(
+                    cs * radial + center.x,
+                    dist * EffectSpace.sine(degrees: angle) + center.y,
+                    radial * sn + center.z
+                ))
+            }
+
+            renderTeiRect(
+                into: &collector,
+                assets: assets,
+                alpha: slot.alphaB,
+                v1: corners[0],
+                v2: corners[1],
+                v3: corners[2],
+                v4: corners[3],
+                blendSelector: 0,
+                textureIndex: 0,
+                isWorldPosition: true,
+                red: 80,
+                green: 255,
+                blue: 80
+            )
+        }
+    }
 
     // MARK: - Shared Helpers
 

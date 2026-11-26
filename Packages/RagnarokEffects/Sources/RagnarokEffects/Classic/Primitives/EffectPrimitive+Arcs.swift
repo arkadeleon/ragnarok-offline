@@ -11,7 +11,119 @@ import simd
 extension EffectPrimitive {
 
     // MARK: - PP_WIND (62)
-    // PrimWind / RenderRiseArc
+
+    /// Motion update for `PP_WIND` (62) orbiting wind ribbon arcs at 60Hz.
+    func primWind() {
+        for index in 0..<4 where state.slots[index].life == 1 {
+            state.slots[index].process += 1
+            let process = state.slots[index].process
+            guard process > 0 else {
+                continue
+            }
+
+            state.slots[index].rotStart += 5
+            if state.slots[index].rotStart >= 360 {
+                state.slots[index].rotStart -= 360
+            }
+
+            let mode = state.slots[index].alphaT
+            let maxArc: Int16 = mode == 2 ? 180 : 120
+            state.slots[index].fullDisplayAngle = min(maxArc, state.slots[index].fullDisplayAngle + 3)
+
+            if mode == 1 {
+                if process > 20 {
+                    state.slots[index].alphaB = max(0, state.slots[index].alphaB - 2)
+                    state.slots[index].distance += 0.1
+                }
+            } else if mode == 2 {
+                if process > 50 {
+                    state.slots[index].alphaB = max(0, state.slots[index].alphaB - 1)
+                }
+                if process > 12 {
+                    state.slots[index].distance += 0.1
+                }
+            }
+
+            if process > 1400 {
+                if mode != 3 {
+                    state.slots[index].alphaB -= 3
+                }
+                if state.slots[index].alphaB < 0 {
+                    state.slots[index].alphaB = 0
+                }
+            }
+
+            if mode == 2 {
+                if process < 12 {
+                    state.slots[index].alphaB += 1
+                }
+            } else if process < 12 {
+                state.slots[index].alphaB = min(250, state.slots[index].alphaB + 10)
+            }
+        }
+    }
+
+    /// Geometry submission for `PP_WIND` (62) elevated rising ribbon arcs.
+    func renderRiseArc(
+        into collector: inout EffectPrimitiveBatchCollector,
+        assets: EffectAssetStore?
+    ) {
+        for ec in 0..<4 where state.slots[ec].life == 1 {
+            let fullDisplayAngle = Int(state.slots[ec].fullDisplayAngle)
+            let step = fullDisplayAngle / 21
+            guard step > 0 else {
+                continue
+            }
+
+            let riseCos = EffectSpace.cosine(degrees: Int(state.slots[ec].riseAngle))
+            let riseSin = EffectSpace.sine(degrees: Int(state.slots[ec].riseAngle))
+            let maxHeight = state.slots[ec].maxHeight
+            let dist = state.slots[ec].distance
+
+            var i = 0
+            var offset = 0
+            while offset < fullDisplayAngle {
+                var angle = (Int(state.slots[ec].rotStart) + offset) % 360
+                if angle < 0 {
+                    angle += 360
+                }
+                if fullDisplayAngle == 360 && i == 20 {
+                    angle = Int(state.slots[ec].rotStart)
+                }
+
+                let cosine = EffectSpace.cosine(degrees: angle)
+                let sine = EffectSpace.sine(degrees: angle)
+                let curB = SIMD3<Float>(cosine * dist, -maxHeight, sine * dist)
+                state.slots[ec].vecBNow = curB
+
+                let height = state.slots[ec].height[i]
+                let riseX = riseCos * height
+                let riseY = riseSin * height
+                let curT = SIMD3<Float>(curB.x + cosine * riseX, -(riseY + maxHeight), curB.z + sine * riseX)
+                state.slots[ec].vecTNow = curT
+
+                if i > 0 {
+                    renderTeiRect(
+                        into: &collector,
+                        assets: assets,
+                        texPart: i - 1,
+                        alphaB: state.slots[ec].alphaB,
+                        alphaT: state.slots[ec].alphaB,
+                        v1: state.slots[ec].vecBPre,
+                        v2: curB,
+                        v3: curT,
+                        v4: state.slots[ec].vecTPre,
+                        textureIndex: 0
+                    )
+                }
+
+                i = min(20, i + 1)
+                state.slots[ec].vecBPre = curB
+                state.slots[ec].vecTPre = curT
+                offset += step
+            }
+        }
+    }
 
     // MARK: - Primitive 137
 

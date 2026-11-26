@@ -1871,4 +1871,192 @@ struct EffectPrimitiveTests {
             #expect(c168.batches.reduce(0) { $0 + $1.vertices.count } == p1CellCount * 6)
         }
     }
+
+    @Test("Casting, Geometry, and Wind primitives with EF_FROSTDIVER2 / EF_WIND / EF_FORESTLIGHT / EF_FLOWERCAST demos")
+    func castingGeometryAndWindPrimitivesAndDemos() {
+        let world = MockWorldContext()
+        world.targets[1] = EffectTargetState(objectID: 1, worldPosition: .zero, facingAngle: 45)
+
+        // EF_FROSTDIVER2 (28): plays sound and launches 8 PP_3DQUADHORN pyramids (4 triangles each = 96 verts)
+        let frostManager = EffectManager()
+        #expect(frostManager.spawn(EffectSpawnRequest(effectID: .ef_frostdiver2, worldPosition: .zero)) != nil)
+        frostManager.stepOneTick(world: world)
+        #expect(world.playedSounds == ["effect\\EF_FrostDiver2.wav"])
+        let frostHost = frostManager.activeEffects.first as? RagEffect
+        #expect(frostHost?.primitives.count == 8)
+        #expect(frostHost?.primitives.allSatisfy { $0.id == .pp_3dquadhorn } == true)
+        let frostPayloads = frostManager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(frostPayloads.reduce(0) { $0 + $1.vertices.count } == 8 * 4 * 3)
+
+        // EF_WIND (224): plays sound and launches PP_WIND (4 ribbon arc slots)
+        world.playedSounds.removeAll()
+        let windManager = EffectManager()
+        #expect(windManager.spawn(EffectSpawnRequest(effectID: .ef_wind, worldPosition: .zero)) != nil)
+        windManager.stepOneTick(world: world)
+        #expect(world.playedSounds == ["_heal_effect.wav"])
+        let windHost = windManager.activeEffects.first as? RagEffect
+        #expect(windHost?.primitives.count == 1)
+        #expect(windHost?.primitives.first?.id == .pp_wind)
+        let windPayloads = windManager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(windPayloads.reduce(0) { $0 + $1.vertices.count } > 0)
+
+        // EF_FORESTLIGHT (307): launches PP_FOREST (4 slots * 5 pentagon sides = 20 quads = 120 verts)
+        let forestManager = EffectManager()
+        #expect(forestManager.spawn(EffectSpawnRequest(effectID: .ef_forestlight, worldPosition: .zero)) != nil)
+        forestManager.stepOneTick(world: world)
+        let forestHost = forestManager.activeEffects.first as? RagEffect
+        #expect(forestHost?.primitives.count == 1)
+        #expect(forestHost?.primitives.first?.id == .pp_forest)
+        let forestPayloads = forestManager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(forestPayloads.reduce(0) { $0 + $1.vertices.count } == 4 * 5 * 6)
+
+        // EF_FLOWERCAST (488): launches 2 PP_FLOWERCAST primitives (fullDisplayAngle 315 / step 15 => 21 segments per slot)
+        let flowerManager = EffectManager()
+        #expect(flowerManager.spawn(EffectSpawnRequest(effectID: .ef_flowercast, worldPosition: .zero)) != nil)
+        flowerManager.stepOneTick(world: world)
+        let flowerHost = flowerManager.activeEffects.first as? RagEffect
+        #expect(flowerHost?.primitives.count == 2)
+        #expect(flowerHost?.primitives.allSatisfy { $0.id == .pp_flowercast } == true)
+        let flowerPayloads = flowerManager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(flowerPayloads.reduce(0) { $0 + $1.vertices.count } == 2 * 4 * 21 * 6)
+
+        let dummyHost = RagEffect(id: UUID(), request: EffectSpawnRequest(effectID: .ef_none, worldPosition: .zero, targetObjectID: 1), duration: 200)
+        let ctx = EffectTickContext(world: world, assets: nil, currentTick: 0, usesMinimalEffects: false) { _ in }
+
+        // Remaining +Casting primitives using render3DCasting / render3DCastingLowPolygon
+        let castingRingIDs: [(EffectPrimitiveID, Int)] = [
+            (30, 20), (31, 20), (36, 10), (41, 20), (50, 20), (57, 20),
+            (63, 20), (113, 20), (.pp_aciddemon, 20), (139, 20), (169, 10),
+        ]
+        for (primID, expectedQuads) in castingRingIDs {
+            let prim = dummyHost.launchPrimitive(primID)
+            prim.state.slots[0].life = 1
+            prim.state.slots[0].fullDisplayAngle = 360
+            prim.state.slots[0].distance = 3.0
+            prim.state.slots[0].maxHeight = 12.0
+            prim.state.slots[0].riseAngle = 75
+            prim.state.slots[0].alphaB = 80
+            prim.state.slots[0].flag1[1] = 10
+            prim.tick(context: ctx)
+            var collector = EffectPrimitiveBatchCollector(fog: Fog())
+            prim.collectBatches(into: &collector, world: world, assets: nil)
+            #expect(collector.batches.reduce(0) { $0 + $1.vertices.count } == expectedQuads * 6)
+        }
+
+        // Halo layer casting primitives: PP_ASURACASTING (68) & 147
+        for primID: EffectPrimitiveID in [.pp_asuracasting, 147] {
+            let prim = dummyHost.launchPrimitive(primID)
+            prim.state.slots[0].life = 1
+            prim.state.slots[0].distance = 5.0
+            prim.state.slots[0].flag1[4] = 1
+            prim.tick(context: ctx)
+            var collector = EffectPrimitiveBatchCollector(fog: Fog())
+            prim.collectBatches(into: &collector, world: world, assets: nil)
+            #expect(collector.batches.reduce(0) { $0 + $1.vertices.count } == 10 * 6)
+        }
+
+        // Remaining +Geometry primitives: 10, 11, 69, 74, 81, 98, 103, 105, 117, 126
+        for primID: EffectPrimitiveID in [.pp_3dspline, .pp_3dspiral] {
+            let prim = dummyHost.launchPrimitive(primID)
+            prim.state.numSegment = 3
+            prim.state.radius = 5.0
+            prim.state.longSpeed = 15.0
+            prim.state.size = 4.0
+            prim.initSegment()
+            prim.tick(context: ctx)
+            var collector = EffectPrimitiveBatchCollector(fog: Fog())
+            prim.collectBatches(into: &collector, world: world, assets: nil)
+            #expect(collector.batches.reduce(0) { $0 + $1.vertices.count } == 3 * 6)
+        }
+
+        // 69: RenderPentaRing (2 passes * 5 sides = 10 quads)
+        let p69 = dummyHost.launchPrimitive(69)
+        p69.state.slots[0].life = 1
+        p69.state.slots[0].distance = 10.0
+        p69.state.slots[0].maxHeight = 2.0
+        p69.tick(context: ctx)
+        var c69 = EffectPrimitiveBatchCollector(fog: Fog())
+        p69.collectBatches(into: &c69, world: world, assets: nil)
+        #expect(c69.batches.reduce(0) { $0 + $1.vertices.count } == 10 * 6)
+
+        // 74: RenderHalfSphere2 (10 rings * 11 angles - 1 = 109 quads)
+        let p74 = dummyHost.launchPrimitive(74)
+        p74.state.slots[0].life = 1
+        p74.state.slots[0].fullDisplayAngle = 360
+        p74.state.slots[0].distance = 6.0
+        p74.state.slots[0].riseAngle = 45
+        p74.state.slots[0].alphaB = 50
+        p74.tick(context: ctx)
+        var c74 = EffectPrimitiveBatchCollector(fog: Fog())
+        p74.collectBatches(into: &c74, world: world, assets: nil)
+        #expect(c74.batches.reduce(0) { $0 + $1.vertices.count } == 109 * 6)
+
+        // 81: RenderBeam (2 crossed quads)
+        let p81 = dummyHost.launchPrimitive(81)
+        p81.state.slots[0].life = 1
+        p81.state.slots[0].distance = 6.0
+        p81.state.slots[0].alphaB = 120
+        p81.state.slots[0].maxHeight = 5.0
+        p81.tick(context: ctx)
+        var c81 = EffectPrimitiveBatchCollector(fog: Fog())
+        p81.collectBatches(into: &c81, world: world, assets: nil)
+        #expect(c81.batches.reduce(0) { $0 + $1.vertices.count } == 2 * 6)
+
+        // 98: RenderRing (1 vertical quad)
+        let p98 = dummyHost.launchPrimitive(98)
+        p98.state.slots[0].life = 1
+        p98.state.slots[0].distance = 4.0
+        p98.tick(context: ctx)
+        var c98 = EffectPrimitiveBatchCollector(fog: Fog())
+        p98.collectBatches(into: &c98, world: world, assets: nil)
+        #expect(c98.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // 103: RenderStackedRings (3 stacked quads)
+        let p103 = dummyHost.launchPrimitive(103)
+        p103.state.slots[0].life = 1
+        p103.state.slots[0].flag1[0] = 3
+        p103.state.slots[0].maxHeight = 8.0
+        p103.state.slots[0].distance = 1.0
+        p103.tick(context: ctx)
+        var c103 = EffectPrimitiveBatchCollector(fog: Fog())
+        p103.collectBatches(into: &c103, world: world, assets: nil)
+        #expect(c103.batches.reduce(0) { $0 + $1.vertices.count } == 3 * 6)
+
+        // 105: RenderCone (20 flared quads)
+        let p105 = dummyHost.launchPrimitive(105)
+        p105.state.slots[0].life = 1
+        p105.state.slots[0].fullDisplayAngle = 360
+        p105.state.slots[0].distance = 6.0
+        p105.state.slots[0].maxHeight = 4.0
+        p105.state.slots[0].height[0] = 1.0
+        p105.tick(context: ctx)
+        var c105 = EffectPrimitiveBatchCollector(fog: Fog())
+        p105.collectBatches(into: &c105, world: world, assets: nil)
+        #expect(c105.batches.reduce(0) { $0 + $1.vertices.count } == 20 * 6)
+
+        // 117: PP_3DQUADHORN2 (4 pyramid triangles = 12 verts)
+        let p117 = dummyHost.launchPrimitive(.pp_3dquadhorn2)
+        p117.state.size = 2.0
+        p117.state.heightSize = 6.0
+        p117.tick(context: ctx)
+        var c117 = EffectPrimitiveBatchCollector(fog: Fog())
+        p117.collectBatches(into: &c117, world: world, assets: nil)
+        #expect(c117.batches.reduce(0) { $0 + $1.vertices.count } == 4 * 3)
+
+        // 126: RenderRotatedRing (trailing rotated ring quads)
+        let p126 = dummyHost.launchPrimitive(126)
+        p126.state.deltaPos = SIMD3<Float>(10, 0, 0)
+        for i in 0..<4 {
+            p126.state.slots[i].life = 1
+            p126.state.slots[i].distance = 3.0
+        }
+        p126.state.slots[0].height[1] = 1.0
+        for _ in 0..<3 {
+            p126.tick(context: ctx)
+        }
+        #expect(p126.state.slots[1].alphaB > 0)
+        var c126 = EffectPrimitiveBatchCollector(fog: Fog())
+        p126.collectBatches(into: &c126, world: world, assets: nil)
+        #expect(c126.batches.reduce(0) { $0 + $1.vertices.count } == 2 * 6)
+    }
 }
