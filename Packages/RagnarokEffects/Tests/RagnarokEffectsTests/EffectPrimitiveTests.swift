@@ -23,6 +23,7 @@ struct EffectPrimitiveTests {
         var cameraPitchDegrees: Float = 0
         var targets: [EffectTargetID : EffectTargetState] = [:]
         var playedSounds: [String] = []
+        var cameraShakeCount: Int = 0
 
         func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float {
             0
@@ -37,6 +38,7 @@ struct EffectPrimitiveTests {
         }
 
         func shakeCamera(amplitude: Float, duration: TimeInterval, frequency: Float) {
+            cameraShakeCount += 1
         }
 
         func applyTargetModifier(_ modifier: EffectTargetModifier, to targetID: EffectTargetID) {
@@ -2058,5 +2060,251 @@ struct EffectPrimitiveTests {
         var c126 = EffectPrimitiveBatchCollector(fog: Fog())
         p126.collectBatches(into: &c126, world: world, assets: nil)
         #expect(c126.batches.reduce(0) { $0 + $1.vertices.count } == 2 * 6)
+    }
+
+    @Test("Ground, Lines, and Panels remaining primitives with EF_ELECTRIC/EF_ELECTRIC2/EF_GROUNDSAMPLE/EF_POISON/EF_DUST demos")
+    func groundLinesAndPanelsRemainingPrimitivesAndDemos() {
+        let world = MockWorldContext()
+        world.cameraYawDegrees = 45
+        world.cameraPitchDegrees = 25
+
+        // 1. EF_ELECTRIC (432): spawns PP_ELECTRIC on ticks 20...23 (2 per tick = 8 total) and plays T_전기.wav on tick 25
+        let elecManager = EffectManager()
+        #expect(elecManager.spawn(EffectSpawnRequest(effectID: .ef_electric, worldPosition: .zero)) != nil)
+        for _ in 0..<26 {
+            elecManager.stepOneTick(world: world)
+        }
+        #expect(world.playedSounds == ["effect\\T_전기.wav"])
+        let elecHost = elecManager.activeEffects.first as? RagEffect
+        #expect(elecHost?.primitives.count == 8)
+        #expect(elecHost?.primitives.allSatisfy { $0.id == .pp_electric } == true)
+        let elecPayloads = elecManager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(elecPayloads.reduce(0) { $0 + $1.vertices.count } > 0)
+
+        // 2. EF_ELECTRIC2 (433): spawns 2 PP_ELECTRIC2 lightning tubes on tick 0
+        let elec2Manager = EffectManager()
+        #expect(elec2Manager.spawn(EffectSpawnRequest(effectID: .ef_electric2, worldPosition: .zero)) != nil)
+        for _ in 0..<3 {
+            elec2Manager.stepOneTick(world: world)
+        }
+        let elec2Host = elec2Manager.activeEffects.first as? RagEffect
+        #expect(elec2Host?.primitives.count == 2)
+        #expect(elec2Host?.primitives.allSatisfy { $0.id == .pp_electric2 } == true)
+        let elec2Payloads = elec2Manager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(elec2Payloads.reduce(0) { $0 + $1.vertices.count } > 0)
+
+        // 3. EF_GROUNDSAMPLE (513): spawns primitive 112 and projects 7x7 * 2 passes = 98 quads = 588 verts
+        let groundManager = EffectManager()
+        #expect(groundManager.spawn(EffectSpawnRequest(effectID: .ef_groundsample, worldPosition: SIMD3<Float>(2, 0, -2))) != nil)
+        groundManager.stepOneTick(world: world)
+        let groundHost = groundManager.activeEffects.first as? RagEffect
+        #expect(groundHost?.primitives.count == 1)
+        #expect(groundHost?.primitives.first?.id == 112)
+        let groundPayloads = groundManager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(groundPayloads.reduce(0) { $0 + $1.vertices.count } == 7 * 7 * 2 * 6)
+
+        // 4. EF_POISON (335): spawns primitive 72 and emits 10 * 6 = 60 grid quads = 360 verts
+        let poisonManager = EffectManager()
+        #expect(poisonManager.spawn(EffectSpawnRequest(effectID: .ef_poison, worldPosition: .zero)) != nil)
+        poisonManager.stepOneTick(world: world)
+        let poisonHost = poisonManager.activeEffects.first as? RagEffect
+        #expect(poisonHost?.primitives.count == 1)
+        #expect(poisonHost?.primitives.first?.id == 72)
+        let poisonPayloads = poisonManager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(poisonPayloads.reduce(0) { $0 + $1.vertices.count } == 10 * 6 * 6)
+
+        // 5. EF_DUST (689): spawns PP_EFFECTTEXTURE_ANI (128) with 9 dust frames and cycles every 8 ticks
+        let dustManager = EffectManager()
+        #expect(dustManager.spawn(EffectSpawnRequest(effectID: .ef_dust, worldPosition: .zero)) != nil)
+        dustManager.stepOneTick(world: world)
+        let dustHost = dustManager.activeEffects.first as? RagEffect
+        let dustPrim = dustHost?.primitives.first
+        #expect(dustPrim?.id == .pp_effecttexture_ani)
+        #expect(dustPrim?.state.texturePaths.count == 9)
+        let dustPayloads = dustManager.collectPrimitivePayloads(fog: Fog(), world: world)
+        #expect(dustPayloads.reduce(0) { $0 + $1.vertices.count } > 0)
+        for _ in 0..<7 {
+            dustManager.stepOneTick(world: world)
+        }
+        #expect(dustPrim?.state.slots[0].flag1[0] == 1)
+
+        let dummyHost = RagEffect(id: UUID(), request: EffectSpawnRequest(effectID: .ef_none, worldPosition: .zero), duration: 200)
+        let ctx = EffectTickContext(world: world, assets: nil, currentTick: 0, usesMinimalEffects: false) { _ in }
+        let minCtx = EffectTickContext(world: world, assets: nil, currentTick: 0, usesMinimalEffects: true) { _ in }
+
+        // +Ground: 27 (PP_MAPPARTICLE), 29, 44, 55 (PP_CHEMICAL2), 56 (PP_CHEMICAL3), 80
+        let p27 = dummyHost.launchPrimitive(.pp_mapparticle)
+        p27.state.slots[0].life = 1
+        p27.state.slots[0].distance = 2.0
+        p27.state.slots[0].vecBPre = SIMD3<Float>(0, -5, 0)
+        p27.state.slots[0].vecBNow = SIMD3<Float>(0, -5, 0)
+        p27.state.slots[0].vecTPre = SIMD3<Float>(0, -5, 0)
+        p27.state.slots[0].vecTNow = SIMD3<Float>(0, -5, 0)
+        p27.tick(context: ctx)
+        var c27 = EffectPrimitiveBatchCollector(fog: Fog())
+        p27.collectBatches(into: &c27, world: world, assets: nil)
+        #expect(c27.batches.reduce(0) { $0 + $1.vertices.count } == 4 * 6)
+
+        for primID: EffectPrimitiveID in [29, 80] {
+            let prim = dummyHost.launchPrimitive(primID)
+            prim.state.slots[0].life = 1
+            prim.state.slots[0].distance = 2.0
+            prim.state.slots[0].maxHeight = 0.2
+            prim.state.slots[0].flag1[0] = 3
+            prim.state.slots[0].vecBPre = SIMD3<Float>(0, -5, 0)
+            prim.state.slots[0].vecBNow = SIMD3<Float>(0, -5, 0)
+            prim.state.slots[0].vecTPre = SIMD3<Float>(0, -5, 0)
+            prim.state.slots[0].vecTNow = SIMD3<Float>(0, -5, 0)
+            prim.tick(context: ctx)
+            var collector = EffectPrimitiveBatchCollector(fog: Fog())
+            prim.collectBatches(into: &collector, world: world, assets: nil)
+            #expect(collector.batches.reduce(0) { $0 + $1.vertices.count } == 4 * 6)
+        }
+
+        // 44: PrimExpandPulse respects usesMinimalEffects when flag1[1] == 24
+        let p44 = dummyHost.launchPrimitive(44)
+        p44.state.slots[0].life = 1
+        p44.state.slots[0].process = 10
+        p44.state.slots[0].distance = 5.0
+        p44.state.slots[0].height[0] = 0.5
+        p44.state.slots[0].height[1] = 1.0
+        p44.state.slots[0].flag1[1] = 24
+        p44.tick(context: minCtx)
+        #expect(p44.state.slots[0].alphaB == 8)
+        var c44 = EffectPrimitiveBatchCollector(fog: Fog())
+        p44.collectBatches(into: &c44, world: world, assets: nil)
+        #expect(c44.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // 55 (PP_CHEMICAL2) & 56 (PP_CHEMICAL3)
+        let p55 = dummyHost.launchPrimitive(.pp_chemical2)
+        p55.state.slots[0].life = 1
+        p55.state.slots[0].distance = 10.0
+        p55.state.slots[0].maxHeight = 4.0
+        p55.tick(context: ctx)
+        #expect(p55.state.slots[0].alphaB == 4)
+        var c55 = EffectPrimitiveBatchCollector(fog: Fog())
+        p55.collectBatches(into: &c55, world: world, assets: nil)
+        #expect(c55.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        let p56 = dummyHost.launchPrimitive(.pp_chemical3)
+        p56.state.slots[0].life = 1
+        p56.state.slots[0].distance = 100.0
+        p56.state.slots[0].maxHeight = 4.0
+        p56.state.slots[0].height[2] = 10.0
+        p56.state.slots[0].flag1[0] = 0
+        p56.tick(context: ctx)
+        #expect(p56.state.slots[0].alphaB == 12)
+        var c56 = EffectPrimitiveBatchCollector(fog: Fog())
+        p56.collectBatches(into: &c56, world: world, assets: nil)
+        #expect(c56.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // +Lines: 19 (PP_3DFLASH), 20 (PP_3DLINE), 171
+        let p19 = dummyHost.launchPrimitive(.pp_3dflash)
+        p19.state.heightSize = 30
+        p19.state.arcAngle = 15
+        p19.tick(context: ctx)
+        var c19 = EffectPrimitiveBatchCollector(fog: Fog())
+        p19.collectBatches(into: &c19, world: world, assets: nil)
+        #expect(c19.batches.first?.mode == .screen2D)
+        #expect(c19.batches.reduce(0) { $0 + $1.vertices.count } == 3)
+
+        let p20 = dummyHost.launchPrimitive(.pp_3dline)
+        p20.tick(context: ctx)
+        #expect(approxEqual(p20.position.y, 5.0))
+        var c20 = EffectPrimitiveBatchCollector(fog: Fog())
+        p20.collectBatches(into: &c20, world: world, assets: nil)
+        #expect(c20.batches.reduce(0) { $0 + $1.vertices.count } == 3)
+
+        let p171 = dummyHost.launchPrimitive(171)
+        p171.state.slots[0].life = 1
+        p171.state.slots[0].distance = 3.0
+        p171.tick(context: ctx)
+        #expect(p171.state.slots[0].alphaB == 4)
+        var c171 = EffectPrimitiveBatchCollector(fog: Fog())
+        p171.collectBatches(into: &c171, world: world, assets: nil)
+        #expect(c171.batches.reduce(0) { $0 + $1.vertices.count } == 2 * 6)
+
+        // +Panels: 26, 28, 39, 67, 88, 161 (RenderSizedSquare)
+        for primID: EffectPrimitiveID in [26, 28, 39, 67, 88, 161] {
+            let prim = dummyHost.launchPrimitive(primID)
+            prim.state.size = 110.0
+            prim.state.slots[0].life = 1
+            prim.state.slots[0].distance = 8.0
+            prim.state.slots[0].alphaB = 120
+            prim.tick(context: ctx)
+            var collector = EffectPrimitiveBatchCollector(fog: Fog())
+            prim.collectBatches(into: &collector, world: world, assets: nil)
+            #expect(collector.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+        }
+
+        // 32: RenderLayeredGlow (flag1[0] == 21 emits 4 glow layers)
+        let p32 = dummyHost.launchPrimitive(32)
+        p32.state.slots[0].life = 1
+        p32.state.slots[0].distance = 4.0
+        p32.state.slots[0].alphaB = 120
+        p32.state.slots[0].flag1[0] = 21
+        p32.tick(context: ctx)
+        var c32 = EffectPrimitiveBatchCollector(fog: Fog())
+        p32.collectBatches(into: &c32, world: world, assets: nil)
+        #expect(c32.batches.reduce(0) { $0 + $1.vertices.count } == 4 * 6)
+
+        // 33: PrimFieldFireflies / RenderFieldPanel
+        let p33 = dummyHost.launchPrimitive(33)
+        p33.state.slots[0].life = 1
+        p33.state.slots[0].distance = 3.0
+        p33.state.slots[0].height[7] = 5.0
+        p33.state.slots[0].rotStart = 100
+        p33.tick(context: ctx)
+        #expect(p33.state.slots[0].alphaB == 2)
+        var c33 = EffectPrimitiveBatchCollector(fog: Fog())
+        p33.collectBatches(into: &c33, world: world, assets: nil)
+        #expect(c33.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // 79: RenderScrollColumn (5 vertical segments when maxHeight > 0)
+        let p79 = dummyHost.launchPrimitive(79)
+        p79.state.slots[0].life = 1
+        p79.state.slots[0].alphaB = 180
+        p79.state.slots[0].distance = 6.0
+        p79.state.slots[0].maxHeight = 10.0
+        p79.tick(context: ctx)
+        var c79 = EffectPrimitiveBatchCollector(fog: Fog())
+        p79.collectBatches(into: &c79, world: world, assets: nil)
+        #expect(c79.batches.reduce(0) { $0 + $1.vertices.count } == 5 * 6)
+
+        // 82 (PrimAuraGlow) & 95 (PP_EFFECTTEXTURE2) -> RenderTeiFacingSlots
+        for primID: EffectPrimitiveID in [82, .pp_effecttexture2] {
+            let prim = dummyHost.launchPrimitive(primID)
+            prim.state.slots[0].life = 1
+            prim.state.slots[0].distance = 5.0
+            prim.state.slots[0].flag1[2] = 17
+            prim.tick(context: ctx)
+            #expect(prim.state.slots[0].alphaB > 0)
+            var collector = EffectPrimitiveBatchCollector(fog: Fog())
+            prim.collectBatches(into: &collector, world: world, assets: nil)
+            #expect(collector.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+        }
+
+        // 87: PrimBubbleSwirl triggers camera shake on process == 33 when flag1[4] == 0
+        let p87 = dummyHost.launchPrimitive(87)
+        p87.state.slots[0].life = 1
+        p87.state.slots[0].distance = 4.0
+        p87.state.slots[0].alphaB = 150
+        p87.state.slots[0].process = 32
+        p87.state.slots[0].flag1[4] = 0
+        p87.tick(context: ctx)
+        #expect(world.cameraShakeCount == 1)
+        var c87 = EffectPrimitiveBatchCollector(fog: Fog())
+        p87.collectBatches(into: &c87, world: world, assets: nil)
+        #expect(c87.batches.reduce(0) { $0 + $1.vertices.count } == 6)
+
+        // 172: PrimPoison + renderTintOverlay172 (1 full-screen-facing overlay quad)
+        let p172 = dummyHost.launchPrimitive(172)
+        p172.state.argb = 0xFF336699
+        p172.state.slots[0].life = 1
+        p172.tick(context: ctx)
+        #expect(p172.state.slots[0].alphaB == 5)
+        var c172 = EffectPrimitiveBatchCollector(fog: Fog())
+        p172.collectBatches(into: &c172, world: world, assets: nil)
+        #expect(c172.batches.reduce(0) { $0 + $1.vertices.count } == 6)
     }
 }

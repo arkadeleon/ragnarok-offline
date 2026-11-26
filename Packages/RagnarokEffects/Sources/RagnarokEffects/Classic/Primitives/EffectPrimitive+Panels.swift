@@ -11,19 +11,336 @@ import simd
 extension EffectPrimitive {
 
     // MARK: - Primitive 26
-    // RenderSizedSquare
+
+    /// Motion update for primitive `26` rotating floor square with texture animation at 60Hz.
+    func primFloorSpin26() {
+        followMaster()
+
+        if state.slots[0].height[4] == 14.0 {
+            state.slots[0].rotStart -= 1
+            if state.slots[0].rotStart < 0 {
+                state.slots[0].rotStart += 360
+            }
+        } else {
+            state.slots[0].rotStart += 1
+            if state.slots[0].rotStart >= 360 {
+                state.slots[0].rotStart -= 360
+            }
+        }
+
+        advanceTextureFrame()
+    }
 
     // MARK: - Primitive 28
-    // RenderSizedSquare
+
+    /// Motion update for primitive `28` twin pulsing floor squares with texture animation at 60Hz.
+    func primFloorPulse28() {
+        followMaster()
+
+        for index in 0..<2 {
+            state.slots[index].riseAngle += 3
+            if state.slots[index].riseAngle >= 360 {
+                state.slots[index].riseAngle -= 360
+            }
+        }
+
+        advanceTextureFrame()
+    }
 
     // MARK: - Primitive 32
-    // PrimDriftingOrbs / RenderLayeredGlow
+
+    /// Motion update for primitive `32` orbiting layered-glow orbs at 60Hz.
+    func primDriftingOrbs(context: EffectTickContext) {
+        faceCamera(world: context.world)
+        followMaster()
+
+        guard state.slots[0].life == 1 else {
+            return
+        }
+
+        state.slots[0].process += 1
+        if state.slots[0].process <= 200 {
+            state.slots[0].alphaB += 1
+        }
+
+        Self.driftSlotAngles(&state.slots[0], count: 3)
+
+        let flag0 = state.slots[0].flag1[0]
+        if flag0 != 0 && flag0 < 20 {
+            if flag0 >= 10 {
+                let period = max(1, Int(flag0) - 9)
+                switch state.isChangeProcessed {
+                case 0:
+                    if state.slots[0].process % period == 0 {
+                        state.slots[0].height[6] += 1.0
+                        if state.slots[0].height[6] >= 360.0 {
+                            state.slots[0].height[6] -= 360.0
+                        }
+                    }
+                    state.slots[0].distance = 6.0
+                    state.slots[0].height[7] = -15.0
+                case 1:
+                    if state.slots[0].process % period == 0 {
+                        state.slots[0].height[6] += 15.0
+                        if state.slots[0].height[6] >= 360.0 {
+                            state.slots[0].height[6] -= 360.0
+                        }
+                    }
+                    state.slots[0].height[7] = max(-30.0, state.slots[0].height[7] - 0.1)
+                    state.slots[0].distance = min(10.0, state.slots[0].distance + 0.02)
+                default:
+                    break
+                }
+            } else if state.slots[0].process % 2 == 0 {
+                state.slots[0].height[6] += 1.0
+                if state.slots[0].height[6] >= 360.0 {
+                    state.slots[0].height[6] -= 360.0
+                }
+            }
+        } else {
+            state.slots[0].height[6] += 1.0
+            if state.slots[0].height[6] >= 360.0 {
+                state.slots[0].height[6] -= 360.0
+            }
+        }
+
+        let wobbleScale: Float
+        let orbitRadius: Float
+        if state.slots[0].height[10] == 1.0 {
+            wobbleScale = 0.7
+            orbitRadius = 5.5
+        } else {
+            wobbleScale = (flag0 == 0 || flag0 >= 20) ? 1.0 : 0.5
+            orbitRadius = 7.0
+        }
+
+        let h0 = EffectSpace.sine(degrees: Int(state.slots[0].height[0]))
+        let h2 = EffectSpace.sine(degrees: Int(state.slots[0].height[2]))
+        let h4 = EffectSpace.sine(degrees: Int(state.slots[0].height[4]))
+        let orbitAngle = Int(state.slots[0].height[6])
+        state.slots[0].vecBNow = SIMD3<Float>(
+            h0 * wobbleScale + EffectSpace.sine(degrees: orbitAngle) * orbitRadius,
+            h4 * wobbleScale + state.slots[0].height[7],
+            h2 * wobbleScale + EffectSpace.cosine(degrees: orbitAngle) * orbitRadius
+        )
+
+        state.slots[0].height[8] += Float(Int.random(in: 0..<5) + 5)
+        if state.slots[0].height[8] >= 360.0 {
+            state.slots[0].height[8] -= 360.0
+        }
+    }
+
+    /// Geometry submission for primitive `32`, rendering multi-layer camera-facing glow orbs.
+    func renderLayeredGlow(into collector: inout EffectPrimitiveBatchCollector, assets: EffectAssetStore?) {
+        let slot = state.slots[0]
+        guard slot.life == 1, slot.alphaB > 0 else {
+            return
+        }
+
+        let rot0 = slot.alphaT
+        let rot1 = state.slots[1].alphaT
+        let alpha = slot.alphaB
+        let drift = EffectSpace.sine(degrees: Int(slot.height[8])) * slot.distance * 0.05
+
+        func emitLayer(scale: Float, layerAlpha: Int16, pw: Int16, r: UInt8, g: UInt8, b: UInt8) {
+            let rx = slot.distance * scale + drift
+            let corners = Self.facingSquareCorners(radius: rx, startAngle: 0, rot0: rot0, rot1: rot1)
+            renderTeiRect(
+                into: &collector,
+                assets: assets,
+                alpha: layerAlpha,
+                v1: corners.0 + slot.vecBNow,
+                v2: corners.1 + slot.vecBNow,
+                v3: corners.2 + slot.vecBNow,
+                v4: corners.3 + slot.vecBNow,
+                blendSelector: pw,
+                textureIndex: 0,
+                isWorldPosition: false,
+                red: r,
+                green: g,
+                blue: b
+            )
+        }
+
+        if slot.flag1[0] == 21 {
+            emitLayer(scale: 3.0, layerAlpha: alpha / 2, pw: 0, r: 0, g: 0, b: 255)
+            emitLayer(scale: 1.7, layerAlpha: alpha, pw: 0, r: 0, g: 0, b: 255)
+        } else if slot.flag1[0] == 20 {
+            emitLayer(scale: 1.3, layerAlpha: alpha, pw: 0, r: 0, g: 0, b: 255)
+        }
+
+        let pw: Int16 = state.isChangeProcessed == 1 ? 0 : 10
+        let midStyle: (pw: Int16, r: UInt8, g: UInt8, b: UInt8) = switch slot.flag1[0] {
+        case 1: (0, 68, 42, 30)
+        case 10: (pw, 255, 50, 50)
+        case 11: (pw, 200, 200, 50)
+        case 12: (pw, 50, 50, 255)
+        case 13: (pw, 255, 255, 255)
+        case 20, 21: (0, 40, 40, 255)
+        default: (0, 0, 0, 255)
+        }
+        emitLayer(scale: 1.0, layerAlpha: alpha, pw: midStyle.pw, r: midStyle.r, g: midStyle.g, b: midStyle.b)
+
+        let innerStyle: (r: UInt8, g: UInt8, b: UInt8) = switch slot.flag1[0] {
+        case 1: (255, 255, 255)
+        case 10: (255, 50, 50)
+        case 11: (200, 200, 50)
+        case 12: (50, 50, 255)
+        case 13: (100, 150, 100)
+        case 20: (150, 150, 255)
+        case 21: (250, 250, 255)
+        default: (255, 255, 0)
+        }
+        emitLayer(scale: 0.5, layerAlpha: alpha, pw: 0, r: innerStyle.r, g: innerStyle.g, b: innerStyle.b)
+    }
 
     // MARK: - Primitive 33
-    // PrimFieldFireflies / RenderFieldPanel
+
+    /// Motion update for primitive `33` drifting ambient field fireflies at 60Hz.
+    func primFieldFireflies(context: EffectTickContext) {
+        faceCamera(world: context.world)
+        followMaster()
+
+        for index in 0..<4 where state.slots[index].life == 1 {
+            let mode = state.slots[index].height[7]
+            if mode < 99.0 {
+                state.slots[index].process += 1
+                let process = state.slots[index].process
+
+                if state.slots[index].flag1[2] == 23 && process % 14 == 0 {
+                    state.slots[index].flag1[0] += 1
+                    if state.slots[index].flag1[0] > 5 {
+                        state.slots[index].flag1[0] = 0
+                    }
+                }
+
+                if mode == 0.0 {
+                    if process < 80 && position.y < state.slots[index].height[6] {
+                        state.slots[index].alphaB += 2
+                    }
+                } else if mode == 2.0 || mode == 5.0 {
+                    if process < 80 {
+                        state.slots[index].alphaB += 2
+                    }
+                } else if mode == 3.0 {
+                    if process < 170 {
+                        state.slots[index].alphaB += 1
+                    }
+                } else if mode == 11.0 || mode == 12.0 || mode == 13.0 || mode == 14.0 {
+                    if process < 70 {
+                        state.slots[index].alphaB += 1
+                    }
+                } else if process < 80 {
+                    state.slots[index].alphaB += 3
+                }
+
+                if process > Int(state.slots[index].rotStart) {
+                    state.slots[index].alphaB -= 1
+                    if state.slots[index].alphaB <= 0 {
+                        state.slots[index].process = 0
+                        state.slots[index].alphaB = 0
+
+                        let respawn = state.slots[index].height[7]
+                        var offsetX: Float
+                        var offsetZ: Float
+                        if respawn == 0.0 {
+                            if position.y > state.slots[index].height[6] {
+                                state.slots[index].process = 300
+                            }
+                            offsetX = Float(Int.random(in: 0..<300) - 150)
+                            offsetZ = Float(Int.random(in: 0..<300) - 150)
+                        } else if respawn == 2.0 || respawn == 5.0 {
+                            offsetX = Float(Int.random(in: 0..<300) - 150)
+                            offsetZ = Float(Int.random(in: 0..<300) - 150)
+                        } else if respawn == 3.0 {
+                            offsetX = Float(Int.random(in: 0..<300) - 150)
+                            offsetZ = Float(Int.random(in: 0..<300) - 150)
+                            let sink = Float(Int.random(in: 0..<5))
+                            let terrainY = context.world.terrainHeight(
+                                atEffectX: position.x + offsetX,
+                                effectZ: position.z + offsetZ
+                            )
+                            state.slots[index].vecBNow.y = terrainY - 20.0 - sink
+                        } else {
+                            offsetX = Float(Int.random(in: 0..<200) + 25)
+                            offsetZ = Float(Int.random(in: 0..<200) + 25)
+                            if Int.random(in: 0..<2) == 0 {
+                                offsetX = -offsetX
+                            }
+                            if Int.random(in: 0..<2) == 0 {
+                                offsetZ = -offsetZ
+                            }
+                        }
+
+                        state.slots[index].vecBNow.x = position.x + offsetX
+                        state.slots[index].vecBNow.z = position.z + offsetZ
+                    }
+                }
+
+                Self.driftSlotAngles(&state.slots[index], count: 2)
+
+                let sinX = EffectSpace.sine(degrees: Int(state.slots[index].height[0]))
+                let sinZ = EffectSpace.sine(degrees: Int(state.slots[index].height[2]))
+                let motion = state.slots[index].height[7]
+                if motion == 3.0 {
+                    state.slots[index].vecBNow.x += sinX * 0.015
+                    state.slots[index].vecBNow.z += sinZ * 0.015
+                } else if motion == 4.0 {
+                    state.slots[index].vecBNow.x += abs(sinX) * 0.2
+                    state.slots[index].vecBNow.z += sinZ * 0.05
+                } else if motion == 5.0 {
+                    state.slots[index].vecBNow.x += sinX * 0.035
+                    state.slots[index].vecBNow.z += sinZ * 0.035
+                } else {
+                    state.slots[index].vecBNow.x += sinX * 0.05
+                    state.slots[index].vecBNow.z += sinZ * 0.05
+                }
+            }
+
+            state.slots[index].height[8] += 1.0
+            if state.slots[index].height[8] >= 360.0 {
+                state.slots[index].height[8] -= 360.0
+            }
+        }
+    }
 
     // MARK: - Primitive 39
-    // RenderSizedSquare
+
+    /// Motion update for primitive `39` twin rotating pulsing floor squares at 60Hz.
+    func primFloorSpin39() {
+        followMaster()
+
+        for index in 0..<2 where state.slots[index].life == 1 {
+            let mode = state.slots[index].height[4]
+            if mode == 4.0 {
+                state.slots[index].rotStart += 6
+                if state.slots[index].rotStart >= 360 {
+                    state.slots[index].rotStart -= 360
+                }
+            } else if mode == 10.0 || mode == 11.0 || mode == 12.0 {
+                state.slots[index].rotStart += 3
+                if state.slots[index].rotStart >= 360 {
+                    state.slots[index].rotStart -= 360
+                }
+            }
+
+            if mode == 2.0 {
+                state.slots[index].riseAngle += 1
+            } else if mode == 10.0 {
+                if state.slots[index].rotStart < 181 {
+                    state.slots[index].distance -= 0.3
+                } else {
+                    state.slots[index].distance += 0.3
+                }
+            } else if mode != 11.0 && mode != 12.0 {
+                state.slots[index].riseAngle += 3
+            }
+
+            if state.slots[index].riseAngle >= 360 {
+                state.slots[index].riseAngle -= 360
+            }
+        }
+    }
 
     // MARK: - PP_PARTICLE_UP (59)
 
@@ -77,25 +394,374 @@ extension EffectPrimitive {
     }
 
     // MARK: - Primitive 67
-    // RenderSizedSquare
+
+    /// Motion update for primitive `67` slow-fading floor square at 60Hz.
+    func primFadeSquare67() {
+        followMaster()
+        state.slots[0].process += 1
+        if state.slots[0].process > 0 {
+            if state.slots[0].process % 2 > 0 {
+                state.slots[0].alphaB -= 1
+            }
+            if state.slots[0].alphaB < 0 {
+                state.slots[0].alphaB = 0
+            }
+        }
+    }
 
     // MARK: - Primitive 79
-    // RenderTeiRect
+
+    /// Motion update for primitive `79` scrolling column panels at 60Hz.
+    func primScrollColumn() {
+        for index in 0..<4 where state.slots[index].life > 0 {
+            state.slots[index].process += 1
+        }
+    }
+
+    /// Geometry submission for primitive `79`, rendering vertically scrolling tiled column panels.
+    func renderScrollColumn(into collector: inout EffectPrimitiveBatchCollector, assets: EffectAssetStore?) {
+        for index in 0..<4 {
+            let slot = state.slots[index]
+            guard slot.life == 1, slot.alphaB > 0 else {
+                continue
+            }
+
+            var frames = Int(slot.maxHeight)
+            let cycle: Int
+            var scroll: Float
+            if frames == 0 {
+                cycle = 0
+                scroll = 40.0
+                frames = 1
+            } else {
+                cycle = slot.process % (frames * 3)
+                scroll = Float(slot.process % frames) * 40.0 / Float(frames)
+            }
+
+            let direction = slot.flag1[1]
+            if direction == 1 || direction == 10 {
+                scroll = 40.0 - scroll
+            }
+
+            let halfWidth = slot.distance * 0.5
+            let left = -halfWidth
+            let right = halfWidth
+            let depth = slot.vecBNow.z
+            let shift = cycle / frames
+
+            for i in 0..<5 {
+                if frames == 1 && i > 0 {
+                    break
+                }
+
+                var top = scroll - slot.height[i]
+                var bottom = scroll - slot.height[i + 1]
+                if slot.flag1[2] > 10 {
+                    let scale = 10.0 / Float(slot.flag1[2])
+                    top *= scale
+                    bottom *= scale
+                }
+
+                var v4 = SIMD3<Float>(left, top, depth)
+                var v1 = SIMD3<Float>(left, bottom, depth)
+                var v2 = SIMD3<Float>(right, bottom, depth)
+                var v3 = SIMD3<Float>(right, top, depth)
+
+                if slot.flag1[0] == 1 {
+                    v4 = SIMD3<Float>(depth, top, left)
+                    v1 = SIMD3<Float>(depth, bottom, left)
+                    v2 = SIMD3<Float>(depth, bottom, right)
+                    v3 = SIMD3<Float>(depth, top, right)
+                }
+
+                var textureIndex = i % 3
+                if direction == 1 || direction == 10 {
+                    textureIndex -= shift
+                    while textureIndex < 0 {
+                        textureIndex += 3
+                    }
+                } else {
+                    textureIndex += shift
+                    if textureIndex > 2 {
+                        textureIndex -= 3
+                    }
+                }
+
+                let (pw, r, g, b): (Int16, UInt8, UInt8, UInt8) = switch direction {
+                case 1: (0, 55, 55, 255)
+                case 10: (0, 255, 55, 255)
+                default: (1, 255, 255, 255)
+                }
+
+                let v1Coord: Float
+                let v2Coord: Float
+                if i == 0 {
+                    let cut = scroll * 0.025
+                    top -= (top - bottom) * cut
+                    v4.y = top
+                    v3.y = top
+                    v1Coord = cut
+                    v2Coord = 1.0
+                } else if i == 4 {
+                    let cut = scroll * 0.025
+                    bottom = (top - bottom) * (1.0 - cut) + bottom
+                    v1.y = bottom
+                    v2.y = bottom
+                    v1Coord = 0.0
+                    v2Coord = cut
+                } else {
+                    v1Coord = 0.0
+                    v2Coord = 1.0
+                }
+
+                renderTeiRect(
+                    into: &collector,
+                    assets: assets,
+                    alpha: slot.alphaB,
+                    v1: v1,
+                    v2: v2,
+                    v3: v3,
+                    v4: v4,
+                    blendSelector: pw,
+                    textureIndex: textureIndex,
+                    isWorldPosition: false,
+                    red: r,
+                    green: g,
+                    blue: b,
+                    v1Coord: v1Coord,
+                    v2Coord: v2Coord
+                )
+            }
+        }
+    }
 
     // MARK: - Primitive 82
-    // PrimAuraGlow / RenderTeiFacingSlots
+
+    /// Motion update for primitive `82` character aura glow billboards at 60Hz.
+    func primAuraGlow(context: EffectTickContext) {
+        faceCamera(world: context.world)
+        followMaster()
+
+        guard state.slots[0].life == 1 else {
+            return
+        }
+
+        state.slots[0].process += 1
+        let process = state.slots[0].process
+        let kind = state.slots[0].flag1[4]
+
+        if process < 300 {
+            if kind == 1 || kind == 3 {
+                if process < 200 {
+                    state.slots[0].alphaB = min(220, state.slots[0].alphaB + 10)
+                } else {
+                    state.slots[0].alphaB = max(0, state.slots[0].alphaB - 5)
+                }
+            } else if kind == 22 {
+                state.slots[0].alphaB = min(220, state.slots[0].alphaB + 10)
+            } else if kind == 0 {
+                state.slots[0].alphaB += 1
+            } else if kind == 20 {
+                state.slots[0].alphaB = min(200, state.slots[0].alphaB + 5)
+            } else if kind >= 16 && kind <= 18 {
+                state.slots[0].alphaB = 100
+            } else if kind >= 10 && kind <= 12 {
+                state.slots[0].alphaB = 150
+            } else if kind == 14 {
+                state.slots[0].alphaB = 50
+            } else if kind >= 10 {
+                state.slots[0].alphaB = 250
+            }
+        }
+
+        if kind == 2 {
+            if process > 40 {
+                let delta: Int16 = process >= 62 ? -8 : 8
+                state.slots[0].alphaB += delta
+                if state.slots[0].alphaB > 0 {
+                    state.slots[0].distance += 0.7
+                }
+            }
+            if process > 300 && state.slots[0].alphaB > 0 {
+                state.slots[0].alphaB -= 1
+            }
+        } else if kind == 16 || kind == 17 {
+            if (process & 1) == 0 {
+                state.slots[0].fullDisplayAngle -= 1
+            }
+            if state.slots[0].fullDisplayAngle < 0 {
+                state.slots[0].fullDisplayAngle += 360
+            }
+        } else if kind < 20 {
+            if kind == 18 {
+                if state.slots[0].fullDisplayAngle < 0 {
+                    state.slots[0].fullDisplayAngle += 360
+                }
+            } else if kind == 10 || kind >= 13 {
+                if (process & 1) == 0 {
+                    state.slots[0].fullDisplayAngle += 1
+                }
+                if state.slots[0].fullDisplayAngle >= 360 {
+                    state.slots[0].fullDisplayAngle -= 360
+                }
+            } else if kind == 11 || kind == 12 {
+                if (process & 1) == 0 {
+                    state.slots[0].fullDisplayAngle -= 1
+                }
+                if state.slots[0].fullDisplayAngle < 0 {
+                    state.slots[0].fullDisplayAngle += 360
+                }
+            } else if process > 300 && state.slots[0].alphaB > 0 {
+                state.slots[0].alphaB -= 1
+            }
+        }
+
+        state.slots[0].alphaB = max(0, min(255, state.slots[0].alphaB))
+
+        if kind < 30 {
+            state.slots[0].height[8] += 2.0
+        }
+        if state.slots[0].height[8] >= 360.0 {
+            state.slots[0].height[8] -= 360.0
+        }
+
+        state.slots[0].vecBNow = SIMD3<Float>(position.x, position.y - state.slots[0].height[15], position.z)
+    }
 
     // MARK: - Primitive 87
-    // PrimBubbleSwirl / RenderFieldPanel
+
+    /// Motion update for primitive `87` swirling trailing impact billboards at 60Hz.
+    func primBubbleSwirl(context: EffectTickContext) {
+        faceCamera(world: context.world)
+        followMaster()
+
+        guard state.slots[0].life == 1 else {
+            return
+        }
+
+        state.slots[0].process += 1
+        let process = state.slots[0].process
+        guard process > 0 else {
+            return
+        }
+
+        if process > 3 {
+            copySwirlTrail(from: 2, to: 3, alphaDrop: 25)
+        }
+        if process > 2 {
+            copySwirlTrail(from: 1, to: 2, alphaDrop: 25)
+        }
+        if process > 1 {
+            copySwirlTrail(from: 0, to: 1, alphaDrop: 100)
+        }
+
+        if process <= 10 {
+            state.slots[0].alphaB += 20
+        }
+
+        if state.slots[0].flag1[4] == 4 {
+            state.slots[0].fullDisplayAngle -= 15
+            if state.slots[0].fullDisplayAngle < 0 {
+                state.slots[0].fullDisplayAngle += 360
+            }
+            state.slots[0].vecBPre.y += state.slots[0].height[1]
+            state.slots[0].vecBNow = position + state.slots[0].vecBPre
+
+            if state.slots[0].vecBPre.y >= -60.0,
+               state.slots[0].fullDisplayAngle >= 250,
+               state.slots[0].fullDisplayAngle <= 280 {
+                state.slots[0].flag1[4] = 0
+                context.world.shakeCamera(amplitude: 3.0, duration: 0.25, frequency: 30.0)
+            }
+        } else if process <= 32 {
+            if state.slots[0].flag1[4] == 0 || process <= 24 {
+                state.slots[0].fullDisplayAngle -= 15
+                if state.slots[0].fullDisplayAngle < 0 {
+                    state.slots[0].fullDisplayAngle += 360
+                }
+                state.slots[0].vecBPre.y += state.slots[0].height[1]
+            }
+            state.slots[0].vecBNow = position + state.slots[0].vecBPre
+        } else {
+            if state.slots[0].flag1[4] == 0 && process == 33 {
+                context.world.shakeCamera(amplitude: 3.0, duration: 0.25, frequency: 30.0)
+            }
+            state.slots[0].alphaB = max(0, state.slots[0].alphaB - 5)
+        }
+    }
 
     // MARK: - Primitive 88
-    // PrimGrowFollow / RenderSizedSquare
+
+    /// Motion update for primitive `88` expanding floor square following master at 60Hz.
+    func primGrowFollow() {
+        followMaster()
+
+        for index in 0..<4 where state.slots[index].life > 0 {
+            state.slots[index].process += 1
+            let process = state.slots[index].process
+            guard process > 0 else {
+                continue
+            }
+
+            if process <= 10 {
+                state.slots[index].alphaB += state.size == 113.0 ? 6 : 2
+            }
+
+            state.slots[index].distance *= 1.07
+
+            if process > 10 {
+                state.slots[index].alphaB = max(0, state.slots[index].alphaB - 1)
+            }
+        }
+    }
 
     // MARK: - PP_EFFECTTEXTURE2 (95)
-    // PrimEffectTexture2 / RenderTeiFacingSlots
+
+    /// Motion update for `PP_EFFECTTEXTURE2` (95) fading billboard panel at 60Hz.
+    func primEffectTexture2(context: EffectTickContext) {
+        faceCamera(world: context.world)
+
+        guard state.slots[0].life == 1 else {
+            return
+        }
+
+        state.slots[0].process += 1
+        if state.slots[0].height[8] >= 360.0 {
+            state.slots[0].height[8] -= 360.0
+        }
+
+        if state.slots[0].process <= 30 {
+            state.slots[0].alphaB = min(255, state.slots[0].alphaB + 10)
+        } else {
+            state.slots[0].alphaB = max(0, state.slots[0].alphaB - 3)
+        }
+
+        state.slots[0].vecBNow.y = state.slots[0].vecBPre.y
+    }
 
     // MARK: - PP_EFFECTTEXTURE_ANI (128)
-    // PrimEffectTexture_Ani / RenderTeiFacingSlots
+
+    /// Motion update for `PP_EFFECTTEXTURE_ANI` (128) animated billboard panel at 60Hz.
+    func primEffectTextureAni(context: EffectTickContext) {
+        faceCamera(world: context.world)
+        followMaster()
+
+        guard state.slots[0].life == 1 else {
+            return
+        }
+
+        state.slots[0].process += 1
+        let frameTicks = state.slots[0].flag1[4] == 0 ? 8 : 6
+        let totalFrames = max(1, state.texturePaths.isEmpty ? state.totalTexture : state.texturePaths.count)
+
+        if state.slots[0].process % frameTicks == 0 {
+            let next = Int(UInt8(bitPattern: state.slots[0].flag1[0])) + 1
+            state.slots[0].flag1[0] = next >= totalFrames ? 0 : Int8(clamping: next)
+        }
+
+        state.slots[0].alphaB = max(0, min(255, state.slots[0].alphaB))
+        state.slots[0].vecBNow = SIMD3<Float>(position.x, state.slots[0].vecBPre.y, position.z)
+    }
 
     // MARK: - Primitive 129
 
@@ -1192,7 +1858,104 @@ extension EffectPrimitive {
     }
 
     // MARK: - Primitive 161
-    // PrimTwinSpin / RenderSizedSquare
+
+    /// Motion update for primitive `161` twin spinning floor squares at 60Hz.
+    func primTwinSpin() {
+        followMaster()
+
+        for index in 0..<2 {
+            state.slots[index].process += 1
+            state.slots[index].riseAngle += 3
+            if state.slots[index].riseAngle >= 360 {
+                state.slots[index].riseAngle -= 360
+            }
+            if state.slots[index].process > state.duration - 25 {
+                state.slots[index].alphaB = max(0, state.slots[index].alphaB - 8)
+            }
+        }
+    }
+
+    /// Geometry submission for primitives `26`, `28`, `39`, `67`, `88`, and `161`.
+    func renderSizedSquare(into collector: inout EffectPrimitiveBatchCollector, assets: EffectAssetStore?) {
+        let size = state.size
+
+        for index in 0..<4 {
+            let slot = state.slots[index]
+            guard slot.life == 1 else {
+                continue
+            }
+
+            var angle = index * 23
+            if size == 100.0 || size >= 110.0 || (size == 4.0 && slot.height[4] == 4.0) || size == 10.0 || size == 0.0 {
+                angle = Int(slot.rotStart)
+            }
+            angle = ((angle % 360) + 360) % 360
+
+            let radius = Float(
+                (Double(EffectSpace.sine(degrees: Int(slot.riseAngle))) + 1.0) * Double(slot.distance * 0.1)
+                    + Double(slot.distance) * 0.8
+            )
+            let y = slot.height[0]
+
+            let a0 = angle
+            let a1 = (a0 + 90) % 360
+            let a2 = (a1 + 90) % 360
+            let a3 = (a2 + 90) % 360
+
+            let v1 = SIMD3<Float>(EffectSpace.cosine(degrees: a0) * radius, y, EffectSpace.sine(degrees: a0) * radius)
+            let v2 = SIMD3<Float>(EffectSpace.cosine(degrees: a1) * radius, y, EffectSpace.sine(degrees: a1) * radius)
+            let v3 = SIMD3<Float>(EffectSpace.cosine(degrees: a2) * radius, y, EffectSpace.sine(degrees: a2) * radius)
+            let v4 = SIMD3<Float>(EffectSpace.cosine(degrees: a3) * radius, y, EffectSpace.sine(degrees: a3) * radius)
+
+            func emit(pw: Int16 = 0, r: UInt8, g: UInt8, b: UInt8, extra: Int8 = 0) {
+                renderTeiRect(
+                    into: &collector,
+                    assets: assets,
+                    alpha: slot.alphaB,
+                    v1: v1,
+                    v2: v2,
+                    v3: v3,
+                    v4: v4,
+                    blendSelector: pw,
+                    textureIndex: 0,
+                    isWorldPosition: false,
+                    red: r,
+                    green: g,
+                    blue: b,
+                    extra: extra
+                )
+            }
+
+            switch size {
+            case 101.0:
+                emit(r: 255, g: 0, b: 0)
+                emit(r: 255, g: 0, b: 0)
+            case 102.0:
+                emit(r: 255, g: 255, b: 0)
+            case 111.0:
+                emit(r: 55, g: 55, b: 255)
+            case 112.0:
+                emit(r: 105, g: 225, b: 105)
+            case 100.0:
+                emit(r: 255, g: 255, b: 255)
+                emit(r: 255, g: 255, b: 255)
+            case 110.0, 0.0:
+                emit(pw: 1, r: 255, g: 255, b: 255)
+            case 113.0:
+                emit(r: 5, g: 5, b: 255, extra: 1)
+            case 114.0:
+                emit(r: 155, g: 5, b: 5, extra: 1)
+            case 15.0:
+                emit(r: 35, g: 255, b: 35)
+            case 17.0:
+                emit(r: 105, g: 105, b: 255)
+            case 18.0:
+                emit(r: 35, g: 35, b: 255)
+            default:
+                emit(r: 255, g: 255, b: 255)
+            }
+        }
+    }
 
     // MARK: - Primitive 166
 
@@ -1346,9 +2109,64 @@ extension EffectPrimitive {
     }
 
     // MARK: - Primitive 172
-    // PrimPoison / Tei_TowardScreen
+
+    /// Geometry submission for primitive `172`, rendering a full-screen-facing tinted overlay quad.
+    func renderTintOverlay172(into collector: inout EffectPrimitiveBatchCollector, assets: EffectAssetStore?) {
+        let slot = state.slots[0]
+        guard slot.life == 1, slot.alphaB > 0 else {
+            return
+        }
+
+        let red = UInt8(truncatingIfNeeded: state.argb)
+        let green = UInt8(truncatingIfNeeded: state.argb >> 8)
+        let blue = UInt8(truncatingIfNeeded: state.argb >> 16)
+
+        var c0 = SIMD3<Float>(-200.0, -10.0, -200.0)
+        var c1 = SIMD3<Float>(200.0, -10.0, -200.0)
+        var c2 = SIMD3<Float>(200.0, -10.0, 200.0)
+        var c3 = SIMD3<Float>(-200.0, -10.0, 200.0)
+        Self.towardScreen(&c0, &c1, &c2, &c3, rot0: slot.alphaT, rot1: state.slots[1].alphaT)
+
+        renderTeiRect(
+            into: &collector,
+            assets: assets,
+            alpha: slot.alphaB,
+            v1: c0,
+            v2: c1,
+            v3: c2,
+            v4: c3,
+            blendSelector: 1,
+            textureIndex: 0,
+            isWorldPosition: false,
+            red: red,
+            green: green,
+            blue: blue
+        )
+    }
 
     // MARK: - Shared Panel & Billboard Helpers
+
+    private func advanceTextureFrame() {
+        let speed = max(1, state.animSpeed)
+        guard state.stateCnt % speed == 0 else {
+            return
+        }
+        let next = currentMotion + 1
+        currentMotion = next
+        if state.repeatAnim {
+            let total = max(1, state.texturePaths.isEmpty ? state.totalTexture : state.texturePaths.count)
+            currentMotion = next % total
+        }
+    }
+
+    private func copySwirlTrail(from source: Int, to destination: Int, alphaDrop: Int16) {
+        state.slots[destination].fullDisplayAngle = state.slots[source].fullDisplayAngle
+        state.slots[destination].distance = state.slots[source].distance
+        state.slots[destination].height[8] = state.slots[source].height[8]
+        state.slots[destination].alphaB = max(0, state.slots[source].alphaB - alphaDrop)
+        state.slots[destination].vecBNow = state.slots[source].vecBNow
+        state.slots[destination].flag1[0] = state.slots[source].flag1[0]
+    }
 
     /// Builds a camera-facing square of radius `radius` rotated by `startAngle`, transformed via `towardScreen`.
     static func facingSquareCorners(
