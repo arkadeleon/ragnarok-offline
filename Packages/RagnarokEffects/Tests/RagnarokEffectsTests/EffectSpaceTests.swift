@@ -130,26 +130,7 @@ struct EffectSpaceTests {
     @MainActor
     @Test("EffectSpawnRequest and EffectWorldContext bridge coordinates")
     func contextAndRequestBridge() {
-        final class StubWorldContext: EffectWorldContext {
-            var cameraWorldPosition: SIMD3<Float> = SIMD3<Float>(10, 5, 10)
-            var cameraYawDegrees: Float = 0
-            var cameraPitchDegrees: Float = 0
-
-            func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float {
-                0
-            }
-
-            func targetState(for targetID: EffectTargetID) -> EffectTargetState? {
-                nil
-            }
-
-            func playSound(named name: String, atWorldPosition position: SIMD3<Float>?, delay: TimeInterval) {}
-            func shakeCamera(amplitude: Float, duration: TimeInterval, frequency: Float) {}
-            func applyTargetModifier(_ modifier: EffectTargetModifier, to targetID: EffectTargetID) {}
-            func spawnChildEffect(_ request: EffectSpawnRequest) {}
-        }
-
-        let world = StubWorldContext()
+        let world = RecordingWorldContext(cameraWorldPosition: SIMD3<Float>(10, 5, 10))
         #expect(approxEqual(world.cameraEffectPosition, SIMD3<Float>(50, -25, -50)))
         #expect(world.isWithinRange(ofEffectPosition: SIMD3<Float>(55, -25, -50), maxDistance: 10))
         #expect(!world.isWithinRange(ofEffectPosition: SIMD3<Float>(100, -25, -50), maxDistance: 10))

@@ -16,25 +16,6 @@ import Testing
 @MainActor
 @Suite("EffectManager & EffectAssetStore")
 struct EffectManagerTests {
-    private final class MockWorldContext: EffectWorldContext {
-        var cameraWorldPosition: SIMD3<Float> = .zero
-        var cameraYawDegrees: Float = 0
-        var cameraPitchDegrees: Float = 0
-
-        func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float {
-            0
-        }
-
-        func targetState(for targetID: EffectTargetID) -> EffectTargetState? {
-            nil
-        }
-
-        func playSound(named name: String, atWorldPosition position: SIMD3<Float>?, delay: TimeInterval) {}
-        func shakeCamera(amplitude: Float, duration: TimeInterval, frequency: Float) {}
-        func applyTargetModifier(_ modifier: EffectTargetModifier, to targetID: EffectTargetID) {}
-        func spawnChildEffect(_ request: EffectSpawnRequest) {}
-    }
-
     private final class MockEffect: EffectInstance {
         let id: UUID
         let effectID: EffectID
@@ -67,7 +48,7 @@ struct EffectManagerTests {
     @Test("60Hz fixed-tick accumulator steps accurately and clamps frame spikes")
     func fixedTickAccumulationAndClamp() {
         let manager = EffectManager()
-        let world = MockWorldContext()
+        let world = RecordingWorldContext()
 
         #expect(manager.advance(deltaTime: 0.008, world: world) == 0)
         #expect(manager.advance(deltaTime: 0.009, world: world) == 1)
@@ -80,7 +61,7 @@ struct EffectManagerTests {
     @Test("update(atTime:) anchors first frame and advances monotonically")
     func updateAtTimeAnchoring() {
         let manager = EffectManager()
-        let world = MockWorldContext()
+        let world = RecordingWorldContext()
 
         #expect(manager.update(atTime: 10.0, world: world) == 0)
         #expect(manager.update(atTime: 10.0 + (2.0 / 60.0), world: world) == 2)
@@ -91,7 +72,7 @@ struct EffectManagerTests {
     @Test("Particle effect takes priority over RagEffect and supports query")
     func dualFactoryRouting() {
         let manager = EffectManager()
-        let world = MockWorldContext()
+        let world = RecordingWorldContext()
 
         manager.registerParticleEffect(for: .ef_stormgust) { id, request in
             MockEffect(id: id, request: request, lifetimeTicks: 2)
@@ -126,7 +107,7 @@ struct EffectManagerTests {
     @Test("Owner/attachmentKey removal and delayed spawn handle stability")
     func ownerAttachmentRemovalAndDelay() {
         let manager = EffectManager()
-        let world = MockWorldContext()
+        let world = RecordingWorldContext()
 
         manager.registerParticleEffect(for: .ef_blessing) { id, request in
             MockEffect(id: id, request: request, lifetimeTicks: 100)
@@ -231,7 +212,7 @@ struct EffectManagerTests {
         }
 
         let manager = EffectManager()
-        let world = MockWorldContext()
+        let world = RecordingWorldContext()
         manager.registerRagEffect(for: .ef_hit1) { id, request in
             StubPrimitiveEffect(id: id, request: request)
         }

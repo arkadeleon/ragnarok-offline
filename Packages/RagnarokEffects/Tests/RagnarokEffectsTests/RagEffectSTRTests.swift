@@ -17,38 +17,6 @@ import Testing
 @MainActor
 @Suite("RagEffect STR Playback & Definitions")
 struct RagEffectSTRTests {
-    private final class RecordingWorldContext: EffectWorldContext {
-        var cameraWorldPosition: SIMD3<Float> = .zero
-        var cameraYawDegrees: Float = 0
-        var cameraPitchDegrees: Float = 0
-        var targets: [EffectTargetID : EffectTargetState] = [:]
-        var playedSounds: [(name: String, position: SIMD3<Float>?)] = []
-        var shakeCount: Int = 0
-        var appliedModifiers: [(targetID: EffectTargetID, modifier: EffectTargetModifier)] = []
-
-        func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float {
-            0
-        }
-
-        func targetState(for targetID: EffectTargetID) -> EffectTargetState? {
-            targets[targetID]
-        }
-
-        func playSound(named name: String, atWorldPosition position: SIMD3<Float>?, delay: TimeInterval) {
-            playedSounds.append((name, position))
-        }
-
-        func shakeCamera(amplitude: Float, duration: TimeInterval, frequency: Float) {
-            shakeCount += 1
-        }
-
-        func applyTargetModifier(_ modifier: EffectTargetModifier, to targetID: EffectTargetID) {
-            appliedModifiers.append((targetID, modifier))
-        }
-
-        func spawnChildEffect(_ request: EffectSpawnRequest) {}
-    }
-
     private struct SyntheticKeyframe {
         var frameIndex: Int32
         var type: Int32

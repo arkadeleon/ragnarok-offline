@@ -17,35 +17,6 @@ import Testing
 @MainActor
 @Suite("EZ2STREffectCatalog & EZ2STREffect")
 struct EZ2STREffectTests {
-    private final class MockWorldContext: EffectWorldContext {
-        var cameraWorldPosition: SIMD3<Float> = .zero
-        var cameraYawDegrees: Float = 0
-        var cameraPitchDegrees: Float = 0
-        var terrainYInEffectSpace: Float = 0
-        var targets: [EffectTargetID : EffectTargetState] = [:]
-        var playedSounds: [String] = []
-        var shakeCount: Int = 0
-
-        func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float {
-            terrainYInEffectSpace
-        }
-
-        func targetState(for targetID: EffectTargetID) -> EffectTargetState? {
-            targets[targetID]
-        }
-
-        func playSound(named name: String, atWorldPosition position: SIMD3<Float>?, delay: TimeInterval) {
-            playedSounds.append(name)
-        }
-
-        func shakeCamera(amplitude: Float, duration: TimeInterval, frequency: Float) {
-            shakeCount += 1
-        }
-
-        func applyTargetModifier(_ modifier: EffectTargetModifier, to targetID: EffectTargetID) {}
-        func spawnChildEffect(_ request: EffectSpawnRequest) {}
-    }
-
     private static func makeBSONDocument(_ build: (inout Data) -> Void) -> Data {
         var body = Data()
         build(&body)
@@ -167,7 +138,7 @@ struct EZ2STREffectTests {
             isToGround: true
         )
 
-        let world = MockWorldContext()
+        let world = RecordingWorldContext()
         world.terrainYInEffectSpace = EffectSpace.toEffectHeight(3.5)
 
         let manager = EffectManager()
@@ -185,7 +156,7 @@ struct EZ2STREffectTests {
         for _ in 0..<5 {
             manager.stepOneTick(world: world)
         }
-        #expect(world.playedSounds == ["effect\\sample.wav"])
+        #expect(world.playedSoundNames == ["effect\\sample.wav"])
         #expect(world.shakeCount == 1)
         #expect(abs(effect.worldPosition.y - 3.5) < 0.001)
 
@@ -242,7 +213,7 @@ struct EZ2STREffectTests {
             filePath: "looping.str",
             isInfinite: true
         )
-        let world = MockWorldContext()
+        let world = RecordingWorldContext()
         let context = EffectTickContext(
             world: world,
             assets: nil,

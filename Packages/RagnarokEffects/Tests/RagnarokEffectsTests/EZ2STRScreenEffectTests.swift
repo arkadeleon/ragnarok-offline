@@ -18,35 +18,6 @@ import Testing
 @MainActor
 @Suite("EZ2STRScreenEffect & EZ2STRScreenEffectDefinition")
 struct EZ2STRScreenEffectTests {
-    private final class MockWorldContext: EffectWorldContext {
-        var cameraWorldPosition: SIMD3<Float> = .zero
-        var cameraYawDegrees: Float = 0
-        var cameraPitchDegrees: Float = 0
-        var terrainYInEffectSpace: Float = 0
-        var targets: [EffectTargetID : EffectTargetState] = [:]
-        var playedSounds: [(name: String, position: SIMD3<Float>?)] = []
-        var shakeCount: Int = 0
-
-        func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float {
-            terrainYInEffectSpace
-        }
-
-        func targetState(for targetID: EffectTargetID) -> EffectTargetState? {
-            targets[targetID]
-        }
-
-        func playSound(named name: String, atWorldPosition position: SIMD3<Float>?, delay: TimeInterval) {
-            playedSounds.append((name, position))
-        }
-
-        func shakeCamera(amplitude: Float, duration: TimeInterval, frequency: Float) {
-            shakeCount += 1
-        }
-
-        func applyTargetModifier(_ modifier: EffectTargetModifier, to targetID: EffectTargetID) {}
-        func spawnChildEffect(_ request: EffectSpawnRequest) {}
-    }
-
     private static func makeSyntheticSTRData(maxKeyframeIndex: Int32 = 2) -> Data {
         var data = Data()
 
@@ -285,7 +256,7 @@ struct EZ2STRScreenEffectTests {
             strPaths: [billboardDef.strPath, groundDef.strPath, screenDef.strPath]
         )
 
-        let world = MockWorldContext()
+        let world = RecordingWorldContext()
         world.terrainYInEffectSpace = EffectSpace.toEffectHeight(2.5)
 
         let billboard = EZ2STRScreenEffect(
@@ -337,7 +308,7 @@ struct EZ2STRScreenEffectTests {
     @Test("Head-attached effect applies headHeight, offset deltas, fadePulse scale, and retires when owner disappears")
     func headOffsetAndOwnerLifecycle() {
         let def = EZ2STRScreenEffectDefinition.definition(for: .ef_strangelights)!
-        let world = MockWorldContext()
+        let world = RecordingWorldContext()
         let ownerID: EffectTargetID = 7
         world.targets[ownerID] = EffectTargetState(
             objectID: ownerID,
@@ -386,7 +357,7 @@ struct EZ2STRScreenEffectTests {
             strPath: "new_meteostorm\\new_meteostorm\\new_meteostorm.str",
             followCamera: true
         )
-        let world = MockWorldContext()
+        let world = RecordingWorldContext()
         world.cameraYawDegrees = 30
 
         let effect = EZ2STRScreenEffect(
@@ -431,7 +402,7 @@ struct EZ2STRScreenEffectTests {
         )
 
         let store = await Self.makeAssetStore(strPaths: [def.strPath], maxKeyframeIndex: 1)
-        let world = MockWorldContext()
+        let world = RecordingWorldContext()
         let context = EffectTickContext(
             world: world,
             assets: store,
@@ -472,7 +443,7 @@ struct EZ2STRScreenEffectTests {
         )
 
         let store = await Self.makeAssetStore(strPaths: [def.strPath], maxKeyframeIndex: 1)
-        let world = MockWorldContext()
+        let world = RecordingWorldContext()
         let context = EffectTickContext(
             world: world,
             assets: store,
@@ -506,7 +477,7 @@ struct EZ2STRScreenEffectTests {
     @Test("EffectManager prioritizes particle EZ2STRScreenEffect over RagEffect")
     func managerParticlePriority() {
         let manager = EffectManager()
-        let world = MockWorldContext()
+        let world = RecordingWorldContext()
 
         #expect(EffectManager.hasBuiltInDefinition(for: .ef_new_meteorstorm))
         #expect(manager.supports(.ef_new_meteorstorm))

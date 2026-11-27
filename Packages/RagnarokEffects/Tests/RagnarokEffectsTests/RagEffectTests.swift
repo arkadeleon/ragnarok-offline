@@ -1,5 +1,5 @@
 //
-//  RagEffectHostTests.swift
+//  RagEffectTests.swift
 //  RagnarokEffectsTests
 //
 //  Created by Leon Li on 2026/11/26.
@@ -16,37 +16,8 @@ import Testing
 @testable import RagnarokEffects
 
 @MainActor
-@Suite("RagEffect Host, Hybrid STR, and Target Modifiers")
-struct RagEffectHostTests {
-    private final class RecordingWorldContext: EffectWorldContext {
-        var cameraWorldPosition: SIMD3<Float> = .zero
-        var cameraYawDegrees: Float = 0
-        var cameraPitchDegrees: Float = 0
-        var targets: [EffectTargetID : EffectTargetState] = [:]
-        var playedSounds: [(name: String, position: SIMD3<Float>?)] = []
-        var appliedModifiers: [(targetID: EffectTargetID, modifier: EffectTargetModifier)] = []
-
-        func terrainHeight(atEffectX x: Float, effectZ z: Float) -> Float {
-            0
-        }
-
-        func targetState(for targetID: EffectTargetID) -> EffectTargetState? {
-            targets[targetID]
-        }
-
-        func playSound(named name: String, atWorldPosition position: SIMD3<Float>?, delay: TimeInterval) {
-            playedSounds.append((name, position))
-        }
-
-        func shakeCamera(amplitude: Float, duration: TimeInterval, frequency: Float) {}
-
-        func applyTargetModifier(_ modifier: EffectTargetModifier, to targetID: EffectTargetID) {
-            appliedModifiers.append((targetID, modifier))
-        }
-
-        func spawnChildEffect(_ request: EffectSpawnRequest) {}
-    }
-
+@Suite("RagEffect")
+struct RagEffectTests {
     private static func makeSyntheticSTRData(maxKeyframeIndex: Int32 = 2) -> Data {
         var data = Data()
 
@@ -362,7 +333,7 @@ struct RagEffectHostTests {
         world.playedSounds.removeAll()
         effect.stateCnt = 0
         effect.assassinCloaking(context: context)
-        #expect(world.playedSounds.map(\.name) == ["effect\\assasin_cloaking.wav"])
+        #expect(world.playedSoundNames == ["effect\\assasin_cloaking.wav"])
         #expect(world.appliedModifiers.contains {
             if case .cloaking(let alpha) = $0.modifier {
                 return abs(alpha - 50.0 / 255.0) < 0.001
@@ -391,5 +362,205 @@ struct RagEffectHostTests {
         #expect((flashPrim?.state.renderFlag ?? 0) & EffectPrimitiveState.RenderFlag.noDepth != 0)
         #expect(flashPrim?.state.argb == 0x0056_3412)
         #expect(flashPrim?.state.slots[0].flag1[10] == 2)
+    }
+
+    @Test("All supported RagEffects spawn, step 65 ticks, and emit finite geometry")
+    func allSupportedRagEffectsSpawnStepAndCollectCleanly() {
+        #expect(!RagEffect.supportedEffectIDs.isEmpty)
+
+        let world = RecordingWorldContext()
+        let ownerID: EffectTargetID = 110_000_001
+        let sourceID: EffectTargetID = 110_000_002
+        world.targets[ownerID] = EffectTargetState(
+            objectID: ownerID,
+            worldPosition: [10, 0, 10],
+            facingAngle: 90
+        )
+        world.targets[sourceID] = EffectTargetState(
+            objectID: sourceID,
+            worldPosition: [4, 0, 6],
+            facingAngle: 0
+        )
+
+        for effectID in RagEffect.supportedEffectIDs {
+            #expect(EffectManager.hasBuiltInDefinition(for: effectID))
+            #expect(RagEffect.supports(effectID))
+
+            let request = EffectSpawnRequest(
+                effectID: effectID,
+                worldPosition: [10, 0, 10],
+                sourceWorldPosition: [4, 0, 6],
+                ownerObjectID: ownerID,
+                targetObjectID: ownerID,
+                sourceObjectID: sourceID,
+                duration: 2.0
+            )
+            let effect = RagEffect.make(id: UUID(), request: request)
+            #expect(effect != nil, "Expected RagEffect.make to succeed for \(effectID.rawValue)")
+            guard let effect else {
+                continue
+            }
+
+            for tick in 0..<65 {
+                let context = EffectTickContext(
+                    world: world,
+                    assets: nil,
+                    currentTick: tick,
+                    usesMinimalEffects: false,
+                    onSpawnChild: { _ in }
+                )
+                effect.tick(context: context)
+
+                if tick == 1 || tick == 10 || tick == 30 || tick == 64 {
+                    var collector = EffectPrimitiveBatchCollector(fog: Fog())
+                    effect.collectPrimitiveBatches(
+                        into: &collector,
+                        fog: Fog(),
+                        modelMatrix: matrix_identity_float4x4,
+                        world: world
+                    )
+                    for batch in collector.batches {
+                        for vertex in batch.vertices {
+                            #expect(vertex.position.x.isFinite && vertex.position.y.isFinite && vertex.position.z.isFinite)
+                            #expect(vertex.color.x.isFinite && vertex.color.y.isFinite && vertex.color.z.isFinite && vertex.color.w.isFinite)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Test("Representative *BODY modifiers, minimal-effect gating, and large-GID target tracking")
+    func representativeBodyModifiersAndProceduralBehaviors() {
+        let manager = EffectManager()
+        let world = RecordingWorldContext()
+        let targetID: EffectTargetID = 110_000_042
+        world.targets[targetID] = EffectTargetState(objectID: targetID, worldPosition: [1, 0, 2])
+
+        // .ef_pressedbody -> .scale
+        manager.spawn(EffectSpawnRequest(effectID: .ef_pressedbody, worldPosition: .zero, targetObjectID: targetID, duration: 1.0))
+        for _ in 0..<19 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(world.appliedModifiers.contains {
+            guard $0.targetID == targetID, case .scale(let scale, durationTicks: 2) = $0.modifier else {
+                return false
+            }
+            return scale.x == 1.0 && abs(scale.y - 0.8) < 0.001 && scale.z == 1.0
+        })
+        manager.removeAll()
+
+        // .ef_kickedbody -> .spriteOffset
+        world.appliedModifiers.removeAll()
+        manager.spawn(EffectSpawnRequest(effectID: .ef_kickedbody, worldPosition: .zero, targetObjectID: targetID, duration: 2.0))
+        for _ in 0..<40 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(world.appliedModifiers.contains {
+            guard $0.targetID == targetID, case .spriteOffset(let offset, durationTicks: 2) = $0.modifier else {
+                return false
+            }
+            return offset.x == 0 && offset.y > 0
+        })
+        manager.removeAll()
+
+        // .ef_hitbody -> .flash
+        world.appliedModifiers.removeAll()
+        manager.spawn(EffectSpawnRequest(effectID: .ef_hitbody, worldPosition: .zero, targetObjectID: targetID, duration: 1.0))
+        for _ in 0..<8 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(world.appliedModifiers.contains {
+            $0.targetID == targetID && $0.modifier == .flash(color: SIMD4<Float>(1, 1, 1, 1), durationTicks: 2)
+        })
+        manager.removeAll()
+
+        // .ef_spinedbody -> .spriteRoll + .spriteOffset
+        world.appliedModifiers.removeAll()
+        manager.spawn(EffectSpawnRequest(effectID: .ef_spinedbody, worldPosition: .zero, targetObjectID: targetID, duration: 1.0))
+        manager.stepOneTick(world: world)
+        #expect(world.appliedModifiers.contains {
+            guard $0.targetID == targetID, case .spriteRoll = $0.modifier else {
+                return false
+            }
+            return true
+        })
+        #expect(world.appliedModifiers.contains {
+            guard $0.targetID == targetID, case .spriteOffset = $0.modifier else {
+                return false
+            }
+            return true
+        })
+        manager.removeAll()
+
+        // .ef_quakebody -> .shake
+        world.appliedModifiers.removeAll()
+        manager.spawn(EffectSpawnRequest(effectID: .ef_quakebody, worldPosition: .zero, targetObjectID: targetID, duration: 1.0))
+        manager.stepOneTick(world: world)
+        #expect(world.appliedModifiers.contains {
+            $0.targetID == targetID && $0.modifier == .shake(amplitude: 2.0, durationTicks: 2)
+        })
+        manager.removeAll()
+
+        // .ef_asurabody -> .outline
+        world.appliedModifiers.removeAll()
+        manager.spawn(EffectSpawnRequest(effectID: .ef_asurabody, worldPosition: .zero, targetObjectID: targetID, duration: 1.0))
+        manager.stepOneTick(world: world)
+        manager.stepOneTick(world: world)
+        #expect(world.appliedModifiers.contains {
+            guard $0.targetID == targetID, case .outline = $0.modifier else {
+                return false
+            }
+            return true
+        })
+        manager.removeAll()
+
+        // .ef_4waybody -> .fourWaySplit
+        world.appliedModifiers.removeAll()
+        manager.spawn(EffectSpawnRequest(effectID: .ef_4waybody, worldPosition: .zero, targetObjectID: targetID, duration: 2.0))
+        for _ in 0..<32 {
+            manager.stepOneTick(world: world)
+        }
+        #expect(world.appliedModifiers.contains {
+            guard $0.targetID == targetID, case .fourWaySplit = $0.modifier else {
+                return false
+            }
+            return true
+        })
+        manager.removeAll()
+
+        // .ef_blackbody -> .tint + .pp_3dtexture
+        world.appliedModifiers.removeAll()
+        manager.spawn(EffectSpawnRequest(effectID: .ef_blackbody, worldPosition: .zero, targetObjectID: targetID, duration: 2.0))
+        for _ in 0..<8 {
+            manager.stepOneTick(world: world)
+        }
+        #expect((manager.activeEffects.first as? RagEffect)?.primitives.first?.id == .pp_3dtexture)
+        #expect(world.appliedModifiers.contains {
+            $0.targetID == targetID && $0.modifier == .tint(color: SIMD4<Float>(0, 0, 0, 1), durationTicks: 2)
+        })
+        manager.removeAll()
+
+        // Minimal effects gating on .ef_bash
+        world.playedSounds.removeAll()
+        manager.spawn(EffectSpawnRequest(effectID: .ef_bash, worldPosition: .zero))
+        manager.stepOneTick(world: world)
+        let bashHost = manager.activeEffects.first as? RagEffect
+        #expect(bashHost?.primitives.contains { $0.id == .pp_2dcircle } == true)
+        #expect(bashHost?.primitives.contains { $0.id == .pp_2dflash } == true)
+        #expect(world.playedSoundNames == ["effect\\EF_Bash.wav"])
+        manager.removeAll()
+
+        let minimalManager = EffectManager(usesMinimalEffects: true)
+        minimalManager.spawn(EffectSpawnRequest(effectID: .ef_bash, worldPosition: .zero))
+        minimalManager.stepOneTick(world: world)
+        #expect((minimalManager.activeEffects.first as? RagEffect)?.primitives.isEmpty == true)
+
+        // Large-GID target tracking in .ef_linelink2 without Float precision loss
+        manager.spawn(EffectSpawnRequest(effectID: .ef_linelink2, worldPosition: .zero, targetObjectID: targetID, duration: 1.0))
+        manager.stepOneTick(world: world)
+        let lineLinkHost = manager.activeEffects.first as? RagEffect
+        #expect(lineLinkHost?.primitives.first?.id == .pp_linelink)
+        #expect(lineLinkHost?.primitives.first?.state.slots[0].targetObjectID == targetID)
     }
 }
