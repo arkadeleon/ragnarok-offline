@@ -331,10 +331,8 @@ struct EffectViewerTargetModifiers: Sendable {
         return payloads
     }
 
-    private static let tickRate: TimeInterval = 60.0
-
     private static func duration(fromTicks ticks: Int) -> TimeInterval {
-        TimeInterval(max(1, ticks)) / tickRate
+        TimeInterval(max(1, ticks)) / EffectManager.tickRate
     }
 
     private static func decay<Value>(_ channel: inout Timed<Value>?, by deltaTime: TimeInterval) {

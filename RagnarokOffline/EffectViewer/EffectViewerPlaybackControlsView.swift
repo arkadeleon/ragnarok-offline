@@ -16,7 +16,7 @@ struct EffectViewerPlaybackControlsView: View {
             EffectViewerProgressRow(renderer: renderer)
 
             HStack(spacing: 16) {
-                EffectViewerPlaybackRateMenu(renderer: renderer)
+                EffectViewerPlaybackRateButton(renderer: renderer)
 
                 Spacer()
 
@@ -42,7 +42,9 @@ private struct EffectViewerProgressRow: View {
             Text(formattedReadout(forTick: currentTick))
                 .font(.caption.monospacedDigit())
                 .foregroundStyle(.secondary)
-                .frame(minWidth: 74, alignment: .leading)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .frame(width: 80, alignment: .leading)
 
             Slider(
                 value: Binding(
@@ -65,7 +67,9 @@ private struct EffectViewerProgressRow: View {
             Text(totalReadout)
                 .font(.caption.monospacedDigit())
                 .foregroundStyle(.secondary)
-                .frame(minWidth: 74, alignment: .trailing)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+                .frame(width: 80, alignment: .trailing)
         }
     }
 
@@ -102,42 +106,41 @@ private struct EffectViewerProgressRow: View {
     }
 }
 
-private struct EffectViewerPlaybackRateMenu: View {
+private struct EffectViewerPlaybackRateButton: View {
     var renderer: EffectViewerEffectRenderer?
 
-    private var playbackRate: EffectViewerPlaybackRate {
-        renderer?.playbackRate ?? .normal
-    }
-
     var body: some View {
-        Menu {
-            Picker(
-                String(),
-                selection: Binding(
-                    get: {
-                        renderer?.playbackRate ?? .normal
-                    },
-                    set: { newRate in
-                        renderer?.playbackRate = newRate
-                    }
-                )
-            ) {
-                ForEach(EffectViewerPlaybackRate.allCases) { rate in
-                    Text(rate.label)
-                        .tag(rate)
-                }
-            }
-            .labelsHidden()
+        Button {
+            renderer?.cyclePlaybackRate()
         } label: {
             Text(playbackRate.label)
                 .font(.subheadline.monospacedDigit().weight(.medium))
                 .foregroundStyle(.primary)
-                .frame(minWidth: 46)
-                .padding(.horizontal, 8)
-                .padding(.vertical, 5)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+                .frame(width: 60, height: 28)
                 .background(.primary.opacity(0.08), in: Capsule())
+                .contentShape(Capsule())
+        }
+        .buttonStyle(.plain)
+        .contextMenu {
+            ForEach(EffectViewerPlaybackRate.allCases.reversed()) { rate in
+                Button {
+                    renderer?.playbackRate = rate
+                } label: {
+                    if rate == playbackRate {
+                        Label(rate.label, systemImage: "checkmark")
+                    } else {
+                        Text(rate.label)
+                    }
+                }
+            }
         }
         .disabled(renderer == nil)
+    }
+
+    private var playbackRate: EffectViewerPlaybackRate {
+        renderer?.playbackRate ?? .normal
     }
 }
 
@@ -164,6 +167,8 @@ private struct EffectViewerTransportControls: View {
             } label: {
                 Image(systemName: "backward.frame.fill")
                     .font(.body.weight(.medium))
+                    .frame(width: 32, height: 32)
+                    .contentShape(Circle())
             }
             .buttonStyle(.plain)
             .disabled(renderer?.canStepBackward != true)
@@ -174,6 +179,7 @@ private struct EffectViewerTransportControls: View {
                 Image(systemName: primaryActionIcon)
                     .font(.title2.weight(.semibold))
                     .frame(width: 32, height: 32)
+                    .contentShape(Circle())
             }
             .buttonStyle(.plain)
             .disabled(renderer == nil)
@@ -183,6 +189,8 @@ private struct EffectViewerTransportControls: View {
             } label: {
                 Image(systemName: "forward.frame.fill")
                     .font(.body.weight(.medium))
+                    .frame(width: 32, height: 32)
+                    .contentShape(Circle())
             }
             .buttonStyle(.plain)
             .disabled(renderer?.canStepForward != true)
@@ -204,11 +212,12 @@ private struct EffectViewerLoopButton: View {
             Image(systemName: "repeat")
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(isLooping ? Color.accentColor : Color.secondary)
-                .frame(width: 34, height: 28)
+                .frame(width: 60, height: 28)
                 .background(
                     isLooping ? Color.accentColor.opacity(0.2) : Color.clear,
                     in: Capsule()
                 )
+                .contentShape(Capsule())
         }
         .buttonStyle(.plain)
         .disabled(renderer == nil)

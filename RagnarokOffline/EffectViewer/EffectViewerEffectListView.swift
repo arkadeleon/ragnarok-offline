@@ -58,7 +58,7 @@ struct EffectViewerEffectListView: View {
         }
         .adaptiveSearch(text: $searchText)
         .task(id: "\(effects.count)-\(searchText)") {
-            filteredEffects = await matchingEffects(searchText, in: effects)
+            filteredEffects = matchingEffects(searchText, in: effects)
         }
     }
 
@@ -83,7 +83,7 @@ struct EffectViewerEffectListView: View {
         proxy.scrollTo(selection.id, anchor: .center)
     }
 
-    private func matchingEffects(_ searchText: String, in effects: [EffectViewerEffect]) async -> [EffectViewerEffect] {
+    private func matchingEffects(_ searchText: String, in effects: [EffectViewerEffect]) -> [EffectViewerEffect] {
         if searchText.isEmpty {
             return effects
         }

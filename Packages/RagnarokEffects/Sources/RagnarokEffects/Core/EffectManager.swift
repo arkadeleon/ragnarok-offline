@@ -19,9 +19,9 @@ public final class EffectManager {
         var remainingTicks: Int
     }
 
-    public static let tickRate: Double = 60.0
-    public static let tickDuration: TimeInterval = 1.0 / tickRate
-    public static let maxTicksPerUpdate: Int = 4
+    public nonisolated static let tickRate: Double = 60.0
+    public nonisolated static let tickDuration: TimeInterval = 1.0 / tickRate
+    public nonisolated static let maxTicksPerUpdate: Int = 4
 
     public nonisolated static var builtInEffectIDs: [EffectID] {
         let screenEffectIDs = EZ2STRScreenEffectDefinition.definitions.map(\.effectID)

@@ -79,8 +79,9 @@ struct EffectViewer: View {
                         }
                         .font(.subheadline.weight(.medium))
                         .padding(.horizontal, 12)
-                        .padding(.vertical, 8)
+                        .frame(height: 36)
                         .adaptiveStageCapsuleBackground()
+                        .contentShape(Capsule())
                     }
                     .buttonStyle(.plain)
                     .matchedTransitionSource(id: "effect", in: effectNamespace)
@@ -96,11 +97,12 @@ struct EffectViewer: View {
                         Image(systemName: showsTarget ? "person" : "person.slash")
                             .font(.subheadline.weight(.medium))
                             .foregroundStyle(showsTarget ? .primary : .secondary)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
+                            .frame(width: 36, height: 36)
                             .adaptiveStageCapsuleBackground()
+                            .contentShape(Capsule())
                     }
                     .buttonStyle(.plain)
+                    .disabled(targetSprite == nil)
                     .padding(12)
                 }
             }
@@ -208,7 +210,7 @@ private extension View {
         self.background(.ultraThinMaterial, in: Capsule())
         #else
         if #available(iOS 26.0, macOS 26.0, *) {
-            self.glassEffect(.regular, in: Capsule())
+            self.glassEffect(.regular.interactive(), in: Capsule())
         } else {
             self.background(.ultraThinMaterial, in: Capsule())
         }

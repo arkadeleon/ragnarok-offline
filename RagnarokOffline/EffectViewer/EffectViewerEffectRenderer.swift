@@ -35,6 +35,15 @@ enum EffectViewerPlaybackRate: Double, CaseIterable, Identifiable {
         case .normal: "1×"
         }
     }
+
+    var next: EffectViewerPlaybackRate {
+        switch self {
+        case .normal: .half
+        case .half: .quarter
+        case .quarter: .tenth
+        case .tenth: .normal
+        }
+    }
 }
 
 @MainActor
@@ -243,6 +252,10 @@ final class EffectViewerEffectRenderer: Renderer {
         let newLatestTick = max(historyBaseTick, historyBaseTick + tickHistory.count - 1)
         currentTick = min(clampedTarget, newLatestTick)
         isCompleted = !manager.hasEffects && currentTick == newLatestTick
+    }
+
+    func cyclePlaybackRate() {
+        playbackRate = playbackRate.next
     }
 
     func toggleLooping() {
