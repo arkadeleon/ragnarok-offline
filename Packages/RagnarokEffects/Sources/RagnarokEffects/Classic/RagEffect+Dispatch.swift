@@ -31,15 +31,25 @@ extension RagEffect {
         proceduralEffectIDSet.contains(effectID) || STRDefinition.definition(for: effectID) != nil
     }
 
+    static func makeProcedural(
+        id: UUID,
+        request: EffectSpawnRequest
+    ) -> RagEffect? {
+        guard proceduralEffectIDSet.contains(request.effectID) else {
+            return nil
+        }
+        return RagEffect(id: id, request: request) { effect, context in
+            effect.processEffect(context: context)
+        }
+    }
+
     static func make(
         id: UUID,
         request: EffectSpawnRequest,
         usesMinimalEffects: Bool = false
     ) -> RagEffect? {
-        if proceduralEffectIDSet.contains(request.effectID) {
-            return RagEffect(id: id, request: request) { effect, context in
-                effect.processEffect(context: context)
-            }
+        if let procedural = makeProcedural(id: id, request: request) {
+            return procedural
         }
 
         if let definition = STRDefinition.definition(for: request.effectID) {

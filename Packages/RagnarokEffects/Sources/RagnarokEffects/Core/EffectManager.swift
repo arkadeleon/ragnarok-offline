@@ -240,22 +240,23 @@ public final class EffectManager {
 
     @discardableResult
     private func spawnImmediately(id: UUID, request: EffectSpawnRequest) -> UUID? {
-        let effect: any EffectInstance
         if let builder = particleEffectBuilders[request.effectID] {
-            effect = builder(id, request)
+            activeEffects.append(builder(id, request))
         } else if let entry = ez2strEffectCatalog?.entry(for: request.effectID) {
-            effect = EZ2STREffect(id: id, request: request, entry: entry)
+            activeEffects.append(EZ2STREffect(id: id, request: request, entry: entry))
         } else if let definition = EZ2STRScreenEffectDefinition.definition(for: request.effectID) {
-            effect = EZ2STRScreenEffect(id: id, request: request, definition: definition)
+            activeEffects.append(EZ2STRScreenEffect(id: id, request: request, definition: definition))
+            if let ragEffect = RagEffect.makeProcedural(id: id, request: request) {
+                activeEffects.append(ragEffect)
+            }
         } else if let builder = ragEffectBuilders[request.effectID] {
-            effect = builder(id, request)
+            activeEffects.append(builder(id, request))
         } else if let ragEffect = RagEffect.make(id: id, request: request, usesMinimalEffects: usesMinimalEffects) {
-            effect = ragEffect
+            activeEffects.append(ragEffect)
         } else {
             return nil
         }
 
-        activeEffects.append(effect)
         return id
     }
 
