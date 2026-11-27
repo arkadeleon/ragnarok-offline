@@ -1432,6 +1432,7 @@ extension EffectPrimitive {
                     worldPosition: childWorldPos,
                     ownerObjectID: ownerID,
                     targetObjectID: ownerID,
+                    deltaPos: slot.vecBNow,
                     extraParams: extra
                 )
             )
@@ -1441,7 +1442,8 @@ extension EffectPrimitive {
                     effectID: .ef_sma3,
                     worldPosition: childWorldPos,
                     ownerObjectID: ownerID,
-                    targetObjectID: ownerID
+                    targetObjectID: ownerID,
+                    deltaPos: slot.vecBNow
                 )
             )
         case 99 where slot.process % 8 == 0:
@@ -1451,6 +1453,7 @@ extension EffectPrimitive {
                     worldPosition: childWorldPos,
                     ownerObjectID: ownerID,
                     targetObjectID: ownerID,
+                    deltaPos: slot.vecBNow,
                     extraParams: extra
                 )
             )

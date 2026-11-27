@@ -79,6 +79,9 @@ public final class RagEffect: EffectPrimitiveRenderable, STREffectRenderable {
         self.attachmentKey = request.attachmentKey
         self.position = request.effectPosition
         self.sourcePosition = request.sourceEffectPosition
+        if let deltaPos = request.deltaPos {
+            self.deltaPos = deltaPos
+        }
         if let extraParams = request.extraParams {
             self.deltaPos2 = extraParams
         }
