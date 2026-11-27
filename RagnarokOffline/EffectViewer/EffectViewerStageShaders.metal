@@ -11,11 +11,11 @@ using namespace metal;
 struct EffectViewerBackdropUniforms {
     float3 centerColor;
     float3 edgeColor;
+    float4 viewport;
 };
 
 struct EffectViewerBackdropOut {
     float4 position [[position]];
-    float2 ndc;
 };
 
 vertex EffectViewerBackdropOut effectViewerBackdropVertex(uint vertexID [[vertex_id]]) {
@@ -26,7 +26,6 @@ vertex EffectViewerBackdropOut effectViewerBackdropVertex(uint vertexID [[vertex
     };
     EffectViewerBackdropOut out;
     out.position = float4(positions[vertexID], 0.0, 1.0);
-    out.ndc = positions[vertexID];
     return out;
 }
 
@@ -34,7 +33,9 @@ fragment float4 effectViewerBackdropFragment(
     EffectViewerBackdropOut in [[stage_in]],
     constant EffectViewerBackdropUniforms &uniforms [[buffer(0)]]
 ) {
-    float t = smoothstep(0.0, 1.2, length(in.ndc));
+    float2 center = uniforms.viewport.xy + uniforms.viewport.zw * 0.5;
+    float radius = max(max(uniforms.viewport.z, uniforms.viewport.w) * 0.65, 1.0);
+    float t = clamp(length(in.position.xy - center) / radius, 0.0, 1.0);
     float3 color = mix(uniforms.centerColor, uniforms.edgeColor, t);
     return float4(color, 1.0);
 }

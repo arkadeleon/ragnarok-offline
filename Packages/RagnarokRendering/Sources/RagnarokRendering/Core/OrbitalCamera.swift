@@ -60,6 +60,9 @@ public class OrbitalCamera {
     }
 
     public func update(size: CGSize) {
+        guard size.width > 0, size.height > 0 else {
+            return
+        }
         aspectRatio = Float(size.width / size.height)
     }
 

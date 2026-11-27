@@ -18,6 +18,7 @@ final class EffectViewerStageRenderer {
     private struct BackdropUniforms {
         var centerColor: SIMD3<Float>
         var edgeColor: SIMD3<Float>
+        var viewport: SIMD4<Float>
     }
 
     private struct GridUniforms {
@@ -65,10 +66,16 @@ final class EffectViewerStageRenderer {
         gridDepthStencilState = device.makeDepthStencilState(descriptor: gridDepthDescriptor)!
     }
 
-    func renderBackdrop(renderCommandEncoder: any MTLRenderCommandEncoder) {
+    func renderBackdrop(viewport: MTLViewport, renderCommandEncoder: any MTLRenderCommandEncoder) {
         var uniforms = BackdropUniforms(
             centerColor: Self.centerCharcoalColor,
-            edgeColor: Self.edgeCharcoalColor
+            edgeColor: Self.edgeCharcoalColor,
+            viewport: SIMD4<Float>(
+                Float(viewport.originX),
+                Float(viewport.originY),
+                Float(viewport.width),
+                Float(viewport.height)
+            )
         )
         renderCommandEncoder.setRenderPipelineState(backdropPipelineState)
         renderCommandEncoder.setDepthStencilState(backdropDepthStencilState)

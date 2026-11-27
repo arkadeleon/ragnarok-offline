@@ -59,6 +59,8 @@ final class EffectViewerEffectRenderer: Renderer {
     let configuration: RenderConfiguration
     let camera: OrbitalCamera
 
+    private(set) var effectID: EffectID?
+
     var isPlaying = true
     private(set) var isCompleted = false
     var isLooping = true
@@ -100,18 +102,17 @@ final class EffectViewerEffectRenderer: Renderer {
 
     @ObservationIgnored var targetSprite: EffectViewerTargetSprite?
 
-    @ObservationIgnored private let effectID: EffectID
+    @ObservationIgnored private let assetStore: EffectAssetStore
+    @ObservationIgnored private let world: EffectViewerEffectWorldContext
+    @ObservationIgnored private let fog = Fog()
     @ObservationIgnored private let renderQueue = RenderQueue<RenderPayload>()
     @ObservationIgnored private let stageRenderer: EffectViewerStageRenderer
     @ObservationIgnored private let targetRenderer: EffectViewerTargetRenderer
-    @ObservationIgnored private let assetStore: EffectAssetStore
-    @ObservationIgnored private let ez2strEffectCatalog: EZ2STREffectCatalog?
-    @ObservationIgnored private var manager: EffectManager
-    @ObservationIgnored private let world: EffectViewerEffectWorldContext
     @ObservationIgnored private let strRenderer: STREffectRenderer
     @ObservationIgnored private let primitiveRenderer: EffectPrimitiveBatchRenderer
-    @ObservationIgnored private let fog = Fog()
 
+    @ObservationIgnored private var ez2strEffectCatalog: EZ2STREffectCatalog?
+    @ObservationIgnored private var manager: EffectManager
     @ObservationIgnored private var tickHistory: [CachedTick] = []
     @ObservationIgnored private var lastRenderTime: TimeInterval?
     @ObservationIgnored private var tickAccumulator: TimeInterval = 0
@@ -119,67 +120,55 @@ final class EffectViewerEffectRenderer: Renderer {
     init(
         device: any MTLDevice,
         configuration: RenderConfiguration,
-        effectID: EffectID,
+        effectID: EffectID? = nil,
         resourceManager: ResourceManager,
         ez2strEffectCatalog: EZ2STREffectCatalog? = nil,
         targetSprite: EffectViewerTargetSprite? = nil
     ) throws {
         self.device = device
         self.configuration = configuration
-        self.effectID = effectID
+        self.camera = Self.makeDefaultCamera()
         self.targetSprite = targetSprite
 
         let assetStore = EffectAssetStore(device: device, resourceManager: resourceManager)
         self.assetStore = assetStore
-        self.ez2strEffectCatalog = ez2strEffectCatalog
-        self.manager = EffectManager(assetStore: assetStore, ez2strEffectCatalog: ez2strEffectCatalog)
         self.world = EffectViewerEffectWorldContext()
         self.stageRenderer = try EffectViewerStageRenderer(device: device, configuration: configuration)
         self.targetRenderer = try EffectViewerTargetRenderer(device: device, configuration: configuration)
         self.strRenderer = try STREffectRenderer(device: device, configuration: configuration)
         self.primitiveRenderer = try EffectPrimitiveBatchRenderer(device: device, configuration: configuration)
-        self.camera = Self.makeDefaultCamera()
+
+        self.ez2strEffectCatalog = ez2strEffectCatalog
+        self.manager = EffectManager(assetStore: assetStore, ez2strEffectCatalog: ez2strEffectCatalog)
+
+        load(effectID: effectID)
+    }
+
+    func load(effectID: EffectID?) {
+        self.effectID = effectID
+        resetSimulation()
+
+        guard let effectID else {
+            estimatedTotalTicks = nil
+            isPlaying = false
+            return
+        }
 
         let lifetime = effectID.defaultLifetimeTicks
-        self.estimatedTotalTicks = (1..<999).contains(lifetime) ? lifetime : nil
-
-        spawnEffect()
+        estimatedTotalTicks = (1..<999).contains(lifetime) ? lifetime : nil
+        isPlaying = true
+        spawnEffect(effectID)
     }
 
-    private static func makeDefaultCamera() -> OrbitalCamera {
-        let camera = OrbitalCamera(distance: 20)
-        camera.fovy = 45
-        camera.nearZ = 1
-        camera.farZ = 1000
-        camera.elevation = radians(20)
-        camera.minimumDistance = 8
-        camera.maximumDistance = 80
-        camera.target = [0, 1.5, 0]
-        return camera
-    }
-
-    func makeCamera(atTime time: TimeInterval, viewport: MTLViewport) -> RenderCamera {
-        camera.update(atTime: time)
-        camera.update(size: viewport.size)
-
-        let inverseView = camera.viewMatrix.inverse
-        world.cameraWorldPosition = [
-            inverseView.columns.3.x,
-            inverseView.columns.3.y,
-            inverseView.columns.3.z,
-        ]
-        world.cameraYawDegrees = degrees(camera.azimuth)
-        world.cameraPitchDegrees = degrees(camera.elevation)
-
-        return RenderCamera(
-            viewMatrix: camera.viewMatrix,
-            projectionMatrix: camera.projectionMatrix,
-            azimuth: camera.azimuth,
-            elevation: camera.elevation
-        )
+    func updateEZ2STREffectCatalog(_ catalog: EZ2STREffectCatalog?) {
+        ez2strEffectCatalog = catalog
+        manager.ez2strEffectCatalog = catalog
     }
 
     func togglePlayPause() {
+        guard effectID != nil else {
+            return
+        }
         if isPlaying {
             pause()
         } else if isCompleted {
@@ -196,6 +185,9 @@ final class EffectViewerEffectRenderer: Renderer {
     }
 
     func replay() {
+        guard let effectID else {
+            return
+        }
         if historyBaseTick == 0 && !tickHistory.isEmpty && !manager.hasEffects {
             currentTick = 0
             isCompleted = false
@@ -205,19 +197,9 @@ final class EffectViewerEffectRenderer: Renderer {
             return
         }
 
-        manager.removeAll()
-        manager = EffectManager(assetStore: assetStore, ez2strEffectCatalog: ez2strEffectCatalog)
-        world.resetModifiers()
-        tickHistory.removeAll(keepingCapacity: true)
-        historyBaseTick = 0
-        simulatedTickCount = 0
-        actualTotalTicks = nil
-        currentTick = 0
-        isCompleted = false
-        tickAccumulator = 0
-        lastRenderTime = nil
+        resetSimulation()
         isPlaying = true
-        spawnEffect()
+        spawnEffect(effectID)
     }
 
     func stepBackwardTick() {
@@ -267,18 +249,32 @@ final class EffectViewerEffectRenderer: Renderer {
         isLooping.toggle()
     }
 
+    func makeCamera(atTime time: TimeInterval, viewport: MTLViewport) -> RenderCamera {
+        camera.update(atTime: time)
+        camera.update(size: viewport.size)
+
+        let inverseView = camera.viewMatrix.inverse
+        world.cameraWorldPosition = [
+            inverseView.columns.3.x,
+            inverseView.columns.3.y,
+            inverseView.columns.3.z,
+        ]
+        world.cameraYawDegrees = degrees(camera.azimuth)
+        world.cameraPitchDegrees = degrees(camera.elevation)
+
+        return RenderCamera(
+            viewMatrix: camera.viewMatrix,
+            projectionMatrix: camera.projectionMatrix,
+            azimuth: camera.azimuth,
+            elevation: camera.elevation
+        )
+    }
+
     func render(frame: RenderFrame) {
         advancePlayback(atTime: frame.time)
 
         let renderPassDescriptor = frame.renderPassDescriptor
-        let edgeColor = EffectViewerStageRenderer.edgeCharcoalColor
-        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(
-            red: Double(edgeColor.x),
-            green: Double(edgeColor.y),
-            blue: Double(edgeColor.z),
-            alpha: 1
-        )
-        renderPassDescriptor.colorAttachments[0].loadAction = .clear
+        renderPassDescriptor.colorAttachments[0].loadAction = .dontCare
         renderPassDescriptor.colorAttachments[0].storeAction = .store
         renderPassDescriptor.depthAttachment.clearDepth = configuration.clearDepth
 
@@ -319,8 +315,7 @@ final class EffectViewerEffectRenderer: Renderer {
         for view in frame.views {
             renderCommandEncoder.setViewport(view.viewport)
 
-            stageRenderer.renderBackdrop(renderCommandEncoder: renderCommandEncoder)
-            stageRenderer.renderGroundGrid(camera: view.camera, renderCommandEncoder: renderCommandEncoder)
+            stageRenderer.renderBackdrop(viewport: view.viewport, renderCommandEncoder: renderCommandEncoder)
 
             renderQueue.sort(camera: view.camera)
 
@@ -351,13 +346,43 @@ final class EffectViewerEffectRenderer: Renderer {
                         )
                     }
                 }
+
+                if bucket == .opaque {
+                    stageRenderer.renderGroundGrid(camera: view.camera, renderCommandEncoder: renderCommandEncoder)
+                }
             }
         }
 
         renderCommandEncoder.endEncoding()
     }
 
-    private func spawnEffect() {
+    private static func makeDefaultCamera() -> OrbitalCamera {
+        let camera = OrbitalCamera(distance: 20)
+        camera.fovy = 45
+        camera.nearZ = 1
+        camera.farZ = 1000
+        camera.elevation = radians(20)
+        camera.minimumDistance = 8
+        camera.maximumDistance = 80
+        camera.target = [0, 1.5, 0]
+        return camera
+    }
+
+    private func resetSimulation() {
+        manager.removeAll()
+        manager = EffectManager(assetStore: assetStore, ez2strEffectCatalog: ez2strEffectCatalog)
+        world.resetModifiers()
+        tickHistory.removeAll(keepingCapacity: true)
+        historyBaseTick = 0
+        simulatedTickCount = 0
+        actualTotalTicks = nil
+        currentTick = 0
+        isCompleted = false
+        tickAccumulator = 0
+        lastRenderTime = nil
+    }
+
+    private func spawnEffect(_ effectID: EffectID) {
         let request = EffectSpawnRequest(
             effectID: effectID,
             worldPosition: .zero,

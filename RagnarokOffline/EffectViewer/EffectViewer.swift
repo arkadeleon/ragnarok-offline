@@ -18,6 +18,7 @@ struct EffectViewer: View {
 
     @State private var isPicking = false
     @State private var selectedEffect: EffectViewerEffect?
+    @State private var effects: [EffectViewerEffect] = EffectViewerEffect.all
     @State private var ez2strEffectCatalog: EZ2STREffectCatalog?
     @State private var targetSprite: EffectViewerTargetSprite?
     @State private var showsTarget = false
@@ -25,15 +26,12 @@ struct EffectViewer: View {
     @State private var loadError: (any Error)?
 
     var body: some View {
-        let effects = EffectViewerEffect.all(ez2strEffectCatalog: ez2strEffectCatalog)
-
         VStack(spacing: 12) {
             ZStack {
                 EffectViewerStageBackground()
 
-                if let renderer {
+                if let renderer, selectedEffect != nil {
                     MetalViewContainer(renderer: renderer)
-                        .id(ObjectIdentifier(renderer))
                 } else if let loadError {
                     Text(loadError.localizedDescription)
                         .frame(maxWidth: 240)
@@ -109,7 +107,7 @@ struct EffectViewer: View {
             .environment(\.colorScheme, .dark)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
 
-            EffectViewerPlaybackControlsView(renderer: renderer)
+            EffectViewerPlaybackControlsView(renderer: selectedEffect == nil ? nil : renderer)
         }
         .padding()
         .navigationTitle(Text("Effect Viewer", tableName: "EffectViewer"))
@@ -134,23 +132,33 @@ struct EffectViewer: View {
                 return await EffectViewerTargetSprite.loadNovice(device: device, resourceManager: resourceManager)
             }()
 
-            ez2strEffectCatalog = await catalogTask
+            let loadedCatalog = await catalogTask
+            ez2strEffectCatalog = loadedCatalog
+            effects = EffectViewerEffect.all(ez2strEffectCatalog: loadedCatalog)
+            renderer?.updateEZ2STREffectCatalog(loadedCatalog)
+
             let loadedSprite = await spriteTask
             targetSprite = loadedSprite
             renderer?.targetSprite = loadedSprite
         }
         .task(id: selectedEffect) {
-            let previousIsLooping = renderer?.isLooping ?? true
-            let previousPlaybackRate = renderer?.playbackRate ?? .normal
-            renderer = nil
             loadError = nil
 
             guard let selectedEffect else {
+                renderer?.load(effectID: nil)
+                return
+            }
+
+            if let renderer {
+                renderer.load(effectID: selectedEffect.effectID)
+                return
+            }
+
+            guard let device = MTLCreateSystemDefaultDevice() else {
                 return
             }
 
             do {
-                let device = MTLCreateSystemDefaultDevice()!
                 let newRenderer = try EffectViewerEffectRenderer(
                     device: device,
                     configuration: .default,
@@ -159,9 +167,7 @@ struct EffectViewer: View {
                     ez2strEffectCatalog: ez2strEffectCatalog,
                     targetSprite: targetSprite
                 )
-                newRenderer.isLooping = previousIsLooping
                 newRenderer.showsTarget = showsTarget
-                newRenderer.playbackRate = previousPlaybackRate
                 renderer = newRenderer
             } catch {
                 loadError = error
