@@ -20,6 +20,8 @@ final class EffectViewerEffectWorldContext: EffectWorldContext {
     var cameraYawDegrees: Float = 0
     var cameraPitchDegrees: Float = 20
 
+    var targetModifiers = EffectViewerTargetModifiers()
+
     private let targets: [EffectTargetID : EffectTargetState] = [
         targetObjectID: EffectTargetState(
             objectID: targetObjectID,
@@ -48,8 +50,21 @@ final class EffectViewerEffectWorldContext: EffectWorldContext {
     }
 
     func applyTargetModifier(_ modifier: EffectTargetModifier, to targetID: EffectTargetID) {
+        guard targetID == Self.targetObjectID else {
+            return
+        }
+        targetModifiers.apply(modifier)
     }
 
     func spawnChildEffect(_ request: EffectSpawnRequest) {
+    }
+
+    func resetModifiers() {
+        targetModifiers = EffectViewerTargetModifiers()
+    }
+
+    func collectTargetPayloads() -> [EffectViewerTargetRenderer.RenderPayload] {
+        let basePosition = targets[Self.targetObjectID]?.worldPosition ?? .zero
+        return targetModifiers.collectPayloads(baseWorldPosition: basePosition)
     }
 }

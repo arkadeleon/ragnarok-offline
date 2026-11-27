@@ -19,6 +19,8 @@ struct EffectViewer: View {
     @State private var isPicking = false
     @State private var selectedEffect: EffectViewerEffect?
     @State private var ez2strEffectCatalog: EZ2STREffectCatalog?
+    @State private var targetSprite: EffectViewerTargetSprite?
+    @State private var showsTarget = false
     @State private var renderer: EffectViewerEffectRenderer?
     @State private var loadError: (any Error)?
 
@@ -87,6 +89,23 @@ struct EffectViewer: View {
                     .padding(12)
                 }
             }
+            .overlay(alignment: .topTrailing) {
+                if selectedEffect != nil {
+                    Button {
+                        showsTarget.toggle()
+                        renderer?.showsTarget = showsTarget
+                    } label: {
+                        Image(systemName: showsTarget ? "person" : "person.slash")
+                            .font(.subheadline.weight(.medium))
+                            .foregroundStyle(showsTarget ? .primary : .secondary)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 8)
+                            .adaptiveStageCapsuleBackground()
+                    }
+                    .buttonStyle(.plain)
+                    .padding(12)
+                }
+            }
             .environment(\.colorScheme, .dark)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
 
@@ -106,7 +125,19 @@ struct EffectViewer: View {
             .adaptiveNavigationTransition(sourceID: "effect", in: effectNamespace)
         }
         .task {
-            ez2strEffectCatalog = await EZ2STREffectCatalog.load(from: resourceManager)
+            async let catalogTask = EZ2STREffectCatalog.load(from: resourceManager)
+            let device = MTLCreateSystemDefaultDevice()
+            async let spriteTask: EffectViewerTargetSprite? = {
+                guard let device else {
+                    return nil
+                }
+                return await EffectViewerTargetSprite.loadNovice(device: device, resourceManager: resourceManager)
+            }()
+
+            ez2strEffectCatalog = await catalogTask
+            let loadedSprite = await spriteTask
+            targetSprite = loadedSprite
+            renderer?.targetSprite = loadedSprite
         }
         .task(id: selectedEffect) {
             let previousIsLooping = renderer?.isLooping ?? true
@@ -125,9 +156,11 @@ struct EffectViewer: View {
                     configuration: .default,
                     effectID: selectedEffect.effectID,
                     resourceManager: resourceManager,
-                    ez2strEffectCatalog: ez2strEffectCatalog
+                    ez2strEffectCatalog: ez2strEffectCatalog,
+                    targetSprite: targetSprite
                 )
                 newRenderer.isLooping = previousIsLooping
+                newRenderer.showsTarget = showsTarget
                 newRenderer.playbackRate = previousPlaybackRate
                 renderer = newRenderer
             } catch {

@@ -41,11 +41,13 @@ enum EffectViewerPlaybackRate: Double, CaseIterable, Identifiable {
 @Observable
 final class EffectViewerEffectRenderer: Renderer {
     private enum RenderPayload {
+        case target(EffectViewerTargetRenderer.RenderPayload)
         case str(STREffectRenderer.RenderPayload)
         case primitive(EffectPrimitiveBatchRenderer.RenderPayload)
     }
 
     private struct CachedTick {
+        let targetPayloads: [EffectViewerTargetRenderer.RenderPayload]
         let strPayloads: [STREffectRenderer.RenderPayload]
         let primitivePayloads: [EffectPrimitiveBatchRenderer.RenderPayload]
     }
@@ -60,6 +62,7 @@ final class EffectViewerEffectRenderer: Renderer {
     var isPlaying = true
     private(set) var isCompleted = false
     var isLooping = true
+    var showsTarget = false
     var playbackRate: EffectViewerPlaybackRate = .normal
 
     private(set) var currentTick: Int = 0
@@ -95,9 +98,12 @@ final class EffectViewerEffectRenderer: Renderer {
         currentTick < historyBaseTick + simulatedTickCount - 1 || manager.hasEffects
     }
 
+    @ObservationIgnored var targetSprite: EffectViewerTargetSprite?
+
     @ObservationIgnored private let effectID: EffectID
     @ObservationIgnored private let renderQueue = RenderQueue<RenderPayload>()
     @ObservationIgnored private let stageRenderer: EffectViewerStageRenderer
+    @ObservationIgnored private let targetRenderer: EffectViewerTargetRenderer
     @ObservationIgnored private let manager: EffectManager
     @ObservationIgnored private let world: EffectViewerEffectWorldContext
     @ObservationIgnored private let strRenderer: STREffectRenderer
@@ -113,16 +119,19 @@ final class EffectViewerEffectRenderer: Renderer {
         configuration: RenderConfiguration,
         effectID: EffectID,
         resourceManager: ResourceManager,
-        ez2strEffectCatalog: EZ2STREffectCatalog? = nil
+        ez2strEffectCatalog: EZ2STREffectCatalog? = nil,
+        targetSprite: EffectViewerTargetSprite? = nil
     ) throws {
         self.device = device
         self.configuration = configuration
         self.effectID = effectID
+        self.targetSprite = targetSprite
 
         let assetStore = EffectAssetStore(device: device, resourceManager: resourceManager)
         self.manager = EffectManager(assetStore: assetStore, ez2strEffectCatalog: ez2strEffectCatalog)
         self.world = EffectViewerEffectWorldContext()
         self.stageRenderer = try EffectViewerStageRenderer(device: device, configuration: configuration)
+        self.targetRenderer = try EffectViewerTargetRenderer(device: device, configuration: configuration)
         self.strRenderer = try STREffectRenderer(device: device, configuration: configuration)
         self.primitiveRenderer = try EffectPrimitiveBatchRenderer(device: device, configuration: configuration)
         self.camera = Self.makeDefaultCamera()
@@ -184,6 +193,7 @@ final class EffectViewerEffectRenderer: Renderer {
 
     func replay() {
         manager.removeAll()
+        world.resetModifiers()
         tickHistory.removeAll(keepingCapacity: true)
         historyBaseTick = 0
         simulatedTickCount = 0
@@ -266,6 +276,15 @@ final class EffectViewerEffectRenderer: Renderer {
         let historyIndex = currentTick - historyBaseTick
         if tickHistory.indices.contains(historyIndex) {
             let cachedTick = tickHistory[historyIndex]
+            if showsTarget, targetSprite != nil {
+                for payload in cachedTick.targetPayloads {
+                    targetRenderer.submit(
+                        payload: payload,
+                        into: renderQueue,
+                        transformPayload: RenderPayload.target
+                    )
+                }
+            }
             for payload in cachedTick.strPayloads {
                 strRenderer.submit(
                     payload: payload,
@@ -293,6 +312,16 @@ final class EffectViewerEffectRenderer: Renderer {
             for bucket in RenderPassBucket.allCases {
                 for item in renderQueue.items(in: bucket) {
                     switch item.payload {
+                    case .target(let payload):
+                        if let targetSprite {
+                            targetRenderer.render(
+                                payload: payload,
+                                targetSprite: targetSprite,
+                                viewport: view.viewport,
+                                camera: view.camera,
+                                renderCommandEncoder: renderCommandEncoder
+                            )
+                        }
                     case .str(let payload):
                         strRenderer.render(
                             payload: payload,
@@ -327,10 +356,18 @@ final class EffectViewerEffectRenderer: Renderer {
     }
 
     private func simulateNextTick() {
+        world.targetModifiers.update(deltaTime: EffectManager.tickDuration)
         manager.stepOneTick(world: world)
+        let targetPayloads = world.collectTargetPayloads()
         let strPayloads = manager.collectSTRPayloads(fog: fog, world: world)
         let primitivePayloads = manager.collectPrimitivePayloads(fog: fog, world: world)
-        tickHistory.append(CachedTick(strPayloads: strPayloads, primitivePayloads: primitivePayloads))
+        tickHistory.append(
+            CachedTick(
+                targetPayloads: targetPayloads,
+                strPayloads: strPayloads,
+                primitivePayloads: primitivePayloads
+            )
+        )
 
         if tickHistory.count > Self.maxHistoryTicks {
             let overflow = tickHistory.count - Self.maxHistoryTicks
