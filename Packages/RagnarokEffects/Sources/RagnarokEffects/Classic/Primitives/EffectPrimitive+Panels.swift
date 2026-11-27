@@ -1057,8 +1057,6 @@ extension EffectPrimitive {
                 bPre.y,
                 half * EffectSpace.sine(degrees: opposite)
             )
-            state.slots[index].vecBPre = bPre
-            state.slots[index].vecBNow = bNow
 
             guard size > 0 else {
                 continue
@@ -1577,9 +1575,6 @@ extension EffectPrimitive {
                 half,
                 EffectSpace.sine(degrees: opposite) * half
             ) + primary.vecBNow
-
-            state.slots[index].vecTPre = tPre
-            state.slots[index].vecTNow = tNow
 
             guard pillarHeight > 0 else {
                 continue
@@ -2422,12 +2417,9 @@ extension EffectPrimitive {
                 continue
             }
 
-            if state.slots[index].height[8] >= 360 || state.slots[index].height[8] < 0 {
-                state.slots[index].height[8] = 0
-            }
-
             let slot = state.slots[index]
-            let rx = slot.distance * EffectSpace.sine(degrees: Int(slot.height[8])) * 0.05 + slot.distance
+            let pulseAngle = (slot.height[8] >= 360 || slot.height[8] < 0) ? 0 : Int(slot.height[8])
+            let rx = slot.distance * EffectSpace.sine(degrees: pulseAngle) * 0.05 + slot.distance
 
             let angle1 = ((Int(slot.fullDisplayAngle) % 360) + 360) % 360
             let angle2 = (angle1 + 90) % 360

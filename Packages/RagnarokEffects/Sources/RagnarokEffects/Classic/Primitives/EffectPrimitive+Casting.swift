@@ -323,6 +323,8 @@ extension EffectPrimitive {
 
             var order = 0
             var count = 0
+            var prevB: SIMD3<Float> = .zero
+            var prevT: SIMD3<Float> = .zero
             while count < fullDisplayAngle {
                 var angle = (Int(state.slots[ec].rotStart) + count) % 360
                 if angle < 0 {
@@ -339,7 +341,6 @@ extension EffectPrimitive {
                     0,
                     sn1 * state.slots[ec].distance
                 )
-                state.slots[ec].vecBNow = base
 
                 let height = state.slots[ec].height[order]
                 var rx = EffectSpace.cosine(degrees: Int(state.slots[ec].riseAngle)) * height
@@ -364,7 +365,6 @@ extension EffectPrimitive {
                 rx = cs1 * rx
 
                 let top = SIMD3<Float>(base.x + rx, -ry, base.z + rz)
-                state.slots[ec].vecTNow = top
 
                 let offsetX = Float(state.slots[ec].flag1[0])
                 let offsetZ = Float(state.slots[ec].flag1[1])
@@ -372,8 +372,8 @@ extension EffectPrimitive {
 
                 let vec1 = top + offset
                 let vec2 = base + offset
-                let vec3 = state.slots[ec].vecTPre + offset
-                let vec4 = state.slots[ec].vecBPre + offset
+                let vec3 = prevT + offset
+                let vec4 = prevB + offset
 
                 if order > 0 {
                     renderTeiRect(
@@ -395,8 +395,8 @@ extension EffectPrimitive {
                     order = 20
                 }
 
-                state.slots[ec].vecTPre = top
-                state.slots[ec].vecBPre = base
+                prevT = top
+                prevB = base
                 count += basicAngle
             }
         }
@@ -1194,10 +1194,6 @@ extension EffectPrimitive {
                 var bNow = SIMD3<Float>(radius * EffectSpace.cosine(degrees: angle2), 0, EffectSpace.sine(degrees: angle2) * radius)
                 var tNow = SIMD3<Float>(radius * EffectSpace.cosine(degrees: angle3), 0, EffectSpace.sine(degrees: angle3) * radius)
                 var tPre = SIMD3<Float>(radius * EffectSpace.cosine(degrees: angle4), 0, EffectSpace.sine(degrees: angle4) * radius)
-                state.slots[ec].vecBPre = bPre
-                state.slots[ec].vecBNow = bNow
-                state.slots[ec].vecTNow = tNow
-                state.slots[ec].vecTPre = tPre
 
                 var vec1 = SIMD3<Float>(shiftX + bPre.x, 0, bPre.z)
                 var vec2 = SIMD3<Float>(shiftX + bNow.x, 0, bNow.z)
@@ -1232,10 +1228,6 @@ extension EffectPrimitive {
                     bNow *= 1.1
                     tPre *= 1.1
                     tNow *= 1.1
-                    state.slots[ec].vecBPre = bPre
-                    state.slots[ec].vecBNow = bNow
-                    state.slots[ec].vecTPre = tPre
-                    state.slots[ec].vecTNow = tNow
 
                     vec1 = SIMD3<Float>(bPre.x + shiftX, bPre.y, bPre.z)
                     vec2 = SIMD3<Float>(bNow.x + shiftX, bNow.y, bNow.z)

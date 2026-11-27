@@ -766,10 +766,6 @@ extension EffectPrimitive {
             let bNow = SIMD3<Float>(cs1 * halfWidth - sn1 * (-halfDepth), -1.0, sn1 * halfWidth + cs1 * (-halfDepth))
             let tNow = SIMD3<Float>(cs1 * (-halfWidth) - sn1 * (-halfDepth), -1.0, sn1 * (-halfWidth) + cs1 * (-halfDepth))
             let tPre = SIMD3<Float>(cs1 * (-halfWidth) - sn1 * halfDepth, -1.0, sn1 * (-halfWidth) + cs1 * halfDepth)
-            state.slots[index].vecBPre = bPre
-            state.slots[index].vecBNow = bNow
-            state.slots[index].vecTNow = tNow
-            state.slots[index].vecTPre = tPre
 
             let red: UInt8
             let green: UInt8
@@ -951,6 +947,8 @@ extension EffectPrimitive {
 
             var order = 0
             var count = 0
+            var prevB: SIMD3<Float> = .zero
+            var prevT: SIMD3<Float> = .zero
             while count <= fullAngle {
                 var angle = Int(state.slots[index].rotStart) + count
                 if angle >= 360 {
@@ -964,13 +962,11 @@ extension EffectPrimitive {
                 let sn1 = EffectSpace.sine(degrees: angle)
                 let distance = state.slots[index].distance
                 let base = SIMD3<Float>(cs1 * distance, -3.0, sn1 * distance)
-                state.slots[index].vecBNow = base
 
                 let riseAngle = Int(state.slots[index].riseAngle)
                 let rx = EffectSpace.cosine(degrees: riseAngle) * state.slots[index].maxHeight
                 let ry = EffectSpace.sine(degrees: riseAngle) * state.slots[index].maxHeight
                 let top = SIMD3<Float>(cs1 * rx + base.x, -(ry + 3.0), sn1 * rx + base.z)
-                state.slots[index].vecTNow = top
 
                 if order > 0 && state.slots[index].alphaB > 0 {
                     renderTeiRect(
@@ -979,10 +975,10 @@ extension EffectPrimitive {
                         texPart: order - 1,
                         alphaB: state.slots[index].alphaB,
                         alphaT: state.slots[index].alphaB,
-                        v1: state.slots[index].vecBPre,
+                        v1: prevB,
                         v2: base,
                         v3: top,
-                        v4: state.slots[index].vecTPre,
+                        v4: prevT,
                         textureIndex: 0
                     )
                 }
@@ -992,8 +988,8 @@ extension EffectPrimitive {
                     order = 20
                 }
 
-                state.slots[index].vecBPre = base
-                state.slots[index].vecTPre = top
+                prevB = base
+                prevT = top
                 count += step
             }
         }
@@ -1108,10 +1104,6 @@ extension EffectPrimitive {
             let bNow = SIMD3<Float>(halfX, -1.0, -halfZ)
             let tNow = SIMD3<Float>(-halfX, -1.0, -halfZ)
             let tPre = SIMD3<Float>(-halfX, -1.0, halfZ)
-            state.slots[index].vecBPre = bPre
-            state.slots[index].vecBNow = bNow
-            state.slots[index].vecTNow = tNow
-            state.slots[index].vecTPre = tPre
 
             emitFourColumnWalls(
                 into: &collector,
@@ -1180,11 +1172,6 @@ extension EffectPrimitive {
                     bNow.z = bPre.z - left
                 }
             }
-
-            state.slots[index].vecBPre = bPre
-            state.slots[index].vecBNow = bNow
-            state.slots[index].vecTNow = tNow
-            state.slots[index].vecTPre = tPre
 
             let topY = -1.0 - slot.height[2]
             let vec1 = SIMD3<Float>(bPre.x, topY, bPre.z)
@@ -1787,10 +1774,6 @@ extension EffectPrimitive {
                 let bNow = SIMD3<Float>(rx * EffectSpace.cosine(degrees: 135), 0, rx * EffectSpace.sine(degrees: 135))
                 let tNow = SIMD3<Float>(rx * EffectSpace.cosine(degrees: 225), 0, rx * EffectSpace.sine(degrees: 225))
                 let tPre = SIMD3<Float>(rx * EffectSpace.cosine(degrees: 315), 0, rx * EffectSpace.sine(degrees: 315))
-                state.slots[index].vecBPre = bPre
-                state.slots[index].vecBNow = bNow
-                state.slots[index].vecTNow = tNow
-                state.slots[index].vecTPre = tPre
 
                 var vec1 = SIMD3<Float>(bPre.x + base, bPre.y, bPre.z)
                 var vec2 = SIMD3<Float>(bNow.x + base, bNow.y, bNow.z)

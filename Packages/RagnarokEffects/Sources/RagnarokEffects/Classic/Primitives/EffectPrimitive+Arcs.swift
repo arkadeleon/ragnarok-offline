@@ -82,6 +82,8 @@ extension EffectPrimitive {
 
             var i = 0
             var offset = 0
+            var prevB: SIMD3<Float> = .zero
+            var prevT: SIMD3<Float> = .zero
             while offset < fullDisplayAngle {
                 var angle = (Int(state.slots[ec].rotStart) + offset) % 360
                 if angle < 0 {
@@ -94,13 +96,11 @@ extension EffectPrimitive {
                 let cosine = EffectSpace.cosine(degrees: angle)
                 let sine = EffectSpace.sine(degrees: angle)
                 let curB = SIMD3<Float>(cosine * dist, -maxHeight, sine * dist)
-                state.slots[ec].vecBNow = curB
 
                 let height = state.slots[ec].height[i]
                 let riseX = riseCos * height
                 let riseY = riseSin * height
                 let curT = SIMD3<Float>(curB.x + cosine * riseX, -(riseY + maxHeight), curB.z + sine * riseX)
-                state.slots[ec].vecTNow = curT
 
                 if i > 0 {
                     renderTeiRect(
@@ -109,17 +109,17 @@ extension EffectPrimitive {
                         texPart: i - 1,
                         alphaB: state.slots[ec].alphaB,
                         alphaT: state.slots[ec].alphaB,
-                        v1: state.slots[ec].vecBPre,
+                        v1: prevB,
                         v2: curB,
                         v3: curT,
-                        v4: state.slots[ec].vecTPre,
+                        v4: prevT,
                         textureIndex: 0
                     )
                 }
 
                 i = min(20, i + 1)
-                state.slots[ec].vecBPre = curB
-                state.slots[ec].vecTPre = curT
+                prevB = curB
+                prevT = curT
                 offset += step
             }
         }
@@ -430,7 +430,6 @@ extension EffectPrimitive {
                 baseOffset: baseOffset,
                 topOffset: topOffset
             ) { segmentIndex, prevB, curB, curT, prevT in
-                state.size = slot.vecTPre.x
                 renderTeiRect(
                     into: &collector,
                     assets: assets,
@@ -441,7 +440,8 @@ extension EffectPrimitive {
                     v2: curB,
                     v3: curT,
                     v4: prevT,
-                    textureIndex: textureIndex
+                    textureIndex: textureIndex,
+                    sizeOverride: slot.vecTPre.x
                 )
             }
         }
@@ -506,7 +506,6 @@ extension EffectPrimitive {
                 topOffset: .zero
             ) { segmentIndex, prevB, curB, curT, prevT in
                 if slot.alphaT != 10 {
-                    state.size = 0
                     renderTeiRect(
                         into: &collector,
                         assets: assets,
@@ -517,41 +516,43 @@ extension EffectPrimitive {
                         v2: curB,
                         v3: curT,
                         v4: prevT,
-                        textureIndex: textureIndex
+                        textureIndex: textureIndex,
+                        sizeOverride: 0
                     )
                 }
 
                 var glowAlpha = slot.alphaB
+                var glowSize = state.size
                 switch slot.alphaT {
                 case ...2:
-                    state.size = 17.0
+                    glowSize = 17.0
                     glowAlpha = slot.alphaB &* 3
                 case 3:
-                    state.size = 18.0
+                    glowSize = 18.0
                     glowAlpha = slot.alphaB &* 3
                 case 4:
-                    state.size = 19.0
+                    glowSize = 19.0
                     glowAlpha = slot.alphaB &* 2
                 case 5:
-                    state.size = 20.0
+                    glowSize = 20.0
                     glowAlpha = slot.alphaB &* 2
                 case 6:
-                    state.size = 5.0
+                    glowSize = 5.0
                     glowAlpha = slot.alphaB &* 2
                 case 7:
-                    state.size = 21.0
+                    glowSize = 21.0
                     glowAlpha = slot.alphaB &* 2
                 case 8:
-                    state.size = 22.0
+                    glowSize = 22.0
                     glowAlpha = slot.alphaB &* 2
                 case 9:
-                    state.size = 30.0
+                    glowSize = 30.0
                     glowAlpha = usesMinimalEffects ? slot.alphaB : slot.alphaB &* 2
                 case 10:
-                    state.size = 6.0
+                    glowSize = 6.0
                     glowAlpha = slot.alphaB &* 3
                 case 11:
-                    state.size = 32.0
+                    glowSize = 32.0
                     glowAlpha = usesMinimalEffects ? slot.alphaB : slot.alphaB &* 2
                 default:
                     break
@@ -571,7 +572,8 @@ extension EffectPrimitive {
                     v2: curB,
                     v3: curT,
                     v4: prevT,
-                    textureIndex: textureIndex
+                    textureIndex: textureIndex,
+                    sizeOverride: glowSize
                 )
             }
         }

@@ -802,12 +802,9 @@ extension EffectPrimitive {
                 continue
             }
 
-            if state.slots[index].height[8] >= 360.0 || state.slots[index].height[8] < 0 {
-                state.slots[index].height[8] = 0
-            }
-
             let slot = state.slots[index]
-            let radius = slot.distance * EffectSpace.sine(degrees: Int(slot.height[8])) * 0.05 + slot.distance
+            let pulseAngle = (slot.height[8] >= 360.0 || slot.height[8] < 0) ? 0 : Int(slot.height[8])
+            let radius = slot.distance * EffectSpace.sine(degrees: pulseAngle) * 0.05 + slot.distance
 
             var angle = ((Int(slot.fullDisplayAngle) % 360) + 360) % 360
             var v1 = SIMD3<Float>(radius * EffectSpace.cosine(degrees: angle), 0, radius * EffectSpace.sine(degrees: angle))
@@ -1275,12 +1272,9 @@ extension EffectPrimitive {
         green: UInt8,
         blue: UInt8
     ) {
-        if state.slots[slotIndex].height[8] >= 360.0 || state.slots[slotIndex].height[8] < 0 {
-            state.slots[slotIndex].height[8] = 0
-        }
-
         let slot = state.slots[slotIndex]
-        let radius = slot.distance * EffectSpace.sine(degrees: Int(slot.height[8])) * 0.05 + slot.distance * scale
+        let pulseAngle = (slot.height[8] >= 360.0 || slot.height[8] < 0) ? 0 : Int(slot.height[8])
+        let radius = slot.distance * EffectSpace.sine(degrees: pulseAngle) * 0.05 + slot.distance * scale
         let corners = Self.facingSquareCorners(
             radius: radius,
             startAngle: Int(slot.fullDisplayAngle),

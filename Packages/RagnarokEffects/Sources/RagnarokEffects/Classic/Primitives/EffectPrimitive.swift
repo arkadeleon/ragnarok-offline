@@ -1200,9 +1200,10 @@ public final class EffectPrimitive {
         v2: SIMD3<Float>,
         v3: SIMD3<Float>,
         v4: SIMD3<Float>,
-        textureIndex: Int
+        textureIndex: Int,
+        sizeOverride: Float? = nil
     ) {
-        let palette = SizePalette(sizeKey: Int(state.size))
+        let palette = SizePalette(sizeKey: Int(sizeOverride ?? state.size))
         let effectiveAlpha = palette.alphaOverride ?? alphaB
 
         var finalRed = palette.red

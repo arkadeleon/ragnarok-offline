@@ -58,13 +58,16 @@ extension EffectPrimitive {
         ]
 
         let isSparkle = state.slots[0].flag1[0] == 3
+        let argb: UInt32
         if isSparkle {
             let r = UInt32(Int.random(in: 0..<11))
             let g = UInt32(Int.random(in: 0..<11))
-            state.argb = (((r << 8) &+ g) << 8) &- 0xD7D701
+            argb = (((r << 8) &+ g) << 8) &- 0xD7D701
+        } else {
+            argb = state.argb
         }
 
-        let color = EffectPrimitiveBatchCollector.unpackARGB(state.argb)
+        let color = EffectPrimitiveBatchCollector.unpackARGB(argb)
         let texture = resolveTexture(at: 0, assets: assets)
         let renderState: EffectPrimitiveRenderState = isSparkle
             ? EffectPrimitiveRenderState(srcBlend: .sourceAlpha, dstBlend: .one, depthTest: true, depthWrite: false, cullMode: .none, bucket: .translucent)
@@ -560,11 +563,6 @@ extension EffectPrimitive {
             let tNow = SIMD3<Float>(-cs1 * halfLength + sn1 * halfWidth, -1.0, -sn1 * halfLength - cs1 * halfWidth)
             let tPre = SIMD3<Float>(-cs1 * halfLength - sn1 * halfWidth, -1.0, -sn1 * halfLength + cs1 * halfWidth)
 
-            state.slots[ec].vecBPre = bPre
-            state.slots[ec].vecBNow = bNow
-            state.slots[ec].vecTNow = tNow
-            state.slots[ec].vecTPre = tPre
-
             let vec1 = SIMD3<Float>(bPre.x, bPre.y - pillarHeight, bPre.z)
             let vec2 = SIMD3<Float>(bNow.x, bNow.y - pillarHeight, bNow.z)
             let vec3 = SIMD3<Float>(tPre.x, tPre.y - pillarHeight, tPre.z)
@@ -643,7 +641,6 @@ extension EffectPrimitive {
                         dist = -dist
                     }
                     dist = 1.5 - dist + 1.5
-                    state.slots[ec].distance = dist
 
                     let quadSize = Int(dist)
                     let negQuadSize = Int(-dist)
@@ -945,6 +942,8 @@ extension EffectPrimitive {
             let riseCos = EffectSpace.cosine(degrees: Int(state.slots[ec].riseAngle))
             let riseSin = EffectSpace.sine(degrees: Int(state.slots[ec].riseAngle))
             var level = 0
+            var prevB: SIMD3<Float> = .zero
+            var prevT: SIMD3<Float> = .zero
 
             for _ in 0..<10 {
                 var count = 0
@@ -954,12 +953,10 @@ extension EffectPrimitive {
                     let sn = EffectSpace.sine(degrees: angle)
                     let dist = state.slots[ec].distance
                     let curB = SIMD3<Float>(dist * cs, 0, dist * sn)
-                    state.slots[ec].vecBNow = curB
 
                     let radius = state.slots[ec].height[level]
                     let spread = radius * riseCos
                     let curT = SIMD3<Float>(spread * cs + curB.x, -(radius * riseSin), spread * sn + curB.z)
-                    state.slots[ec].vecTNow = curT
 
                     if level > 0 {
                         renderTeiRect(
@@ -968,17 +965,17 @@ extension EffectPrimitive {
                             texPart: level - 1,
                             alphaB: state.slots[ec].alphaB,
                             alphaT: state.slots[ec].alphaB,
-                            v1: state.slots[ec].vecBPre,
+                            v1: prevB,
                             v2: curB,
                             v3: curT,
-                            v4: state.slots[ec].vecTPre,
+                            v4: prevT,
                             textureIndex: 0
                         )
                     }
 
                     level = min(20, level + 1)
-                    state.slots[ec].vecBPre = curB
-                    state.slots[ec].vecTPre = curT
+                    prevB = curB
+                    prevT = curT
                     count += step
                 }
             }
@@ -1464,11 +1461,6 @@ extension EffectPrimitive {
             let tNow = SIMD3<Float>(EffectSpace.cosine(degrees: angle) * radius, y, EffectSpace.sine(degrees: angle) * radius)
             angle += angle + 90 >= 360 ? -270 : 90
             let tPre = SIMD3<Float>(EffectSpace.cosine(degrees: angle) * radius, y, EffectSpace.sine(degrees: angle) * radius)
-
-            state.slots[ec].vecBPre = bPre
-            state.slots[ec].vecBNow = bNow
-            state.slots[ec].vecTNow = tNow
-            state.slots[ec].vecTPre = tPre
 
             let height = state.slots[ec].distance
             let vec1 = SIMD3<Float>(bPre.x, bPre.y - height, bPre.z)

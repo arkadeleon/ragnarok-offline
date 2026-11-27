@@ -511,8 +511,6 @@ extension EffectPrimitive {
                     -(rz * EffectSpace.sine(degrees: add)),
                     sn1 * rz * EffectSpace.cosine(degrees: add)
                 )
-                state.slots[index].vecBNow.x = wingSpan.x
-                state.slots[index].vecBNow.z = wingSpan.z
 
                 let v2 = v1 + wingSpan
                 let v3 = v4 + wingSpan
