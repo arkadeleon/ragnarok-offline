@@ -104,7 +104,9 @@ final class EffectViewerEffectRenderer: Renderer {
     @ObservationIgnored private let renderQueue = RenderQueue<RenderPayload>()
     @ObservationIgnored private let stageRenderer: EffectViewerStageRenderer
     @ObservationIgnored private let targetRenderer: EffectViewerTargetRenderer
-    @ObservationIgnored private let manager: EffectManager
+    @ObservationIgnored private let assetStore: EffectAssetStore
+    @ObservationIgnored private let ez2strEffectCatalog: EZ2STREffectCatalog?
+    @ObservationIgnored private var manager: EffectManager
     @ObservationIgnored private let world: EffectViewerEffectWorldContext
     @ObservationIgnored private let strRenderer: STREffectRenderer
     @ObservationIgnored private let primitiveRenderer: EffectPrimitiveBatchRenderer
@@ -128,6 +130,8 @@ final class EffectViewerEffectRenderer: Renderer {
         self.targetSprite = targetSprite
 
         let assetStore = EffectAssetStore(device: device, resourceManager: resourceManager)
+        self.assetStore = assetStore
+        self.ez2strEffectCatalog = ez2strEffectCatalog
         self.manager = EffectManager(assetStore: assetStore, ez2strEffectCatalog: ez2strEffectCatalog)
         self.world = EffectViewerEffectWorldContext()
         self.stageRenderer = try EffectViewerStageRenderer(device: device, configuration: configuration)
@@ -192,11 +196,22 @@ final class EffectViewerEffectRenderer: Renderer {
     }
 
     func replay() {
+        if historyBaseTick == 0 && !tickHistory.isEmpty && !manager.hasEffects {
+            currentTick = 0
+            isCompleted = false
+            tickAccumulator = 0
+            lastRenderTime = nil
+            isPlaying = true
+            return
+        }
+
         manager.removeAll()
+        manager = EffectManager(assetStore: assetStore, ez2strEffectCatalog: ez2strEffectCatalog)
         world.resetModifiers()
         tickHistory.removeAll(keepingCapacity: true)
         historyBaseTick = 0
         simulatedTickCount = 0
+        actualTotalTicks = nil
         currentTick = 0
         isCompleted = false
         tickAccumulator = 0
@@ -414,8 +429,13 @@ final class EffectViewerEffectRenderer: Renderer {
                 simulateNextTick()
                 currentTick = max(historyBaseTick, historyBaseTick + tickHistory.count - 1)
             } else if isLooping {
-                replay()
-                return
+                if historyBaseTick == 0 && !tickHistory.isEmpty {
+                    currentTick = 0
+                    isCompleted = false
+                } else {
+                    replay()
+                    return
+                }
             } else {
                 isCompleted = true
                 isPlaying = false

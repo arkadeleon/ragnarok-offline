@@ -37,8 +37,37 @@ struct EffectViewerPlaybackControlsView: View {
 private struct EffectViewerProgressRow: View {
     var renderer: EffectViewerEffectRenderer?
 
-    @State private var isScrubbing = false
-    @State private var scrubTick: Double = 0
+    var body: some View {
+        HStack(spacing: 10) {
+            Text(formattedReadout(forTick: currentTick))
+                .font(.caption.monospacedDigit())
+                .foregroundStyle(.secondary)
+                .frame(minWidth: 74, alignment: .leading)
+
+            Slider(
+                value: Binding(
+                    get: {
+                        sliderValue
+                    },
+                    set: { newValue in
+                        renderer?.seek(toTick: Int(newValue.rounded()))
+                    }
+                ),
+                in: Double(minTick)...Double(sliderUpperBound),
+                step: 1
+            ) { editing in
+                if editing {
+                    renderer?.pause()
+                }
+            }
+            .disabled(renderer == nil || maxTick <= minTick)
+
+            Text(totalReadout)
+                .font(.caption.monospacedDigit())
+                .foregroundStyle(.secondary)
+                .frame(minWidth: 74, alignment: .trailing)
+        }
+    }
 
     private var currentTick: Int {
         renderer?.currentTick ?? 0
@@ -52,62 +81,19 @@ private struct EffectViewerProgressRow: View {
         renderer?.maxTick ?? 0
     }
 
-    private var displayedTick: Int {
-        isScrubbing ? Int(scrubTick.rounded()) : currentTick
+    private var sliderUpperBound: Int {
+        max(minTick + 1, maxTick)
     }
 
-    private var sliderUpperBound: Double {
-        Double(max(minTick + 1, maxTick))
-    }
-
-    var body: some View {
-        HStack(spacing: 10) {
-            Text(formattedReadout(forTick: displayedTick))
-                .font(.caption.monospacedDigit())
-                .foregroundStyle(.secondary)
-                .frame(minWidth: 74, alignment: .leading)
-
-            Slider(
-                value: Binding(
-                    get: {
-                        isScrubbing ? scrubTick : Double(currentTick)
-                    },
-                    set: { newValue in
-                        scrubTick = newValue
-                        renderer?.seek(toTick: Int(newValue.rounded()))
-                    }
-                ),
-                in: Double(minTick)...sliderUpperBound,
-                step: 1
-            ) { editing in
-                isScrubbing = editing
-                if editing {
-                    scrubTick = Double(currentTick)
-                    renderer?.pause()
-                }
-            }
-            .disabled(renderer == nil || maxTick <= minTick)
-
-            Text(totalReadout)
-                .font(.caption.monospacedDigit())
-                .foregroundStyle(.secondary)
-                .frame(minWidth: 74, alignment: .trailing)
-        }
-        .onChange(of: currentTick) { _, newTick in
-            if !isScrubbing {
-                scrubTick = Double(newTick)
-            }
-        }
-        .onAppear {
-            scrubTick = Double(currentTick)
-        }
+    private var sliderValue: Double {
+        Double(min(max(currentTick, minTick), sliderUpperBound))
     }
 
     private var totalReadout: String {
-        guard let totalTicks = renderer?.totalTicks else {
+        guard let renderer, renderer.totalTicks != nil else {
             return "—"
         }
-        return formattedReadout(forTick: totalTicks)
+        return formattedReadout(forTick: renderer.maxTick)
     }
 
     private func formattedReadout(forTick tick: Int) -> String {
