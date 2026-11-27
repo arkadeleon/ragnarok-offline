@@ -556,11 +556,25 @@ struct RagEffectTests {
         minimalManager.stepOneTick(world: world)
         #expect((minimalManager.activeEffects.first as? RagEffect)?.primitives.isEmpty == true)
 
-        // Large-GID target tracking in .ef_linelink2 without Float precision loss
+        // Large-GID target tracking in .ef_linelink2, .ef_soullink, and .ef_sma without Float precision loss
         manager.spawn(EffectSpawnRequest(effectID: .ef_linelink2, worldPosition: .zero, targetObjectID: targetID, duration: 1.0))
         manager.stepOneTick(world: world)
         let lineLinkHost = manager.activeEffects.first as? RagEffect
         #expect(lineLinkHost?.primitives.first?.id == .pp_linelink)
         #expect(lineLinkHost?.primitives.first?.state.slots[0].targetObjectID == targetID)
+        manager.removeAll()
+
+        manager.spawn(EffectSpawnRequest(effectID: .ef_soullink, worldPosition: .zero, targetObjectID: targetID, duration: 1.0))
+        manager.stepOneTick(world: world)
+        let soulLinkHost = manager.activeEffects.first as? RagEffect
+        #expect(soulLinkHost?.primitives.first?.id == .pp_soullink)
+        #expect(soulLinkHost?.primitives.first?.state.slots[0].targetObjectID == targetID)
+        manager.removeAll()
+
+        manager.spawn(EffectSpawnRequest(effectID: .ef_sma, worldPosition: .zero, targetObjectID: targetID, duration: 1.0))
+        manager.stepOneTick(world: world)
+        let smaHost = manager.activeEffects.first as? RagEffect
+        #expect(smaHost?.primitives.first?.id == .pp_sma)
+        #expect(smaHost?.primitives.first?.state.slots[0].targetObjectID == targetID)
     }
 }
