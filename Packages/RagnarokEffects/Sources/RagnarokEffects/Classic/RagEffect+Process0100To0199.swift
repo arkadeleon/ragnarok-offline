@@ -52,6 +52,7 @@ extension RagEffect {
         .ef_hitdark,
         .ef_sui_explosion,
         .ef_darkattack,
+        .ef_curseattack,
         .ef_telekhit,
     ]
 
@@ -156,6 +157,8 @@ extension RagEffect {
             return processSuiExplosion(context: context)
         case .ef_darkattack:
             hitDark(context: context)
+        case .ef_curseattack:
+            processCurseAttack(context: context)
         case .ef_telekhit:
             break
         default:
@@ -1248,5 +1251,22 @@ extension RagEffect {
         }
 
         return processEZ2STRRaised(context: context)
+    }
+
+    private func processCurseAttack(context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        let texturePath = "effect\\curse.bmp"
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let prim = launchPrimitive(.pp_3dtexture)
+        prim.state.duration = 9999
+        prim.state.longSpeed = 4.5
+        prim.state.deltaPos2.y -= 30.0
+        prim.state.widthSize = 4.0
+        prim.state.heightSize = 4.0
+        prim.state.texturePaths = [texturePath]
     }
 }

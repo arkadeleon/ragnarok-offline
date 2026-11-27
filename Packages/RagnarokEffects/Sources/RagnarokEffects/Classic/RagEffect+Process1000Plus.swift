@@ -1209,7 +1209,7 @@ extension RagEffect {
 
     // MARK: - EF_NEW_TRIPLEATTACK (1409)
 
-    /// Spawns yellow directional line streaks (`83`) for `EF_NEW_TRIPLEATTACK` (1409).
+    /// Spawns yellow directional line streaks (`PP_CHEMICAL3` (56)) for `EF_NEW_TRIPLEATTACK` (1409).
     func lineStreak(kind: Int16, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
@@ -1218,7 +1218,7 @@ extension RagEffect {
         let texturePath = "effect\\line3y.tga"
         _ = context.assets?.texture(atPath: texturePath)
 
-        let primitive = launchPrimitive(83)
+        let primitive = launchPrimitive(.pp_chemical3)
         primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.noDepth
         primitive.state.duration = duration
         primitive.state.totalTexture = 1
@@ -1440,7 +1440,7 @@ extension RagEffect {
 
     // MARK: - EF_CRUEL_BITE_LINE / EF_QUILL_SPEAR_LINE (2439, 2442)
 
-    /// Spawns directional swirl streaks (`83`) for `EF_CRUEL_BITE_LINE` (2439) and `EF_QUILL_SPEAR_LINE` (2442).
+    /// Spawns directional swirl streaks (`PP_CHEMICAL3` (56)) for `EF_CRUEL_BITE_LINE` (2439) and `EF_QUILL_SPEAR_LINE` (2442).
     func texturedSwirl(clockwise: Bool, texturePath: String, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
@@ -1448,7 +1448,7 @@ extension RagEffect {
 
         _ = context.assets?.texture(atPath: texturePath)
 
-        let primitive = launchPrimitive(83)
+        let primitive = launchPrimitive(.pp_chemical3)
         primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.noDepth
         primitive.state.duration = duration
         primitive.state.totalTexture = 1

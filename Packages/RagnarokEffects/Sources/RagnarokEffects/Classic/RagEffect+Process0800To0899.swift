@@ -1301,7 +1301,7 @@ extension RagEffect {
 
     // MARK: - EF_CHEMICAL2DASH3 (836)
 
-    /// Spawns textured directional line streaks (`PP_CHEMICAL3` (83)) for `EF_CHEMICAL2DASH3` (836).
+    /// Spawns textured directional line streaks (`PP_CHEMICAL3` (56)) for `EF_CHEMICAL2DASH3` (836).
     func lineStreakTextured(kind: Int16, texturePath: String, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
@@ -1309,7 +1309,7 @@ extension RagEffect {
 
         _ = context.assets?.texture(atPath: texturePath)
 
-        let primitive = launchPrimitive(83)
+        let primitive = launchPrimitive(.pp_chemical3)
         primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.noDepth
         primitive.state.duration = duration
         primitive.state.totalTexture = 1
@@ -2250,7 +2250,7 @@ extension RagEffect {
 
     // MARK: - EF_CHEMICAL3S (893)
 
-    /// Spawns directional line streaks (`83`) for `EF_CHEMICAL3S` (893).
+    /// Spawns directional line streaks (`PP_CHEMICAL3` (56)) for `EF_CHEMICAL3S` (893).
     func lineStreakKind(kind: Int16, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
@@ -2259,7 +2259,7 @@ extension RagEffect {
         let texturePath = kind < 10 ? "effect\\line3.tga" : "effect\\line3y.tga"
         _ = context.assets?.texture(atPath: texturePath)
 
-        let primitive = launchPrimitive(83)
+        let primitive = launchPrimitive(.pp_chemical3)
         primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
         primitive.state.duration = duration
         primitive.state.totalTexture = 1

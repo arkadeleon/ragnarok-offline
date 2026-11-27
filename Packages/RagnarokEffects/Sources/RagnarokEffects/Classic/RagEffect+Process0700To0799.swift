@@ -672,6 +672,33 @@ extension RagEffect {
 
     // MARK: - EF_FROSTMYSTY (726)
 
+    /// Spawns expanding ground ripple fan (`131`) for `EF_FROSTMYSTY` (726).
+    func saintWing(texturePath: String, context: EffectTickContext) {
+        guard stateCnt == 0 else {
+            return
+        }
+
+        _ = context.assets?.texture(atPath: texturePath)
+
+        let primitive = launchPrimitive(131)
+        primitive.state.renderFlag = EffectPrimitiveState.RenderFlag.alpha | EffectPrimitiveState.RenderFlag.customBlend
+        primitive.state.duration = duration
+        primitive.state.totalTexture = 1
+        primitive.state.texturePaths = [texturePath]
+        primitive.state.size = 0
+
+        for i in 1..<4 {
+            primitive.state.slots[i].life = 0
+        }
+        primitive.state.slots[0].life = 1
+        primitive.state.slots[0].process = 0
+        primitive.state.slots[0].distance = 24.0
+        primitive.state.slots[0].alphaB = 0
+        primitive.state.slots[0].height = Array(repeating: 0, count: 21)
+        primitive.state.slots[0].flag1[0] = 0
+        primitive.state.slots[0].flag1[4] = 1
+    }
+
     /// Emits falling snowflake bursts (`PP_PARTICLE_UP` (59)) every 8 ticks up to tick 100 for `EF_FROSTMYSTY` (726).
     func snowFall(kind: Int8, context: EffectTickContext) {
         guard stateCnt >= 0, stateCnt <= 100, stateCnt % 8 == 0 else {

@@ -220,7 +220,7 @@ extension RagEffect {
         case .ef_entry2:
             portalRings(context: context)
         case .ef_saintwing:
-            saintWing(texturePath: "effect\\wing003.bmp", context: context)
+            texturedPair(texturePath: "effect\\wing003.bmp", context: context)
         case .ef_spherewind:
             for angle in stride(from: 0, to: 45, by: 9) {
                 featherRing(texturePath: "effect\\blue_ivy.bmp", angle: Int16(angle), large: 0, context: context)
@@ -1014,10 +1014,10 @@ extension RagEffect {
         }
     }
 
-    // MARK: - EF_SAINTWING (345)
+    // MARK: - EF_SAINTWING (362)
 
     /// Spawns `PP_SAINTWING` (76) paired flapping angel wings for `EF_SAINTWING` (362).
-    func saintWing(texturePath: String, context: EffectTickContext) {
+    func texturedPair(texturePath: String, context: EffectTickContext) {
         guard stateCnt == 0 else {
             return
         }
