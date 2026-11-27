@@ -5,6 +5,7 @@
 //  Created by Leon Li on 2026/11/26.
 //
 
+import Foundation
 import Metal
 import RagnarokRendering
 import simd
@@ -16,114 +17,12 @@ final class EffectViewerStageRenderer {
 
     private struct BackdropUniforms {
         var centerColor: SIMD3<Float>
-        var _pad0: Float = 0
         var edgeColor: SIMD3<Float>
-        var _pad1: Float = 0
     }
 
     private struct GridUniforms {
         var viewProjectionMatrix: simd_float4x4
     }
-
-    private static let shaderSource = """
-    #include <metal_stdlib>
-    using namespace metal;
-
-    struct BackdropUniforms {
-        float3 centerColor;
-        float _pad0;
-        float3 edgeColor;
-        float _pad1;
-    };
-
-    struct BackdropOut {
-        float4 position [[position]];
-        float2 ndc;
-    };
-
-    vertex BackdropOut effectViewerBackdropVertex(uint vertexID [[vertex_id]]) {
-        float2 positions[3] = {
-            float2(-1.0, -1.0),
-            float2( 3.0, -1.0),
-            float2(-1.0,  3.0)
-        };
-        BackdropOut out;
-        out.position = float4(positions[vertexID], 0.0, 1.0);
-        out.ndc = positions[vertexID];
-        return out;
-    }
-
-    fragment float4 effectViewerBackdropFragment(
-        BackdropOut in [[stage_in]],
-        constant BackdropUniforms &uniforms [[buffer(0)]]
-    ) {
-        float t = smoothstep(0.0, 1.2, length(in.ndc));
-        float3 color = mix(uniforms.centerColor, uniforms.edgeColor, t);
-        return float4(color, 1.0);
-    }
-
-    struct GridUniforms {
-        float4x4 viewProjectionMatrix;
-    };
-
-    struct GridOut {
-        float4 position [[position]];
-        float2 worldXZ;
-    };
-
-    vertex GridOut effectViewerGridVertex(
-        uint vertexID [[vertex_id]],
-        constant GridUniforms &uniforms [[buffer(0)]]
-    ) {
-        float2 corners[4] = {
-            float2(-32.0, -32.0),
-            float2( 32.0, -32.0),
-            float2(-32.0,  32.0),
-            float2( 32.0,  32.0)
-        };
-        float2 xz = corners[vertexID];
-        GridOut out;
-        out.position = uniforms.viewProjectionMatrix * float4(xz.x, 0.0, xz.y, 1.0);
-        out.worldXZ = xz;
-        return out;
-    }
-
-    fragment float4 effectViewerGridFragment(GridOut in [[stage_in]]) {
-        float2 coord = in.worldXZ;
-        float2 minorDeriv = fwidth(coord);
-        float2 minorGrid = abs(fract(coord - 0.5) - 0.5) / max(minorDeriv, float2(1e-4));
-        float minorLine = 1.0 - min(min(minorGrid.x, minorGrid.y), 1.0);
-
-        float2 majorCoord = coord / 5.0;
-        float2 majorDeriv = fwidth(majorCoord);
-        float2 majorGrid = abs(fract(majorCoord - 0.5) - 0.5) / max(majorDeriv, float2(1e-4));
-        float majorLine = 1.0 - min(min(majorGrid.x, majorGrid.y), 1.0);
-
-        float axisX = 1.0 - min(abs(coord.y) / max(minorDeriv.y, 1e-4), 1.0);
-        float axisZ = 1.0 - min(abs(coord.x) / max(minorDeriv.x, 1e-4), 1.0);
-        float axisLine = max(axisX, axisZ);
-
-        float dist = length(coord);
-        float fade = 1.0 - smoothstep(12.0, 28.0, dist);
-
-        float alpha = max(minorLine * 0.12, majorLine * 0.24);
-        alpha = max(alpha, axisLine * 0.30);
-        alpha *= fade;
-
-        if (alpha <= 0.001) {
-            discard_fragment();
-        }
-
-        float3 color = float3(0.72, 0.76, 0.84);
-        if (axisX > axisZ && axisX > 0.1) {
-            color = mix(color, float3(0.75, 0.40, 0.42), 0.45);
-        } else if (axisZ > 0.1) {
-            color = mix(color, float3(0.42, 0.58, 0.80), 0.45);
-        }
-
-        return float4(color, alpha);
-    }
-    """
 
     private let backdropPipelineState: any MTLRenderPipelineState
     private let backdropDepthStencilState: any MTLDepthStencilState
@@ -131,7 +30,7 @@ final class EffectViewerStageRenderer {
     private let gridDepthStencilState: any MTLDepthStencilState
 
     init(device: any MTLDevice, configuration: RenderConfiguration) throws {
-        let library = try device.makeLibrary(source: Self.shaderSource, options: nil)
+        let library = try device.makeDefaultLibrary(bundle: .main)
 
         let backdropDescriptor = MTLRenderPipelineDescriptor()
         backdropDescriptor.vertexFunction = library.makeFunction(name: "effectViewerBackdropVertex")
