@@ -123,10 +123,6 @@ extension EffectPrimitive {
         into collector: inout EffectPrimitiveBatchCollector,
         assets: EffectAssetStore?
     ) {
-        if state.cooldownSkillID != nil || state.slots[0].life == 98 {
-            currentMotion = 0
-        }
-
         let sinRoll = EffectSpace.sine(degrees: Int(state.roll))
         let cosRoll = EffectSpace.cosine(degrees: Int(state.roll))
         let width = state.widthSize
@@ -149,7 +145,8 @@ extension EffectPrimitive {
         let v3 = SIMD2<Float>(p3X - 0.5, p3Y - 0.5) + centerOffset
 
         let color = EffectPrimitiveBatchCollector.unpackARGB(state.argb)
-        let texture = resolveTexture(at: currentMotion, assets: assets)
+        let motionIndex = (state.cooldownSkillID != nil || state.slots[0].life == 98) ? 0 : currentMotion
+        let texture = resolveTexture(at: motionIndex, assets: assets)
         let flag = state.useRenderFlag[0] != 0 ? state.renderFlag : EffectPrimitiveState.RenderFlag.alpha
         let renderState = make2DRenderState(renderFlag: flag)
 

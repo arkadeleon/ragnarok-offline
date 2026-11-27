@@ -288,7 +288,7 @@ public final class RagEffect: EffectPrimitiveRenderable, STREffectRenderable {
                 retireMaster()
             } else {
                 stateCnt += 1
-                if duration > 0 && stateCnt >= duration {
+                if stateCnt >= duration {
                     retireMaster()
                 }
             }

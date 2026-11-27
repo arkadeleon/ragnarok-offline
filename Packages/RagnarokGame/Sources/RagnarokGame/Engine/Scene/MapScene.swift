@@ -847,11 +847,12 @@ extension MapScene: EffectWorldContext {
         guard let object = world.objects[targetID] else {
             return nil
         }
+        let facingAngle = Float(((8 - object.action.direction.rawValue) % 8) * 45)
         return EffectTargetState(
             objectID: object.objectID,
             worldPosition: object.worldPosition,
             headHeight: 2.0,
-            facingAngle: 0,
+            facingAngle: facingAngle,
             directionIndex: object.action.direction.rawValue,
             isValid: !object.isDead
         )

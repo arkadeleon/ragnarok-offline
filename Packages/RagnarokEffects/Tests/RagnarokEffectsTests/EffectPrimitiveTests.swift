@@ -359,8 +359,9 @@ struct EffectPrimitiveTests {
         #expect(p0.state.cooldownSkillID == 40_000)
 
         var anchoredCollector = EffectPrimitiveBatchCollector(fog: Fog())
+        p0.currentMotion = 2
         p0.collectBatches(into: &anchoredCollector, world: world, assets: nil)
-        #expect(p0.currentMotion == 0)
+        #expect(p0.currentMotion == 2)
         #expect(anchoredCollector.batches.first?.mode == .screen2D)
         #expect(anchoredCollector.batches.reduce(0) { $0 + $1.vertices.count } == 6)
 
