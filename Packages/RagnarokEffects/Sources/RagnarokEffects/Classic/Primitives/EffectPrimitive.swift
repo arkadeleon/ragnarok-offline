@@ -32,6 +32,7 @@ public final class EffectPrimitive {
     var customTick: TickHandler?
     var customRender: RenderHandler?
     private var lastUsesMinimalEffects: Bool = false
+    var isAwaitingSpriteAsset: Bool = false
 
     public init(id: EffectPrimitiveID = .pp_2dtexture) {
         self.id = id
@@ -855,6 +856,10 @@ public final class EffectPrimitive {
 
     @discardableResult
     public func animMotion() -> Bool {
+        if isAwaitingSpriteAsset {
+            return true
+        }
+
         let speed = max(1, state.animSpeed)
         guard state.stateCnt % speed == 0 else {
             return true

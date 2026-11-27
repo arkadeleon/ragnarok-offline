@@ -152,6 +152,17 @@ public final class EffectAssetStore {
         }
     }
 
+    public func hasFailedSpriteAsset(spritePath: String, actionPath: String) -> Bool {
+        let key = SpriteCacheKey(
+            spritePath: Self.normalizedTextureKey(forPath: spritePath),
+            actionPath: Self.normalizedTextureKey(forPath: actionPath)
+        )
+        if case .failed = spriteAssets[key] {
+            return true
+        }
+        return false
+    }
+
     public func removeAll() {
         for phase in strAssets.values {
             if case .inProgress(let task) = phase {

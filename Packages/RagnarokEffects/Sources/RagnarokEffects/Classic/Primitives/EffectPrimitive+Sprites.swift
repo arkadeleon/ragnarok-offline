@@ -1498,11 +1498,21 @@ extension EffectPrimitive {
     }
 
     func syncSpriteFrameCount(assets: EffectAssetStore?) {
-        if let asset = resolveSpriteAsset(assets: assets) {
+        guard let assets,
+              let spritePath = state.spritePath,
+              let actionPath = state.actionPath else {
+            isAwaitingSpriteAsset = false
+            return
+        }
+
+        if let asset = assets.spriteAsset(spritePath: spritePath, actionPath: actionPath) {
+            isAwaitingSpriteAsset = false
             let count = asset.frameCount(forAction: previousAnimation)
             if count > 0 {
                 spriteFrameCount = count
             }
+        } else {
+            isAwaitingSpriteAsset = !assets.hasFailedSpriteAsset(spritePath: spritePath, actionPath: actionPath)
         }
     }
 
