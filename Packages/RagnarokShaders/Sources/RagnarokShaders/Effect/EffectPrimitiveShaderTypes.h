@@ -20,6 +20,7 @@ typedef struct {
     matrix_float4x4 projectionMatrix;
     float depthBias;
     int renderMode; // 0 = world3D, 1 = billboard3D, 2 = screen2D (world-anchored), 3 = screen2DAbsolute
+    vector_float2 viewportSize;
 } EffectPrimitiveVertexUniforms;
 
 typedef struct {

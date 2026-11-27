@@ -354,6 +354,7 @@ final class EffectViewerEffectRenderer: Renderer {
                     case .primitive(let payload):
                         primitiveRenderer.render(
                             payload: payload,
+                            viewport: view.viewport,
                             camera: view.camera,
                             renderCommandEncoder: renderCommandEncoder
                         )

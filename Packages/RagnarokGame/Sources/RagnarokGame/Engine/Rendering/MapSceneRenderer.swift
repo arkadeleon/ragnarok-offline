@@ -369,6 +369,7 @@ final class MapSceneRenderer {
             case .primitiveEffect(let payload):
                 primitiveBatchRenderer.render(
                     payload: payload,
+                    viewport: viewport,
                     camera: camera,
                     renderCommandEncoder: renderCommandEncoder
                 )

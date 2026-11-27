@@ -101,6 +101,7 @@ public final class EffectPrimitiveBatchRenderer {
 
     public func render(
         payload: RenderPayload,
+        viewport: MTLViewport? = nil,
         camera: RenderCamera,
         renderCommandEncoder: any MTLRenderCommandEncoder
     ) {
@@ -163,12 +164,19 @@ public final class EffectPrimitiveBatchRenderer {
             }
         }
 
+        let viewportSize: SIMD2<Float>
+        if let viewport, viewport.width > 0, viewport.height > 0 {
+            viewportSize = [Float(viewport.width), Float(viewport.height)]
+        } else {
+            viewportSize = [640, 480]
+        }
         var vertexUniforms = EffectPrimitiveVertexUniforms(
             modelMatrix: payload.modelMatrix,
             viewMatrix: camera.viewMatrix,
             projectionMatrix: camera.projectionMatrix,
             depthBias: payload.renderState.depthBias,
-            renderMode: payload.mode.rawValue
+            renderMode: payload.mode.rawValue,
+            viewportSize: viewportSize
         )
         renderCommandEncoder.setVertexBytes(
             &vertexUniforms,

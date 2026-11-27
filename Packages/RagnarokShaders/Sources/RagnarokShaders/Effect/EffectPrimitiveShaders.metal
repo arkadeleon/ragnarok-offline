@@ -54,9 +54,15 @@ effectPrimitiveVertexShader(const device EffectPrimitiveVertex *vertices [[buffe
 
     float4 clipPosition = uniforms.projectionMatrix * viewPosition;
     if (uniforms.renderMode == 2) {
-        // Screen2D: offset projected 3D anchor by classic 640x480 screen pixels (+Y down -> -Y in NDC).
-        clipPosition.x += (in.billboardOffset.x / 320.0) * clipPosition.w;
-        clipPosition.y -= (in.billboardOffset.y / 240.0) * clipPosition.w;
+        // Screen2D: offset projected 3D anchor by 480p-referenced pixels scaled uniformly by viewport height
+        // so circles stay circular at any aspect ratio and DPI.
+        float aspect = (uniforms.viewportSize.x > 0.0 && uniforms.viewportSize.y > 0.0)
+            ? (uniforms.viewportSize.x / uniforms.viewportSize.y)
+            : (640.0 / 480.0);
+        float halfHeight = 240.0;
+        float halfWidth = halfHeight * aspect;
+        clipPosition.x += (in.billboardOffset.x / halfWidth) * clipPosition.w;
+        clipPosition.y -= (in.billboardOffset.y / halfHeight) * clipPosition.w;
     }
 
     out.position = clipPosition;
