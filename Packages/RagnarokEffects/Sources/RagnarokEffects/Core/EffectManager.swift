@@ -24,13 +24,15 @@ public final class EffectManager {
     public nonisolated static let maxTicksPerUpdate: Int = 4
 
     public nonisolated static var builtInEffectIDs: [EffectID] {
+        let particleEffectIDs = ParticleEffectRegistry.supportedEffectIDs
         let screenEffectIDs = EZ2STRScreenEffectDefinition.definitions.map(\.effectID)
         let ragEffectIDs = RagEffect.supportedEffectIDs
-        return Array(Set(screenEffectIDs).union(ragEffectIDs)).sorted()
+        return Array(Set(particleEffectIDs).union(screenEffectIDs).union(ragEffectIDs)).sorted()
     }
 
     public nonisolated static func hasBuiltInDefinition(for effectID: EffectID) -> Bool {
-        EZ2STRScreenEffectDefinition.definition(for: effectID) != nil
+        ParticleEffectRegistry.supports(effectID)
+            || EZ2STRScreenEffectDefinition.definition(for: effectID) != nil
             || RagEffect.supports(effectID)
     }
 
@@ -242,6 +244,8 @@ public final class EffectManager {
     private func spawnImmediately(id: UUID, request: EffectSpawnRequest) -> UUID? {
         if let builder = particleEffectBuilders[request.effectID] {
             activeEffects.append(builder(id, request))
+        } else if let particleEffect = ParticleEffectRegistry.make(id: id, request: request) {
+            activeEffects.append(particleEffect)
         } else if let entry = ez2strEffectCatalog?.entry(for: request.effectID) {
             activeEffects.append(EZ2STREffect(id: id, request: request, entry: entry))
         } else if let definition = EZ2STRScreenEffectDefinition.definition(for: request.effectID) {
